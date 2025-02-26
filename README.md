@@ -6,7 +6,7 @@ in games like Chess, Go, Tic Tac Toe, Connect Four, and Checkers. The platform o
 leaderboards, and a rich graphical user interface (GUI) for a seamless gaming experience.
 
 ## Project Structure
-
+### This is a Tree structure diagram which can be generated with command 'Tree /F /A' in command prompt
 ```
 
 /seng300-w25-project

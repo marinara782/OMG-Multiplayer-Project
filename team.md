@@ -6,4 +6,5 @@
 - **Hamza Ata** (30227411)
 - **Shazil Khan** (30241942)
 - **Youssif Abdelaziz** (30208726)
+- **Syed Raza Zaidi** (30075408)
 

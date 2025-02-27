@@ -14,15 +14,23 @@
     - Implementing user authentication (`Login.java`, `UserProfile.java`)
     - Managing user data storage (`UserDatabaseStub.java`)
 
-### **C. Game Development Teams (10 People, 5 Sub-Teams)**
+### **C. Game Development Teams (10 People, 3 Sub-Teams)**
 Each sub-team develops a specific game.
 - **Directory:** `/src/game/[game_name]`
 - **Responsibilities:**
-    - **Chess Team (2 People):** `ChessBoard.java`, `ChessPiece.java`, `ChessGame.java`
-    - **Go Team (2 People):** `GoBoard.java`, `GoStone.java`, `GoGame.java`
-    - **Tic Tac Toe Team (2 People):** `TicTacToeBoard.java`, `TicTacToeGame.java`
+
+[//]: # (    - **Chess Team &#40;2 People&#41;:** `ChessBoard.java`, `ChessPiece.java`, `ChessGame.java`)
+
+[//]: # (    - **Go Team &#40;2 People&#41;:** `GoBoard.java`, `GoStone.java`, `GoGame.java`)
+    - **Tic Tac Toe Team (4 People):** `TicTacToeBoard.java`, `TicTacToeGame.java`
+    - **Checkers Team (4 People):** `CheckersBoard.java`, `CheckersGame.java`
+
+
+### for people who have already completed previous CPSC 231, had the connect four game as ASSIGNMENT -1
+### (Those who scored 100, please let us know beforehand) this will help boost up the project progress.
+
     - **Connect Four Team (2 People):** `ConnectFourBoard.java`, `ConnectFourGame.java`
-    - **Checkers Team (2 People):** `CheckersBoard.java`, `CheckersGame.java`
+    
 
 ### **D. Leaderboard & Matchmaking Team (3 People)**
 - **Directories:** `/src/leaderboard` & `/src/matchmaking`

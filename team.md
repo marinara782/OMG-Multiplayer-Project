@@ -12,3 +12,9 @@
 - **Vihandu Appuhamy**  (30177972)
 - **Surkhab Mundi** (30189028)
 - **Jose Figueredo** (30185529)
+- **Syed Wasif Daiyan** 
+- **Abdu Rahmann Ben Issa**
+- **Hassaan Durrani**
+- **Puneet Dhawan**
+- **Muhammad Khan Umer**
+- **Dilraj Deol**

@@ -8,3 +8,7 @@
 - **Youssif Abdelaziz** (30208726)
 - **Eloisa Castillo** (30208515)
 - **Ahmed Azmaine Alvee** (30189598)
+- **Syed Raza Zaidi** (30075408)
+- **Vihandu Appuhamy**  (30177972)
+- **Surkhab Mundi** (30189028)
+- **Jose Figueredo** (30185529)

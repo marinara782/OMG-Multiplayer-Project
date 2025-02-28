@@ -14,7 +14,7 @@
 - **Jose Figueredo** (30185529)
 - **Syed Wasef Daiyan** (30205727)
 - **Abdu Rahmann Ben Issa**
-- **Hassaan Durrani**
+- **Hassaan Durrani** (30213840)
 - **Puneet Dhawan**
 - **Muhammad Khan Umer**
 - **Dilraj Deol** (30229680)

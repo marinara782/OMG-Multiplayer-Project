@@ -15,7 +15,7 @@
 - **Syed Wasef Daiyan** (30205727)
 - **Abdu Rahmann Ben Issa**
 - **Hassaan Durrani** (30213840)
-- **Puneet Dhawan**
+- **Puneet Dhawan** (30205304)
 - **Muhammad Khan Umer**
 - **Dilraj Deol** (30229680)
 - **Sara Moon** (30175244)

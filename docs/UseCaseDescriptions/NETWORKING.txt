@@ -1,0 +1,140 @@
+Use Case: Login
+
+Primary actor:	 Player
+
+Goal in context: Player can log into his or her account on the platform.
+
+Preconditions:	There is an option to log in on the corner of the screen.
+
+Trigger: Player must click the login button.
+
+Scenario:
+Player clicks the login button
+Player is prompted for a username and password
+Player enters a username and password
+Player is taken to the main screen of their account
+Exceptions:
+Username does not exist in the database
+Username exists in the database but the password is incorrect
+
+Priority: Essential, must be implemented
+
+When available:
+
+Frequency of use: Medium. Some players may choose to stay logged out. Once a player is logged in, they will not be asked to log in again unless they close the session and reopen it.
+
+Channel to actor: Via OMG gaming platform (requires internet connection)
+
+Secondary actor: N/A
+
+Channels to secondary actors:
+N/A
+
+Open issues:
+How many wrong password attempts will temporarily lock a user out of their account?
+
+
+
+
+
+
+
+
+
+
+
+
+
+Use Case: Create account
+
+Primary actor:	 Player
+
+Goal in context: Player can create a new account.
+
+Preconditions:	There is an option to create an account in the corner of the screen.
+
+Trigger: Player must click the “Create Account” button
+
+Scenario:
+Player clicks the “Create Account” button
+The player is asked to enter their full name, user name, phone number, email, birthday and a password twice.
+Player presses “Create Account” at the bottom of the screen
+Login screen is displayed
+
+Exceptions:
+Username is not available. Player will be told to enter a different username.
+
+Priority: Essential, must be implemented
+
+When available:
+
+Frequency of use: Low-medium. Typically. a user will only have one account and therefore only need to create it once.
+
+Channel to actor: Via OMG gaming platform (internet required)
+
+Channels to secondary actors:
+N/A
+
+Open issues:
+What information will be mandatory for a player to enter?
+Use Case: Match with another player
+
+Primary actor:	 Player 1
+
+Goal in context: Player 1 is matched with another player of similar skill level
+
+Preconditions:	User must be logged in
+
+Trigger: On the “Multiplayer” tab, the player clicks the “find opponent” button.
+
+Scenario:
+Player clicks on the “Multiplayer” tab.
+Player clicks on “find opponent” button.
+
+
+Exceptions:
+Username is not available. Player will be told to enter a different username.
+
+Priority: Essential, must be implemented
+
+When available:
+
+Frequency of use: Low-medium. Typically. a user will only have one account and therefore only need to create it once.
+
+Channel to actor: Via OMG gaming platform (internet required)
+
+Secondary Actor: Player 2, database of players in the system.
+
+Channels to secondary actors:
+Same as channel to primary actor.
+
+Open issues:
+What information will be mandatory for a player to enter?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Use Case Descriptions (Tic-Tac-Toe Game)
+Use Case 1: Start a new tic-tac-toe game
+Use Case 2: Make a move
+Use Case 3: Handle invalid moves
+Use Case 4: View Rules
+Use Case 5: Detect condition for game over
+Use Case 6: Display a winner/loser or draw
+Use Case 7: Quit Game
+Use Case 8: Restart Game
+Use Case 9: Use in-game chat
+Use Case 10: Display Stats

@@ -223,14 +223,16 @@ public class GameWindow {
         Button sendButton = new Button("Send");
         sendButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
 
+        // Haven't added "if" game selected.
+        // Add a delay time in response.
         sendButton.setOnAction(e -> {
             String message = chatInput.getText().trim();
             if (!message.isEmpty()) {
-                // For TicTacToe, we use the specific Bot responses
-                String response = ChatManager.TicTacToeBot.generateResponse(message);  // Use TicTacToeBot's generateResponse method
                 chatDisplay.appendText("\nYou: " + message);
-                chatDisplay.appendText("\nBot: " + response);  // Append the bot's response
                 chatInput.clear();
+
+                // Call the bot's delayed response with typing effect
+                ChatManager.TicTacToeBot.generateResponseWithDelay(message, chatDisplay);
             }
         });
         return sendButton;

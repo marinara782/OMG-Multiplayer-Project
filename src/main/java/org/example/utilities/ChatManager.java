@@ -1,4 +1,9 @@
 package org.example.utilities;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
+import javafx.util.Duration;
+
+import java.awt.*;
 import java.util.*;
 
 public class ChatManager {
@@ -22,6 +27,55 @@ public class ChatManager {
                 "Your turn.", "What’s next?", "Pick a spot.",
                 "Strategize wisely.", "The board awaits.", "I’m watching!"
         };
+
+        // Generate a response with a delay and simulate typing
+        public static void generateResponseWithDelay(String input, javafx.scene.control.TextArea chatDisplay) {
+            String response = generateResponse(input);
+            String botMessagePrefix = "\nComputer: ";
+
+            new Thread(() -> {
+                try {
+                    // Show "Computer: Typing" with animated dots
+                    for (int i = 0; i < 6; i++) { // Animate for about 1.8 seconds (6 * 300ms)
+                        final String typingText = botMessagePrefix + "Typing" + ".".repeat(i % 4);
+                        Platform.runLater(() -> {
+                            String text = chatDisplay.getText();
+                            int lastNewline = text.lastIndexOf("\nComputer: ");
+                            if (lastNewline != -1) {
+                                chatDisplay.setText(text.substring(0, lastNewline) + typingText);
+                            } else {
+                                chatDisplay.appendText(typingText);
+                            }
+                        });
+                        Thread.sleep(300); // Adjust speed of animation
+                    }
+
+                    // Replace "Typing..." with actual message
+                    Platform.runLater(() -> {
+                        String text = chatDisplay.getText();
+                        int lastNewline = text.lastIndexOf("\nComputer: ");
+                        if (lastNewline != -1) {
+                            chatDisplay.setText(text.substring(0, lastNewline) + botMessagePrefix);
+                        }
+                    });
+
+                    // Typing effect: revealing the response one character at a time
+                    for (int i = 0; i < response.length(); i++) {
+                        final String partialText = botMessagePrefix + response.substring(0, i + 1);
+                        Platform.runLater(() -> {
+                            String text = chatDisplay.getText();
+                            int lastNewline = text.lastIndexOf("\nComputer: ");
+                            if (lastNewline != -1) {
+                                chatDisplay.setText(text.substring(0, lastNewline) + partialText);
+                            }
+                        });
+                        Thread.sleep(100); // Adjust speed of typing
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        }
 
         public static String generateResponse(String input) {
             input = input.toLowerCase();

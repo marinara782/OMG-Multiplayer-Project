@@ -12,11 +12,13 @@
 - **Vihandu Appuhamy**  (30177972)
 - **Surkhab Mundi** (30189028)
 - **Jose Figueredo** (30185529)
-- **Syed Wasif Daiyan** 
-- **Abdu Rahmann Ben Issa**
-- **Hassaan Durrani**
-- **Puneet Dhawan**
-- **Muhammad Khan Umer**
+- **Syed Wasef Daiyan** (30205727)
+- **Abdu Rahmann Ben Issa** (30171465)
+- **Hassaan Durrani** (30213840)
+- **Puneet Dhawan** (30205304)
+- **Muhammad Khan Umer** (30210150)
 - **Dilraj Deol** (30229680)
 - **Sara Moon** (30175244)
 - **Marena Matavao** (30237507)
+- **Bereket Ware** (30180248)
+- **Jacob Baggot** (30232092)

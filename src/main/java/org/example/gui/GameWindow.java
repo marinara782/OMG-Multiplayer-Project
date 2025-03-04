@@ -208,7 +208,7 @@ public class GameWindow {
         chatInput.setStyle("-fx-background-color: #1a2530; -fx-text-fill: white;");
         HBox.setHgrow(chatInput, Priority.ALWAYS);
 
-        Button sendButton = getButton(chatInput, chatDisplay);
+        Button sendButton = getButton(chatInput, chatDisplay, gameInstance);
 
         chatInputBox.getChildren().addAll(chatInput, sendButton);
 
@@ -219,22 +219,69 @@ public class GameWindow {
         return rightPanel;
     }
 
-    private static Button getButton(TextField chatInput, TextArea chatDisplay) {
+    private static Button getButton(TextField chatInput, TextArea chatDisplay, Object gameInstance) {
         Button sendButton = new Button("Send");
         sendButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
 
-        // Haven't added "if" game selected.
-        // Add a delay time in response.
         sendButton.setOnAction(e -> {
             String message = chatInput.getText().trim();
             if (!message.isEmpty()) {
                 chatDisplay.appendText("\nYou: " + message);
-                chatInput.clear();
 
-                // Call the bot's delayed response with typing effect
-                ChatManager.TicTacToeBot.generateResponseWithDelay(message, chatDisplay);
+                if (gameInstance instanceof TicTacToeGame) {
+                    // Show "Typing..." message first
+                    chatDisplay.appendText("\nBot: Typing");
+
+                    // Create a timeline to simulate typing effect
+                    Timeline typingAnimation = new Timeline(
+                            // First cycle of animation
+                            new KeyFrame(Duration.seconds(0.25), evt -> chatDisplay.setText(
+                                    chatDisplay.getText().replace("Typing", "Typing."))),
+                            new KeyFrame(Duration.seconds(0.5), evt -> chatDisplay.setText(
+                                    chatDisplay.getText().replace("Typing.", "Typing.."))),
+                            new KeyFrame(Duration.seconds(0.75), evt -> chatDisplay.setText(
+                                    chatDisplay.getText().replace("Typing..", "Typing..."))),
+                            // Second cycle of animation
+                            new KeyFrame(Duration.seconds(1), evt -> chatDisplay.setText(
+                                    chatDisplay.getText().replace("Typing...", "Typing"))),
+                            new KeyFrame(Duration.seconds(1.25), evt -> chatDisplay.setText(
+                                    chatDisplay.getText().replace("Typing", "Typing."))),
+                            new KeyFrame(Duration.seconds(1.5), evt -> chatDisplay.setText(
+                                    chatDisplay.getText().replace("Typing.", "Typing.."))),
+                            new KeyFrame(Duration.seconds(1.75), evt -> chatDisplay.setText(
+                                    chatDisplay.getText().replace("Typing..", "Typing...")))
+                    );
+
+                    // After animation, replace "Typing..." with actual response
+                    typingAnimation.setOnFinished(evt -> {
+                        String response = ChatManager.TicTacToeBot.generateResponse(message);
+
+                        Platform.runLater(() -> {
+                            String currentText = chatDisplay.getText();
+
+                            // More robust way to replace "Typing..." with the response
+                            int typingIndex = currentText.lastIndexOf("Bot: Typing...");
+                            if (typingIndex >= 0) {
+                                // Split the text into before and after "Typing..."
+                                String textBeforeTyping = currentText.substring(0, typingIndex);
+                                String textAfterTyping = currentText.substring(typingIndex + 14); // 9 is length of "Typing..."
+
+                                // Reconstruct the text with the new response
+                                String updatedText = textBeforeTyping + "Bot: " + response + textAfterTyping;
+                                chatDisplay.setText(updatedText);
+                            } else {
+                                // Fallback if "Typing..." is not found
+                                chatDisplay.appendText("\nBot: " + response);
+                            }
+                        });
+                    });
+
+                    typingAnimation.play();  // Start animation
+                }
+                chatInput.clear();
             }
         });
+
         return sendButton;
     }
 

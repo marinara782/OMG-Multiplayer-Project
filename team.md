@@ -22,3 +22,4 @@
 - **Marena Matavao** (30237507)
 - **Bereket Ware** (30180248)
 - **Jacob Baggot** (30232092)
+- **Daman Sodhi** (30233872)

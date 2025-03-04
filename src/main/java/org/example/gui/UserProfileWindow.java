@@ -232,5 +232,4 @@ public class UserProfileWindow {
 
     public void show() {
     }
-    
 }

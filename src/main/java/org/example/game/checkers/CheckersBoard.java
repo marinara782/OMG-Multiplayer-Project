@@ -1,4 +1,4 @@
-package game.checkers;
+package org.example.game.checkers;
 
 public class CheckersBoard {
     private Piece[][] board; // 2D array representing the checkers board

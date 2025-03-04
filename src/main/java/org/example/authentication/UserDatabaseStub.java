@@ -25,6 +25,19 @@ public class UserDatabaseStub {
         }
     }
 
+    public boolean authenticateUser(UserProfile user){
+        // send user to external database to check if user exists
+        // return res
+    }
+
+    public void addUserExternal(UserProfile user){
+        // sends user to external database
+    }
+
+    public void deleteUserExternal(UserProfile user){
+        // send request to delete user in external database
+    }
+
      */
 
 

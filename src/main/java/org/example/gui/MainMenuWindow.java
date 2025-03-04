@@ -343,10 +343,10 @@ public class MainMenuWindow {
 
     private void startGame(String gameType) {
         switch (gameType) {
-            case "tictactoe":
+            case "ticTacToe", "tictactoe", "tic-tac-toe":
                 new GameWindow(stage, new TicTacToeGame(), currentUser);
                 break;
-            case "connectfour":
+            case "connectfour", "connectFour", "connect-four":
                 new GameWindow(stage, new ConnectFourGame(), currentUser);
                 break;
             case "checkers":

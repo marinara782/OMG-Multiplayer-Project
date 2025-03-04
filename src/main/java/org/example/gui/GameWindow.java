@@ -37,8 +37,14 @@ public class GameWindow {
         this.gameInstance = gameInstance;
         this.currentUser = currentUser;
         this.gameSession = new GameSession();
-        this.chatManager = new ChatManager();
         this.gameTimer = new GameTimer();
+
+        // Initialize chatManager based on selected game
+        if (gameInstance instanceof TicTacToeGame) {
+            this.chatManager = new ChatManager.TicTacToeBot(); // Use the TicTacToeBot//
+        } else {
+            this.chatManager = new ChatManager(); // Use the default ChatManager
+        }
 
         initializeUI();
         setupGameBoard();
@@ -193,7 +199,7 @@ public class GameWindow {
         chatDisplay.setEditable(false);
         chatDisplay.setPrefHeight(200);
         chatDisplay.setStyle("-fx-control-inner-background: #1a2530; -fx-text-fill: white;");
-        chatDisplay.setText("System: Game started\nPlayerXYZ: gl hf\nYou: you too!");
+        chatDisplay.setText("System: Game started\nComputer: good luck!\nYou: you too!");
         VBox.setVgrow(chatDisplay, Priority.ALWAYS);
 
         HBox chatInputBox = new HBox(10);
@@ -202,15 +208,7 @@ public class GameWindow {
         chatInput.setStyle("-fx-background-color: #1a2530; -fx-text-fill: white;");
         HBox.setHgrow(chatInput, Priority.ALWAYS);
 
-        Button sendButton = new Button("Send");
-        sendButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
-        sendButton.setOnAction(e -> {
-            String message = chatInput.getText().trim();
-            if (!message.isEmpty()) {
-                chatDisplay.appendText("\nYou: " + message);
-                chatInput.clear();
-            }
-        });
+        Button sendButton = getButton(chatInput, chatDisplay);
 
         chatInputBox.getChildren().addAll(chatInput, sendButton);
 
@@ -219,6 +217,23 @@ public class GameWindow {
         rightPanel.getChildren().addAll(opponentInfo, gameStats, chatSection);
 
         return rightPanel;
+    }
+
+    private static Button getButton(TextField chatInput, TextArea chatDisplay) {
+        Button sendButton = new Button("Send");
+        sendButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
+
+        sendButton.setOnAction(e -> {
+            String message = chatInput.getText().trim();
+            if (!message.isEmpty()) {
+                // For TicTacToe, we use the specific Bot responses
+                String response = ChatManager.TicTacToeBot.generateResponse(message);  // Use TicTacToeBot's generateResponse method
+                chatDisplay.appendText("\nYou: " + message);
+                chatDisplay.appendText("\nBot: " + response);  // Append the bot's response
+                chatInput.clear();
+            }
+        });
+        return sendButton;
     }
 
     private HBox createBottomBar() {
@@ -245,13 +260,21 @@ public class GameWindow {
     }
 
     private void setupGameBoard() {
+        System.out.println("Setting up game board, instance: " + gameInstance);
+        System.out.println("Is TicTacToe: " + (gameInstance instanceof TicTacToeGame));
+        System.out.println("Is ConnectFour: " + (gameInstance instanceof ConnectFourGame));
+        System.out.println("Is Checkers: " + (gameInstance instanceof CheckersGame));
+
         gameBoard.getChildren().clear();
 
         if (gameInstance instanceof TicTacToeGame) {
+            System.out.println("Setting up TicTacToe board");
             setupTicTacToeBoard();
         } else if (gameInstance instanceof ConnectFourGame) {
+            System.out.println("Setting up ConnectFour board");
             setupConnectFourBoard();
         } else if (gameInstance instanceof CheckersGame) {
+            System.out.println("Setting up Checkers board");
             setupCheckersBoard();
         }
     }

@@ -17,6 +17,9 @@ import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.networking.GameSession;
 import org.example.utilities.ChatManager;
 import org.example.utilities.GameTimer;
+import javafx.scene.media.AudioClip;
+
+import java.io.File;
 
 public class GameWindow {
     private Stage stage;
@@ -31,6 +34,12 @@ public class GameWindow {
     private VBox gameBoard;
     private Label turnLabel;
     private Label timerLabel;
+    private final AudioClip ticTacToeSoundX;
+    private final AudioClip ticTacToeSoundO;
+    private final AudioClip connectFourSoundBlue;
+    private final AudioClip connectFourSoundRed;
+    private int connectFourSoundCounter = 0;
+    private int ticTacToeCounter = 0;
 
     public GameWindow(Stage stage, Object gameInstance, UserProfile currentUser) {
         this.stage = stage;
@@ -45,6 +54,30 @@ public class GameWindow {
         } else {
             this.chatManager = new ChatManager(); // Use the default ChatManager
         }
+
+        // Get the project root directory
+        String projectDir = System.getProperty("user.dir");
+
+        // Build the full file path to the sound file
+        String ticTacToeSoundXPath = new File(projectDir, "resources/sounds/ticTacToeX.mp3").toURI().toString();
+
+        // Build the full file path to the sound file
+        String ticTacToeSoundOPath = new File(projectDir, "resources/sounds/ticTacToeO.mp3").toURI().toString();
+
+        // Build the full file path to the sound file
+        String connectFourBluePath = new File(projectDir, "resources/sounds/connectFourBlue.mp3").toURI().toString();
+
+        // Build the full file path to the sound file
+        String connectFourRedPath = new File(projectDir, "resources/sounds/connectFourRed.mp3").toURI().toString();
+
+        // Load the sound file
+        ticTacToeSoundX = new AudioClip(ticTacToeSoundXPath);
+
+        ticTacToeSoundO = new AudioClip(ticTacToeSoundOPath);
+
+        connectFourSoundBlue = new AudioClip(connectFourBluePath);
+
+        connectFourSoundRed = new AudioClip(connectFourRedPath);
 
         initializeUI();
         setupGameBoard();
@@ -329,6 +362,7 @@ public class GameWindow {
     }
 
     private void setupTicTacToeBoard() {
+
         VBox boardContainer = new VBox(20);
         boardContainer.setAlignment(Pos.CENTER);
 
@@ -354,8 +388,18 @@ public class GameWindow {
 
                     // For demo, just set X
                     if (clicked.getText().isEmpty()) {
-                        clicked.setText("X");
-                        simulateOpponentTurn();
+                        ticTacToeCounter++;
+                        if(ticTacToeCounter % 2 == 0){
+                            // Play click sound
+                            ticTacToeSoundX.play();
+                            clicked.setText("X");
+
+                            simulateOpponentTurn();
+                        }else{
+                            // Play click sound
+                            ticTacToeSoundO.play();
+                            clicked.setText("O");
+                        }
                     }
                 });
 
@@ -403,7 +447,15 @@ public class GameWindow {
             dropButton.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white;");
 
             final int column = col;
-            dropButton.setOnAction(e -> makeConnectFourMove(column));
+            dropButton.setOnAction(e -> {
+                connectFourSoundCounter++;
+                if(connectFourSoundCounter % 2 == 0){
+                    connectFourSoundBlue.play();
+                }else{
+                    connectFourSoundRed.play();
+                }
+                makeConnectFourMove(column);
+            });
 
             columnButtons.getChildren().add(dropButton);
         }

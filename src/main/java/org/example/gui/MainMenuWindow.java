@@ -12,6 +12,7 @@ import org.example.authentication.Login;
 import org.example.authentication.UserProfile;
 import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourGame;
+import org.example.game.ticTacToe.SymbolSelection;
 import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.leaderboard.Leaderboard;
 import org.example.matchmaking.Matchmaker;
@@ -344,7 +345,12 @@ public class MainMenuWindow {
     private void startGame(String gameType) {
         switch (gameType) {
             case "ticTacToe", "tictactoe", "tic-tac-toe":
-                new GameWindow(stage, new TicTacToeGame(), currentUser);
+                // Create symbol selection dialog
+                SymbolSelection symbolDialog = new SymbolSelection();
+                char chosenSymbol = symbolDialog.showAndWait();
+
+                // Create game with chosen symbol
+                new GameWindow(stage, new TicTacToeGame(chosenSymbol), currentUser);
                 break;
             case "connectfour", "connectFour", "connect-four":
                 new GameWindow(stage, new ConnectFourGame(), currentUser);

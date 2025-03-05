@@ -6,12 +6,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.example.authentication.UserProfile;
 import org.example.gui.MainMenuWindow;
 
@@ -26,6 +28,7 @@ public class TicTacToeBoard extends VBox {
     private final UserProfile currentUser;
 
     public TicTacToeBoard(TicTacToeGame game, Stage primaryStage, UserProfile currentUser) {
+
         this.game = game;
         this.primaryStage = primaryStage;
         this.currentUser = currentUser;
@@ -111,22 +114,40 @@ public class TicTacToeBoard extends VBox {
         VBox dialogVBox = new VBox(20);
         dialogVBox.setAlignment(Pos.CENTER);
         dialogVBox.setPadding(new Insets(20));
+        dialogVBox.setStyle("-fx-background-color: #1a2530;"); // Match game board background
 
         Label resultLabel = new Label();
         resultLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
 
         Button returnToMenuButton = new Button("Return to Main Menu");
-        returnToMenuButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+        returnToMenuButton.setStyle(
+                "-fx-background-color: #4CAF50;" + // Green button
+                        "-fx-text-fill: white;" +
+                        "-fx-font-size: 16px;" +
+                        "-fx-background-radius: 5px;" +
+                        "-fx-padding: 10px 20px;"
+        );
 
         // Determine game result and set styling
         switch (status) {
             case 'X':
-                resultLabel.setText("You Win!");
-                resultLabel.setStyle("-fx-text-fill: #00FF00;"); // Bright bold green
+                if(game.getPlayerSymbol() == 'X'){
+                    resultLabel.setText("You Win!");
+                    resultLabel.setStyle("-fx-text-fill: #00FF00;"); // Bright bold green
+                }else{
+                    resultLabel.setText("You Lost!");
+                    resultLabel.setStyle("-fx-text-fill: #8B0000;"); // Dark bold red
+                }
                 break;
+
             case 'O':
-                resultLabel.setText("You Lost!");
-                resultLabel.setStyle("-fx-text-fill: #8B0000;"); // Dark bold red
+                if(game.getPlayerSymbol() == 'O'){
+                    resultLabel.setText("You Win!");
+                    resultLabel.setStyle("-fx-text-fill: #00FF00;"); // Bright bold green
+                }else{
+                    resultLabel.setText("You Lost!");
+                    resultLabel.setStyle("-fx-text-fill: #8B0000;"); // Dark bold red
+                }
                 break;
             case 'D':
                 resultLabel.setText("It's a Draw");
@@ -147,6 +168,16 @@ public class TicTacToeBoard extends VBox {
         dialogVBox.getChildren().addAll(resultLabel, returnToMenuButton);
 
         Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        dialogScene.setFill(javafx.scene.paint.Color.TRANSPARENT);
+
+        // Optional: add a subtle border and shadow to the dialog
+        dialogVBox.setStyle(
+                "-fx-background-color: #1a2530;" +
+                        "-fx-background-radius: 10px;" +
+                        "-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);"
+        );
+
+        dialogStage.initStyle(StageStyle.TRANSPARENT);
         dialogStage.setScene(dialogScene);
         dialogStage.show();
     }

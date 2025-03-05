@@ -1,60 +1,22 @@
 package org.example.game.ticTacToe;
 import java.util.Random;
 
-//public class TicTacToeGame {
-//    public boolean checkForWin() {
-//        return false;
-//    }
-//
-//    public boolean isBoardFull() {
-//        return false;
-//    }
-//
-//    public boolean getOpponentSymbol() {
-//        return false;
-//    }
-//
-//    public int[] getAIMove() {
-//        return new int[0];
-//    }
-//
-//    public boolean isNetworkGame() {
-//        return false;
-//    }
-//
-//    public char[] getPlayerSymbol() {
-//        return new char[0];
-//    }
-//
-//    public boolean makeMove(int i, int i1) {
-//        return false;
-//    }
-//
-//    public boolean isPlayerTurn() {
-//        return false;
-//    }
-//
-//    public char getBoardValue(int row, int col) {
-//        return 0;
-//    }
-//
-//    public char getCurrentPlayer() {
-//        return 0;
-//    }
-//
-//    public char checkGameStatus() {
-//        return 0;
-//    }
-//}
-
-
 public class TicTacToeGame {
-    private char[][] board;
+    private final char[][] board;
     private char currentPlayer;
     private boolean isPlayerTurn;
-    private boolean isNetworkGame;
+    private final boolean isNetworkGame;
+    private final char playerSymbol;
+    private final char aiSymbol;
 
-    public TicTacToeGame() {
+    public TicTacToeGame(char playerSymbol) {
+
+        this.playerSymbol = playerSymbol;
+        System.out.println("This is the player symbol that is in TicTacToeGame : " + playerSymbol);
+
+        // Set AI symbol to the opposite of player's symbol
+        this.aiSymbol = (playerSymbol == 'X') ? 'O' : 'X';
+
         board = new char[3][3];
         // Initialize board with empty spaces
         for (int row = 0; row < 3; row++) {
@@ -62,9 +24,10 @@ public class TicTacToeGame {
                 board[row][col] = ' ';
             }
         }
-        // X always starts first
-        currentPlayer = 'X';
-        isPlayerTurn = true;
+
+        // Adjust initial player based on player's chosen symbol
+        currentPlayer = 'X'; // X always starts first
+        isPlayerTurn = (currentPlayer == playerSymbol);
         isNetworkGame = false;
     }
 
@@ -133,7 +96,7 @@ public class TicTacToeGame {
     public char checkGameStatus() {
         if (checkForWin()) {
             // The previous player (who just moved) was the winner
-            return getOpponentSymbol() ? 'X' : 'O';
+            return getOpponentSymbol() ? currentPlayer : playerSymbol;
         }
 
         if (isBoardFull()) {
@@ -144,7 +107,7 @@ public class TicTacToeGame {
     }
 
     public boolean getOpponentSymbol() {
-        return currentPlayer == 'O';
+        return currentPlayer != playerSymbol;
     }
 
     public int[] getAIMove() {
@@ -164,10 +127,6 @@ public class TicTacToeGame {
         return isNetworkGame;
     }
 
-    public char[] getPlayerSymbol() {
-        return new char[]{'X', 'O'};
-    }
-
     public boolean isPlayerTurn() {
         return isPlayerTurn;
     }
@@ -181,5 +140,13 @@ public class TicTacToeGame {
 
     public char getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public char getPlayerSymbol() {
+        return playerSymbol;
+    }
+
+    public char getAISymbol() {
+        return aiSymbol;
     }
 }

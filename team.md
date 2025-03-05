@@ -16,7 +16,7 @@
 - **Abdu Rahmann Ben Issa** (30171465)
 - **Hassaan Durrani** (30213840)
 - **Puneet Dhawan** (30205304)
-- **Muhammad Khan Umer** (30210150)
+- **Khan Muhammad Umer** (30210150)
 - **Dilraj Deol** (30229680)
 - **Sara Moon** (30175244)
 - **Marena Matavao** (30237507)

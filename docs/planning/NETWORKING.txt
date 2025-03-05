@@ -1,0 +1,29 @@
+- testing / in progress - 
+
+Purpose
+
+The networking component will manage the multiplayer aspect of this project as well 
+as the client-server communication and the handling of real time interactions.
+
+Client.java
+
+Will handle the client-side logic of the game. 
+? Handling user input from the game??
+- Establishing a connection to the server
+- 
+
+Server.java
+
+-handle server disconnections and errors
+- listen for incoming connections from clients
+- 
+
+GameSession.java
+
+- Managing game sessions between players
+- 
+
+
+
+Error Handling
+- Client disconnection will be detected by the server

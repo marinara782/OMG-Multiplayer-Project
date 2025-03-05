@@ -1,0 +1,42 @@
+Objective: Implement a matchmaking system for pairing players, tracking scores, win/loss statistics, and ranking systems.
+
+Milestones and Tasks:
+
+Tasks:
+
+[ ] Create team organization document:
+    - Status: Completed
+    - Date Started:
+    - Date Completed:
+
+[ ] Develop planning document:
+    - Status: In Progress
+    - Date Started: 03/04/2025
+    - Date Completed:
+
+[ ] Create Structure Diagram:
+    - Status: Not Started
+    - Date Started:
+    - Date Completed:
+
+[ ] Write Use Case Descriptions:
+    - Status: In Progress
+    - Date Started:
+    - Date Completed:
+
+Milestones:
+
+[ ] Milestone 1:
+    - Complete team organization and GitLab setup.
+
+[ ] Milestone 2:
+    - Finalize planning documents and task timeline.
+
+[ ] Milestone 3:
+    - Complete diagrams and use case descriptions.
+
+[ ] Milestone 4:
+    - Submit deliverables by the deadline.
+
+[ ] Milestone 5:
+    - Just look over what we potentially need for the code part of our project.

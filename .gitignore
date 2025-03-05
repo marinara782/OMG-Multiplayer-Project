@@ -36,3 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+src/main/java/org/example/leaderboard/letterfonts.tex
+src/main/java/org/example/leaderboard/macros.tex
+src/main/java/org/example/leaderboard/preamble.tex

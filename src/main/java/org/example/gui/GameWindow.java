@@ -13,6 +13,7 @@ import javafx.util.Duration;
 import org.example.authentication.UserProfile;
 import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourGame;
+import org.example.game.ticTacToe.TicTacToeBoard;
 import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.networking.GameSession;
 import org.example.utilities.ChatManager;
@@ -34,12 +35,10 @@ public class GameWindow {
     private VBox gameBoard;
     private Label turnLabel;
     private Label timerLabel;
-    private final AudioClip ticTacToeSoundX;
-    private final AudioClip ticTacToeSoundO;
     private final AudioClip connectFourSoundBlue;
     private final AudioClip connectFourSoundRed;
     private int connectFourSoundCounter = 0;
-    private int ticTacToeCounter = 0;
+
 
     public GameWindow(Stage stage, Object gameInstance, UserProfile currentUser) {
         this.stage = stage;
@@ -59,21 +58,10 @@ public class GameWindow {
         String projectDir = System.getProperty("user.dir");
 
         // Build the full file path to the sound file
-        String ticTacToeSoundXPath = new File(projectDir, "resources/sounds/ticTacToeX.mp3").toURI().toString();
-
-        // Build the full file path to the sound file
-        String ticTacToeSoundOPath = new File(projectDir, "resources/sounds/ticTacToeO.mp3").toURI().toString();
-
-        // Build the full file path to the sound file
         String connectFourBluePath = new File(projectDir, "resources/sounds/connectFourBlue.mp3").toURI().toString();
 
         // Build the full file path to the sound file
         String connectFourRedPath = new File(projectDir, "resources/sounds/connectFourRed.mp3").toURI().toString();
-
-        // Load the sound file
-        ticTacToeSoundX = new AudioClip(ticTacToeSoundXPath);
-
-        ticTacToeSoundO = new AudioClip(ticTacToeSoundOPath);
 
         connectFourSoundBlue = new AudioClip(connectFourBluePath);
 
@@ -351,7 +339,10 @@ public class GameWindow {
 
         if (gameInstance instanceof TicTacToeGame) {
             System.out.println("Setting up TicTacToe board");
-            setupTicTacToeBoard();
+
+            TicTacToeBoard ticTacToeBoard = new TicTacToeBoard((TicTacToeGame) gameInstance);
+            // Add the TicTacToeBoard to the gameBoard VBox
+            gameBoard.getChildren().add(ticTacToeBoard);
         } else if (gameInstance instanceof ConnectFourGame) {
             System.out.println("Setting up ConnectFour board");
             setupConnectFourBoard();
@@ -361,55 +352,7 @@ public class GameWindow {
         }
     }
 
-    private void setupTicTacToeBoard() {
 
-        VBox boardContainer = new VBox(20);
-        boardContainer.setAlignment(Pos.CENTER);
-
-        GridPane board = new GridPane();
-        board.setAlignment(Pos.CENTER);
-        board.setHgap(10);
-        board.setVgap(10);
-
-        // Create the 3x3 grid
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 3; col++) {
-                Button cell = new Button();
-                cell.setPrefSize(100, 100);
-                cell.setStyle("-fx-background-color: #1a2530; -fx-text-fill: white; -fx-font-size: 36px;");
-
-                // Store row and col in button properties for easy access in event handler
-                cell.setUserData(new int[]{row, col});
-
-                cell.setOnAction(e -> {
-                    Button clicked = (Button) e.getSource();
-                    int[] position = (int[]) clicked.getUserData();
-                    makeMove(position[0], position[1]);
-
-                    // For demo, just set X
-                    if (clicked.getText().isEmpty()) {
-                        ticTacToeCounter++;
-                        if(ticTacToeCounter % 2 == 0){
-                            // Play click sound
-                            ticTacToeSoundX.play();
-                            clicked.setText("X");
-
-                            simulateOpponentTurn();
-                        }else{
-                            // Play click sound
-                            ticTacToeSoundO.play();
-                            clicked.setText("O");
-                        }
-                    }
-                });
-
-                board.add(cell, col, row);
-            }
-        }
-
-        boardContainer.getChildren().add(board);
-        gameBoard.getChildren().add(boardContainer);
-    }
 
     private void setupConnectFourBoard() {
         VBox boardContainer = new VBox(20);
@@ -541,12 +484,6 @@ public class GameWindow {
         int minutes = seconds / 60;
         seconds = seconds % 60;
         timerLabel.setText(String.format("%d:%02d", minutes, seconds));
-    }
-
-    // Game move logic
-    private void makeMove(int row, int col) {
-        System.out.println("Making move at: " + row + ", " + col);
-        // This would call the actual game logic in a real implementation
     }
 
     private void makeConnectFourMove(int column) {

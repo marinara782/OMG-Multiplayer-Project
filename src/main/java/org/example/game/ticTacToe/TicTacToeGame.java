@@ -36,4 +36,12 @@ public class TicTacToeGame {
     public char getBoardValue(int row, int col) {
         return 0;
     }
+
+    public char getCurrentPlayer() {
+        return 0;
+    }
+
+    public char checkGameStatus() {
+        return 0;
+    }
 }

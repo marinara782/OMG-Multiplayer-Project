@@ -9,13 +9,19 @@ public class TicTacToeGame {
     private final char playerSymbol;
     private final char aiSymbol;
 
-    public TicTacToeGame(char playerSymbol) {
+    public TicTacToeGame(char playerSymbol, GameModeSelection.GameMode gameMode) {
 
         this.playerSymbol = playerSymbol;
         System.out.println("This is the player symbol that is in TicTacToeGame : " + playerSymbol);
 
-        // Set AI symbol to the opposite of player's symbol
-        this.aiSymbol = (playerSymbol == 'X') ? 'O' : 'X';
+        // Modify AI symbol handling based on game mode
+        if (gameMode == GameModeSelection.GameMode.HUMAN_VS_COMPUTER) {
+            // Set AI symbol to the opposite of player's symbol for computer mode
+            this.aiSymbol = (playerSymbol == 'X') ? 'O' : 'X';
+        } else {
+            // For human vs human, we'll set aiSymbol to a placeholder
+            this.aiSymbol = ' ';
+        }
 
         board = new char[3][3];
         // Initialize board with empty spaces
@@ -28,7 +34,7 @@ public class TicTacToeGame {
         // Adjust initial player based on player's chosen symbol
         currentPlayer = 'X'; // X always starts first
         isPlayerTurn = (currentPlayer == playerSymbol);
-        isNetworkGame = false;
+        isNetworkGame = (gameMode == GameModeSelection.GameMode.HUMAN_VS_HUMAN);
     }
 
     public boolean makeMove(int row, int col) {
@@ -111,16 +117,20 @@ public class TicTacToeGame {
     }
 
     public int[] getAIMove() {
-        // Simple AI: Find the first empty cell
+        // Simple AI: Find a random empty cell
         Random random = new Random();
-        while (true) {
+        int attempts = 0;
+        while (attempts < 9) { // Prevent infinite loop
             int row = random.nextInt(3);
             int col = random.nextInt(3);
 
             if (board[row][col] == ' ') {
                 return new int[]{row, col};
             }
+            attempts++;
         }
+        // Fallback in case no empty cell is found
+        return null;
     }
 
     public boolean isNetworkGame() {

@@ -12,6 +12,7 @@ import org.example.authentication.Login;
 import org.example.authentication.UserProfile;
 import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourGame;
+import org.example.game.ticTacToe.GameModeSelection;
 import org.example.game.ticTacToe.SymbolSelection;
 import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.leaderboard.Leaderboard;
@@ -349,8 +350,11 @@ public class MainMenuWindow {
                 SymbolSelection symbolDialog = new SymbolSelection();
                 char chosenSymbol = symbolDialog.showAndWait();
 
+                GameModeSelection gameModeDialog = new GameModeSelection();
+                GameModeSelection.GameMode ChosenGameMode = gameModeDialog.showAndWait();
+
                 // Create game with chosen symbol
-                new GameWindow(stage, new TicTacToeGame(chosenSymbol), currentUser);
+                new GameWindow(stage, new TicTacToeGame(chosenSymbol, ChosenGameMode), currentUser);
                 break;
             case "connectfour", "connectFour", "connect-four":
                 new GameWindow(stage, new ConnectFourGame(), currentUser);

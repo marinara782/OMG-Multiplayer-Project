@@ -340,7 +340,7 @@ public class GameWindow {
         if (gameInstance instanceof TicTacToeGame) {
             System.out.println("Setting up TicTacToe board");
 
-            TicTacToeBoard ticTacToeBoard = new TicTacToeBoard((TicTacToeGame) gameInstance);
+            TicTacToeBoard ticTacToeBoard = new TicTacToeBoard((TicTacToeGame) gameInstance, stage, currentUser);
             // Add the TicTacToeBoard to the gameBoard VBox
             gameBoard.getChildren().add(ticTacToeBoard);
         } else if (gameInstance instanceof ConnectFourGame) {

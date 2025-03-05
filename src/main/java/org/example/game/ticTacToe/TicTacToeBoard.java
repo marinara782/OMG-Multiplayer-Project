@@ -1,154 +1,20 @@
 package org.example.game.ticTacToe;
-//
-//import javafx.animation.KeyFrame;
-//import javafx.animation.Timeline;
-//import javafx.geometry.Pos;
-//import javafx.scene.Node;
-//import javafx.scene.control.Button;
-//import javafx.scene.control.Label;
-//import javafx.scene.layout.GridPane;
-//import javafx.scene.layout.VBox;// Add this method to your GameWindow class
-//import javafx.scene.media.AudioClip;
-//import javafx.util.Duration;
-//
-//import java.io.File;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//public class TicTacToeBoard {
-//
-//    public VBox gameBoard;
-//    public Label turnLabel;
-//    public Label timerLabel;
-//    private final AudioClip ticTacToeSoundX;
-//    private final AudioClip ticTacToeSoundO;
-//    private int ticTacToeCounter;
-//
-//    public TicTacToeBoard(TicTacToeGame game){
-//
-//        // Get the project root directory
-//        String projectDir = System.getProperty("user.dir");
-//
-//        // Build the full file path to the sound file
-//        String ticTacToeSoundXPath = new File(projectDir, "resources/sounds/ticTacToeX.mp3").toURI().toString();
-//
-//        // Build the full file path to the sound file
-//        String ticTacToeSoundOPath = new File(projectDir, "resources/sounds/ticTacToeO.mp3").toURI().toString();
-//
-//        // Load the sound file
-//        ticTacToeSoundX = new AudioClip(ticTacToeSoundXPath);
-//
-//        ticTacToeSoundO = new AudioClip(ticTacToeSoundOPath);
-//
-//        setupTicTacToeBoard();
-//
-//    }
-//
-//    private void setupTicTacToeBoard() {
-//
-//        VBox boardContainer = new VBox(20);
-//        boardContainer.setAlignment(Pos.CENTER);
-//
-//        GridPane board = new GridPane();
-//        board.setAlignment(Pos.CENTER);
-//        board.setHgap(10);
-//        board.setVgap(10);
-//
-//        TicTacToeGame ticTacToeGame = (TicTacToeGame) gameInstance;
-//
-//        // Create the 3x3 grid
-//        for (int row = 0; row < 3; row++) {
-//            for (int col = 0; col < 3; col++) {
-//                Button cell = new Button();
-//                cell.setPrefSize(100, 100);
-//                cell.setStyle("-fx-background-color: #1a2530; -fx-text-fill: white; -fx-font-size: 36px;");
-//
-//                final int finalRow = row;
-//                final int finalCol = col;
-//
-//                cell.setOnAction(e -> {
-//                    if (cell.getText().isEmpty() && ticTacToeGame.makeMove(finalRow, finalCol)) {
-//                        updateBoardCell(cell, ticTacToeGame.getCurrentPlayer());
-//                    }
-//                });
-//
-//                board.add(cell, col, row);
-//            }
-//        }
-//
-//        boardContainer.getChildren().add(board);
-//        gameBoard.getChildren().add(boardContainer);
-//    }
-//
-//    // Game move logic
-//    private void makeMove(int row, int col) {
-//        System.out.println("Making move at: " + row + ", " + col);
-//        // This would call the actual game logic in a real implementation
-//    }
-//
-//    private void simulateOpponentTurn() {
-//        // For demo purposes, simulate the opponent's turn
-//        turnLabel.setText("Opponent's Turn");
-//        turnLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #e74c3c; -fx-font-weight: bold;");
-//
-//        // After 2 seconds, switch back to player's turn
-//        Timeline opponentTimeline = new Timeline(
-//                new KeyFrame(Duration.seconds(2), e -> {
-//                    turnLabel.setText("Your Turn");
-//                    turnLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #2ecc71; -fx-font-weight: bold;");
-//                })
-//        );
-//        opponentTimeline.play();
-//    }
-//
-//    private void updateBoardCell(Button cell, char player) {
-//        // Play sound based on player
-//        if (player == 'X') {
-//            ticTacToeSoundX.play();
-//        } else {
-//            ticTacToeSoundO.play();
-//        }
-//
-//        cell.setText(String.valueOf(player));
-//
-//        // Check game status after move
-//        TicTacToeGame ticTacToeGame = (TicTacToeGame) gameInstance;
-//        if (ticTacToeGame.checkGameStatus() != ' ') {
-//            handleGameEnd(ticTacToeGame.checkGameStatus());
-//        }
-//    }
-//
-//    private void handleGameEnd(char status) {
-//        String message;
-//        boolean isVictory;
-//
-//        switch (status) {
-//            case 'X':
-//                message = "You won!";
-//                isVictory = true;
-//                break;
-//            case 'O':
-//                message = "Computer won!";
-//                isVictory = false;
-//                break;
-//            case 'D':
-//                message = "It's a draw!";
-//                isVictory = false;
-//                break;
-//            default:
-//                return;
-//        }
-//
-//        showGameOverDialog(message, isVictory);
-//    }
-//}
 
-
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import org.example.authentication.UserProfile;
+import org.example.gui.MainMenuWindow;
+
 import java.io.File;
 
 public class TicTacToeBoard extends VBox {
@@ -156,9 +22,13 @@ public class TicTacToeBoard extends VBox {
     private final Button[][] cells;
     private final AudioClip ticTacToeSoundX;
     private final AudioClip ticTacToeSoundO;
+    private final Stage primaryStage;
+    private final UserProfile currentUser;
 
-    public TicTacToeBoard(TicTacToeGame game) {
+    public TicTacToeBoard(TicTacToeGame game, Stage primaryStage, UserProfile currentUser) {
         this.game = game;
+        this.primaryStage = primaryStage;
+        this.currentUser = currentUser;
         cells = new Button[3][3];
 
         // Initialize sounds
@@ -233,18 +103,52 @@ public class TicTacToeBoard extends VBox {
             }
         }
 
-        // Show game result (you might want to implement this differently)
+        // Create game result dialog
+        Stage dialogStage = new Stage();
+        dialogStage.initModality(Modality.APPLICATION_MODAL);
+        dialogStage.setTitle("Game Over");
+
+        VBox dialogVBox = new VBox(20);
+        dialogVBox.setAlignment(Pos.CENTER);
+        dialogVBox.setPadding(new Insets(20));
+
+        Label resultLabel = new Label();
+        resultLabel.setFont(Font.font("Arial", FontWeight.BOLD, 24));
+
+        Button returnToMenuButton = new Button("Return to Main Menu");
+        returnToMenuButton.setStyle("-fx-background-color: #4CAF50; -fx-text-fill: white;");
+
+        // Determine game result and set styling
         switch (status) {
             case 'X':
-                System.out.println("Player X wins!");
+                resultLabel.setText("You Win!");
+                resultLabel.setStyle("-fx-text-fill: #00FF00;"); // Bright bold green
                 break;
             case 'O':
-                System.out.println("Player O wins!");
+                resultLabel.setText("You Lost!");
+                resultLabel.setStyle("-fx-text-fill: #8B0000;"); // Dark bold red
                 break;
             case 'D':
-                System.out.println("It's a draw!");
+                resultLabel.setText("It's a Draw");
+                resultLabel.setStyle("-fx-text-fill: #808080;"); // Light gray
                 break;
         }
+
+        // Return to main menu action
+        returnToMenuButton.setOnAction(e -> {
+            dialogStage.close();
+            // Assuming you have a method to show the main menu
+            if (primaryStage != null && currentUser != null) {
+                // Create a new MainMenuWindow with the stage and current user
+                new MainMenuWindow(primaryStage, currentUser);
+            }
+        });
+
+        dialogVBox.getChildren().addAll(resultLabel, returnToMenuButton);
+
+        Scene dialogScene = new Scene(dialogVBox, 300, 200);
+        dialogStage.setScene(dialogScene);
+        dialogStage.show();
     }
 }
 

@@ -1,42 +1,58 @@
+Project Timeline: Matchmaking System
+
+The timeline will cover the planning, development, and implementation of the MATCHMAKING branch.
+Each team member is expected to contribute 3 x 45 minutes per week.
+
+
 Objective: Implement a matchmaking system for pairing players, tracking scores, win/loss statistics, and ranking systems.
 
-Milestones and Tasks:
 
-Tasks:
+Planning and Design
 
-[ ] Create team organization document:
-    - Status: Completed
-    - Date Started:
-    - Date Completed:
+    - Create planning documents for MATCHMAKING branch
+        - Outline tasks, assign responsibilities, and set rough completion dates.
+        - DEADLINE: March 6, 2025
 
-[ ] Develop planning document:
-    - Status: In Progress
-    - Date Started: 03/04/2025
-    - Date Completed:
+   - Design use case diagrams
+        - Create a draft, review, and finalize use case diagrams for matchmaking.
+        - DEADLINE: March 6, 2025
 
-[ ] Create Structure Diagram:
-    - Status: Not Started
-    - Date Started:
-    - Date Completed:
+  - Design class structure diagrams
+        - Create a general class structure diagram for matchmaking-related classes.
+        - DEADLINE: March 6, 2025
 
-[ ] Write Use Case Descriptions:
-    - Status: In Progress
-    - Date Started:
-    - Date Completed:
+ - Create use case descriptions document
+        - Identify and detail use cases for matchmaking (e.g., finding players, creating matches, etc.)
+        - DEADLINE: March 6, 2025
 
-Milestones:
+- Review and submit documents for Iteration 1
+        - Team review, proofread, and submit to D2L dropbox.
+        - DEADLINE: March 6, 2025
 
-[ ] Milestone 1:
-    - Complete team organization and GitLab setup.
 
-[ ] Milestone 2:
-    - Finalize planning documents and task timeline.
+Milestones
 
-[ ] Milestone 3:
-    - Complete diagrams and use case descriptions.
+    - Iteration 1 Submission: March 7, 2025
 
-[ ] Milestone 4:
-    - Submit deliverables by the deadline.
 
-[ ] Milestone 5:
-    - Just look over what we potentially need for the code part of our project.
+
+Development and Implementation
+
+    - Objective: Develop and implement a Matchmaking System to pair players based on skill level, preferences, and
+    availability. The system will integrate with the game lobby and other systems.
+
+    - Duration: March 8, 2025 - April 11, 2025 (Post-Iteration 1 to Iteration 3 deadline)
+
+    - Key Features:
+        - Pair players based on skill level (e.g., ELO rating)
+        - Allow players to set preferences (e.g., game mode)
+        - Integrate with teh game lobby and other systems
+        - Handle match creation and player assignment
+        - Provide real-time matchmaking status updates
+
+
+Phase 1: Setup
+
+    - Duration: March 8, 2025 - March 12, 2025
+
+    - Goal: Establish rough skeleton code and finalize design for MATCHMAKING

@@ -121,4 +121,28 @@ Task List:
 Milestones:
 GUI Integration Complete: April 2, 2025
 
+Phase 4: Testing
+Duration: April 3, 2025 - April 7, 2025
+Goal: Thorough testing of Connect4 gameplay logic & GUI integration
+
+Task List:
+    Create unit tests for CheckersBoard
+        Start Date: April 3, 2025
+        End Date: April 4, 2025
+        Estimated Time: 5 hours
+
+    Create unit tests for CheckersGame
+        Start Date: April 5, 2025
+        End Date: April 6, 2025
+        Estimated Time: 5 hours
+
+    GUI integration tests
+        Start Date: April 6, 2025
+        End Date: April 7, 2025
+        Estimated Time: 3 hours
+
+Milestones:
+Unit Testing Complete: April 7, 2025
+
+
 

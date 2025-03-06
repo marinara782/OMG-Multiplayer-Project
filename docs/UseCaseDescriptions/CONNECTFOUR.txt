@@ -1,0 +1,294 @@
+Use Case 1: Launch Connect Four Game
+
+Actors:
+
+Player (Primary)
+
+GameWindow (Supporting)
+
+ConnectFourGame (Supporting)
+
+Preconditions:
+
+The player is logged in and on the main menu.
+
+The CONNECT4 module is available and initialized.
+
+Trigger:
+
+The player selects “Connect Four” from the main menu.
+
+Main Flow:
+
+The main menu instantiates a ConnectFourGame object.
+
+The GameWindow is initialized with the ConnectFourGame instance and the current user profile.
+
+GameWindow calls the setupConnectFourBoard() method to render the 7x6 grid and drop buttons.
+
+The game session starts, and the UI displays the game title “Connect Four” along with necessary controls.
+
+Alternative Flows:
+
+Initialization Failure: If the ConnectFourGame fails to initialize, an error message is displayed, and the player is returned to the main menu.
+
+Postconditions:
+
+The Connect Four game is launched and visible within the GameWindow, ready for gameplay.
+
+
+
+Use Case 2: Make a Connect Four Move
+
+Actors:
+
+Player (Primary)
+
+GameWindow (Supporting)
+
+ConnectFourGame (Supporting)
+
+Preconditions:
+
+A Connect Four game session is active.
+
+The game board is rendered and visible.
+
+Trigger:
+
+The player clicks a “Drop” button for a specific column.
+
+Main Flow:
+
+The player clicks the drop button for the chosen column.
+
+GameWindow’s event handler calls the makeConnectFourMove(int column) method.
+
+ConnectFourGame validates the move (e.g., checks if the column is not full) and updates the board state.
+
+GameWindow re-renders the board to display the newly dropped piece.
+
+The system checks for win/draw conditions.
+
+If the game continues, the turn switches (with the UI updating the turn indicator).
+
+Alternative Flows:
+
+Invalid Move: If the selected column is full, the player is notified and prompted to select a different column.
+
+Game Over Detected: If a win or draw is detected, the game session is terminated with an appropriate message.
+
+Postconditions:
+
+The board state is updated, and the game progresses to the next turn or ends if a terminal condition is met.
+
+
+
+Use Case 3: Exit Connect Four Game
+
+Actors:
+
+Player (Primary)
+
+GameWindow (Supporting)
+
+ConnectFourGame (Supporting)
+
+Preconditions:
+
+A Connect Four game session is active.
+
+Trigger:
+
+The player clicks the “Exit Game” button on the top bar.
+
+Main Flow:
+
+The player selects the “Exit Game” option.
+
+GameWindow displays a confirmation dialog warning that exiting will forfeit the current game.
+
+If the player confirms, the game session is terminated, and the player is returned to the main menu.
+
+Alternative Flows:
+
+Cancellation: If the player cancels at the confirmation dialog, the game continues without interruption.
+
+Postconditions:
+
+The active Connect Four session is terminated, and control returns to the main menu.
+
+
+
+
+
+
+
+
+
+
+
+Use Case 4: Offer a Draw in Connect Four
+
+Actors:
+
+Player (Primary)
+
+GameWindow (Supporting)
+
+ConnectFourGame (Supporting)
+
+Preconditions:
+
+The Connect Four game session is active and both players (or the AI simulation) are engaged.
+
+Trigger:
+
+The player selects the “Offer Draw” button.
+
+Main Flow:
+
+The player clicks the “Offer Draw” button in the bottom bar.
+
+GameWindow shows a confirmation dialog for offering a draw.
+
+Upon confirmation, the draw offer is sent to the opponent (or simulated if playing against AI).
+
+If the opponent accepts (or the simulation confirms), the game session ends in a draw and an informational dialog is displayed.
+
+Alternative Flows:
+
+Draw Declined: If the opponent declines the draw offer, the game continues as normal.
+
+Postconditions:
+
+If accepted, the game session ends with a draw; if declined, the game remains active.
+
+
+
+
+
+
+
+
+
+Use Case 5: Resign from Connect Four Game
+
+Actors:
+
+Player (Primary)
+
+GameWindow (Supporting)
+
+ConnectFourGame (Supporting)
+
+Preconditions:
+
+The Connect Four game session is active.
+
+Trigger:
+
+The player clicks the “Resign” button on the bottom bar.
+
+Main Flow:
+
+The player selects the “Resign” option.
+
+GameWindow displays a confirmation dialog asking the player to confirm resignation.
+
+If confirmed, the system terminates the current game session and marks the game as a loss for the resigning player.
+
+GameWindow shows a game over dialog with a “Defeat” message and then returns the player to the main menu.
+
+Alternative Flows:
+
+Cancellation: If the player cancels the resignation confirmation, the game continues normally.
+
+Postconditions:
+
+The game session ends, and the player's record is updated to reflect the resignation (loss), returning the player to the main menu.
+
+
+
+
+
+
+
+Use Case 6: Initiate Rated Matchmaking and Update Leaderboard
+
+Actors:
+
+Player (Primary)
+
+Matchmaking System (Supporting)
+
+Leaderboard System (Supporting)
+
+Preconditions:
+
+The player is logged in and has a valid rating for the selected game (e.g., Connect Four, Checkers, Tic Tac Toe).
+
+Both the matchmaking system and leaderboard system are operational.
+
+The player is on the main menu and selects a game mode that supports rating-based matchmaking.
+
+Trigger:
+
+The player selects “Find Rated Match” from the matchmaking interface.
+
+Main Flow:
+
+Game Selection:
+
+The player chooses a game (e.g., Connect Four) to play in rated mode.
+
+The system retrieves the player's current rating for that game.
+
+Matchmaking:
+
+The matchmaking system uses the retrieved rating to search for an opponent within a similar rating range.
+
+If a matching opponent is found, the system pairs the players and starts a game session.
+
+If no opponent is found immediately, the player is placed in a game-specific matchmaking queue, with the system gradually expanding the acceptable rating range if needed.
+
+Game Session:
+
+The paired players engage in the game session.
+
+During gameplay, the system monitors moves, turns, and game state transitions.
+
+Post-Match Processing:
+
+At the conclusion of the match, the system calculates new ratings for both players based on the match outcome (win, loss, or draw) using a defined algorithm (e.g., Elo).
+
+The updated ratings are stored in the players’ profiles.
+
+Leaderboard Update:
+
+The leaderboard system retrieves the new ratings.
+
+The leaderboard display is refreshed to reflect the updated standings and rankings for the game.
+
+Alternative Flows:
+
+No Opponent Found:
+
+If no suitable opponent is found within the current rating range, the system either expands the range gradually or notifies the player of a delayed match.
+
+Player Cancels Matchmaking:
+
+If the player cancels the matchmaking request before an opponent is found, they are removed from the matchmaking queue.
+
+Game Abortion or Forfeit:
+
+If the match is aborted or a player forfeits, the system applies forfeit rules to adjust ratings accordingly, and the leaderboard is updated to reflect these changes.
+
+Postconditions:
+
+The player is either actively engaged in a game session or remains queued for matchmaking.
+
+After match completion, both players' ratings are updated, and the leaderboard accurately reflects the new rankings.
+
+
+

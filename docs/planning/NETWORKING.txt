@@ -4,7 +4,7 @@ The timeline will cover the planning, development, and implementation of the NET
 Each team member is expected to contribute 3 x 45 minutes per week.
 
 
-Objective: Implement a matchmaking system for pairing players, tracking scores, win/loss statistics, and ranking systems.
+Objective: Implement a networking system for pairing players, tracking scores, win/loss statistics, and ranking systems.
 
 
 Planning and Design
@@ -14,11 +14,11 @@ Planning and Design
         - DEADLINE: March 6, 2025
 
    - Design use case diagrams
-        - Create a draft, review, and finalize use case diagrams for matchmaking.
+        - Create a draft, review, and finalize use case diagrams for networking.
         - DEADLINE: March 6, 2025
 
   - Design class structure diagrams
-        - Create a general class structure diagram for matchmaking-related classes.
+        - Create a general class structure diagram for networking-related classes.
         - DEADLINE: March 6, 2025
 
  - Create use case descriptions document

@@ -42,5 +42,27 @@ Key Features:
 
 The Development and Implementation will be divided into phases: Setup, Core Development, Integration, Testing, and Review. Tasks are assigned to balance workload among all team members.
 
+Phase 1: Setup
+Duration: March 8, 2025 - March 12, 2025
+Goal: Establish rough skeleton code and finalize design for Checkers
+
+Task List:
+    Git Repository Setup
+        Start Date: March 8, 2025
+        End Date: March 8, 2025
+        Estimated Time: 1 hour
+
+    Finalize class structure design: Adjust class diagram based on feedback
+        Start Date: March 9, 2025
+        End Date: March 10, 2025
+        Estimated Time: 3 hours
+
+    Plan GUI: Create a sketch for the Checkers GUI
+        Start Date: March 11, 2025
+        End Date: March 12, 2025
+        Estimated Time: 3 hours
+
+Milestones:
+Setup complete: March 12, 2025
 
 

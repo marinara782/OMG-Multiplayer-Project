@@ -1,0 +1,139 @@
+TIC-TAC-TOE
+
+Project Timeline
+This timeline will cover the planning aspect of all tasks within the TIC-TAC-TOE branch. Each
+member is expected to contribute 3 × 45 minutes per week.
+
+
+Planning and Design
+Create planning documents for TIC-TAC-TOE branch
+• Define scope and features of the Tic-Tac-Toe game.
+• Create an outline and rough deadlines for task completion.
+• Deadline: March 5, 2025
+Design use case diagrams
+• Draft initial use case diagrams, then refine to final versions.
+• Deadline: March 6, 2025
+Design class structure diagrams
+• Create a class structure diagram detailing interactions of key components
+(tictactoeBoard.java, tictactoeGame.java, etc.).
+• Deadline: March 6, 2025
+Create use case descriptions document
+• Identify and provide details of different game scenarios (e.g., player move, win condition,
+tie detection, reset game).
+• Deadline: March 6, 2025
+Review and submit documents for iteration 1
+• Team review, spell-checking, formatting, proofreading, and final submission to D2L
+Dropbox.
+• Deadline: March 6, 2025
+Milestones:
+• team 2 : : iteration 1 Submission: March 7, 2025 (can be seen on Csgit under milestones
+tab)
+
+
+Risk Assessment & Mitigation Planning:
+Types of issues that can be encountered:
+• Integration Issues: Different components of the OMG platform may not work together
+e.g. networking or matchmaking
+o Solution: Conduct early integration testing and use stubs to simulate API
+interactions.
+• Networking failures: Multiplayer connection issues
+o Solution: Implementing extensive unit testing for robust error handling and
+reconnection fail safes in place.
+• Time constraints: Team members fail to deliver on schedule
+o Solution: Weekly scrum sessions to track progress and task realignment if
+necessary
+• Game logic bugs: Unexpected errors or edge cases
+o Solution: implementing unit tests and code reviewing.
+
+
+Development and Implementation
+
+Objective:
+Develop and implement a Tic-Tac-Toe game with multiplayer support, AI opponent, and game
+state tracking.
+Duration:
+• March 8, 2025 - April 11, 2025 (Post-iteration 1 to iteration 3 deadline)
+
+
+Key Features:
+Game Logic:
+• Implement Tic-Tac-Toe rules (win conditions, draw conditions, and valid moves).
+• Validate user inputs and game state updates.
+Multiplayer Support:
+• Allow two players to play online via networking.
+• Support matchmaking and turn-based interactions.
+AI Opponent (Optional):
+• Implement a basic AI opponent using Minimax algorithm.
+User Interface:
+• Build a simple, interactive GUI for the game.
+• Display game board, player moves, and end-game messages.
+Integration with OMG Platform:
+• Ensure Tic-Tac-Toe works within the Online Multiplayer Board Game (OMG) platform.
+• Interface with authentication, matchmaking, and leaderboard components.
+
+
+Phase 1: Setup
+Duration: March 8, 2025 - March 12, 2025
+Goal: Establish project structure and finalize design.
+Task List:
+• Setup Git Repository and branch for Tic-Tac-Toe. (March 8, 2025 - March 8, 2025)
+• Finalize class structure design. (March 9, 2025 - March 10, 2025)
+• Stub networking interface. (March 10, 2025 - March 11, 2025)
+• Plan GUI: Create a sketch for the Tic-Tac-Toe interface. (March 11, 2025 - March 12,
+2025)
+Milestones: Setup complete: March 12, 2025
+
+
+Phase 2: Core Development
+Duration: March 13, 2025 - March 25, 2025
+Goal: Implement core systems for Tic-Tac-Toe.
+Task List:
+• Implement a class to handle game logic and player moves. (March 13, 2025 - March 16,
+2025)
+• Implement win/loss/tie detection logic. (March 16, 2025 - March 18, 2025)
+• Implement multiplayer communication using networking components. (March 18, 2025 -
+March 21, 2025)
+• Develop GUI interactions. (March 21, 2025 - March 25, 2025)
+Milestones: Core mechanics implemented: March 25, 2025
+
+
+Phase 3: Integration
+Duration: March 26, 2025 – April 1, 2025
+Goal: Connect Tic-Tac-Toe with the OMG platform.
+Task List:
+• Integrate with authentication and matchmaking systems. (March 26, 2025 - March 28,
+2025)
+• Connect Tic-Tac-Toe with the leaderboard for win/loss tracking. (March 28, 2025 -
+March 29, 2025)
+• Implement error handling and logging. (March 29, 2025 - March 31, 2025)
+Milestones: Integration complete: March 31, 2025
+
+
+Phase 4: Testing
+Duration: April 2, 2025 – April 8, 2025
+Goal: Test all features and fix bugs.
+Task List:
+• Conduct unit tests on game logic. (April 1, 2025 - April 3, 2025)
+• Perform network tests to ensure smooth multiplayer gameplay. (April 3, 2025 - April 5,
+2025)
+• GUI usability testing. (April 5, 2025 - April 7, 2025)
+Milestones: All tests passed: April 8, 2025
+
+
+Phase 5: Review
+Duration: April 9, 2025 - April 11, 2025
+Goal: Final refinements and submission.
+Task List:
+• Perform final code review and documentation updates. (April 8, 2025 - April 9, 2025)
+• Prepare presentation materials for the project. (April 9, 2025 - April 10, 2025)
+• Submit Tic-Tac-Toe module for final integration into OMG platform. (April 10, 2025 -
+April 11, 2025)
+Milestones: Project ready for submission: April 11, 2025
+
+
+Final Notes:
+• Start coding on March 8, 2025 – the earlier, the better!
+• Hold weekly meetings with other team leaders to coordinate efforts.
+• Conduct scrum meetings within the Tic-Tac-Toe team.
+• Branch early, commit often, and document everything in GitLab.
+

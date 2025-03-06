@@ -1,24 +1,18 @@
-Project Timeline: Networking System
-
-The timeline will cover the planning, development, and implementation of the NETWORKING branch.
-Each team member is expected to contribute 3 x 45 minutes per week.
-
-
-Objective: Implement a networking system for pairing players, tracking scores, win/loss statistics, and ranking systems.
-
-
+NETWORKING
+ 
 Planning and Design
+
 
     - Create planning documents for NETWORKING branch
         - Outline tasks, assign responsibilities, and set rough completion dates.
         - DEADLINE: March 6, 2025
 
    - Design use case diagrams
-        - Create a draft, review, and finalize use case diagrams for networking.
+        - Create a draft, review, and finalize use case diagrams for matchmaking.
         - DEADLINE: March 6, 2025
 
   - Design class structure diagrams
-        - Create a general class structure diagram for networking-related classes.
+        - Create a general class structure diagram for matchmaking-related classes.
         - DEADLINE: March 6, 2025
 
  - Create use case descriptions document
@@ -28,26 +22,6 @@ Planning and Design
 - Review and submit documents for Iteration 1
         - Team review, proofread, and submit to D2L dropbox.
         - DEADLINE: March 6, 2025
-
-
-Milestones
-
-    - Iteration 1 Submission: March 7, 2025
-
-
-Development and Implementation
-
-    - Objective: Develop and implement a Networking System to receive client requests to join game sessions, server verification of credentials as well as syncing servers to pair players within a game session. 
-
-    - Duration: March 8, 2025 - April 11, 2025 (Post-Iteration 1 to Iteration 3 deadline)
-
-    - Key Features:
-        - Server rejects an invalid move and notifies client of an error
-        - Server detects disconnections and waits for player to reconnect
-        - Player is placed in a matching queue until an opponent is available
-
-**Move sent from the client to the server → server validates the move and updates game session state → updated game state is sent to both players.**
-
 
 Phase 1: Setup
 
@@ -82,10 +56,6 @@ Phase 1: Setup
 
 Milestone: Setup complete by March 12, 2025.
 
-
-*******************************************
-
-
 Phase 2: Core Development
 
 Duration: March 13, 2025 - March 25, 2025
@@ -97,3 +67,73 @@ Task List:
         - Develop logic to handle player connection and disconnection (e.g., ELO)
         - Start Date: March 13, 2025
         - End Date: March 16, 2025
+
+Phase 2: Task Implementation
+
+Duration: March 26, 2025 - April 1, 2025
+
+Goal: Connect server to client within gamesessions
+
+Tasklist:
+
+Integration with networking: Add a method to demonstrate online interface integration to host games.
+- Start Date: March 26, 2025
+- End Date: March 29, 2025
+- Estimated Time: 6 hours
+Player log-in and user profile view and creation
+- Start Date: March 27, 2025
+- End Date: march 31, 2025
+- Estimated Time: 6 hours
+Test integration: Players should be able to view users’ profiles/status/recent matches
+– Start Date: March 30, 2025
+– End Date: April 1, 2025
+– Estimated Time: 3 hours
+
+
+Milestones:
+Integrated NETWORKING: April 1, 2025
+
+
+Phase 4: Testing
+Duration: April 2, 2025 - April 8, 2025
+Goal: Ensure there are no bugs.
+Tasklist:
+Create unit tests to test client-server communication as well as game-state synchronization
+– Start Date: April 2, 2025
+– End Date: April 5, 2025
+– Estimated Time: 6 hours
+Test chat funtionality
+– Start Date: April 3, 2025
+– End Date: April 6, 2025
+– Estimated Time: 4 hours
+Test general session management
+– Start Date: April 4, 2025
+– End Date: April 7, 2025
+– Estimated Time: 3 hours
+Full system test
+– Start Date: April 5, 2025
+– End Date: April 8, 2025
+– Estimated Time: 3 hours
+Milestones:
+NETWORKING  tested: April 8, 2025
+Phase 5: Review
+
+Update documentation
+– Start Date: April 9, 2025
+– End Date: April 9, 2025
+– Estimated Time: 2 hours
+Full code review
+– Start Date: April 9, 2025
+– End Date: April 10, 2025
+– Estimated Time: 3 hours
+Record video demonstration
+– Start Date: April 9, 2025
+4– End Date: April 10, 2025
+– Estimated Time: 3 hours
+Submit documents
+– Start Date: April 10, 2025
+– End Date: April 11, 2025
+– Estimated Time: 1 hour
+Milestones:
+Submission: April 11, 2025
+

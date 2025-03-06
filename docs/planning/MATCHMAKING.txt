@@ -35,7 +35,6 @@ Milestones
     - Iteration 1 Submission: March 7, 2025
 
 
-
 Development and Implementation
 
     - Objective: Develop and implement a Matchmaking System to pair players based on skill level, preferences, and
@@ -56,3 +55,46 @@ Phase 1: Setup
     - Duration: March 8, 2025 - March 12, 2025
 
     - Goal: Establish rough skeleton code and finalize design for MATCHMAKING
+
+    - Task List:
+        - Git Repository Setup:
+            - Set up Git repository for MATCHMAKING branch.
+            - Start Date: March 8, 2025
+            - End Date: March 8, 2025
+            - Estimated Time: 1 hour.
+
+        - Finalize class structure design:
+            - Adjust class diagram based on feedback.
+            - Start Date: March 9, 2025
+            - End Date: March 10, 2025
+            - Estimated Time: 3 hours.
+
+       - Stub matchmaking logic:
+            - Simulate player pairing and match creating.
+            - Start Date: March 10,2025
+            - End Date: March 11, 2025
+            - Estimated Time: 3 hours.
+
+      - Plan GUI integration:
+            - Create a sketch for the matchmaking interface.
+            - Start Date: March 11, 2025
+            - End Date: March 12, 2025
+            - Estimated Time: 3 hours.
+
+Milestone: Setup complete by March 12, 2025.
+
+
+*******************************************
+
+
+Phase 2: Core Development
+
+Duration: March 13, 2025 - March 25, 2025
+
+Goal: Implement core systems for MATCHMAKING.
+
+Task List:
+    - Implement ranking logic:
+        - Develop logic to calculate player skill levels (e.g., ELO)
+        - Start Date: March 13, 2025
+        - End Date: March 16, 2025

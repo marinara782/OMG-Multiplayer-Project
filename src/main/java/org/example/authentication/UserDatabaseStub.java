@@ -16,7 +16,7 @@ public class UserDatabaseStub {
         // Map<String, String> temp = some code to contact external server
         // returns temp;
     }
-
++ auther
     public String getPassword(String user){
         Map<String, String> temp = getProfiles();
         try{

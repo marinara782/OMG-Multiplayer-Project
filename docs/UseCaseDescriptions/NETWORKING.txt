@@ -83,17 +83,21 @@ Primary actor:	 Player 1
 
 Goal in context: Player 1 is matched with another player of similar skill level
 
-Preconditions:	User must be logged in
+Preconditions:	User must be logged in, user must have a recorded skill level based on previous multiplayer interactions or games against a computer.
 
 Trigger: On the “Multiplayer” tab, the player clicks the “find opponent” button.
 
 Scenario:
 Player clicks on the “Multiplayer” tab.
 Player clicks on “find opponent” button.
+The system retrieves the player’s skill level from their profile
+The matchmaking system searches for a suitable opponent
+
 
 
 Exceptions:
-Username is not available. Player will be told to enter a different username.
+
+
 
 Priority: Essential, must be implemented
 
@@ -103,7 +107,7 @@ Frequency of use: Low-medium. Typically. a user will only have one account and t
 
 Channel to actor: Via OMG gaming platform (internet required)
 
-Secondary Actor: Player 2, database of players in the system.
+Secondary Actor: Player 2, matchmaking system
 
 Channels to secondary actors:
 Same as channel to primary actor.
@@ -116,11 +120,74 @@ What information will be mandatory for a player to enter?
 
 
 
+Use Case: Add friend
+
+Primary actor:	 Player 1
+
+Goal in context: Player 1 sends friend request to player 2
+
+Preconditions:	User must be logged in, user must search friend’s username or click on their profile after being matched with them in a game. In general, a player 1 must have clicked on player 2’s profile in order to send a friend request.
+
+Trigger: Player 1 clicks “Send Friend Request”.
+
+Scenario:
+Player 1 clicks “Send Friend Request” button
+Player 2 receives friend request in their inbox
+Player 2 can accept/reject the friend request from player 1
+Exceptions:
+Username is not available. Player will be told to enter a different username.
+
+Priority: Essential, must be implemented
+
+When available:
+
+Frequency of use: Low-medium. Typically. a user will only have one account and therefore only need to create it once.
+
+Channel to actor: Via OMG gaming platform (internet required)
+
+Secondary Actor: Player 2
+
+Channels to secondary actors:
+Same as channel to primary actor.
+
+Open issues:
+What information will be mandatory for a player to enter?
 
 
 
 
 
+Use Case: Block a user
+
+Primary actor:	 Player 1
+
+Goal in context:
+
+Preconditions:
+
+Trigger:
+
+Scenario:
+
+
+Exceptions:
+
+
+
+Priority: Bonus feature (not requested in outline letter from company)
+
+When available:
+
+Frequency of use:
+
+Channel to actor: Via OMG gaming platform (internet required)
+
+Secondary Actor: Player 2
+
+Channels to secondary actors:
+Same as channel to primary actor.
+
+Open issues:
 
 
 
@@ -128,6 +195,44 @@ What information will be mandatory for a player to enter?
 
 
 Use Case Descriptions (Tic-Tac-Toe Game)
+Use Case: Start a new
+
+Primary actor:	 Player 1
+
+Goal in context:
+
+Preconditions:
+
+Trigger:
+
+Scenario:
+
+
+Exceptions:
+
+
+
+Priority: Bonus feature (not requested in outline letter from company)
+
+When available:
+
+Frequency of use:
+
+Channel to actor: Via OMG gaming platform (internet required)
+
+Secondary Actor: Player 2
+
+Channels to secondary actors:
+Same as channel to primary actor.
+
+Open issues:
+
+
+
+
+
+
+
 Use Case 1: Start a new tic-tac-toe game
 Use Case 2: Make a move
 Use Case 3: Handle invalid moves

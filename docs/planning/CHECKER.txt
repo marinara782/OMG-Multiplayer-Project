@@ -1,0 +1,31 @@
+Team 4 - CHECKERS team
+
+Project Planning Document
+
+Project Timeline - Checkers Team
+This timeline will cover the planning aspect of all tasks within the CHECKER branch. Each member is expected to contribute 3 × 45 minutes per week.
+
+
+Planning and Design
+Create planning documents for CHECKER branch
+Create an outline and rough dates for when tasks are estimated to be finished.
+Deadline: March 7, 2025
+    Design use case diagrams
+        Create draft then create final of the use case diagrams.
+        Deadline: March 7, 2025
+
+    Design class structure diagrams
+        Create a general class structure diagram for classes in CHECKER.
+        Deadline: March 7, 2025
+
+    Create use case descriptions document
+        Identify and provide details to different use cases.
+        Deadline: March 7, 2025
+
+    Review and submit documents for iteration 1
+        Team review, spell checking, format checking, proofread, then submit to D2L dropbox.
+        Deadline: March 7, 2025
+
+Milestones
+Team 4 - Iteration 1: March 7, 2025
+

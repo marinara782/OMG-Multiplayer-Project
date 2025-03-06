@@ -1,4 +1,4 @@
-package game.checkers;
+package org.example.game.checkers;
 
 public class CheckersGame {
 }

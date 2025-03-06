@@ -195,7 +195,7 @@ Open issues:
 
 
 Use Case Descriptions (Tic-Tac-Toe Game)
-Use Case: Start a new
+Use Case: Start a new game
 
 Primary actor:	 Player 1
 

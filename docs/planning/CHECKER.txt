@@ -144,5 +144,31 @@ Task List:
 Milestones:
 Unit Testing Complete: April 7, 2025
 
+Phase 5: Review
+Duration: April 7, 2025 - April 11, 2025
+Goal: Finalize all code, fixes and prepare for final submission
+
+Task List:
+    Full Code Review
+        Start Date: April 7, 2025
+        End Date: April 9, 2025
+        Estimated Time: 3 hours
+
+    Documentation Update + Final Checks
+        Start Date: April 9, 2025
+        End Date: April 9, 2025
+        Estimated Time: 3 hours
+
+    Record Video Demonstration for Submission
+        Start Date: April 9, 2025
+        End Date: April 10, 2025
+        Estimated Time: 3 hours
+
+    Submission!
+        Start Date: April 11, 2025
+
+Milestones:
+Review and Submission: April 11, 2025
+
 
 

@@ -93,4 +93,32 @@ Task List:
 Milestones:
 Core Development Complete: March 25, 2025
 
+Phase 3: Integration
+Duration: March 26, 2025 - April 2, 2025
+Goal: Integrate the Checkers game with main GUI
+
+Task List:
+    Integrate Checkers game with GameWindow
+        Start Date: March 26, 2025
+        End Date: March 28, 2025
+        Estimated Time: 6 hours
+
+    Verification of UI integration
+        Start Date: March 28, 2025
+        End Date: March 29, 2025
+        Estimated Time: 3 hours
+
+    Final touches (bug fixes, improvements, refinements, etc)
+        Start Date: March 29, 2025
+        End Date: March 30, 2025
+        Estimated Time: 3 hours
+
+    Flexible timeline to figure out any remaining issues / catch up on incomplete tasks
+        Start Date: March 31, 2025
+        End Date: April 2, 2025
+        Estimated Time: To be further discussed with team members
+
+Milestones:
+GUI Integration Complete: April 2, 2025
+
 

@@ -93,6 +93,7 @@ Player clicks on “find opponent” button.
 The system retrieves the player’s skill level from their profile
 The matchmaking system searches for a suitable opponent
 Both players are assigned to a match
+Game begins
 
 
 

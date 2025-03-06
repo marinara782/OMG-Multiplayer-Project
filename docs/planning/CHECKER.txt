@@ -29,4 +29,18 @@ Deadline: March 7, 2025
 Milestones
 Team 4 - Iteration 1: March 7, 2025
 
+Development and Implementation
+Objective: Develop and implement a Checkers game with interactive gameplay that stays true to the original board game.
+Duration: March 8, 2025 - April 11, 2025 (Post-Iteration 1 to Iteration 3 deadline)
+
+Key Features:
+    Two players take turns moving pieces
+    8x8 game board to accurately simulate board game
+    Regular pieces move diagonally in one direction, kings can move diagonally in both directions
+    Pieces “jump” over opponent pieces to capture them
+    Integrate with GUI and other systems
+
+The Development and Implementation will be divided into phases: Setup, Core Development, Integration, Testing, and Review. Tasks are assigned to balance workload among all team members.
+
+
 

@@ -65,4 +65,32 @@ Task List:
 Milestones:
 Setup complete: March 12, 2025
 
+Phase 2: Core Development
+Duration: March 13, 2025 - March 25, 2025
+Goal: Implement core systems for Checkers
+
+Task List:
+    Implement game board to accurately simulate board game
+        Start Date: March 13, 2025
+        End Date: March 16, 2025
+        Estimated Time: 5 hours
+
+    Implement core gameplay mechanics (moving pieces), piece -> king , etc
+        Start Date: March 17, 2025
+        End Date: March 20, 2025
+        Estimated Time: 8 hours
+
+    Implement win/loss logic
+        Start Date: March 21, 2025
+        End Date: March 23, 2025
+        Estimated Time: 8 hours
+
+    Flexible timeline to figure out any remaining issues / catch up on incomplete tasks
+        Start Date: March 24, 2025
+        End Date: March 25, 2025
+        Estimated Time: To be further discussed with team members
+
+Milestones:
+Core Development Complete: March 25, 2025
+
 

@@ -37,11 +37,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
-src/main/java/org/example/leaderboard/letterfonts.tex
-src/main/java/org/example/leaderboard/macros.tex
-src/main/java/org/example/leaderboard/preamble.tex
-src/main/java/org/example/leaderboard/leaderboard_planning.aux
-src/main/java/org/example/leaderboard/leaderboard_planning.fdb_latexmk
-src/main/java/org/example/leaderboard/leaderboard_planning.fls
-src/main/java/org/example/leaderboard/leaderboard_planning.log
-src/main/java/org/example/leaderboard/leaderboard_planning.synctex.gz
+/.idea/

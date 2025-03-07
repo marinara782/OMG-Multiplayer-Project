@@ -1,4 +1,4 @@
-package org.example.game.connectFour;
+package game.connectFour;
 
 public class ConnectFourBoard {
     public static final int EMP = Game.EMP;

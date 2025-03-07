@@ -95,6 +95,126 @@ Goal: Implement core systems for MATCHMAKING.
 
 Task List:
     - Implement ranking logic:
-        - Develop logic to calculate player skill levels (e.g., ELO)
+        - Develop logic to calculate player skill levels (e.g., ELO).
         - Start Date: March 13, 2025
         - End Date: March 16, 2025
+
+   - Implement match creation logic:
+        - Develop logic to create matches based on player preferences.
+        - Start Date: March 17, 2025.
+        - End Date: March 20, 2025.
+
+  - Implement real time status updates:
+        - Develop logic to provide real time updates on matchmaking progress.
+        - Start Date: March 21, 2025.
+        - End Date: March 23, 2025.
+
+ - Implement player preference handling:
+        - Develop logic to handle player preferences (e.g., game mode).
+        - Start Date: March 24, 2025
+        - End Date: March 25, 2025
+
+Milestone: Core development complete by March 25, 2025.
+
+
+*********************************************************
+
+
+Phase 3: Integration
+
+Duration: March 26, 2025 - April 1, 2025
+
+Goal: Integrate MATCHMAKING with other systems (e.g., game lobby, leaderboard).
+
+Task List:
+
+    - Integrate with game lobby:
+        - Ensure matchmaking system communicates with the game lobby.
+        - Estimated Time: 6 hours
+        - Start Date: March 26, 2025
+        - End Date: March 28, 2025
+
+   - Integrate with leaderboard:
+        - Ensure matchmaking system updates player rankings in the leaderboard.
+        - Estimated Time: 6 hours
+        - Start Date: March 29, 2025
+        - End Date: March 31, 2025
+
+  - Test end to end integration:
+        - Test the entire system for seamless integration.
+        - Estimated Time: 3 hours
+        - Start Date: April 1, 2025
+        - End Date: April 1, 2025
+
+
+Milestone: Integration complete by April 1, 2025.
+
+
+***************************************************
+
+
+Phase 4: Testing
+
+Duration: April 2, 2025 - April 7, 2025
+
+Goal: Test the matchmaking system for functionality, performance, and edge cases.
+
+
+Task List:
+
+    - Unit Testing
+        - Test individual components of the matchmaking system.
+        - Estimated Time: 6 Hours
+        - Start Date: TBD
+        - End Date: TBD
+
+   - Integration Testing
+        - Test interactions between matchmaking and other systems.
+        - Estimated Time: 6 hours
+        - Start Date: TBD
+        - End Date: TBD
+
+  - Performance Testing
+        - Test the system performance under a high load.
+        - Estimated Time: 6 hours
+        - Start Date: TBD
+        - End Date: TBD
+
+Milestone: Testing complete by April 7, 2025.
+
+
+******************************************************
+
+
+Phase 5: Review
+
+Duration: TBD
+
+Goal: Review and refine the matchmaking system.
+
+Task List:
+
+    - Code review
+        - Review code for quality, readability, and adherence to design.
+        - Estimated Time: 6 hours
+        - Start Date: TBD
+        - End Date: TBD
+
+    - Refactor and optimize
+        - Refactor code and optimize performance
+        - Estimated Time: 6 hours
+        - Start Date: TBD
+        - End Date: TBD
+
+
+***************************************************
+
+Final Notes
+
+    - Start coding on March 8, 2025 (The earlier, the better).
+    - Hold weekly meetings with other team leaders working on different features.
+    - Conduct scrum meetings with your team to track progress.
+    - Branch early and often, and commit frequently to GitLab.
+
+
+**************************************************

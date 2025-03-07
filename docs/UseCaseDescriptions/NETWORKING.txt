@@ -137,35 +137,123 @@ Handling ownership of the game if the player who created it disconnects
 
 Use Case: Player joins game
 
-Primary actor:	 Player
+Primary actor:	 Player 1
 
 Goal in context: Player connects to a specific game session after matchmaking or invitation.
 
-Preconditions:
+Preconditions: Player has authenticated and connected to the server, a game has been created (for invitation case), the player has received an invitation or has been assigned an opponent by the computer.
 
-Trigger:
+Trigger: Player 1 accepts the invitation from player 2 or the matchmaking system assigns player 1 to a game with player 2.
 
 Scenario:
+Player 1 accepts an invitation from player 2 or the matchmaking system assigns player 1 to a session
+The game client sends a join request to the server asking to join a game with a specific ID
+The server validates the request by checking if the session ID exists
+If validation is successful, player 1 is added to the game
+Server updates the game state and the client is notified that player 1 had been added.
+Player 1 can see on the GUI that they have been added to the game
+
+Exceptions:
+Session is full. Player is notified and prompted to join another session
+Session not found (invalid session ID). Player is notified and prompted to try again
+Network error. Player is notified
+
+Priority: High. Required for multiplayer gaming.
+
+When available: Third iteration
+
+Frequency of use: Each time a player joins an online session.
+
+Channel to actor: OMG gaming platform
+
+Secondary actor: Server, game session, player 2
+
+Channels to secondary actors: Network connection, API for session updates, database for session details
+
+Open issues:
+Handling reconnects if a player is disconnected mid-game
+
+
+
+
+
+Use Case: Send and receive game moves
+
+Primary actor:	 Player 1
+
+Goal in context: Enable real-time gaming interaction between players online
+
+Preconditions: Player 1 and player 2 are connected to the game server, game session is active, server is online.
+
+Trigger: Player 1 makes a move on the gaming platform
+
+Scenario:
+Player 1 makes a move in the game
+Game client sends the move to the server
+Server calls the game’s logic system
+Server updates the game state if the move is valid
+Server sends updated game state to player 2
+Player 2’s client receives the updated move and displays it
+
+Exceptions:
+Network lag / connection loss
+Invalid move
+
+Priority: Essential. Used anytime a player wants to play against another player
+
+When available: Third iteration
+
+Frequency of use: High. Used anytime a player wishes to play against other players.
+
+Channel to actor: OMG gaming platform
+
+Secondary Actor: Player 2’s client, game logic system, server, database for storing moves
+
+Channels to secondary actors: Network connection, OMG gaming platform, API
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Use Case: Game state update
+
+Primary actor:	 Server
+
+Goal in context: Break the connection between the player’s game client and the server, either on purpose or due to external factors.
+
+Preconditions: Game session is active, players are connected, server has received a valid move from a player.
+
+Trigger: Player performs an action.
+
+Scenario:
+Player makes a move
+
+
 
 Exceptions:
 
-Priority:
 
-When available: Third iteration
+
+Priority:
+When available:
 
 Frequency of use:
 
 Channel to actor:
 
-Secondary actor: Server, game session
+Secondary Actor: Player 1, Player 2
 
 Channels to secondary actors:
-
 Open issues:
-
-
-
-
 
 
 
@@ -210,63 +298,6 @@ Secondary Actor: Server
 Channels to secondary actors:	Network connection
 
 Open issues: Handling unexpected disconnects without data loss
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Use Case: Send and receive game moves
-
-Primary actor:	 Player
-
-Goal in context: Enable real-time gaming interaction between players online
-
-Preconditions: Player 1 and player 2 are connected to the game server, game session is active, server is online.
-
-Trigger: Player 1 makes a move on the gaming platform
-
-Scenario:
-Player 1 makes a move in the game
-Game client sends the move to the server
-Server updates the game state
-Server sends updated game state to player 2
-Player 2’s client receives the updated move and displays it
-
-Exceptions:
-Network lag / connection loss
-Invalid move
-
-Priority: Essential. Used anytime a player wants to play against another player
-
-When available: Third iteration
-
-Frequency of use: High. Used anytime a player wishes to play against other players.
-
-Channel to actor:
-
-Secondary Actor: Player 2’s client
-
-Channels to secondary actors:
-
-Open issues:
-
 
 
 

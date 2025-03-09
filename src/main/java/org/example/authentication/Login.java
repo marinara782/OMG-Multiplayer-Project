@@ -53,7 +53,7 @@ public class Login {
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(25, 25, 25, 25));
-        grid.setStyle("-fx-background-color: white;");
+        grid.setStyle("-fx-background-color: #b4cfd1;");
 
         // Title text
         Text sceneTitle = new Text("Login");

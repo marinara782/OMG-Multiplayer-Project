@@ -4,11 +4,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.authentication.Login;
+import org.example.authentication.SignUp;
 import org.example.authentication.UserProfile;
 import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourGame;
@@ -24,6 +23,7 @@ public class MainMenuWindow {
     private BorderPane mainLayout;
     private UserProfile currentUser;
     private Matchmaker matchmaker;
+    private String ProfileName;
 
     public MainMenuWindow(Stage stage, UserProfile currentUser) {
         this.stage = stage;
@@ -80,15 +80,31 @@ public class MainMenuWindow {
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         // User info
-        Label userLabel = new Label("Welcome, " + currentUser.getUsername());
+        Login login = new Login(stage);
+        if(login.checkLoginValidity()){
+            ProfileName = currentUser.getUsername();
+        }else{
+            ProfileName = "Player";
+        }
+        Label userLabel = new Label("Welcome, " + ProfileName);
         userLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
 
-        // Logout button
-        Button logoutButton = new Button("Logout");
-        logoutButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
-        logoutButton.setOnAction(e -> logout());
+        // SignIn button
+        Button signUpButton = new Button("SignUp");
+        signUpButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+        signUpButton.setOnAction(e -> signUp());
 
-        header.getChildren().addAll(logoLabel, spacer, userLabel, profileButton, logoutButton);
+        // Login button
+        Button loginButton = new Button("Login");
+        loginButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+        loginButton.setOnAction(e -> login());
+
+//        // Logout button
+//        Button logoutButton = new Button("Logout");
+//        logoutButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+//        logoutButton.setOnAction(e -> login());
+
+        header.getChildren().addAll(logoLabel, spacer, userLabel, profileButton, signUpButton, loginButton);
 
         return header;
     }
@@ -284,7 +300,12 @@ public class MainMenuWindow {
         profileWindow.show();
     }
 
-    private void logout() {
+    private void signUp() {
+        SignUp signUpScreen = new SignUp(stage);
+        signUpScreen.show();
+    }
+
+    private void login() {
         Login loginScreen = new Login(stage);
         loginScreen.show();
     }

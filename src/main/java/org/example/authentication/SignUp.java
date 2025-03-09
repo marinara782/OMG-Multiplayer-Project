@@ -24,7 +24,6 @@ public class SignUp {
     private PasswordField passwordField;
     private PasswordField confirmPasswordField;
     private Label messageLabel;
-    private AuthManager authManager;
 
     // Color constants based on your preferred palette
     private final String DARK_BLUE = "#2c3e50";
@@ -261,17 +260,15 @@ public class SignUp {
         loginBox.setAlignment(Pos.CENTER);
         Text loginText = new Text("Already have an account? ");
         loginText.setFill(Color.web("#7f8c8d"));
-        Text loginLink = new Text("Log in");
+        Hyperlink loginLink = new Hyperlink("Log in");
         loginLink.setStyle("-fx-text-fill: " + LIGHT_BLUE + ";");
 
-        // Add click handler
-        loginLink.setOnMouseClicked(event -> {
-            // Close the current signup dialog
-            signupStage.close(); // or hide() depending on your implementation
-
-            // Show login dialog using AuthManager
-            authManager.showLogin();
+        loginLink.setOnAction(e -> {
+            signupStage.close();
+            Login loginDialog = new Login(signupStage);
+            loginDialog.show();
         });
+
 
         loginBox.getChildren().addAll(loginText, loginLink);
         grid.add(loginBox, 0, 12, 2, 1);
@@ -347,7 +344,7 @@ public class SignUp {
 
     // Display the signup popup
     public void show() {
-        signupStage.showAndWait();
+        signupStage.show();
     }
 
     // Handle signup button click
@@ -396,8 +393,8 @@ public class SignUp {
         messageLabel.setText("Account created successfully!");
         messageLabel.setStyle("-fx-text-fill: #27ae60;"); // Green for success
 
-        // You might want to close the dialog or redirect to another screen
-        // For example, after a small delay:
+        // If you want or might want to close the dialog or redirect to another screen
+        // For example, after a small delay ig??:
         // new java.util.Timer().schedule(
         //     new java.util.TimerTask() {
         //         @Override
@@ -409,7 +406,4 @@ public class SignUp {
         // );
     }
 
-    public void setAuthManager(AuthManager authManager) {
-        this.authManager = authManager;
-    }
 }

@@ -1,13 +1,13 @@
 package org.example.authentication;
 import javafx.stage.Stage;
 
-public class AuthManager {
+public class AuthenticationManager {
     private Stage parentStage;
     private Login loginDialog;
     private SignUp signupDialog;
 
     // Constructor that takes the parent stage
-    public AuthManager(Stage parentStage) {
+    public AuthenticationManager(Stage parentStage) {
         this.parentStage = parentStage;
         initialize();
     }
@@ -16,10 +16,6 @@ public class AuthManager {
     private void initialize() {
         loginDialog = new Login(parentStage);
         signupDialog = new SignUp(parentStage);
-
-        // Set reference to this manager in both dialogs
-        loginDialog.setAuthManager(this);
-        signupDialog.setAuthManager(this);
     }
 
     // Show the login dialog

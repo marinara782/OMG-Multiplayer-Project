@@ -23,7 +23,6 @@ public class Login {
     private PasswordField passwordField;
     private Label messageLabel;
     boolean loginValidity = false;
-    private AuthManager authManager;
 
     // Color constants based on your preferred palette
     private final String DARK_BLUE = "#2c3e50";
@@ -189,18 +188,15 @@ public class Login {
         HBox signupBox = new HBox();
         signupBox.setAlignment(Pos.CENTER);
         Text signupText = new Text("Don't have an account? ");
-        signupText.setFill(Color.web("#7f8c8d"));
-        Text signupLink = new Text("Sign up");
+        Hyperlink signupLink = new Hyperlink("Sign up");
         signupLink.setStyle("-fx-text-fill: " + LIGHT_BLUE + ";");
 
-        // Add click handler
-        signupLink.setOnMouseClicked(event -> {
-            // Close the current login dialog
+        signupLink.setOnAction(e -> {
             loginStage.close();
-
-            // Show signup dialog using AuthManager
-            authManager.showSignUp();
+            SignUp signupDialog = new SignUp(loginStage);
+            signupDialog.show();
         });
+
 
         signupBox.getChildren().addAll(signupText, signupLink);
         grid.add(signupBox, 0, 8, 2, 1);
@@ -276,7 +272,7 @@ public class Login {
 
     // Display the login popup
     public void show() {
-        loginStage.showAndWait();
+        loginStage.show();
     }
 
     // Handle login button click
@@ -323,9 +319,5 @@ public class Login {
 
     public boolean checkLoginValidity(){
         return loginValidity;
-    }
-
-    public void setAuthManager(AuthManager authManager) {
-        this.authManager = authManager;
     }
 }

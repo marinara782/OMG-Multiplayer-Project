@@ -16,6 +16,10 @@ public class AuthManager {
     private void initialize() {
         loginDialog = new Login(parentStage);
         signupDialog = new SignUp(parentStage);
+
+        // Set reference to this manager in both dialogs
+        loginDialog.setAuthManager(this);
+        signupDialog.setAuthManager(this);
     }
 
     // Show the login dialog

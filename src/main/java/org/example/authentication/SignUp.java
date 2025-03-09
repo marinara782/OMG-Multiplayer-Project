@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
@@ -23,11 +24,13 @@ public class SignUp {
     private PasswordField passwordField;
     private PasswordField confirmPasswordField;
     private Label messageLabel;
+    private AuthManager authManager;
 
     // Color constants based on your preferred palette
     private final String DARK_BLUE = "#2c3e50";
     private final String LIGHT_BLUE = "#3498db";
     private final String ACCENT_RED = "#e74c3c";
+    private final String BG_COLOR = "#ecf0f1";
 
     // Constructor that takes a parent Stage
     public SignUp(Stage parentStage) {
@@ -37,7 +40,7 @@ public class SignUp {
         // Configure as a modal popup window
         signupStage.initModality(Modality.APPLICATION_MODAL);
         signupStage.initOwner(parentStage);
-        signupStage.initStyle(StageStyle.UNDECORATED); // Remove default window decoration
+        signupStage.initStyle(StageStyle.TRANSPARENT); // Use TRANSPARENT for better shadow effect
 
         initializeComponents();
     }
@@ -46,166 +49,297 @@ public class SignUp {
     private void initializeComponents() {
         // Create a border pane as the main container
         BorderPane borderPane = new BorderPane();
-        borderPane.setStyle("-fx-background-color: " + DARK_BLUE + ";");
+        borderPane.setStyle("-fx-background-color: transparent;");
+
+        // Add a shadow effect to the entire dialog
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(15.0);
+        dropShadow.setOffsetX(3.0);
+        dropShadow.setOffsetY(3.0);
+        dropShadow.setColor(Color.rgb(0, 0, 0, 0.2));
+        borderPane.setEffect(dropShadow);
 
         // Create a grid pane for form layout
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(25, 25, 25, 25));
-        grid.setStyle("-fx-background-color: #b4cfd1;");
+        grid.setHgap(15);
+        grid.setVgap(15);
+        grid.setPadding(new Insets(30, 30, 30, 30));
+        grid.setStyle("-fx-background-color: " + BG_COLOR + ";" +
+                "-fx-background-radius: 15;" +
+                "-fx-border-radius: 15;");
 
-        // Title text
+        // Title text with slight shadow
         Text sceneTitle = new Text("Create Account");
-        sceneTitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 20));
+        sceneTitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 22));
         sceneTitle.setFill(Color.web(DARK_BLUE));
+        DropShadow titleShadow = new DropShadow();
+        titleShadow.setRadius(2.0);
+        titleShadow.setOffsetX(1.0);
+        titleShadow.setOffsetY(1.0);
+        titleShadow.setColor(Color.rgb(0, 0, 0, 0.3));
+        sceneTitle.setEffect(titleShadow);
         grid.add(sceneTitle, 0, 0, 2, 1);
 
-        // Username label and field
-        Label userLabel = new Label("Username:");
+        // Subtitle text
+        Text subtitle = new Text("Join our community today");
+        subtitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+        subtitle.setFill(Color.web("#7f8c8d"));
+        grid.add(subtitle, 0, 1, 2, 1);
+
+        // Username field with improved styling
+        Label userLabel = new Label("Username");
         userLabel.setTextFill(Color.web(DARK_BLUE));
-        grid.add(userLabel, 0, 1);
+        userLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, 12));
+        grid.add(userLabel, 0, 2);
 
         userTextField = new TextField();
         userTextField.setPromptText("Choose a username");
-        userTextField.setStyle("-fx-border-color: " + LIGHT_BLUE + ";" +
-                "-fx-border-radius: 3;" +
-                "-fx-background-radius: 3;");
-        grid.add(userTextField, 1, 1);
+        userTextField.setStyle("-fx-background-color: white;" +
+                "-fx-border-color: #bdc3c7;" +
+                "-fx-border-radius: 8;" +
+                "-fx-background-radius: 8;" +
+                "-fx-padding: 8;" +
+                "-fx-font-size: 13px;");
+        userTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                userTextField.setStyle("-fx-background-color: white;" +
+                        "-fx-border-color: " + LIGHT_BLUE + ";" +
+                        "-fx-border-radius: 8;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 8;" +
+                        "-fx-font-size: 13px;");
+            } else {
+                userTextField.setStyle("-fx-background-color: white;" +
+                        "-fx-border-color: #bdc3c7;" +
+                        "-fx-border-radius: 8;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 8;" +
+                        "-fx-font-size: 13px;");
+            }
+        });
+        grid.add(userTextField, 0, 3, 2, 1);
 
-        // Email label and field
-        Label emailLabel = new Label("Email:");
+        // Email field with improved styling
+        Label emailLabel = new Label("Email");
         emailLabel.setTextFill(Color.web(DARK_BLUE));
-        grid.add(emailLabel, 0, 2);
+        emailLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, 12));
+        grid.add(emailLabel, 0, 4);
 
         emailTextField = new TextField();
         emailTextField.setPromptText("Enter your email");
-        emailTextField.setStyle("-fx-border-color: " + LIGHT_BLUE + ";" +
-                "-fx-border-radius: 3;" +
-                "-fx-background-radius: 3;");
-        grid.add(emailTextField, 1, 2);
+        emailTextField.setStyle("-fx-background-color: white;" +
+                "-fx-border-color: #bdc3c7;" +
+                "-fx-border-radius: 8;" +
+                "-fx-background-radius: 8;" +
+                "-fx-padding: 8;" +
+                "-fx-font-size: 13px;");
+        emailTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                emailTextField.setStyle("-fx-background-color: white;" +
+                        "-fx-border-color: " + LIGHT_BLUE + ";" +
+                        "-fx-border-radius: 8;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 8;" +
+                        "-fx-font-size: 13px;");
+            } else {
+                emailTextField.setStyle("-fx-background-color: white;" +
+                        "-fx-border-color: #bdc3c7;" +
+                        "-fx-border-radius: 8;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 8;" +
+                        "-fx-font-size: 13px;");
+            }
+        });
+        grid.add(emailTextField, 0, 5, 2, 1);
 
-        // Password label and field
-        Label passwordLabel = new Label("Password:");
+        // Password field with improved styling
+        Label passwordLabel = new Label("Password");
         passwordLabel.setTextFill(Color.web(DARK_BLUE));
-        grid.add(passwordLabel, 0, 3);
+        passwordLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, 12));
+        grid.add(passwordLabel, 0, 6);
 
         passwordField = new PasswordField();
         passwordField.setPromptText("Create a password");
-        passwordField.setStyle("-fx-border-color: " + LIGHT_BLUE + ";" +
-                "-fx-border-radius: 3;" +
-                "-fx-background-radius: 3;");
-        grid.add(passwordField, 1, 3);
+        passwordField.setStyle("-fx-background-color: white;" +
+                "-fx-border-color: #bdc3c7;" +
+                "-fx-border-radius: 8;" +
+                "-fx-background-radius: 8;" +
+                "-fx-padding: 8;" +
+                "-fx-font-size: 13px;");
+        passwordField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                passwordField.setStyle("-fx-background-color: white;" +
+                        "-fx-border-color: " + LIGHT_BLUE + ";" +
+                        "-fx-border-radius: 8;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 8;" +
+                        "-fx-font-size: 13px;");
+            } else {
+                passwordField.setStyle("-fx-background-color: white;" +
+                        "-fx-border-color: #bdc3c7;" +
+                        "-fx-border-radius: 8;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 8;" +
+                        "-fx-font-size: 13px;");
+            }
+        });
+        grid.add(passwordField, 0, 7, 2, 1);
 
-        // Confirm Password label and field
-        Label confirmPasswordLabel = new Label("Confirm Password:");
+        // Confirm Password field with improved styling
+        Label confirmPasswordLabel = new Label("Confirm Password");
         confirmPasswordLabel.setTextFill(Color.web(DARK_BLUE));
-        grid.add(confirmPasswordLabel, 0, 4);
+        confirmPasswordLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, 12));
+        grid.add(confirmPasswordLabel, 0, 8);
 
         confirmPasswordField = new PasswordField();
         confirmPasswordField.setPromptText("Confirm your password");
-        confirmPasswordField.setStyle("-fx-border-color: " + LIGHT_BLUE + ";" +
-                "-fx-border-radius: 3;" +
-                "-fx-background-radius: 3;");
-        grid.add(confirmPasswordField, 1, 4);
+        confirmPasswordField.setStyle("-fx-background-color: white;" +
+                "-fx-border-color: #bdc3c7;" +
+                "-fx-border-radius: 8;" +
+                "-fx-background-radius: 8;" +
+                "-fx-padding: 8;" +
+                "-fx-font-size: 13px;");
+        confirmPasswordField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                confirmPasswordField.setStyle("-fx-background-color: white;" +
+                        "-fx-border-color: " + LIGHT_BLUE + ";" +
+                        "-fx-border-radius: 8;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 8;" +
+                        "-fx-font-size: 13px;");
+            } else {
+                confirmPasswordField.setStyle("-fx-background-color: white;" +
+                        "-fx-border-color: #bdc3c7;" +
+                        "-fx-border-radius: 8;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 8;" +
+                        "-fx-font-size: 13px;");
+            }
+        });
+        grid.add(confirmPasswordField, 0, 9, 2, 1);
 
-        // Terms of service checkbox
+        // Terms of service checkbox with improved style
         CheckBox termsCheckBox = new CheckBox("I accept the Terms of Service");
-        termsCheckBox.setTextFill(Color.web(DARK_BLUE));
-        grid.add(termsCheckBox, 1, 5);
+        termsCheckBox.setTextFill(Color.web("#7f8c8d"));
+        termsCheckBox.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+        HBox termsBox = new HBox(termsCheckBox);
+        termsBox.setAlignment(Pos.CENTER_LEFT);
+        termsBox.setPadding(new Insets(5, 0, 5, 0));
+        grid.add(termsBox, 0, 10, 2, 1);
 
-        // Sign up button
-        Button signupButton = new Button("Sign Up");
+        // Sign up button with improved styling
+        Button signupButton = new Button("Create Account");
+        signupButton.setPrefWidth(180);
+        signupButton.setPrefHeight(40);
         signupButton.setStyle("-fx-background-color: " + LIGHT_BLUE + ";" +
                 "-fx-text-fill: white;" +
                 "-fx-font-weight: bold;" +
-                "-fx-cursor: hand;");
+                "-fx-cursor: hand;" +
+                "-fx-font-size: 14px;" +
+                "-fx-background-radius: 20;");
 
-        // Cancel button
+        // Cancel button with improved styling
         Button cancelButton = new Button("Cancel");
-        cancelButton.setStyle("-fx-background-color: " + ACCENT_RED + ";" +
-                "-fx-text-fill: white;" +
-                "-fx-font-weight: bold;" +
-                "-fx-cursor: hand;");
+        cancelButton.setPrefWidth(100);
+        cancelButton.setPrefHeight(40);
+        cancelButton.setStyle("-fx-background-color: transparent;" +
+                "-fx-text-fill: " + DARK_BLUE + ";" +
+                "-fx-border-color: " + DARK_BLUE + ";" +
+                "-fx-border-radius: 20;" +
+                "-fx-background-radius: 20;" +
+                "-fx-cursor: hand;" +
+                "-fx-font-size: 14px;");
 
-        HBox buttonBox = new HBox(10);
-        buttonBox.setAlignment(Pos.BOTTOM_RIGHT);
+        HBox buttonBox = new HBox(15);
+        buttonBox.setAlignment(Pos.CENTER);
         buttonBox.getChildren().addAll(cancelButton, signupButton);
-        grid.add(buttonBox, 1, 6);
+        grid.add(buttonBox, 0, 11, 2, 1);
 
-        // Login link
-        Hyperlink loginLink = new Hyperlink("Already have an account? Log in");
-        loginLink.setTextFill(Color.web(LIGHT_BLUE));
-        grid.add(loginLink, 1, 7);
+        // Login link with improved styling
+        HBox loginBox = new HBox();
+        loginBox.setAlignment(Pos.CENTER);
+        Text loginText = new Text("Already have an account? ");
+        loginText.setFill(Color.web("#7f8c8d"));
+        Text loginLink = new Text("Log in");
+        loginLink.setStyle("-fx-text-fill: " + LIGHT_BLUE + ";");
 
-        // Message label to show signup results
+        // Add click handler
+        loginLink.setOnMouseClicked(event -> {
+            // Close the current signup dialog
+            signupStage.close(); // or hide() depending on your implementation
+
+            // Show login dialog using AuthManager
+            authManager.showLogin();
+        });
+
+        loginBox.getChildren().addAll(loginText, loginLink);
+        grid.add(loginBox, 0, 12, 2, 1);
+
+        // Message label to show signup results with improved styling
         messageLabel = new Label();
-        grid.add(messageLabel, 0, 8, 2, 1);
+        messageLabel.setAlignment(Pos.CENTER);
+        messageLabel.setMaxWidth(Double.MAX_VALUE);
+        grid.add(messageLabel, 0, 13, 2, 1);
 
         // Button actions
         signupButton.setOnAction(e -> handleSignUp(termsCheckBox.isSelected()));
         cancelButton.setOnAction(e -> signupStage.close());
-        loginLink.setOnAction(e -> {
-            signupStage.close();
-            Login loginDialog = new Login(parentStage);
-            loginDialog.show();
-        });
 
-        // Add hover effects for buttons
+        // Button hover effects with subtle animations
         signupButton.setOnMouseEntered(e ->
                 signupButton.setStyle("-fx-background-color: #2980b9;" + // Darker blue on hover
                         "-fx-text-fill: white;" +
                         "-fx-font-weight: bold;" +
-                        "-fx-cursor: hand;"));
+                        "-fx-cursor: hand;" +
+                        "-fx-font-size: 14px;" +
+                        "-fx-background-radius: 20;" +
+                        "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 2);"));
 
         signupButton.setOnMouseExited(e ->
                 signupButton.setStyle("-fx-background-color: " + LIGHT_BLUE + ";" +
                         "-fx-text-fill: white;" +
                         "-fx-font-weight: bold;" +
-                        "-fx-cursor: hand;"));
+                        "-fx-cursor: hand;" +
+                        "-fx-font-size: 14px;" +
+                        "-fx-background-radius: 20;"));
 
         cancelButton.setOnMouseEntered(e ->
-                cancelButton.setStyle("-fx-background-color: #c0392b;" + // Darker red on hover
-                        "-fx-text-fill: white;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-cursor: hand;"));
+                cancelButton.setStyle("-fx-background-color: #f8f9fa;" + // Light background on hover
+                        "-fx-text-fill: " + DARK_BLUE + ";" +
+                        "-fx-border-color: " + DARK_BLUE + ";" +
+                        "-fx-border-radius: 20;" +
+                        "-fx-background-radius: 20;" +
+                        "-fx-cursor: hand;" +
+                        "-fx-font-size: 14px;"));
 
         cancelButton.setOnMouseExited(e ->
-                cancelButton.setStyle("-fx-background-color: " + ACCENT_RED + ";" +
-                        "-fx-text-fill: white;" +
-                        "-fx-font-weight: bold;" +
-                        "-fx-cursor: hand;"));
+                cancelButton.setStyle("-fx-background-color: transparent;" +
+                        "-fx-text-fill: " + DARK_BLUE + ";" +
+                        "-fx-border-color: " + DARK_BLUE + ";" +
+                        "-fx-border-radius: 20;" +
+                        "-fx-background-radius: 20;" +
+                        "-fx-cursor: hand;" +
+                        "-fx-font-size: 14px;"));
 
         // Set the grid as the center content of the border pane
         borderPane.setCenter(grid);
 
-        // Add a header bar with the app title
-        HBox headerBar = new HBox();
-        headerBar.setStyle("-fx-background-color: " + LIGHT_BLUE + ";");
-        headerBar.setPadding(new Insets(10, 10, 10, 10));
-
-        Text appTitle = new Text("Authentication");
-        appTitle.setFill(Color.WHITE);
-        appTitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 14));
-
-        headerBar.getChildren().add(appTitle);
-        borderPane.setTop(headerBar);
-
         // Create the scene and set it on the stage
-        Scene scene = new Scene(borderPane, 400, 450);
+        Scene scene = new Scene(borderPane, 400, 620);
+        scene.setFill(Color.TRANSPARENT); // Important for the shadow effect
         signupStage.setScene(scene);
 
-        // Make the window draggable since we're using UNDECORATED style
+        // Make the window draggable
         final double[] xOffset = {0};
         final double[] yOffset = {0};
 
-        headerBar.setOnMousePressed(event -> {
+        grid.setOnMousePressed(event -> {
             xOffset[0] = event.getSceneX();
             yOffset[0] = event.getSceneY();
         });
 
-        headerBar.setOnMouseDragged(event -> {
+        grid.setOnMouseDragged(event -> {
             signupStage.setX(event.getScreenX() - xOffset[0]);
             signupStage.setY(event.getScreenY() - yOffset[0]);
         });
@@ -273,5 +407,9 @@ public class SignUp {
         //     },
         //     2000 // close after 2 seconds
         // );
+    }
+
+    public void setAuthManager(AuthManager authManager) {
+        this.authManager = authManager;
     }
 }

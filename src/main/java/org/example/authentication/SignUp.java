@@ -16,13 +16,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-public class Login {
+public class SignUp {
     private Stage parentStage;
-    private Stage loginStage;
+    private Stage signupStage;
     private TextField userTextField;
+    private TextField emailTextField;
     private PasswordField passwordField;
+    private PasswordField confirmPasswordField;
     private Label messageLabel;
-    boolean loginValidity = false;
 
     // Color constants based on your preferred palette
     private final String DARK_BLUE = "#2c3e50";
@@ -31,14 +32,14 @@ public class Login {
     private final String BG_COLOR = "#ecf0f1";
 
     // Constructor that takes a parent Stage
-    public Login(Stage parentStage) {
+    public SignUp(Stage parentStage) {
         this.parentStage = parentStage;
-        this.loginStage = new Stage();
+        this.signupStage = new Stage();
 
         // Configure as a modal popup window
-        loginStage.initModality(Modality.APPLICATION_MODAL);
-        loginStage.initOwner(parentStage);
-        loginStage.initStyle(StageStyle.TRANSPARENT); // Use TRANSPARENT for better shadow effect
+        signupStage.initModality(Modality.APPLICATION_MODAL);
+        signupStage.initOwner(parentStage);
+        signupStage.initStyle(StageStyle.TRANSPARENT); // Use TRANSPARENT for better shadow effect
 
         initializeComponents();
     }
@@ -68,7 +69,7 @@ public class Login {
                 "-fx-border-radius: 15;");
 
         // Title text with slight shadow
-        Text sceneTitle = new Text("Welcome Back");
+        Text sceneTitle = new Text("Create Account");
         sceneTitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 22));
         sceneTitle.setFill(Color.web(DARK_BLUE));
         DropShadow titleShadow = new DropShadow();
@@ -80,19 +81,19 @@ public class Login {
         grid.add(sceneTitle, 0, 0, 2, 1);
 
         // Subtitle text
-        Text subtitle = new Text("Please enter your credentials");
+        Text subtitle = new Text("Join our community today");
         subtitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
         subtitle.setFill(Color.web("#7f8c8d"));
         grid.add(subtitle, 0, 1, 2, 1);
 
-        // Username label and field with improved styling
+        // Username field with improved styling
         Label userLabel = new Label("Username");
         userLabel.setTextFill(Color.web(DARK_BLUE));
         userLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, 12));
         grid.add(userLabel, 0, 2);
 
         userTextField = new TextField();
-        userTextField.setPromptText("Enter your username");
+        userTextField.setPromptText("Choose a username");
         userTextField.setStyle("-fx-background-color: white;" +
                 "-fx-border-color: #bdc3c7;" +
                 "-fx-border-radius: 8;" +
@@ -118,14 +119,47 @@ public class Login {
         });
         grid.add(userTextField, 0, 3, 2, 1);
 
-        // Password label and field with improved styling
+        // Email field with improved styling
+        Label emailLabel = new Label("Email");
+        emailLabel.setTextFill(Color.web(DARK_BLUE));
+        emailLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, 12));
+        grid.add(emailLabel, 0, 4);
+
+        emailTextField = new TextField();
+        emailTextField.setPromptText("Enter your email");
+        emailTextField.setStyle("-fx-background-color: white;" +
+                "-fx-border-color: #bdc3c7;" +
+                "-fx-border-radius: 8;" +
+                "-fx-background-radius: 8;" +
+                "-fx-padding: 8;" +
+                "-fx-font-size: 13px;");
+        emailTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                emailTextField.setStyle("-fx-background-color: white;" +
+                        "-fx-border-color: " + LIGHT_BLUE + ";" +
+                        "-fx-border-radius: 8;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 8;" +
+                        "-fx-font-size: 13px;");
+            } else {
+                emailTextField.setStyle("-fx-background-color: white;" +
+                        "-fx-border-color: #bdc3c7;" +
+                        "-fx-border-radius: 8;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 8;" +
+                        "-fx-font-size: 13px;");
+            }
+        });
+        grid.add(emailTextField, 0, 5, 2, 1);
+
+        // Password field with improved styling
         Label passwordLabel = new Label("Password");
         passwordLabel.setTextFill(Color.web(DARK_BLUE));
         passwordLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, 12));
-        grid.add(passwordLabel, 0, 4);
+        grid.add(passwordLabel, 0, 6);
 
         passwordField = new PasswordField();
-        passwordField.setPromptText("Enter your password");
+        passwordField.setPromptText("Create a password");
         passwordField.setStyle("-fx-background-color: white;" +
                 "-fx-border-color: #bdc3c7;" +
                 "-fx-border-radius: 8;" +
@@ -149,18 +183,55 @@ public class Login {
                         "-fx-font-size: 13px;");
             }
         });
-        grid.add(passwordField, 0, 5, 2, 1);
+        grid.add(passwordField, 0, 7, 2, 1);
 
-        // Remember me checkbox
-        CheckBox rememberMe = new CheckBox("Remember me");
-        rememberMe.setTextFill(Color.web("#7f8c8d"));
-        grid.add(rememberMe, 0, 6);
+        // Confirm Password field with improved styling
+        Label confirmPasswordLabel = new Label("Confirm Password");
+        confirmPasswordLabel.setTextFill(Color.web(DARK_BLUE));
+        confirmPasswordLabel.setFont(Font.font("Tahoma", FontWeight.BOLD, 12));
+        grid.add(confirmPasswordLabel, 0, 8);
 
-        // Login button with improved styling
-        Button loginButton = new Button("Sign in");
-        loginButton.setPrefWidth(150);
-        loginButton.setPrefHeight(40);
-        loginButton.setStyle("-fx-background-color: " + LIGHT_BLUE + ";" +
+        confirmPasswordField = new PasswordField();
+        confirmPasswordField.setPromptText("Confirm your password");
+        confirmPasswordField.setStyle("-fx-background-color: white;" +
+                "-fx-border-color: #bdc3c7;" +
+                "-fx-border-radius: 8;" +
+                "-fx-background-radius: 8;" +
+                "-fx-padding: 8;" +
+                "-fx-font-size: 13px;");
+        confirmPasswordField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                confirmPasswordField.setStyle("-fx-background-color: white;" +
+                        "-fx-border-color: " + LIGHT_BLUE + ";" +
+                        "-fx-border-radius: 8;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 8;" +
+                        "-fx-font-size: 13px;");
+            } else {
+                confirmPasswordField.setStyle("-fx-background-color: white;" +
+                        "-fx-border-color: #bdc3c7;" +
+                        "-fx-border-radius: 8;" +
+                        "-fx-background-radius: 8;" +
+                        "-fx-padding: 8;" +
+                        "-fx-font-size: 13px;");
+            }
+        });
+        grid.add(confirmPasswordField, 0, 9, 2, 1);
+
+        // Terms of service checkbox with improved style
+        CheckBox termsCheckBox = new CheckBox("I accept the Terms of Service");
+        termsCheckBox.setTextFill(Color.web("#7f8c8d"));
+        termsCheckBox.setFont(Font.font("Tahoma", FontWeight.NORMAL, 12));
+        HBox termsBox = new HBox(termsCheckBox);
+        termsBox.setAlignment(Pos.CENTER_LEFT);
+        termsBox.setPadding(new Insets(5, 0, 5, 0));
+        grid.add(termsBox, 0, 10, 2, 1);
+
+        // Sign up button with improved styling
+        Button signupButton = new Button("Create Account");
+        signupButton.setPrefWidth(180);
+        signupButton.setPrefHeight(40);
+        signupButton.setStyle("-fx-background-color: " + LIGHT_BLUE + ";" +
                 "-fx-text-fill: white;" +
                 "-fx-font-weight: bold;" +
                 "-fx-cursor: hand;" +
@@ -181,39 +252,40 @@ public class Login {
 
         HBox buttonBox = new HBox(15);
         buttonBox.setAlignment(Pos.CENTER);
-        buttonBox.getChildren().addAll(cancelButton, loginButton);
-        grid.add(buttonBox, 0, 7, 2, 1);
+        buttonBox.getChildren().addAll(cancelButton, signupButton);
+        grid.add(buttonBox, 0, 11, 2, 1);
 
-        // Add sign up link
-        HBox signupBox = new HBox();
-        signupBox.setAlignment(Pos.CENTER);
-        Text signupText = new Text("Don't have an account? ");
-        Hyperlink signupLink = new Hyperlink("Sign up");
-        signupLink.setStyle("-fx-text-fill: " + LIGHT_BLUE + ";");
+        // Login link with improved styling
+        HBox loginBox = new HBox();
+        loginBox.setAlignment(Pos.CENTER);
+        Text loginText = new Text("Already have an account? ");
+        loginText.setFill(Color.web("#7f8c8d"));
+        Hyperlink loginLink = new Hyperlink("Log in");
+        loginLink.setStyle("-fx-text-fill: " + LIGHT_BLUE + ";");
 
-        signupLink.setOnAction(e -> {
-            loginStage.close();
-            SignUp signupDialog = new SignUp(loginStage);
-            signupDialog.show();
+        loginLink.setOnAction(e -> {
+            signupStage.close();
+            Login loginDialog = new Login(signupStage);
+            loginDialog.show();
         });
 
 
-        signupBox.getChildren().addAll(signupText, signupLink);
-        grid.add(signupBox, 0, 8, 2, 1);
+        loginBox.getChildren().addAll(loginText, loginLink);
+        grid.add(loginBox, 0, 12, 2, 1);
 
-        // Message label to show login results with improved styling
+        // Message label to show signup results with improved styling
         messageLabel = new Label();
         messageLabel.setAlignment(Pos.CENTER);
         messageLabel.setMaxWidth(Double.MAX_VALUE);
-        grid.add(messageLabel, 0, 9, 2, 1);
+        grid.add(messageLabel, 0, 13, 2, 1);
 
         // Button actions
-        loginButton.setOnAction(e -> handleLogin());
-        cancelButton.setOnAction(e -> loginStage.close());
+        signupButton.setOnAction(e -> handleSignUp(termsCheckBox.isSelected()));
+        cancelButton.setOnAction(e -> signupStage.close());
 
         // Button hover effects with subtle animations
-        loginButton.setOnMouseEntered(e ->
-                loginButton.setStyle("-fx-background-color: #2980b9;" + // Darker blue on hover
+        signupButton.setOnMouseEntered(e ->
+                signupButton.setStyle("-fx-background-color: #2980b9;" + // Darker blue on hover
                         "-fx-text-fill: white;" +
                         "-fx-font-weight: bold;" +
                         "-fx-cursor: hand;" +
@@ -221,8 +293,8 @@ public class Login {
                         "-fx-background-radius: 20;" +
                         "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 4, 0, 0, 2);"));
 
-        loginButton.setOnMouseExited(e ->
-                loginButton.setStyle("-fx-background-color: " + LIGHT_BLUE + ";" +
+        signupButton.setOnMouseExited(e ->
+                signupButton.setStyle("-fx-background-color: " + LIGHT_BLUE + ";" +
                         "-fx-text-fill: white;" +
                         "-fx-font-weight: bold;" +
                         "-fx-cursor: hand;" +
@@ -251,9 +323,9 @@ public class Login {
         borderPane.setCenter(grid);
 
         // Create the scene and set it on the stage
-        Scene scene = new Scene(borderPane, 380, 500);
+        Scene scene = new Scene(borderPane, 400, 620);
         scene.setFill(Color.TRANSPARENT); // Important for the shadow effect
-        loginStage.setScene(scene);
+        signupStage.setScene(scene);
 
         // Make the window draggable
         final double[] xOffset = {0};
@@ -265,59 +337,73 @@ public class Login {
         });
 
         grid.setOnMouseDragged(event -> {
-            loginStage.setX(event.getScreenX() - xOffset[0]);
-            loginStage.setY(event.getScreenY() - yOffset[0]);
+            signupStage.setX(event.getScreenX() - xOffset[0]);
+            signupStage.setY(event.getScreenY() - yOffset[0]);
         });
     }
 
-    // Display the login popup
+    // Display the signup popup
     public void show() {
-        loginStage.show();
+        signupStage.show();
     }
 
-    // Handle login button click
-    private void handleLogin() {
+    // Handle signup button click
+    private void handleSignUp(boolean termsAccepted) {
         String username = userTextField.getText();
+        String email = emailTextField.getText();
         String password = passwordField.getText();
+        String confirmPassword = confirmPasswordField.getText();
 
-        // Check if username and password are not empty
-        if (username.isEmpty() || password.isEmpty()) {
-            messageLabel.setText("Username or password cannot be empty");
-            messageLabel.setStyle("-fx-text-fill: " + ACCENT_RED + ";" +
-                    "-fx-background-color: #ffebee;" +
-                    "-fx-background-radius: 4;" +
-                    "-fx-padding: 5;");
+        // Validate input fields
+        if (username.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            messageLabel.setText("All fields are required");
+            messageLabel.setStyle("-fx-text-fill: " + ACCENT_RED + ";");
             return;
         }
 
-        // In a real application, you would validate against a database or service
-        if (username.equals("admin") && password.equals("password")) {
-            messageLabel.setText("Login successful!");
-            messageLabel.setStyle("-fx-text-fill: #27ae60;" + // Green for success
-                    "-fx-background-color: #e8f5e9;" +
-                    "-fx-background-radius: 4;" +
-                    "-fx-padding: 5;");
-            loginValidity = true;
-            checkLoginValidity();
-
-            // Close the login window after successful login
-            // In a real app, you might want to delay this with a Timeline
-            loginStage.close();
-
-            // Here you would typically redirect to the main application
-            // For example:
-            // MainApplication mainApp = new MainApplication(parentStage);
-            // mainApp.show();
-        } else {
-            messageLabel.setText("Invalid username or password");
-            messageLabel.setStyle("-fx-text-fill: " + ACCENT_RED + ";" +
-                    "-fx-background-color: #ffebee;" +
-                    "-fx-background-radius: 4;" +
-                    "-fx-padding: 5;");
+        // Validate email format using simple regex
+        if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$")) {
+            messageLabel.setText("Please enter a valid email address");
+            messageLabel.setStyle("-fx-text-fill: " + ACCENT_RED + ";");
+            return;
         }
+
+        // Check password length
+        if (password.length() < 6) {
+            messageLabel.setText("Password must be at least 6 characters");
+            messageLabel.setStyle("-fx-text-fill: " + ACCENT_RED + ";");
+            return;
+        }
+
+        // Check password match
+        if (!password.equals(confirmPassword)) {
+            messageLabel.setText("Passwords do not match");
+            messageLabel.setStyle("-fx-text-fill: " + ACCENT_RED + ";");
+            return;
+        }
+
+        // Check terms acceptance
+        if (!termsAccepted) {
+            messageLabel.setText("You must accept the Terms of Service");
+            messageLabel.setStyle("-fx-text-fill: " + ACCENT_RED + ";");
+            return;
+        }
+
+        // In a real app, you would save the user info to a database
+        messageLabel.setText("Account created successfully!");
+        messageLabel.setStyle("-fx-text-fill: #27ae60;"); // Green for success
+
+        // If you want or might want to close the dialog or redirect to another screen
+        // For example, after a small delay ig??:
+        // new java.util.Timer().schedule(
+        //     new java.util.TimerTask() {
+        //         @Override
+        //         public void run() {
+        //             javafx.application.Platform.runLater(() -> signupStage.close());
+        //         }
+        //     },
+        //     2000 // close after 2 seconds
+        // );
     }
 
-    public boolean checkLoginValidity(){
-        return loginValidity;
-    }
 }

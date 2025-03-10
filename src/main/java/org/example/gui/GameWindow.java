@@ -11,7 +11,9 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.authentication.UserProfile;
+import org.example.game.checkers.CheckersBoard;
 import org.example.game.checkers.CheckersGame;
+import org.example.game.connectFour.ConnectFourBoard;
 import org.example.game.connectFour.ConnectFourGame;
 import org.example.game.ticTacToe.TicTacToeBoard;
 import org.example.game.ticTacToe.TicTacToeGame;
@@ -23,21 +25,15 @@ import javafx.scene.media.AudioClip;
 import java.io.File;
 
 public class GameWindow {
-    private Stage stage;
-    private Scene scene;
-    private BorderPane mainLayout;
-    private UserProfile currentUser;
-    private Object gameInstance;
+    private final Stage stage;
+    private final UserProfile currentUser;
+    private final Object gameInstance;
     private GameSession gameSession;
     private ChatManager chatManager;
-    private GameTimer gameTimer;
+    private final GameTimer gameTimer;
     private Timeline updateTimeline;
     private VBox gameBoard;
-    private Label turnLabel;
     private Label timerLabel;
-    private final AudioClip connectFourSoundBlue;
-    private final AudioClip connectFourSoundRed;
-    private int connectFourSoundCounter = 0;
 
 
     public GameWindow(Stage stage, Object gameInstance, UserProfile currentUser) {
@@ -54,26 +50,13 @@ public class GameWindow {
             this.chatManager = new ChatManager(); // Use the default ChatManager
         }
 
-        // Get the project root directory
-        String projectDir = System.getProperty("user.dir");
-
-        // Build the full file path to the sound file
-        String connectFourBluePath = new File(projectDir, "resources/sounds/connectFourBlue.mp3").toURI().toString();
-
-        // Build the full file path to the sound file
-        String connectFourRedPath = new File(projectDir, "resources/sounds/connectFourRed.mp3").toURI().toString();
-
-        connectFourSoundBlue = new AudioClip(connectFourBluePath);
-
-        connectFourSoundRed = new AudioClip(connectFourRedPath);
-
         initializeUI();
         setupGameBoard();
         startGameUpdates();
     }
 
     private void initializeUI() {
-        mainLayout = new BorderPane();
+        BorderPane mainLayout = new BorderPane();
         mainLayout.setPadding(new Insets(15));
         mainLayout.setStyle("-fx-background-color: #2c3e50;");
 
@@ -95,7 +78,7 @@ public class GameWindow {
         HBox bottomBar = createBottomBar();
         mainLayout.setBottom(bottomBar);
 
-        scene = new Scene(mainLayout, 1200, 800);
+        Scene scene = new Scene(mainLayout, 1200, 800);
         stage.setTitle(getGameTitle() + " - OMG Platform");
         stage.setScene(scene);
         stage.setMinWidth(800);
@@ -117,7 +100,7 @@ public class GameWindow {
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         // Turn indicator
-        turnLabel = new Label("Your Turn");
+        Label turnLabel = new Label("Your Turn");
         turnLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #2ecc71; -fx-font-weight: bold;");
 
         // Timer
@@ -345,118 +328,15 @@ public class GameWindow {
             gameBoard.getChildren().add(ticTacToeBoard);
         } else if (gameInstance instanceof ConnectFourGame) {
             System.out.println("Setting up ConnectFour board");
-            setupConnectFourBoard();
+
+            ConnectFourBoard connectFourBoard = new ConnectFourBoard((ConnectFourGame) gameInstance, stage, currentUser);
+            gameBoard.getChildren().add(connectFourBoard);
         } else if (gameInstance instanceof CheckersGame) {
             System.out.println("Setting up Checkers board");
-            setupCheckersBoard();
+
+            CheckersBoard checkersBoard = new CheckersBoard((CheckersGame) gameInstance, stage, currentUser);
+            gameBoard.getChildren().add(checkersBoard);
         }
-    }
-
-
-
-    private void setupConnectFourBoard() {
-        VBox boardContainer = new VBox(20);
-        boardContainer.setAlignment(Pos.CENTER);
-
-        GridPane board = new GridPane();
-        board.setAlignment(Pos.CENTER);
-        board.setHgap(5);
-        board.setVgap(5);
-
-        // Create the 7x6 grid (7 columns, 6 rows)
-        for (int row = 0; row < 6; row++) {
-            for (int col = 0; col < 7; col++) {
-                StackPane cell = new StackPane();
-                cell.setPrefSize(60, 60);
-                cell.setStyle("-fx-background-color: #3498db; -fx-background-radius: 30;");
-
-                Region innerCircle = new Region();
-                innerCircle.setPrefSize(50, 50);
-                innerCircle.setStyle("-fx-background-color: #1a2530; -fx-background-radius: 25;");
-
-                cell.getChildren().add(innerCircle);
-                board.add(cell, col, row);
-            }
-        }
-
-        // Create column buttons for dropping pieces
-        HBox columnButtons = new HBox(5);
-        columnButtons.setAlignment(Pos.CENTER);
-
-        for (int col = 0; col < 7; col++) {
-            Button dropButton = new Button("Drop");
-            dropButton.setPrefWidth(60);
-            dropButton.setUserData(col);
-            dropButton.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white;");
-
-            final int column = col;
-            dropButton.setOnAction(e -> {
-                connectFourSoundCounter++;
-                if(connectFourSoundCounter % 2 == 0){
-                    connectFourSoundBlue.play();
-                }else{
-                    connectFourSoundRed.play();
-                }
-                makeConnectFourMove(column);
-            });
-
-            columnButtons.getChildren().add(dropButton);
-        }
-
-        boardContainer.getChildren().addAll(columnButtons, board);
-        gameBoard.getChildren().add(boardContainer);
-    }
-
-    private void setupCheckersBoard() {
-        VBox boardContainer = new VBox(20);
-        boardContainer.setAlignment(Pos.CENTER);
-
-        GridPane board = new GridPane();
-        board.setAlignment(Pos.CENTER);
-
-        // Create the 8x8 grid
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                StackPane cell = new StackPane();
-                cell.setPrefSize(60, 60);
-
-                // Alternating colors for the checkerboard
-                boolean isLightSquare = (row + col) % 2 == 0;
-                cell.setStyle("-fx-background-color: " + (isLightSquare ? "#ecf0f1" : "#34495e") + ";");
-
-                // Add checkers pieces to initial positions
-                if (!isLightSquare) {
-                    if (row < 3) {
-                        // Red pieces (opponent)
-                        Region piece = new Region();
-                        piece.setPrefSize(40, 40);
-                        piece.setStyle("-fx-background-color: #e74c3c; -fx-background-radius: 20;");
-                        cell.getChildren().add(piece);
-                    } else if (row > 4) {
-                        // Black pieces (player)
-                        Region piece = new Region();
-                        piece.setPrefSize(40, 40);
-                        piece.setStyle("-fx-background-color: #2c3e50; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20; -fx-border-width: 2;");
-                        cell.getChildren().add(piece);
-                    }
-                }
-
-                // Store position for move handling
-                cell.setUserData(new int[]{row, col});
-
-                // Add click handler
-                cell.setOnMouseClicked(e -> {
-                    StackPane clicked = (StackPane) e.getSource();
-                    int[] position = (int[]) clicked.getUserData();
-                    selectCheckersPiece(position[0], position[1]);
-                });
-
-                board.add(cell, col, row);
-            }
-        }
-
-        boardContainer.getChildren().add(board);
-        gameBoard.getChildren().add(boardContainer);
     }
 
     private String getGameTitle() {
@@ -484,32 +364,6 @@ public class GameWindow {
         int minutes = seconds / 60;
         seconds = seconds % 60;
         timerLabel.setText(String.format("%d:%02d", minutes, seconds));
-    }
-
-    private void makeConnectFourMove(int column) {
-        System.out.println("Dropping piece in column: " + column);
-        // This would call the actual game logic in a real implementation
-        simulateOpponentTurn();
-    }
-
-    private void selectCheckersPiece(int row, int col) {
-        System.out.println("Selected piece at: " + row + ", " + col);
-        // This would handle piece selection and movement in a real implementation
-    }
-
-    private void simulateOpponentTurn() {
-        // For demo purposes, simulate the opponent's turn
-        turnLabel.setText("Opponent's Turn");
-        turnLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #e74c3c; -fx-font-weight: bold;");
-
-        // After 2 seconds, switch back to player's turn
-        Timeline opponentTimeline = new Timeline(
-                new KeyFrame(Duration.seconds(2), e -> {
-                    turnLabel.setText("Your Turn");
-                    turnLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #2ecc71; -fx-font-weight: bold;");
-                })
-        );
-        opponentTimeline.play();
     }
 
     // Dialog methods

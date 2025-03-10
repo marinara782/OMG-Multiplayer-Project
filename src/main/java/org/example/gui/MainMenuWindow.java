@@ -4,26 +4,24 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.authentication.Login;
-import org.example.authentication.SignUp;
 import org.example.authentication.UserProfile;
 import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourGame;
-import org.example.game.ticTacToe.GameModeSelection;
-import org.example.game.ticTacToe.SymbolSelection;
 import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.leaderboard.Leaderboard;
 import org.example.matchmaking.Matchmaker;
 
 public class MainMenuWindow {
-    private final Stage stage;
+    private Stage stage;
     private Scene scene;
     private BorderPane mainLayout;
-    private final UserProfile currentUser;
+    private UserProfile currentUser;
     private Matchmaker matchmaker;
-    private String ProfileName;
 
     public MainMenuWindow(Stage stage, UserProfile currentUser) {
         this.stage = stage;
@@ -80,31 +78,15 @@ public class MainMenuWindow {
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         // User info
-        Login login = new Login(stage);
-        if(login.checkLoginValidity()){
-            ProfileName = currentUser.getUsername();
-        }else{
-            ProfileName = "Player";
-        }
-        Label userLabel = new Label("Welcome, " + ProfileName);
+        Label userLabel = new Label("Welcome, " + currentUser.getUsername());
         userLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
 
-        // SignIn button
-        Button signUpButton = new Button("SignUp");
-        signUpButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
-        signUpButton.setOnAction(e -> signUp());
+        // Logout button
+        Button logoutButton = new Button("Logout");
+        logoutButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+        logoutButton.setOnAction(e -> logout());
 
-        // Login button
-        Button loginButton = new Button("Login");
-        loginButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
-        loginButton.setOnAction(e -> login());
-
-//        // Logout button
-//        Button logoutButton = new Button("Logout");
-//        logoutButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
-//        logoutButton.setOnAction(e -> login());
-
-        header.getChildren().addAll(logoLabel, spacer, userLabel, profileButton, signUpButton, loginButton);
+        header.getChildren().addAll(logoLabel, spacer, userLabel, profileButton, logoutButton);
 
         return header;
     }
@@ -300,12 +282,7 @@ public class MainMenuWindow {
         profileWindow.show();
     }
 
-    private void signUp() {
-        SignUp signUpScreen = new SignUp(stage);
-        signUpScreen.show();
-    }
-
-    private void login() {
+    private void logout() {
         Login loginScreen = new Login(stage);
         loginScreen.show();
     }
@@ -367,15 +344,7 @@ public class MainMenuWindow {
     private void startGame(String gameType) {
         switch (gameType) {
             case "ticTacToe", "tictactoe", "tic-tac-toe":
-                // Create symbol selection dialog
-                SymbolSelection symbolDialog = new SymbolSelection();
-                char chosenSymbol = symbolDialog.showAndWait();
-
-                GameModeSelection gameModeDialog = new GameModeSelection();
-                GameModeSelection.GameMode ChosenGameMode = gameModeDialog.showAndWait();
-
-                // Create game with chosen symbol
-                new GameWindow(stage, new TicTacToeGame(chosenSymbol, ChosenGameMode), currentUser);
+                new GameWindow(stage, new TicTacToeGame(), currentUser);
                 break;
             case "connectfour", "connectFour", "connect-four":
                 new GameWindow(stage, new ConnectFourGame(), currentUser);

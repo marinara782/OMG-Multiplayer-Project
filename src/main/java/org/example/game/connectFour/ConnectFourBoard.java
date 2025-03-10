@@ -2,9 +2,11 @@ package org.example.game.connectFour;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
@@ -19,13 +21,26 @@ public class ConnectFourBoard extends VBox {
     private final AudioClip connectFourSoundBlue;
     private final AudioClip connectFourSoundRed;
     private final ConnectFourGame game;
+    private final Stage stage;
+    private final UserProfile currentUser;
+    private final boolean playAgainstComputer;
+    private final boolean playerIsRed;
 
     private Label statusLabel;
     private Circle[][] circles;
     private Button[] dropButtons;
+    private Label player2Label;
 
-    public ConnectFourBoard(ConnectFourGame game, Stage stage, UserProfile currentUser) {
+    public ConnectFourBoard(ConnectFourGame game, Stage stage, UserProfile currentUser,
+                            boolean playAgainstComputer, boolean playerIsRed, String difficulty) {
         this.game = game;
+        this.stage = stage;
+        this.currentUser = currentUser;
+        this.playAgainstComputer = playAgainstComputer;
+        this.playerIsRed = playerIsRed;
+
+        // Configure the game with these settings
+        game.configureGame(playAgainstComputer, playerIsRed, difficulty);
 
         // Get the project root directory
         String projectDir = System.getProperty("user.dir");
@@ -40,11 +55,50 @@ public class ConnectFourBoard extends VBox {
 
         // Set up the UI
         setupConnectFourBoard();
+
+        // If computer goes first, make the first move
+        if (playAgainstComputer && !game.isHumanTurn()) {
+            makeComputerMove();
+        }
     }
 
     private void setupConnectFourBoard() {
-        this.setSpacing(20);
+        this.setSpacing(15);
+        this.setPadding(new Insets(20));
         this.setAlignment(Pos.CENTER);
+
+        // Create header with player information
+        HBox playerInfoBox = new HBox(50);
+        playerInfoBox.setAlignment(Pos.CENTER);
+
+        // Player 1 info
+        VBox player1Box = new VBox(5);
+        player1Box.setAlignment(Pos.CENTER);
+
+        Circle player1Circle = new Circle(15);
+        player1Circle.setFill(Color.RED);
+
+        Label player1Label = new Label(playerIsRed ? currentUser.getUsername() :
+                (playAgainstComputer ? game.getComputerName() : "Player 2"));
+        player1Label.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+
+        player1Box.getChildren().addAll(player1Circle, player1Label);
+
+        // Player 2 info
+        VBox player2Box = new VBox(5);
+        player2Box.setAlignment(Pos.CENTER);
+
+        Circle player2Circle = new Circle(15);
+        player2Circle.setFill(Color.BLUE);
+
+        player2Label = new Label(playerIsRed ?
+                (playAgainstComputer ? game.getComputerName() : "Player 2") :
+                currentUser.getUsername());
+        player2Label.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
+
+        player2Box.getChildren().addAll(player2Circle, player2Label);
+
+        playerInfoBox.getChildren().addAll(player1Box, player2Box);
 
         // Create status label
         statusLabel = new Label("Red's Turn");
@@ -90,32 +144,83 @@ public class ConnectFourBoard extends VBox {
             }
         }
 
-        // Reset button
-        Button resetButton = new Button("Reset Game");
-        resetButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold;");
+        // Create buttons for game controls
+        HBox controlsBox = new HBox(20);
+        controlsBox.setAlignment(Pos.CENTER);
+
+        Button resetButton = new Button("New Game");
+        resetButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15;");
         resetButton.setOnAction(e -> resetGame());
+
+        Button setupButton = new Button("Game Setup");
+        setupButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15;");
+        setupButton.setOnAction(e -> {
+            // Go back to the setup screen
+            new ConnectFourSetup(stage, currentUser);
+        });
+
+        controlsBox.getChildren().addAll(resetButton, setupButton);
 
         // Add all components to the board
         boardContainer.getChildren().addAll(columnButtons, boardGrid);
-        this.getChildren().addAll(statusLabel, boardContainer, resetButton);
+        this.getChildren().addAll(
+                playerInfoBox,
+                new Separator(),
+                statusLabel,
+                boardContainer,
+                new Separator(),
+                controlsBox
+        );
     }
 
     private Button createDropButton(int col) {
-        Button dropButton = new Button("Drop");
+        Button dropButton = new Button("↓");
         dropButton.setPrefWidth(60);
         dropButton.setUserData(col);
-        dropButton.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white;");
+        dropButton.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-weight: bold;");
 
-        dropButton.setOnAction(e -> makeConnectFourMove(col));
+        dropButton.setOnAction(e -> makePlayerMove(col));
         return dropButton;
     }
 
-    private void makeConnectFourMove(int column) {
-        // Don't do anything if the game is over or the move is invalid
-        if (game.isGameOver() || !game.isValidMove(column)) {
-            return;
-        }
+    private void makePlayerMove(int column) {
+        // Check if it's the player's turn and the move is valid
+        if (game.isHumanTurn() && game.isValidMove(column)) {
+            makeMove(column);
 
+            // If playing against computer and the game isn't over, make the computer's move
+            if (playAgainstComputer && !game.isGameOver()) {
+                makeComputerMove();
+            }
+        }
+    }
+
+    private void makeComputerMove() {
+        // Disable buttons during computer's turn
+        setButtonsEnabled(false);
+
+        // Update status to show computer is thinking
+        updateThinkingStatus();
+
+        // Add delay to simulate computer thinking
+        Timeline computerThinking = new Timeline(
+                new KeyFrame(Duration.seconds(1.2), e -> {
+                    // Make the computer's move
+                    int column = game.makeComputerMove();
+                    if (column >= 0) {
+                        makeMove(column);
+                    }
+
+                    // Re-enable buttons if game continues and it's player's turn
+                    if (!game.isGameOver() && game.isHumanTurn()) {
+                        setButtonsEnabled(true);
+                    }
+                })
+        );
+        computerThinking.play();
+    }
+
+    private void makeMove(int column) {
         // Play the appropriate sound
         if (game.getCurrentPlayer() == ConnectFourGame.PLAYER_RED) {
             connectFourSoundRed.play();
@@ -163,83 +268,92 @@ public class ConnectFourBoard extends VBox {
             }
 
             // Disable drop buttons when game is over
-            for (Button button : dropButtons) {
-                button.setDisable(true);
-            }
+            setButtonsEnabled(false);
         } else {
             // Game continues, update whose turn it is
+            String playerName;
             if (game.getCurrentPlayer() == ConnectFourGame.PLAYER_RED) {
-                statusLabel.setText("Red's Turn");
                 statusLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #e74c3c;");
+                playerName = playerIsRed ? currentUser.getUsername() :
+                        (playAgainstComputer ? game.getComputerName() : "Player 2");
             } else {
-                statusLabel.setText("Blue's Turn");
                 statusLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #3498db;");
+                playerName = playerIsRed ?
+                        (playAgainstComputer ? game.getComputerName() : "Player 2") :
+                        currentUser.getUsername();
             }
+            statusLabel.setText(playerName + "'s Turn");
+        }
+    }
+
+    private void updateThinkingStatus() {
+        String computerName = game.getComputerName();
+        statusLabel.setText(computerName + " is thinking...");
+        statusLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #3498db;");
+    }
+
+    private void setButtonsEnabled(boolean enabled) {
+        for (Button button : dropButtons) {
+            button.setDisable(!enabled);
+            button.setOpacity(enabled ? 1.0 : 0.5);
         }
     }
 
     private void resetGame() {
-        // Reset the game logic
+        // Reset the game state
         game.resetGame();
 
-        // Reset the board UI
+        // Clear the board UI
         for (int row = 0; row < ConnectFourGame.ROWS; row++) {
             for (int col = 0; col < ConnectFourGame.COLUMNS; col++) {
                 circles[row][col].setFill(Color.valueOf("#1a2530"));
             }
         }
 
-        // Re-enable all drop buttons
-        for (Button button : dropButtons) {
-            button.setDisable(false);
-        }
-
-        // Reset status label
+        // Reset the status label
         statusLabel.setText("Red's Turn");
         statusLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #e74c3c;");
+
+        // Enable all buttons
+        setButtonsEnabled(true);
+
+        // If computer goes first, make the first move
+        if (playAgainstComputer && !game.isHumanTurn()) {
+            makeComputerMove();
+        }
     }
 
-    // If you need to simulate an AI opponent,
-    /*
-    private void simulateOpponentTurn() {
-        // This would be where you implement AI logic
-        // For a simple AI, you could:
-        // 1. Pick a random valid column
-        // 2. Make a move in that column
+    public void highlightWinningPieces(int[][] winningPositions) {
+        if (winningPositions == null) return;
 
-        if (game.isGameOver()) {
-            return;
+        for (int[] position : winningPositions) {
+            int row = position[0];
+            int col = position[1];
+
+            // Highlight the winning piece with a brighter color or animation
+            Circle circle = circles[row][col];
+
+            // Create a pulsing animation or change to a brighter color
+            if (game.getPieceAt(row, col) == ConnectFourGame.PLAYER_RED) {
+                circle.setStroke(Color.GOLD);
+                circle.setStrokeWidth(3);
+            } else if (game.getPieceAt(row, col) == ConnectFourGame.PLAYER_BLUE) {
+                circle.setStroke(Color.GOLD);
+                circle.setStrokeWidth(3);
+            }
         }
-
-        // Disable user interaction temporarily
-        for (Button button : dropButtons) {
-            button.setDisable(true);
-        }
-
-        // Display "thinking" message
-        statusLabel.setText("Blue is thinking...");
-
-        // Use a timeline to add a delay before the AI makes a move
-        Timeline aiTimeline = new Timeline(
-            new KeyFrame(Duration.seconds(1.5), e -> {
-                // Find a valid move
-                int column;
-                do {
-                    column = (int)(Math.random() * ConnectFourGame.COLUMNS);
-                } while (!game.isValidMove(column));
-
-                // Make the move
-                makeConnectFourMove(column);
-
-                // Re-enable buttons if game is not over
-                if (!game.isGameOver()) {
-                    for (Button button : dropButtons) {
-                        button.setDisable(false);
-                    }
-                }
-            })
-        );
-        aiTimeline.play();
     }
-    */
+
+//    public void setDifficulty(String difficulty) {
+//        game.setDifficulty(difficulty);
+//    }
+//
+//    public String getDifficulty() {
+//        return game.getDifficulty();
+//    }
+
+//    public void showGameStats() {
+//        // This method could display game statistics
+//        // Implementation for showing game stats, win percentages, etc.
+//    }
 }

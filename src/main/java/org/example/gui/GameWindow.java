@@ -329,7 +329,7 @@ public class GameWindow {
         } else if (gameInstance instanceof ConnectFourGame) {
             System.out.println("Setting up ConnectFour board");
 
-            ConnectFourBoard connectFourBoard = new ConnectFourBoard((ConnectFourGame) gameInstance, stage, currentUser);
+            ConnectFourBoard connectFourBoard = new ConnectFourBoard((ConnectFourGame) gameInstance, stage, currentUser, true, true, "Medium");
             gameBoard.getChildren().add(connectFourBoard);
         } else if (gameInstance instanceof CheckersGame) {
             System.out.println("Setting up Checkers board");

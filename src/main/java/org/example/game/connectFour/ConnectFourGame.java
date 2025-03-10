@@ -1,6 +1,7 @@
 package org.example.game.connectFour;
 
 import javafx.scene.paint.Color;
+import java.util.Random;
 
 public class ConnectFourGame {
     // Constants for the board dimensions
@@ -17,6 +18,12 @@ public class ConnectFourGame {
     private int currentPlayer;
     private boolean gameOver;
     private int winner;
+
+    // Game settings
+    private boolean playAgainstComputer;
+    private boolean playerIsRed;
+    private String difficulty;
+    private Random random = new Random();
 
     public ConnectFourGame() {
         // Initialize the game
@@ -38,6 +45,19 @@ public class ConnectFourGame {
         currentPlayer = PLAYER_RED;
         gameOver = false;
         winner = EMPTY;
+    }
+
+    /**
+     * Configure game settings
+     *
+     * @param playAgainstComputer Whether to play against the computer
+     * @param playerIsRed Whether the human player is red
+     * @param difficulty The difficulty level for AI (Easy, Medium, Hard)
+     */
+    public void configureGame(boolean playAgainstComputer, boolean playerIsRed, String difficulty) {
+        this.playAgainstComputer = playAgainstComputer;
+        this.playerIsRed = playerIsRed;
+        this.difficulty = difficulty;
     }
 
     /**
@@ -154,6 +174,161 @@ public class ConnectFourGame {
     }
 
     /**
+     * Determine if it's the human player's turn.
+     *
+     * @return true if it's the human player's turn, false otherwise
+     */
+    public boolean isHumanTurn() {
+        if (!playAgainstComputer) {
+            return true; // In human vs human, all turns are human
+        }
+
+        return (playerIsRed && currentPlayer == PLAYER_RED) ||
+                (!playerIsRed && currentPlayer == PLAYER_BLUE);
+    }
+
+    /**
+     * Make a computer move based on the difficulty level.
+     *
+     * @return The column where the computer made its move
+     */
+    public int makeComputerMove() {
+        if (!playAgainstComputer || isHumanTurn() || gameOver) {
+            return -1;
+        }
+
+        int column;
+
+        switch (difficulty) {
+            case "Hard":
+                column = findBestMove();
+                break;
+            case "Medium":
+                // 70% chance to make the best move, 30% chance for a random move
+                if (random.nextDouble() < 0.7) {
+                    column = findBestMove();
+                } else {
+                    column = findRandomValidMove();
+                }
+                break;
+            case "Easy":
+            default:
+                // 30% chance to make the best move, 70% chance for a random move
+                if (random.nextDouble() < 0.3) {
+                    column = findBestMove();
+                } else {
+                    column = findRandomValidMove();
+                }
+                break;
+        }
+
+        return column;
+    }
+
+    /**
+     * Find a random valid move.
+     *
+     * @return A random column that has space for a piece
+     */
+    private int findRandomValidMove() {
+        // Get all valid moves
+        int[] validMoves = new int[COLUMNS];
+        int validMoveCount = 0;
+
+        for (int col = 0; col < COLUMNS; col++) {
+            if (isValidMove(col)) {
+                validMoves[validMoveCount++] = col;
+            }
+        }
+
+        // Pick a random valid move
+        if (validMoveCount > 0) {
+            return validMoves[random.nextInt(validMoveCount)];
+        }
+
+        // Fallback to column 3 (middle) if something goes wrong
+        return 3;
+    }
+
+    /**
+     * Find the best move using a simple heuristic.
+     * This is a simplified AI that:
+     * 1. Checks for an immediate win
+     * 2. Blocks opponent's immediate win
+     * 3. Prefers center columns
+     *
+     * @return The best column to make a move
+     */
+    private int findBestMove() {
+        // First, check if we can win in the next move
+        for (int col = 0; col < COLUMNS; col++) {
+            if (isValidMove(col)) {
+                // Try this move
+                int row = getNextEmptyRow(col);
+                board[row][col] = currentPlayer;
+
+                // Check if this move wins
+                boolean wins = checkWin(row, col);
+
+                // Undo the move
+                board[row][col] = EMPTY;
+
+                if (wins) {
+                    return col; // Found a winning move
+                }
+            }
+        }
+
+        // If we can't win, check if opponent can win in their next move and block it
+        int opponent = (currentPlayer == PLAYER_RED) ? PLAYER_BLUE : PLAYER_RED;
+
+        for (int col = 0; col < COLUMNS; col++) {
+            if (isValidMove(col)) {
+                // Try this move for the opponent
+                int row = getNextEmptyRow(col);
+                board[row][col] = opponent;
+
+                // Check if this move wins for the opponent
+                boolean opponentWins = checkWin(row, col);
+
+                // Undo the move
+                board[row][col] = EMPTY;
+
+                if (opponentWins) {
+                    return col; // Block opponent's winning move
+                }
+            }
+        }
+
+        // If no immediate win or block, prefer the center and columns close to it
+        int[] columnPreference = {3, 2, 4, 1, 5, 0, 6}; // Center first, then outward
+
+        for (int col : columnPreference) {
+            if (isValidMove(col)) {
+                return col;
+            }
+        }
+
+        // Fallback to a random move
+        return findRandomValidMove();
+    }
+
+    /**
+     * Get the next empty row in a column.
+     *
+     * @param col The column to check
+     * @return The row index of the next empty slot, or -1 if the column is full
+     */
+    private int getNextEmptyRow(int col) {
+        for (int row = ROWS - 1; row >= 0; row--) {
+            if (board[row][col] == EMPTY) {
+                return row;
+            }
+        }
+        return -1;
+    }
+
+    /**
      * Get the current player.
      *
      * @return The current player (PLAYER_RED or PLAYER_BLUE)
@@ -220,5 +395,28 @@ public class ConnectFourGame {
      */
     public Color getCurrentPlayerColor() {
         return (currentPlayer == PLAYER_RED) ? Color.RED : Color.BLUE;
+    }
+
+    /**
+     * Get the computer player name based on the difficulty.
+     *
+     * @return The computer player's name
+     */
+    public String getComputerName() {
+        return "Computer (" + difficulty + ")";
+    }
+
+    /**
+     * Check if game is set to play against computer.
+     */
+    public boolean isPlayingAgainstComputer() {
+        return playAgainstComputer;
+    }
+
+    /**
+     * Check if human player is playing as red.
+     */
+    public boolean isPlayerRed() {
+        return playerIsRed;
     }
 }

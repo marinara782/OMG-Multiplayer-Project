@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.*;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
@@ -15,7 +16,6 @@ import java.io.File;
 
 public class ConnectFourBoard extends VBox{
 
-    private Label turnLabel;
     private final AudioClip connectFourSoundBlue;
     private final AudioClip connectFourSoundRed;
     private int connectFourSoundCounter = 0;
@@ -104,6 +104,7 @@ public class ConnectFourBoard extends VBox{
 
     private void simulateOpponentTurn() {
         // For demo purposes, simulate the opponent's turn
+        Label turnLabel = new Label();
         turnLabel.setText("Opponent's Turn");
         turnLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #e74c3c; -fx-font-weight: bold;");
 

@@ -12,21 +12,16 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.authentication.UserProfile;
-import org.example.leaderboard.Leaderboard;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class UserProfileWindow {
-    private Stage stage;
-    private Scene scene;
-    private BorderPane mainLayout;
-    private UserProfile userProfile;
-    private TabPane tabPane;
+    private final Stage stage;
+    private final UserProfile userProfile;
 
     // Mock data for the profile
     private Map<String, Integer> gameStats;
-    private Map<String, Integer> ranks;
 
     public UserProfileWindow(Stage stage, UserProfile userProfile) {
         this.stage = stage;
@@ -43,14 +38,14 @@ public class UserProfileWindow {
         gameStats.put("Checkers", 16);
 
         // Mock ranks
-        ranks = new HashMap<>();
+        Map<String, Integer> ranks = new HashMap<>();
         ranks.put("Tic-Tac-Toe", 1250);
         ranks.put("Connect Four", 1423);
         ranks.put("Checkers", 1342);
     }
 
     private void initializeUI() {
-        mainLayout = new BorderPane();
+        BorderPane mainLayout = new BorderPane();
         mainLayout.setStyle("-fx-background-color: #2c3e50;");
 
         // Header with user info
@@ -58,7 +53,7 @@ public class UserProfileWindow {
         mainLayout.setTop(header);
 
         // Main content with tabs
-        tabPane = new TabPane();
+        TabPane tabPane = new TabPane();
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
         Tab overviewTab = new Tab("Overview", createOverviewPane());
@@ -70,7 +65,7 @@ public class UserProfileWindow {
 
         mainLayout.setCenter(tabPane);
 
-        scene = new Scene(mainLayout, 900, 700);
+        Scene scene = new Scene(mainLayout, 900, 700);
         stage.setTitle("User Profile - OMG Platform");
         stage.setScene(scene);
         stage.setMinWidth(700);
@@ -78,15 +73,24 @@ public class UserProfileWindow {
     }
 
     private Node createSettingsPane() {
-        return null;
+        VBox settingsPane = new VBox(10);
+        settingsPane.setPadding(new Insets(20));
+        // Add actual settings controls later
+        return settingsPane;
     }
 
     private Node createMatchHistoryPane() {
-        return null;
+        VBox historyPane = new VBox(10);
+        historyPane.setPadding(new Insets(20));
+        // Add match history components later
+        return historyPane;
     }
 
     private Node createStatsPane() {
-        return null;
+        VBox statsPane = new VBox(10);
+        statsPane.setPadding(new Insets(20));
+        // Add stats components later
+        return statsPane;
     }
 
     private HBox createHeader() {
@@ -227,7 +231,20 @@ public class UserProfileWindow {
     }
 
     private VBox createStatBox(String title, String value, String color) {
-        return null;
+        VBox statBox = new VBox(5);
+        statBox.setAlignment(Pos.CENTER);
+        statBox.setPadding(new Insets(15));
+        statBox.setPrefWidth(150);
+        statBox.setStyle("-fx-background-color: " + color + "; -fx-background-radius: 5;");
+
+        Label valueLabel = new Label(value);
+        valueLabel.setStyle("-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;");
+
+        Label titleLabel = new Label(title);
+        titleLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+
+        statBox.getChildren().addAll(valueLabel, titleLabel);
+        return statBox;
     }
 
     public void show() {

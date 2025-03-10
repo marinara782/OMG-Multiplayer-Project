@@ -18,10 +18,10 @@ import org.example.leaderboard.Leaderboard;
 import org.example.matchmaking.Matchmaker;
 
 public class MainMenuWindow {
-    private Stage stage;
+    private final Stage stage;
     private Scene scene;
     private BorderPane mainLayout;
-    private UserProfile currentUser;
+    private final UserProfile currentUser;
     private Matchmaker matchmaker;
     private String ProfileName;
 

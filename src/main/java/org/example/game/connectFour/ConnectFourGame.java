@@ -14,7 +14,7 @@ public class ConnectFourGame {
     public static final int PLAYER_BLUE = 2;
 
     // Game state
-    private int[][] board;
+    private final int[][] board;
     private int currentPlayer;
     private boolean gameOver;
     private int winner;
@@ -23,7 +23,7 @@ public class ConnectFourGame {
     private boolean playAgainstComputer;
     private boolean playerIsRed;
     private String difficulty;
-    private Random random = new Random();
+    private final Random random = new Random();
 
     public ConnectFourGame() {
         // Initialize the game

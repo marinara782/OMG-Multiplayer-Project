@@ -15,6 +15,7 @@ import org.example.game.checkers.CheckersBoard;
 import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourBoard;
 import org.example.game.connectFour.ConnectFourGame;
+import org.example.game.connectFour.ConnectFourGameModeSelection;
 import org.example.game.ticTacToe.TicTacToeBoard;
 import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.networking.GameSession;
@@ -328,8 +329,9 @@ public class GameWindow {
             gameBoard.getChildren().add(ticTacToeBoard);
         } else if (gameInstance instanceof ConnectFourGame) {
             System.out.println("Setting up ConnectFour board");
+            ConnectFourGameModeSelection connectFourGameModeSelection = new ConnectFourGameModeSelection(stage, currentUser);
 
-            ConnectFourBoard connectFourBoard = new ConnectFourBoard((ConnectFourGame) gameInstance, stage, currentUser, true, true, "Medium");
+            ConnectFourBoard connectFourBoard = new ConnectFourBoard((ConnectFourGame) gameInstance, stage, currentUser, connectFourGameModeSelection.playAgainstComputer, connectFourGameModeSelection.playerIsRed, connectFourGameModeSelection.difficulty);
             gameBoard.getChildren().add(connectFourBoard);
         } else if (gameInstance instanceof CheckersGame) {
             System.out.println("Setting up Checkers board");

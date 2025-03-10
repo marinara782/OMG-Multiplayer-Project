@@ -8,23 +8,29 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.authentication.UserProfile;
 
-public class ConnectFourSetup {
+public class ConnectFourGameModeSelection {
     private final Stage primaryStage;
     private final UserProfile currentUser;
+    private Stage dialogStage;
 
     // Game options
-    private boolean playAgainstComputer = true;
-    private boolean playerIsRed = true;
-    private String difficulty = "Medium"; // Easy, Medium, Hard
+    public boolean playAgainstComputer = true;
+    public boolean playerIsRed = true;
+    public String difficulty = "Medium"; // Easy, Medium, Hard
 
-    public ConnectFourSetup(Stage primaryStage, UserProfile currentUser) {
+    public ConnectFourGameModeSelection(Stage primaryStage, UserProfile currentUser) {
         this.primaryStage = primaryStage;
         this.currentUser = currentUser;
 
-        showSetupScreen();
+        showSetupDialog();
     }
 
-    private void showSetupScreen() {
+    private void showSetupDialog() {
+        // Create a new dialog stage
+        dialogStage = new Stage();
+        dialogStage.initOwner(primaryStage);
+        dialogStage.setTitle("Connect Four - Setup");
+
         VBox setupBox = new VBox(15);
         setupBox.setAlignment(Pos.CENTER);
         setupBox.setPadding(new Insets(20));
@@ -81,8 +87,8 @@ public class ConnectFourSetup {
                 difficulty = difficultyComboBox.getValue();
             }
 
-            // Start the game with these settings
-            startGame();
+            // Close the dialog
+            dialogStage.close();
         });
 
         // Add all components to the setup screen
@@ -101,22 +107,9 @@ public class ConnectFourSetup {
                 startButton
         );
 
-        // Create and show the scene
+        // Create and show the dialog
         Scene setupScene = new Scene(setupBox, 400, 500);
-        primaryStage.setScene(setupScene);
-        primaryStage.setTitle("Connect Four - Setup");
-        primaryStage.show();
-    }
-
-    private void startGame() {
-        // Create game with selected options
-        ConnectFourGame game = new ConnectFourGame();
-        ConnectFourBoard board = new ConnectFourBoard(game, primaryStage, currentUser, playAgainstComputer, playerIsRed, difficulty);
-
-        // Show the game board
-        Scene gameScene = new Scene(board, 600, 700);
-        primaryStage.setScene(gameScene);
-        primaryStage.setTitle("Connect Four");
-        primaryStage.centerOnScreen();
+        dialogStage.setScene(setupScene);
+        dialogStage.showAndWait(); // This makes it modal
     }
 }

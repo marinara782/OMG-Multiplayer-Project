@@ -29,7 +29,6 @@ public class ConnectFourBoard extends VBox {
     private Label statusLabel;
     private Circle[][] circles;
     private Button[] dropButtons;
-    private Label player2Label;
 
     public ConnectFourBoard(ConnectFourGame game, Stage stage, UserProfile currentUser,
                             boolean playAgainstComputer, boolean playerIsRed, String difficulty) {
@@ -91,7 +90,7 @@ public class ConnectFourBoard extends VBox {
         Circle player2Circle = new Circle(15);
         player2Circle.setFill(Color.BLUE);
 
-        player2Label = new Label(playerIsRed ?
+        Label player2Label = new Label(playerIsRed ?
                 (playAgainstComputer ? game.getComputerName() : "Player 2") :
                 currentUser.getUsername());
         player2Label.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
@@ -156,7 +155,7 @@ public class ConnectFourBoard extends VBox {
         setupButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 8 15;");
         setupButton.setOnAction(e -> {
             // Go back to the setup screen
-            new ConnectFourSetup(stage, currentUser);
+            new ConnectFourGameModeSelection(stage, currentUser);
         });
 
         controlsBox.getChildren().addAll(resetButton, setupButton);
@@ -174,7 +173,7 @@ public class ConnectFourBoard extends VBox {
     }
 
     private Button createDropButton(int col) {
-        Button dropButton = new Button("↓");
+        Button dropButton = new Button("Drop");
         dropButton.setPrefWidth(60);
         dropButton.setUserData(col);
         dropButton.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white; -fx-font-weight: bold;");
@@ -343,17 +342,4 @@ public class ConnectFourBoard extends VBox {
             }
         }
     }
-
-//    public void setDifficulty(String difficulty) {
-//        game.setDifficulty(difficulty);
-//    }
-//
-//    public String getDifficulty() {
-//        return game.getDifficulty();
-//    }
-
-//    public void showGameStats() {
-//        // This method could display game statistics
-//        // Implementation for showing game stats, win percentages, etc.
-//    }
 }

@@ -85,7 +85,7 @@ Each team works on a **feature branch** before merging into `main`.
 
 A designated team member ensures the feature branch is **updated with `main`**:
 
-```bash 
+```bash
 git checkout feature/authentication
 git pull origin main  # Get the latest updates from main
 git push origin feature/authentication  # Push the updated branch

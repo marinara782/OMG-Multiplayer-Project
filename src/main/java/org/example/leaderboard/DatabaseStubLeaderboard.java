@@ -11,9 +11,9 @@ public class DatabaseStubLeaderboard implement DatabaseInterface{
     // TODO: stub implementation for leaderboard 
 
     @Override
-    public List<rankingEntry> getRankings(String gameName){
+    public List<rankingEntry> Leaderboard.getRankings(String gameName){
         // suppose fetching from a real database
-        List<rankingEntry> entries  =new ArrayList<>();
+        List<Leaderboard.rankingEntry> entries  =new ArrayList<>();
     
         // chess game
         if ("Connect Four".equals(gameName)){

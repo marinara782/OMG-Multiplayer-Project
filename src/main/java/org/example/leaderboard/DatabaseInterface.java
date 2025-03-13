@@ -4,6 +4,6 @@ import java.util.List;
 
 public class DatabaseInterface {
     List<Leaderboard.rankingEntry> getRankings(String gameName){
-        // random
+        // insert getRankings methods below
     }
 }

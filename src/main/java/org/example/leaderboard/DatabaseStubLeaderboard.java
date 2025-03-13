@@ -16,7 +16,7 @@ public class DatabaseStubLeaderboard implement DatabaseInterface{
         List<rankingEntry> entries  =new ArrayList<>();
     
         // chess game
-        if ("Chess".equals(gameName)){
+        if ("Connect Four".equals(gameName)){
             entries.add(new rankingEntry("Alice", 20, 10));
             entries.add(new rankingEntry("Bob", 21, 5));
             entries.add(new rankingEntry("Charlie", 5, 3));
@@ -31,7 +31,7 @@ public class DatabaseStubLeaderboard implement DatabaseInterface{
         }
 
         // tictactoe game
-        if ("Tictactoe".equals(gameName)){
+        if ("Tic-Tac-Toe".equals(gameName)){
             entries.add(new rankingEntry("Alice", 5, 3));
             entries.add(new rankingEntry("Bob", 6, 3));
             entries.add(new rankingEntry("Charlie", 7, 8));

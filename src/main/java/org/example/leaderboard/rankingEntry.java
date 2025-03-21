@@ -1,13 +1,13 @@
 package org.example.leaderboard;
 
-public class rankingEntry {
+public class RankingEntry {
     private String username;
-    private int score;
+    // private int score;
     private int wins;
     private int losses;
 
     // constructor for ranking entry
-    public rankingEntry(String username, int wins, int losses){
+    public RankingEntry(String username, int wins, int losses){
         this.username = username;
         this.wins = wins;
         this.losses = losses;

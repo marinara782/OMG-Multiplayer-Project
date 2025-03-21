@@ -60,13 +60,13 @@ public class Leaderboard {
      * @param rankings list of ranking entries
      * @param criteriaString criteria like wins/losses
      */
-    private void sortRankings(List<rankingEntry> rankings, String criteriaString){
+    private void sortRankings(List<RankingEntry> rankings, String criteriaString){
         switch (criteriaString){
             case "wins":
-                rankings.sort(Comparator.comparingInt(rankingEntry::getWins).reversed());
+                rankings.sort(Comparator.comparingInt(RankingEntry::getWins).reversed());
                 break;
             case "losses":
-                rankings.sort(Comparator.comparingInt(rankingEntry::getLosses));
+                rankings.sort(Comparator.comparingInt(RankingEntry::getLosses));
                 break;
             default:
                 throw new IllegalArgumentException("invalid sorting criteria: "+criteriaString);

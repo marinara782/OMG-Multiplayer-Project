@@ -54,7 +54,12 @@ public class Leaderboard {
         // note: this method may not be needed, as exportLeaderboard may be sufficient
     }
 
-
+    /**
+     * Sorts the rankings based on the criteria like wins/losses
+     * 
+     * @param rankings list of ranking entries
+     * @param criteriaString criteria like wins/losses
+     */
     private void sortRankings(List<rankingEntry> rankings, String criteriaString){
         switch (criteriaString){
             case "wins":

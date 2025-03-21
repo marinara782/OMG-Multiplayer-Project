@@ -1,10 +1,13 @@
 package org.example.leaderboard;
 
+import java.util.Comparator;
 import java.util.List;
 
 import javafx.stage.Stage;
 
 public class Leaderboard {
+
+    private DatabaseInterface databaseInterface = new DatabaseStubLeaderboard;
     public void showLeaderboard(Stage stage) {
     }
 
@@ -52,37 +55,16 @@ public class Leaderboard {
     }
 
 
-    class rankingEntry {
-        private String username;
-        private int score;
-        private int wins;
-        private int losses;
-    
-        // constructor for ranking entry
-        public rankingEntry(String username, int wins, int losses){
-            this.username = username;
-            this.wins = wins;
-            this.losses = losses;
-    
-        }
-    
-    
-        // username getter
-        public String getUsername(){
-            return username;
-        }
-        
-        // score getter
-    /*    public int  getScore(){
-            return score;
-        }*/
-    
-        public int getWins(){
-            return wins;
-        }
-    
-        public int getLosses(){
-            return losses;
+    private void sortRankings(List<rankingEntry> rankings, String criteriaString){
+        switch (criteriaString){
+            case "wins":
+                rankings.sort(Comparator.comparingInt(rankingEntry::getWins).reversed());
+                break;
+            case "losses":
+                rankings.sort(Comparator.comparingInt(rankingEntry::getLosses));
+                break;
+            default:
+                throw new IllegalArgumentException("invalid sorting criteria: "+criteriaString);
         }
     }
 }

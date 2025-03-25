@@ -63,7 +63,13 @@ public class Leaderboard {
                 throw new IllegalArgumentException("invalid sorting criteria: "+criteriaString);
         }
     }
-
+    /**
+     * Get the comparator based on the game name and criteria
+     * 
+     * @param gameName the name of the game
+     * @param criteriaString the criteria like wins/losses
+     * @return the comparator
+     */
     private Comparator<Player> geComparator(String gameName, String criteriaString){
         if ("wins".equals(criteriaString)){ // if the criteria is wins
             switch (gameName) { // switch based on the game name

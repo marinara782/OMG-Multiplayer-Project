@@ -31,7 +31,7 @@ public class Leaderboard {
      * @param sortingCriteria the sorting criteria to view to top players (i.e. sort by checker wins, connect4 losses, etc.)
      */
     public ArrayList<Player> getTopNPlayers(int amount,String sortingCriteria) {
-        sortRankings(sortingCriteria);
+        sortRankings(sortingCriteria); // don't change this
         ArrayList<Player> result = new ArrayList<>();
         for (int i=0; i<amount; i++) {
             result.add(players.get(i));
@@ -51,11 +51,11 @@ public class Leaderboard {
      * @param rankings list of ranking entries
      * @param criteriaString criteria like wins/losses
      */
-    private void sortRankings(List<Player> players, String criteriaString){ // TODO: change the parameter to List<Player> players
+    private void sortRankings(List<Player> players, String criteriaString){ // TODO: change the paramter to just the criteria string
         switch (criteriaString){ // this class will no longer be using comparator but will now use `Player.java` and getComparator method
             case "wins":
                 rankings.sort(Comparator.comparingInt(Player::getWins).reversed());
-                break;
+                break;  
             case "losses":
                 rankings.sort(Comparator.comparingInt(Player::getLosses));
                 break;
@@ -74,7 +74,7 @@ public class Leaderboard {
         if ("wins".equals(criteriaString)){ // if the criteria is wins
             switch (gameName) { // switch based on the game name
                 case "checkers":
-                    return Comparator.comparingInt(Player::getCheckerWins).reversed();
+                    return Comparator.comparingInt(Player::getCheckerWins).reversed(); // return the comparator based on the checker wins. reversed() is used to sort in descending order
                 case "tictactoe":
                     return Comparator.comparingInt(Player::getTictactoeWins).reversed();
                 case "connect4":

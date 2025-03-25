@@ -1,0 +1,28 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2. Branching Strategy
+Each team should work on a separate feature branch before merging into the main branch. Suggested branch names:
+
+feature/authentication
+feature/game-chess
+feature/game-go
+feature/game-tic-tac-toe
+feature/game-connect-four
+feature/game-checkers
+feature/leaderboard
+feature/matchmaking
+feature/networking
+feature/gui
+feature/tests

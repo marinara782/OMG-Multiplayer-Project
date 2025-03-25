@@ -1,13 +1,19 @@
 package org.example.leaderboard;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.example.Player;
 
 import javafx.stage.Stage;
 
 import java.util.List;
 
 public class Leaderboard {
+
+    // list of players
+    private List<Player> players;
     public void showLeaderboard(Stage stage) {
     }
 
@@ -16,7 +22,7 @@ public class Leaderboard {
      * @param player: the player to be added to the leaderboard
      */
     public void addPlayer(Player player) {
-        players.add(player);
+        players.add(player); // add player to the list of players
     }
 
     /**
@@ -38,9 +44,6 @@ public class Leaderboard {
      * Sorts the rankings based on the criteria like wins/losses
      * @param sortingCriteria criteria like checker wins, tictactoe losses, etc
      */
-    private void sortRankings(String sortingCriteria) {
-        //TODO: change current sorting method from using ranking entry to Player attributes
-    }
 
     /**
      * Sorts the rankings based on the criteria like wins/losses

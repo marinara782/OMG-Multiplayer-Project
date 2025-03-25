@@ -51,8 +51,8 @@ public class Leaderboard {
      * @param rankings list of ranking entries
      * @param criteriaString criteria like wins/losses
      */
-    private void sortRankings(List<Player> players, String criteriaString){
-        switch (criteriaString){
+    private void sortRankings(List<Player> players, String criteriaString){ // TODO: change the parameter to List<Player> players
+        switch (criteriaString){ // this class will no longer be using comparator but will now use `Player.java` and getComparator method
             case "wins":
                 rankings.sort(Comparator.comparingInt(Player::getWins).reversed());
                 break;

@@ -1,53 +1,46 @@
 package org.example.leaderboard;
 
 import javafx.stage.Stage;
+import org.example.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Leaderboard {
+
+    private ArrayList<Player> players;
+
     public void showLeaderboard(Stage stage) {
     }
 
     /**
      * Add a player to the leaderboard
-     * @param playerName name of the player to be added
-     * @param playerScore the score of the player (potentially change to be a win-loss-tie format
-     *                    instead of a single score: to be determined later)
+     * @param player: the player to be added to the leaderboard
      */
-    public void addPlayer(String playerName, int playerScore) {
-        // TODO: implement logic to add a player to the leaderboard
+    public void addPlayer(Player player) {
+        players.add(player);
     }
 
     /**
-     * Update the score of a player.
-     * Note: potentially change this or add a new method that adds an integer value to a players current score
-     * @param playerName name of player that's score is to be updated
-     * @param newScore the new score of the player
+     * view the top n players of the leaderboard in a certain sorting criteria
+     * @param amount the amount of players to be viewed (i.e. top 5, bottom 3, etc.)
+     * @param sortingCriteria the sorting criteria to view to top players (i.e. sort by checker wins, connect4 losses, etc.)
      */
-    public void updateScore(String playerName, int newScore) {
-        // TODO: implement logic to update the score of a player
+    public ArrayList<Player> getTopNPlayers(int amount,String sortingCriteria) {
+        sortRankings(sortingCriteria);
+        ArrayList<Player> result = new ArrayList<>();
+        for (int i=0; i<amount; i++) {
+            result.add(players.get(i));
+        }
+
+        return result;
     }
 
     /**
-     * Retrieves the top players based on their score
-     * @param count the number of top players to retrieve
-     * @return a list of top players
+     * Sorts the rankings based on the criteria like wins/losses
+     * @param sortingCriteria criteria like checker wins, tictactoe losses, etc
      */
-    public List<String> getTopPlayers(int count) {
-        // TODO: implement logic to retrieve the top 'count' number of players
-        return null;
-    }
-
-    public void exportLeaderboard(String filePath) {
-        // TODO: implement the logic to export leaderboard data to a file
-        // most most likely will call a file writer class, to be implemented later
-    }
-
-    /**
-     * Displays the leaderboard in a formatted manner
-     */
-    public void displayLeaderboard() {
-        // TODO: implement logic to display the leaderboard
-        // note: this method may not be needed, as exportLeaderboard may be sufficient
+    private void sortRankings(String sortingCriteria) {
+        //TODO: change current sorting method from using ranking entry to Player attributes
     }
 }

@@ -51,16 +51,44 @@ public class Leaderboard {
      * @param rankings list of ranking entries
      * @param criteriaString criteria like wins/losses
      */
-    private void sortRankings(List<RankingEntry> rankings, String criteriaString){
+    private void sortRankings(List<Player> players, String criteriaString){
         switch (criteriaString){
             case "wins":
-                rankings.sort(Comparator.comparingInt(RankingEntry::getWins).reversed());
+                rankings.sort(Comparator.comparingInt(Player::getWins).reversed());
                 break;
             case "losses":
-                rankings.sort(Comparator.comparingInt(RankingEntry::getLosses));
+                rankings.sort(Comparator.comparingInt(Player::getLosses));
                 break;
             default:
                 throw new IllegalArgumentException("invalid sorting criteria: "+criteriaString);
         }
+    }
+
+    private Comparator<Player> geComparator(String gameName, String criteriaString){
+        if ("wins".equals(criteriaString)){ // if the criteria is wins
+            switch (gameName) { // switch based on the game name
+                case "checkers":
+                    return Comparator.comparingInt(Player::getCheckerWins).reversed();
+                case "tictactoe":
+                    return Comparator.comparingInt(Player::getTictactoeWins).reversed();
+                case "connect4":
+                    return Comparator.comparingInt(Player::getConnect4Wins).reversed();
+                default:
+                    throw new IllegalArgumentException("invalid game name: "+gameName);
+            }
+        } else if ("losses".equals(criteriaString)){ // if the criteria is losses
+            switch (gameName) { // switch based on the game name
+                case "checkers":
+                    return Comparator.comparingInt(Player::getCheckerLosses);
+                case "tictactoe":
+                    return Comparator.comparingInt(Player::getTictactoeLosses);
+                case "connect4":
+                    return Comparator.comparingInt(Player::getConncet4Losses);
+                default:
+                    throw new IllegalArgumentException("invalid game name: "+gameName);
+            }
+        } else {
+            throw new IllegalArgumentException("invalid sorting criteria: "+criteriaString);
+        } 
     }
 }

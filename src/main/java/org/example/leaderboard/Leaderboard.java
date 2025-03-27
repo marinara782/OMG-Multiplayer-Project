@@ -60,7 +60,7 @@ public class Leaderboard {
         players.sort(comparator); // sort the players based on the comparator
     }
     /**
-     * Get the comparator based on the game name and criteria
+     * Is a helper method for sortRanking. Get the comparator based on the game name and criteria
      * 
      * @param gameName the name of the game
      * @param criteriaString the criteria like wins/losses

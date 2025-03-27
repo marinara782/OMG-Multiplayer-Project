@@ -10,5 +10,5 @@ public interface  DatabaseInterface {
      * @param gameName name of game like Checkers, tictactoe
      * @return list of ranking entries each containing player name, wins and losses
      */
-    List<RankingEntry> getRankings(String gameName);
+    List<rankingEntry> getRankings(String gameName);
 }

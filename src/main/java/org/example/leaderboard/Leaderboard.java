@@ -8,8 +8,6 @@ import org.example.Player;
 
 import javafx.stage.Stage;
 
-import java.util.List;
-
 public class Leaderboard {
 
     // list of players
@@ -51,17 +49,15 @@ public class Leaderboard {
      * @param rankings list of ranking entries
      * @param criteriaString criteria like wins/losses
      */
-    private void sortRankings(List<Player> players, String criteriaString){ // TODO: change the paramter to just the criteria string
-        switch (criteriaString){ // this class will no longer be using comparator but will now use `Player.java` and getComparator method
-            case "wins":
-                rankings.sort(Comparator.comparingInt(Player::getWins).reversed());
-                break;  
-            case "losses":
-                rankings.sort(Comparator.comparingInt(Player::getLosses));
-                break;
-            default:
-                throw new IllegalArgumentException("invalid sorting criteria: "+criteriaString);
+    private void sortRankings(String criteriaString){ // TODO: change the paramter to just the criteria string
+        String[] parts = criteriaString.split(" "); // split the criteria string into parts so when on button press in GUI, it will be like "sort by checker wins" and this will split it into ["sort", "by", "checker", "wins"]
+        if (parts.length != 2){
+            throw new IllegalArgumentException("Invalid sorting criteria format.");
         }
+        String game = parts[0].toLowerCase(); // get the game name
+        String type = parts[1].toLowerCase(); // get the type of sorting criteria (i.e. wins/losses)
+        Comparator<Player> comparator = geComparator(game, type);
+        players.sort(comparator); // sort the players based on the comparator
     }
     /**
      * Get the comparator based on the game name and criteria

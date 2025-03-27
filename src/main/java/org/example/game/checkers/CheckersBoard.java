@@ -1,23 +1,39 @@
 package org.example.game.checkers;
 
 public class CheckersBoard {
-    private Piece[][] board; // 2D array representing the checkers board
+    private final int SIZE = 8;
+    private int[][] board;
 
     public CheckersBoard() {
-        // Constructor to initialize the board with pieces
-        board = new Piece[8][8]; // Standard 8x8 checkers board could be 10x10 too
-        setupBoard(); // Call method to setup the initial board configuration
+        board = new int[SIZE][SIZE];
+        setupBoard();
     }
-    //Initialized the board with the pieces in their starting positions
+
     private void setupBoard() {
-        // Set up pieces on the board (arrange checkers on their initial positions)
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                // Only use dark squares
+                if ((row + col) % 2 == 1) {
+                    if (row < 3) {
+                        board[row][col] = 1; // 1 = Red pieces (opponent)
+                    } else if (row > 4) {
+                        board[row][col] = 2; // 2 = Black pieces (player)
+                    } else {
+                        board[row][col] = 0; // 0 = Empty playable square
+                    }
+                } else {
+                    board[row][col] = -1; // -1 = Light square, not used
+                }
+            }
+        }
     }
-    //Displays the current state of the board
-    public void displayBoard() {
-        // Logic to display the board (for console or GUI)
-    }
-    // Getter method to retrieve the board array
-    public Piece[][] getBoard() {
-        return board;
+
+    public void printBoard() {
+        for (int[] row : board) {
+            for (int cell : row) {
+                System.out.print(cell + " ");
+            }
+            System.out.println();
+        }
     }
 }

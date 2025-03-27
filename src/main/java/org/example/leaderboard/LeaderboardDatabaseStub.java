@@ -48,7 +48,6 @@ public class LeaderboardDatabaseStub  {
         charlie.setTictactoeLosses(7);
         players.add(charlie);
     }
-    
 
 
 

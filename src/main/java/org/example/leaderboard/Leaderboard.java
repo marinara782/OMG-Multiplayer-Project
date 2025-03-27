@@ -85,7 +85,7 @@ public class Leaderboard {
                 case "tictactoe":
                     return Comparator.comparingInt(Player::getTictactoeLosses);
                 case "connect4":
-                    return Comparator.comparingInt(Player::getConncet4Losses);
+                    return Comparator.comparingInt(Player::getConnect4Losses);
                 default:
                     throw new IllegalArgumentException("invalid game name: "+gameName);
             }

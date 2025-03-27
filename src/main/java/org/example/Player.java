@@ -19,6 +19,44 @@ public class Player {
         this.conncet4Losses = 0;
     }
 
+    // setters for Database Stub
+
+    public void setCheckerWins(int checkerWins) {
+        this.checkerWins = checkerWins;
+    }
+
+
+
+    public void setCheckerLosses(int checkerLosses) {
+        this.checkerLosses = checkerLosses;
+    }
+
+
+
+    public void setTictactoeWins(int tictactoeWins) {
+        this.tictactoeWins = tictactoeWins;
+    }
+
+
+
+    public void setTictactoeLosses(int tictactoeLosses) {
+        this.tictactoeLosses = tictactoeLosses;
+    }
+
+
+
+    public void setConnect4Wins(int connect4Wins) {
+        this.connect4Wins = connect4Wins;
+    }
+
+
+
+    public void setConncet4Losses(int conncet4Losses) {
+        this.conncet4Losses = conncet4Losses;
+    }
+
+
+
     public String getUsername() {
         return username;
     }

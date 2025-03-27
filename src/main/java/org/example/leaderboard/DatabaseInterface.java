@@ -2,8 +2,13 @@ package org.example.leaderboard;
 
 import java.util.List;
 
-public class DatabaseInterface {
-    List<Leaderboard.rankingEntry> getRankings(String gameName){
-        // insert getRankings methods below
-    }
+public interface  DatabaseInterface {
+
+    /**
+     * obtains the list of rankings in a specific game
+     * 
+     * @param gameName name of game like Checkers, tictactoe
+     * @return list of ranking entries each containing player name, wins and losses
+     */
+    List<RankingEntry> getRankings(String gameName);
 }

@@ -3,18 +3,33 @@ package org.example.leaderboard;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LeaderboardDatabaseStub implements DatabaseInterface{
-    // TODO: stub implementation for leaderboard
-
+/**
+ * Stub class for the database interface
+ */
+public class LeaderboardDatabaseStub implements DatabaseInterface {
     @Override
-    public List<Leaderboard.rankingEntry> getRankings(String gameName){
-        // suppose this database stub fetches data from a real database
-        Leaderboard leaderboard = new Leaderboard();
-        List<Leaderboard.rankingEntry> entries = leaderboard.new rankingEntry();
-
-        // checkers game
-            entries.add(leaderboard.new rankingEntry("Alice", 20, 10));
-            entries.add(leaderboard.new rankingEntry("Bob", 21, 5));
+    public List<RankingEntry> getRankings(String gameName){
+        List<RankingEntry> entries = new ArrayList<>();
+        switch (gameName) {
+            case "Tic-Tac-Toe":
+                entries.add(new RankingEntry("Alice", 20, 10));
+                entries.add(new RankingEntry("Bob", 21, 5));
+                entries.add(new RankingEntry("Charlie", 5, 3));
+                break;
+            case "Checkers":
+                entries.add(new RankingEntry("Alice", 2, 1));
+                entries.add(new RankingEntry("Bob", 5, 3));
+                entries.add(new RankingEntry("Charlie", 6, 3));
+                break;
+            case "Connect4":
+                entries.add(new RankingEntry("Alice", 5, 3));
+                entries.add(new RankingEntry("Bob", 6, 4));
+                entries.add(new RankingEntry("Charlie", 7, 8));
+                break;
+            default:
+                break;
         }
+        
+        return entries; // unsorted right now
     }
 }

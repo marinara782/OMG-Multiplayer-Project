@@ -10,15 +10,16 @@ import org.example.Player;
  * Stub class for the database interface
  */
 public class LeaderboardDatabaseStub  {
-    private List<Player> players;
+    private Leaderboard leaderboard;
 
     public LeaderboardDatabaseStub(){
-        players = new ArrayList<>();
+        leaderboard = new Leaderboard();
         initializePlayers();
     }
 
-    public void initializePlayers(){
-    // add Alice    
+    public void initializePlayers() {
+
+        // add Alice
         Player alice = new Player("Alice");
         alice.setCheckerWins(2);
         alice.setCheckerLosses(5);
@@ -26,7 +27,7 @@ public class LeaderboardDatabaseStub  {
         alice.setConnect4Losses(2);
         alice.setTictactoeWins(15);
         alice.setTictactoeLosses(12);
-        players.add(alice);
+        leaderboard.addPlayer(alice);
 
         // add Bob
         Player bob = new Player("Bob");
@@ -36,7 +37,7 @@ public class LeaderboardDatabaseStub  {
         bob.setConnect4Losses(3);
         bob.setTictactoeWins(10);
         bob.setTictactoeLosses(15);
-        players.add(bob);
+        leaderboard.addPlayer(bob);
 
         // add Charlie
         Player charlie = new Player("Charlie");
@@ -46,10 +47,37 @@ public class LeaderboardDatabaseStub  {
         charlie.setConnect4Losses(10);
         charlie.setTictactoeWins(13);
         charlie.setTictactoeLosses(7);
-        players.add(charlie);
+        leaderboard.addPlayer(charlie);
     }
 
+    /**
+     * Get the top N players based on a sorting criterion.
+     * @param amount Number of players to retrieve.
+     * @param sortingCriteria Sorting criteria (e.g., "checkers wins").
+     * @return List of top N players.
+     */
+    public List<Player> getTopPlayers(int amount, String sortingCriteria) {
+        return leaderboard.getTopNPlayers(amount, sortingCriteria);
+    }
 
+    /**
+     * Prints the top N players based on sorting criteria.
+     */
+    public void printTopPlayers(int amount, String sortingCriteria) {
+        List<Player> topPlayers = getTopPlayers(amount, sortingCriteria);
+        System.out.println("\nTop " + amount + " Players by " + sortingCriteria + ":");
+        for (Player p : topPlayers) {
+            System.out.println(p.getUsername() + " - " + sortingCriteria);
+        }
+    }
 
-    
+    public static void main(String[] args) {
+        LeaderboardDatabaseStub stub = new LeaderboardDatabaseStub();
+
+        // Print top 2 players by Checkers Wins
+        stub.printTopPlayers(2, "checkers wins");
+
+        // Print top 2 players by Tic-Tac-Toe Losses
+        stub.printTopPlayers(2, "tictactoe losses");
+    }
 }

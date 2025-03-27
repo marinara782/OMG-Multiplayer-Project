@@ -24,7 +24,7 @@ public class Leaderboard {
     }
 
     /**
-     * view the top n players of the leaderboard in a certain sorting criteria
+     * view the top n players of the leaderboard in a certain sorting criteria (i.e. top 5 checker wins, top 10 tic-tac-toe losses, etc.)
      * @param amount the amount of players to be viewed (i.e. top 5, bottom 3, etc.)
      * @param sortingCriteria the sorting criteria to view to top players (i.e. sort by checker wins, connect4 losses, etc.)
      */
@@ -40,13 +40,6 @@ public class Leaderboard {
 
     /**
      * Sorts the rankings based on the criteria like wins/losses
-     * @param sortingCriteria criteria like checker wins, tictactoe losses, etc
-     */
-
-    /**
-     * Sorts the rankings based on the criteria like wins/losses
-     * 
-     * @param rankings list of ranking entries
      * @param criteriaString criteria like wins/losses
      */
     private void sortRankings(String criteriaString){ // TODO: change the paramter to just the criteria string

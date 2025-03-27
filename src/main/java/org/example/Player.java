@@ -101,7 +101,7 @@ public class Player {
         this.tictactoeWins += 1;
     }
 
-    public void updateTicTacToeLosses() {
+    public void updateTictactoeLosses() {
         this.tictactoeLosses += 1;
     }
 

@@ -1,58 +1,47 @@
 package org.example.leaderboard;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+
+import org.example.Player;
 
 import javafx.stage.Stage;
 
 public class Leaderboard {
 
-    private DatabaseInterface databaseInterface = new DatabaseStubLeaderboard;
+    // list of players
+    private List<Player> players;
     public void showLeaderboard(Stage stage) {
     }
 
     /**
      * Add a player to the leaderboard
-     * @param playerName name of the player to be added
-     * @param playerScore the score of the player (potentially change to be a win-loss-tie format
-     *                    instead of a single score: to be determined later)
+     * @param player: the player to be added to the leaderboard
      */
-    public void addPlayer(String playerName, int playerScore) {
-        // TODO: implement logic to add a player to the leaderboard
+    public void addPlayer(Player player) {
+        players.add(player); // add player to the list of players
     }
 
     /**
-     * Update the score of a player.
-     * Note: potentially change this or add a new method that adds an integer value to a players current score
-     * @param playerName name of player that's score is to be updated
-     * @param newScore the new score of the player
+     * view the top n players of the leaderboard in a certain sorting criteria
+     * @param amount the amount of players to be viewed (i.e. top 5, bottom 3, etc.)
+     * @param sortingCriteria the sorting criteria to view to top players (i.e. sort by checker wins, connect4 losses, etc.)
      */
-    public void updateScore(String playerName, int newScore) {
-        // TODO: implement logic to update the score of a player
+    public ArrayList<Player> getTopNPlayers(int amount,String sortingCriteria) {
+        sortRankings(sortingCriteria); // don't change this
+        ArrayList<Player> result = new ArrayList<>();
+        for (int i=0; i<amount; i++) {
+            result.add(players.get(i));
+        }
+
+        return result;
     }
 
     /**
-     * Retrieves the top players based on their score
-     * @param count the number of top players to retrieve
-     * @return a list of top players
+     * Sorts the rankings based on the criteria like wins/losses
+     * @param sortingCriteria criteria like checker wins, tictactoe losses, etc
      */
-    public List<String> getTopPlayers(int count) {
-        // TODO: implement logic to retrieve the top 'count' number of players
-        return null;
-    }
-
-    public void exportLeaderboard(String filePath) {
-        // TODO: implement the logic to export leaderboard data to a file
-        // most most likely will call a file writer class, to be implemented later
-    }
-
-    /**
-     * Displays the leaderboard in a formatted manner
-     */
-    public void displayLeaderboard() {
-        // TODO: implement logic to display the leaderboard
-        // note: this method may not be needed, as exportLeaderboard may be sufficient
-    }
 
     /**
      * Sorts the rankings based on the criteria like wins/losses
@@ -60,16 +49,48 @@ public class Leaderboard {
      * @param rankings list of ranking entries
      * @param criteriaString criteria like wins/losses
      */
-    private void sortRankings(List<RankingEntry> rankings, String criteriaString){
-        switch (criteriaString){
-            case "wins":
-                rankings.sort(Comparator.comparingInt(RankingEntry::getWins).reversed());
-                break;
-            case "losses":
-                rankings.sort(Comparator.comparingInt(RankingEntry::getLosses));
-                break;
-            default:
-                throw new IllegalArgumentException("invalid sorting criteria: "+criteriaString);
+    private void sortRankings(String criteriaString){ // TODO: change the paramter to just the criteria string
+        String[] parts = criteriaString.split(" "); // split the criteria string into parts so when on button press in GUI, it will be like "sort by checker wins" and this will split it into ["sort", "by", "checker", "wins"]
+        if (parts.length != 2){
+            throw new IllegalArgumentException("Invalid sorting criteria format.");
         }
+        String game = parts[0].toLowerCase(); // get the game name
+        String type = parts[1].toLowerCase(); // get the type of sorting criteria (i.e. wins/losses)
+        Comparator<Player> comparator = geComparator(game, type);
+        players.sort(comparator); // sort the players based on the comparator
+    }
+    /**
+     * Is a helper method for sortRanking. Get the comparator based on the game name and criteria
+     * 
+     * @param gameName the name of the game
+     * @param criteriaString the criteria like wins/losses
+     * @return the comparator
+     */
+    private Comparator<Player> geComparator(String gameName, String criteriaString){
+        if ("wins".equals(criteriaString)){ // if the criteria is wins
+            switch (gameName) { // switch based on the game name
+                case "checkers":
+                    return Comparator.comparingInt(Player::getCheckerWins).reversed(); // return the comparator based on the checker wins. reversed() is used to sort in descending order
+                case "tictactoe":
+                    return Comparator.comparingInt(Player::getTictactoeWins).reversed();
+                case "connect4":
+                    return Comparator.comparingInt(Player::getConnect4Wins).reversed();
+                default:
+                    throw new IllegalArgumentException("invalid game name: "+gameName);
+            }
+        } else if ("losses".equals(criteriaString)){ // if the criteria is losses
+            switch (gameName) { // switch based on the game name
+                case "checkers":
+                    return Comparator.comparingInt(Player::getCheckerLosses);
+                case "tictactoe":
+                    return Comparator.comparingInt(Player::getTictactoeLosses);
+                case "connect4":
+                    return Comparator.comparingInt(Player::getConncet4Losses);
+                default:
+                    throw new IllegalArgumentException("invalid game name: "+gameName);
+            }
+        } else {
+            throw new IllegalArgumentException("invalid sorting criteria: "+criteriaString);
+        } 
     }
 }

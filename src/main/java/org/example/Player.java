@@ -7,7 +7,7 @@ public class Player {
     private int tictactoeWins;
     private int tictactoeLosses;
     private int connect4Wins;
-    private int conncet4Losses;
+    private int connect4Losses;
 
     public Player(String username) {
         this.username = username;
@@ -16,7 +16,7 @@ public class Player {
         this.tictactoeWins = 0;
         this.tictactoeLosses = 0;
         this.connect4Wins = 0;
-        this.conncet4Losses = 0;
+        this.connect4Losses = 0;
     }
 
     // setters for Database Stub
@@ -51,11 +51,11 @@ public class Player {
 
 
 
-    public void setConncet4Losses(int conncet4Losses) {
-        this.conncet4Losses = conncet4Losses;
+    public void setConnect4Losses(int connect4Losses) {
+        this.connect4Losses = connect4Losses;
     }
 
-
+    // getters
 
     public String getUsername() {
         return username;
@@ -85,8 +85,8 @@ public class Player {
         return connect4Wins;
     }
 
-    public int getConncet4Losses() {
-        return conncet4Losses;
+    public int getConnect4Losses() {
+        return connect4Losses;
     }
 
     public void updateCheckerWins() {
@@ -110,6 +110,6 @@ public class Player {
     }
 
     public void updateConnect4Losses() {
-        this.conncet4Losses += 1;
+        this.connect4Losses += 1;
     }
 }

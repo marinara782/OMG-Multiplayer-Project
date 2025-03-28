@@ -6,8 +6,8 @@ public class Server {
             case "LOGIN";
                 return "Login Successful";
             break;
-            case "CONNECT"
-                return "Connection Successful";
+            case "CGS"
+                return "New Game Created";
         }
     }
 }

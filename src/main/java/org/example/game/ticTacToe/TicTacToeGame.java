@@ -2,6 +2,16 @@ package org.example.game.ticTacToe;
 
 public class TicTacToeGame {
 
+    private char[][] board;
+    private char player;
+    private int sizeOfTheBoard;
+
+    public TicTacToeGame()
+    {
+
+    }
+
+
     public boolean checkForWin() {
         return false;
     }

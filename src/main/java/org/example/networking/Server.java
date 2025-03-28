@@ -1,7 +1,7 @@
 package org.example.networking;
 
 public class Server {
-    public String processRequest(String request) {
+    public static String processRequest(String request) {
         switch (request) {
             case "LOGIN":
                 return "Login Successful";

@@ -2,35 +2,11 @@ package org.example.authentication;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
 public class UserDatabaseStub {
 
-    public String[] getUserIds(){
-         String [] temp = null;
-         return temp;
-    }
-
-    // First is userID
-    // Second is password
-    public Map<String, String> getProfiles(){
-        Map<String, String> temp = null;
-        return temp;
-    }
-    public String getPassword(String user){
-        Map<String, String> temp = getProfiles();
-        try{
-            return temp.get(user);
-        } catch (Exception e){
-            return null;
-        }
-    }
-
-    public boolean Authenticate_user(){
-        return false;
-    }
 
     //return a list of registered users
     public List<User> registered_users_list() throws FileNotFoundException {
@@ -53,11 +29,66 @@ public class UserDatabaseStub {
 
     }
 
-    public boolean verify_account(){
+    public boolean Authenticate_user(String username, String password, String email, String phone) throws FileNotFoundException {
+        List<User> users = registered_users_list();
+        boolean userExists = false;
+        for (User user : users) {
+            if(user.getUsername().equals(username) && user.getPassword().equals(password) && user.getEmail().equals(email) && user.getPhone().equals(phone)) {
+                userExists = true;
+                break;
+            }
+        }
+        return userExists;
+    }
+
+    public boolean verify_account(String username, String password) throws FileNotFoundException {
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if(user.getUsername().equals(username) && user.getPassword().equals(password)){
+                return true;
+            }
+        }
         return false;
     }
 
-    public boolean verify_password(){
+
+    public boolean verify_username(String username) throws FileNotFoundException {
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if(user.getUsername().equals(username)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean verify_password(String username, String password) throws FileNotFoundException {
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if(user.getUsername().equals(username) && user.getPassword().equals(password)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean verify_email(String username, String email) throws FileNotFoundException {
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if(user.getUsername().equals(username) && user.getEmail().equals(email)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean verify_phone_number(String username, String phone) throws FileNotFoundException {
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if(user.getUsername().equals(username)){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -65,29 +96,28 @@ public class UserDatabaseStub {
         return false;
     }
 
-    public boolean verify_username(){
-        return false;
-    }
-
-    public void update_username(){
-
-    }
-
-    public void update_password(){
+    public void update_username(String oldUsername, String newUsername) throws FileNotFoundException {
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if(user.getUsername().equals(oldUsername)){
+                user.setUsername(newUsername);
+            }
+        }
 
     }
 
-    public void verify_email(){
-
-    }
-
-    public void verify_phone_number(){
-
+    public void update_password(String username, String oldPassword, String newPassword) throws FileNotFoundException {
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if(user.getUsername().equals(username) && user.getPassword().equals(oldPassword)){
+                user.setPassword(newPassword);
+            }
+        }
     }
 
     public void linked_phone_number(){
 
     }
-
+    
 
 }

@@ -38,6 +38,7 @@ public class ChatManager {
             }
         }
 
+
         private static String randomResponse(String[] responses) {
             return responses[random.nextInt(responses.length)];
         }
@@ -54,5 +55,23 @@ public class ChatManager {
             }
             scanner.close();
         }
+    }
+
+
+    // STUB METHODS
+    public void resetBot() {
+        // TODO: Implement logic to reset the bot state
+    }
+
+    public void notifyGameOver(boolean playerWon) {
+        // TODO: Trigger appropriate final response based on outcome
+    }
+
+    public void sendPlayerMove(String move) {
+        // TODO: Could be used to analyze strategy or store history
+    }
+
+    public void handleRestart() {
+        // TODO: Reset internal data and send restart acknowledgment
     }
 }

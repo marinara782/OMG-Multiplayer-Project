@@ -8,7 +8,9 @@ public class TicTacToeGame {
 
     public TicTacToeGame()
     {
-
+        this.sizeOfTheBoard = 3;
+        this.player = 'O';
+        this.board = new char[3][3];
     }
 
 

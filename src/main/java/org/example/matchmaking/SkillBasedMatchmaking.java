@@ -13,4 +13,11 @@ public class SkillBasedMatchmaking {
     //There needs to be a certain amount of time that a player has to wait. In extreme cases,
     //a player may need to be told that a match could not be found at this time.
 
+    //High-level Structure
+    //1. Iterate through all players looking for a match
+    //2. Identify their respective skill levels
+    //3. Match players with similar skill levels
+    //4. If match found, remove those players from the pool of players looking for match
+    //5. Ensure two players that are incompatible do not get matched repeatedly, and handle
+    //other extremities as well.
 }

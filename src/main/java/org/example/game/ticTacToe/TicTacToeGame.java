@@ -13,10 +13,14 @@ public class TicTacToeGame {
         this.board = new char[3][3];
         //We also have to initialize the cells of the board, they need to be empty at first
 
-        for(short i = 0; 3>i;i++)
-        {
-            for(short j = 0; 3 > i; i++)
-            {
+       BoardInitialization();
+    }
+
+    private void BoardInitialization()
+    {
+        board = new char[3][3];
+        for(short i = 0; 3>i;i++) {
+            for (short j = 0; 3 > i; i++) {
                 board[i][j] = '/';
             }
         }

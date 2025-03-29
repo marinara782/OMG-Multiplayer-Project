@@ -51,122 +51,122 @@ public class LeaderboardDatabaseStub  {
 
         // add Dave
         Player dave = new Player("Dave");
-        charlie.setCheckerWins(35);
-        charlie.setCheckerLosses(12);
-        charlie.setConnect4Wins(39);
-        charlie.setConnect4Losses(45);
-        charlie.setTictactoeWins(11);
-        charlie.setTictactoeLosses(19);
+        dave.setCheckerWins(35);
+        dave.setCheckerLosses(12);
+        dave.setConnect4Wins(39);
+        dave.setConnect4Losses(45);
+        dave.setTictactoeWins(11);
+        dave.setTictactoeLosses(19);
         leaderboard.addPlayer(dave);
 
         // add Erick
         Player erick = new Player("Erick");
-        charlie.setCheckerWins(43);
-        charlie.setCheckerLosses(56);
-        charlie.setConnect4Wins(86);
-        charlie.setConnect4Losses(14);
-        charlie.setTictactoeWins(56);
-        charlie.setTictactoeLosses(98);
+        erick.setCheckerWins(43);
+        erick.setCheckerLosses(56);
+        erick.setConnect4Wins(86);
+        erick.setConnect4Losses(14);
+        erick.setTictactoeWins(56);
+        erick.setTictactoeLosses(98);
         leaderboard.addPlayer(erick);
 
         // add Fred
         Player fred = new Player("Fred");
-        charlie.setCheckerWins(42);
-        charlie.setCheckerLosses(9);
-        charlie.setConnect4Wins(12);
-        charlie.setConnect4Losses(2);
-        charlie.setTictactoeWins(98);
-        charlie.setTictactoeLosses(45);
+        fred.setCheckerWins(42);
+        fred.setCheckerLosses(9);
+        fred.setConnect4Wins(12);
+        fred.setConnect4Losses(2);
+        fred.setTictactoeWins(98);
+        fred.setTictactoeLosses(45);
         leaderboard.addPlayer(fred);
 
         // add Gary
         Player gary = new Player("Gary");
-        charlie.setCheckerWins(45);
-        charlie.setCheckerLosses(22);
-        charlie.setConnect4Wins(33);
-        charlie.setConnect4Losses(66);
-        charlie.setTictactoeWins(55);
-        charlie.setTictactoeLosses(44);
+        gary.setCheckerWins(45);
+        gary.setCheckerLosses(22);
+        gary.setConnect4Wins(33);
+        gary.setConnect4Losses(66);
+        gary.setTictactoeWins(55);
+        gary.setTictactoeLosses(44);
         leaderboard.addPlayer(gary);
 
         // add Haley
         Player haley = new Player("Haley");
-        charlie.setCheckerWins(3);
-        charlie.setCheckerLosses(16);
-        charlie.setConnect4Wins(4);
-        charlie.setConnect4Losses(10);
-        charlie.setTictactoeWins(5);
-        charlie.setTictactoeLosses(24);
+        haley.setCheckerWins(3);
+        haley.setCheckerLosses(16);
+        haley.setConnect4Wins(4);
+        haley.setConnect4Losses(10);
+        haley.setTictactoeWins(5);
+        haley.setTictactoeLosses(24);
         leaderboard.addPlayer(haley);
 
         // add Isiah
         Player isiah = new Player("Isiah");
-        charlie.setCheckerWins(34);
-        charlie.setCheckerLosses(12);
-        charlie.setConnect4Wins(65);
-        charlie.setConnect4Losses(34);
-        charlie.setTictactoeWins(90);
-        charlie.setTictactoeLosses(83);
+        isiah.setCheckerWins(34);
+        isiah.setCheckerLosses(12);
+        isiah.setConnect4Wins(65);
+        isiah.setConnect4Losses(34);
+        isiah.setTictactoeWins(90);
+        isiah.setTictactoeLosses(83);
         leaderboard.addPlayer(isiah);
 
         // add Jack
         Player jack = new Player("Jack");
-        charlie.setCheckerWins(53);
-        charlie.setCheckerLosses(23);
-        charlie.setConnect4Wins(23);
-        charlie.setConnect4Losses(53);
-        charlie.setTictactoeWins(13);
-        charlie.setTictactoeLosses(98);
+        jack.setCheckerWins(53);
+        jack.setCheckerLosses(23);
+        jack.setConnect4Wins(23);
+        jack.setConnect4Losses(53);
+        jack.setTictactoeWins(13);
+        jack.setTictactoeLosses(98);
         leaderboard.addPlayer(jack);
 
         // add Kylie
         Player kylie = new Player("Kylie");
-        charlie.setCheckerWins(2);
-        charlie.setCheckerLosses(12);
-        charlie.setConnect4Wins(42);
-        charlie.setConnect4Losses(1);
-        charlie.setTictactoeWins(41);
-        charlie.setTictactoeLosses(24);
+        kylie.setCheckerWins(2);
+        kylie.setCheckerLosses(12);
+        kylie.setConnect4Wins(42);
+        kylie.setConnect4Losses(1);
+        kylie.setTictactoeWins(41);
+        kylie.setTictactoeLosses(24);
         leaderboard.addPlayer(kylie);
 
         // add Lebron
         Player lebron = new Player("Lebron");
-        charlie.setCheckerWins(84);
-        charlie.setCheckerLosses(1);
-        charlie.setConnect4Wins(23);
-        charlie.setConnect4Losses(12);
-        charlie.setTictactoeWins(24);
-        charlie.setTictactoeLosses(17);
+        lebron.setCheckerWins(84);
+        lebron.setCheckerLosses(1);
+        lebron.setConnect4Wins(23);
+        lebron.setConnect4Losses(12);
+        lebron.setTictactoeWins(24);
+        lebron.setTictactoeLosses(17);
         leaderboard.addPlayer(lebron);
 
         // add Mathew
         Player mathew = new Player("Mathew");
-        charlie.setCheckerWins(43);
-        charlie.setCheckerLosses(12);
-        charlie.setConnect4Wins(23);
-        charlie.setConnect4Losses(45);
-        charlie.setTictactoeWins(37);
-        charlie.setTictactoeLosses(85);
+        mathew.setCheckerWins(43);
+        mathew.setCheckerLosses(12);
+        mathew.setConnect4Wins(23);
+        mathew.setConnect4Losses(45);
+        mathew.setTictactoeWins(37);
+        mathew.setTictactoeLosses(85);
         leaderboard.addPlayer(mathew);
 
         // add Nick
         Player nick = new Player("Nick");
-        charlie.setCheckerWins(12);
-        charlie.setCheckerLosses(23);
-        charlie.setConnect4Wins(75);
-        charlie.setConnect4Losses(24);
-        charlie.setTictactoeWins(74);
-        charlie.setTictactoeLosses(25);
+        nick.setCheckerWins(12);
+        nick.setCheckerLosses(23);
+        nick.setConnect4Wins(75);
+        nick.setConnect4Losses(24);
+        nick.setTictactoeWins(74);
+        nick.setTictactoeLosses(25);
         leaderboard.addPlayer(nick);
 
         // add Obi
         Player obi = new Player("Obi");
-        charlie.setCheckerWins(56);
-        charlie.setCheckerLosses(34);
-        charlie.setConnect4Wins(36);
-        charlie.setConnect4Losses(53);
-        charlie.setTictactoeWins(37);
-        charlie.setTictactoeLosses(23);
+        obi.setCheckerWins(56);
+        obi.setCheckerLosses(34);
+        obi.setConnect4Wins(36);
+        obi.setConnect4Losses(53);
+        obi.setTictactoeWins(37);
+        obi.setTictactoeLosses(23);
         leaderboard.addPlayer(obi);
     }
 
@@ -177,7 +177,26 @@ public class LeaderboardDatabaseStub  {
         List<Player> topPlayers = leaderboard.getTopNPlayers(amount, sortingCriteria);
         System.out.println("\nTop " + amount + " Players by " + sortingCriteria + ":");
         for (Player p : topPlayers) {
-            System.out.println(p.getUsername() + " - " + sortingCriteria);
+            switch (sortingCriteria) {
+                case "checkers wins":
+                    System.out.println(p.getUsername() + " - " + p.getCheckerWins());
+                    break;
+                case "checkers losses":
+                    System.out.println(p.getUsername() + " - " + p.getCheckerLosses());
+                    break;
+                case "tictactoe wins":
+                    System.out.println(p.getUsername() + " - " + p.getTictactoeWins());
+                    break;
+                case "tictactoe losses":
+                    System.out.println(p.getUsername() + " - " + p.getTictactoeLosses());
+                    break;
+                case "connect4 wins":
+                    System.out.println(p.getUsername() + " - " + p.getConnect4Wins());
+                    break;
+                case "connect4 losses":
+                    System.out.println(p.getUsername() + " - " + p.getConnect4Losses());
+                    break;
+            }
         }
     }
 

@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 public class Leaderboard {
 
     // list of players
-    private List<Player> players;
+    private List<Player> players = new ArrayList<>();
     public void showLeaderboard(Stage stage) {
     }
 
@@ -49,7 +49,7 @@ public class Leaderboard {
         }
         String game = parts[0].toLowerCase(); // get the game name
         String type = parts[1].toLowerCase(); // get the type of sorting criteria (i.e. wins/losses)
-        Comparator<Player> comparator = geComparator(game, type);
+        Comparator<Player> comparator = getComparator(game, type);
         players.sort(comparator); // sort the players based on the comparator
     }
     /**
@@ -59,7 +59,7 @@ public class Leaderboard {
      * @param criteriaString the criteria like wins/losses
      * @return the comparator
      */
-    private Comparator<Player> geComparator(String gameName, String criteriaString){
+    private Comparator<Player> getComparator(String gameName, String criteriaString){
         if ("wins".equals(criteriaString)){ // if the criteria is wins
             switch (gameName) { // switch based on the game name
                 case "checkers":

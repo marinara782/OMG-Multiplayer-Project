@@ -1,6 +1,14 @@
 package org.example.networking;
 
 public class Server {
+    private int port;
+    private boolean isRunning;
+
+
+
+
+
+    //all code below this may be removed as we make our cases more complex / separate them into individual methods
     public static String processRequest(String request) {
         switch (request) {
             case "LOGIN":

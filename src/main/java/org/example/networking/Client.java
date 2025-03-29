@@ -64,10 +64,6 @@ public class Client {
         response = Server.processRequest("CHAT");
         System.out.println(response);
 
-        System.out.println("Sending disconnect request...");
-        response = Server.processRequest("DISCONNECT");
-        System.out.println(response);
-
         System.out.println("Sending game complete...");
         response = Server.processRequest("COMPLETE");
         System.out.println(response);

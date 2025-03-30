@@ -375,7 +375,7 @@ public class MainMenuWindow {
                 GameModeSelection.GameMode ChosenGameMode = gameModeDialog.showAndWait();
 
                 // Create game with chosen symbol
-                new GameWindow(stage, new TicTacToeGame(chosenSymbol, ChosenGameMode), currentUser);
+//                new GameWindow(stage, new TicTacToeGame(chosenSymbol, ChosenGameMode), currentUser);
                 break;
             case "connectfour", "connectFour", "connect-four":
                 new GameWindow(stage, new ConnectFourGame(), currentUser);

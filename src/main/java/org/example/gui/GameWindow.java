@@ -13,17 +13,13 @@ import javafx.util.Duration;
 import org.example.authentication.UserProfile;
 import org.example.game.checkers.CheckersBoard;
 import org.example.game.checkers.CheckersGame;
-import org.example.game.connectFour.ConnectFourBoard;
 import org.example.game.connectFour.ConnectFourGame;
 import org.example.game.connectFour.ConnectFourGameModeSelection;
-import org.example.game.ticTacToe.TicTacToeBoard;
 import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.networking.GameSession;
 import org.example.utilities.ChatManager;
 import org.example.utilities.GameTimer;
-import javafx.scene.media.AudioClip;
 
-import java.io.File;
 
 public class GameWindow {
     private final Stage stage;
@@ -324,15 +320,15 @@ public class GameWindow {
         if (gameInstance instanceof TicTacToeGame) {
             System.out.println("Setting up TicTacToe board");
 
-            TicTacToeBoard ticTacToeBoard = new TicTacToeBoard((TicTacToeGame) gameInstance, stage, currentUser);
+//            TicTacToeBoard ticTacToeBoard = new TicTacToeBoard((TicTacToeGame) gameInstance, stage, currentUser);
             // Add the TicTacToeBoard to the gameBoard VBox
-            gameBoard.getChildren().add(ticTacToeBoard);
+//            gameBoard.getChildren().add(ticTacToeBoard);
         } else if (gameInstance instanceof ConnectFourGame) {
             System.out.println("Setting up ConnectFour board");
             ConnectFourGameModeSelection connectFourGameModeSelection = new ConnectFourGameModeSelection(stage, currentUser);
 
-            ConnectFourBoard connectFourBoard = new ConnectFourBoard((ConnectFourGame) gameInstance, stage, currentUser, connectFourGameModeSelection.playAgainstComputer, connectFourGameModeSelection.playerIsRed, connectFourGameModeSelection.difficulty);
-            gameBoard.getChildren().add(connectFourBoard);
+//            ConnectFourBoard connectFourBoard = new ConnectFourBoard((ConnectFourGame) gameInstance, stage, currentUser, connectFourGameModeSelection.playAgainstComputer, connectFourGameModeSelection.playerIsRed, connectFourGameModeSelection.difficulty);
+//            gameBoard.getChildren().add(connectFourBoard);
         } else if (gameInstance instanceof CheckersGame) {
             System.out.println("Setting up Checkers board");
 

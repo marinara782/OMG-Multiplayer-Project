@@ -33,26 +33,32 @@
             <!-- Spacer to push elements apart -->
             <Region prefHeight="20.0" prefWidth="513.0" HBox.hgrow="ALWAYS" />
         </HBox>
+
       <Hyperlink layoutX="283.0" layoutY="381.0" text="Forget Password" />
-      <Text fill="#3498db" layoutX="265.0" layoutY="576.0" strokeType="OUTSIDE" strokeWidth="0.0" text="© 2025 OMG. All Rights Reserved." wrappingWidth="132.0">
+
+        <Text fill="#3498db" layoutX="265.0" layoutY="576.0" strokeType="OUTSIDE" strokeWidth="0.0" text="© 2025 OMG. All Rights Reserved." wrappingWidth="132.0">
          <font>
             <Font name="System Bold" size="8.0" />
          </font>
       </Text>
-      <ImageView fitHeight="138.0" fitWidth="323.0" layoutX="68.0" layoutY="87.0" opacity="0.86" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../../../OneDrive/Desktop/11154439.jpg" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="138.0" fitWidth="323.0" layoutX="261.0" layoutY="87.0" opacity="0.86" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../../../OneDrive/Desktop/11151414.jpg" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="138.0" fitWidth="323.0" layoutX="444.0" layoutY="87.0" opacity="0.86" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../../../../../OneDrive/Desktop/4460454.jpg" />
-         </image>
-      </ImageView>
+        <!--
+        <ImageView fitHeight="138.0" fitWidth="323.0" layoutX="68.0" layoutY="87.0" opacity="0.86" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../../../../OneDrive/Desktop/11154439.jpg" />
+            </image>
+        </ImageView>
+
+        <ImageView fitHeight="138.0" fitWidth="323.0" layoutX="261.0" layoutY="87.0" opacity="0.86" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../../../../OneDrive/Desktop/11151414.jpg" />
+            </image>
+        </ImageView>
+
+        <ImageView fitHeight="138.0" fitWidth="323.0" layoutX="444.0" layoutY="87.0" opacity="0.86" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../../../../OneDrive/Desktop/4460454.jpg" />
+            </image>
+        </ImageView>
+        Game Images -->
     </children>
 </AnchorPane>

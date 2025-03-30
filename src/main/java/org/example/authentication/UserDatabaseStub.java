@@ -1,8 +1,6 @@
 package org.example.authentication;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class UserDatabaseStub {
@@ -92,31 +90,44 @@ public class UserDatabaseStub {
         return false;
     }
 
-    public boolean passwords_match(){
-        return false;
+    private void write_users_to_file(List<User> users) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("temp.txt"))) {
+            for (User user : users) {
+                writer.println(user.getUsername() + ", " + user.getPassword() + ", " + user.getEmail() + ", " + user.getPhone());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void update_username(String oldUsername, String newUsername) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
-            if(user.getUsername().equals(oldUsername)){
+            if (user.getUsername().equals(oldUsername)) {
                 user.setUsername(newUsername);
             }
         }
-
+        write_users_to_file(users);
     }
 
     public void update_password(String username, String oldPassword, String newPassword) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
-            if(user.getUsername().equals(username) && user.getPassword().equals(oldPassword)){
+            if (user.getUsername().equals(username) && user.getPassword().equals(oldPassword)) {
                 user.setPassword(newPassword);
             }
         }
+        write_users_to_file(users);
     }
 
-    public void linked_phone_number(){
-
+    public void linked_phone_number(String username, String newPhone) throws FileNotFoundException {
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                user.setPhone(newPhone);
+            }
+        }
+        write_users_to_file(users);
     }
     
 

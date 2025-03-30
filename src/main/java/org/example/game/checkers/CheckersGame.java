@@ -13,6 +13,10 @@ public class CheckersGame {
     // false = black's turn, true = red's turn
     private boolean isRedTurn;
 
+    // Currently selected piece for movement (set by GUI click)
+    private int selectedRow = -1;
+    private int selectedCol = -1;
+
     /**
      * Constructor initializes the board and sets the starting turn.
      */
@@ -59,10 +63,53 @@ public class CheckersGame {
     }
 
     /**
-     * Placeholder for future move logic.
+     * Selects a piece to move. This should be triggered by GUI click.
+     * Only selects if it's the current player's piece.
+     */
+    public void selectPiece(int row, int col) {
+        if (!isValidPosition(row, col)) return;
+
+        int piece = board[row][col];
+        if ((isRedTurn && piece > 0) || (!isRedTurn && piece < 0)) {
+            selectedRow = row;
+            selectedCol = col;
+        }
+    }
+
+    /**
+     * Attempts to move a selected piece to the given position.
+     * Only supports basic forward diagonal moves for non-king pieces.
      */
     public void makeMove(int row, int col) {
-        // TODO: Implement logic to move
+        if (selectedRow == -1 || selectedCol == -1) return;
+
+        int piece = board[selectedRow][selectedCol];
+
+        // Ensure it's the correct player's piece
+        if ((isRedTurn && piece <= 0) || (!isRedTurn && piece >= 0)) return;
+
+        // Ensure target is in bounds and empty
+        if (!isValidPosition(row, col) || board[row][col] != 0) return;
+
+        int direction = isRedTurn ? 1 : -1;
+
+        // Check for valid diagonal move (1 step forward)
+        if (row == selectedRow + direction && Math.abs(col - selectedCol) == 1) {
+            board[row][col] = piece;
+            board[selectedRow][selectedCol] = 0;
+
+            selectedRow = -1;
+            selectedCol = -1;
+
+            isRedTurn = !isRedTurn; // Switch turns
+        }
+    }
+
+    /**
+     * Validates if a position is on the board.
+     */
+    private boolean isValidPosition(int row, int col) {
+        return row >= 0 && row < 8 && col >= 0 && col < 8;
     }
 
     /**

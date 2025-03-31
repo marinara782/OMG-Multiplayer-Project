@@ -1,4 +1,4 @@
-//package org.example.game.ticTacToe;
+package org.example.game.ticTacToe;
 //
 //import javafx.animation.PauseTransition;
 //import javafx.fxml.FXML;
@@ -19,7 +19,7 @@
 //import org.example.authentication.UserProfile;
 //import org.example.gui.MainMenuWindow;
 //
-//public class TicTacToeController {
+public class TicTacToeController {}
 //    @FXML
 //    private GridPane boardGrid; // Your game board grid
 //

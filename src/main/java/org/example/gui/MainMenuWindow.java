@@ -347,7 +347,7 @@ public class MainMenuWindow {
                 new GameWindow(stage, new TicTacToeGame(), currentUser);
                 break;
             case "connectfour", "connectFour", "connect-four":
-                new GameWindow(stage, new ConnectFourGame(), currentUser);
+                new GameWindow(stage, new ConnectFourGame(1,6,7,4), currentUser);
                 break;
             case "checkers":
                 new GameWindow(stage, new CheckersGame(), currentUser);

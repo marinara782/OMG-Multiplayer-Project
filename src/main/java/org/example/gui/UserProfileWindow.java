@@ -23,7 +23,7 @@ public class UserProfileWindow {
     private BorderPane mainLayout;
     private UserProfile userProfile;
     private TabPane tabPane;
-
+// testing commit
     // Mock data for the profile
     private Map<String, Integer> gameStats;
     private Map<String, Integer> ranks;

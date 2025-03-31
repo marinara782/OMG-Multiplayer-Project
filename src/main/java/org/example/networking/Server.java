@@ -23,6 +23,7 @@ public class Server {
         }
     }
 
+    //Checks if server is running, creates a new game session, adds the session to the list of active sessions and returns the session
     public GameSession createGameSession(String gameType){
         if (!isRunning){
             System.out.println("Cannot create a game session because server is not running.");

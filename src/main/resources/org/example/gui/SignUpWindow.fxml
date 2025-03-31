@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="593.0" prefWidth="660.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.gui.SignUpWindowController">
+    <children>
+        <!-- Username Field -->
+        <TextField fx:id="usernameField" layoutX="253.0" layoutY="217.0" prefHeight="31.0" prefWidth="155.0" promptText="Username" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-prompt-text-fill: #95a5a6;" />
+
+        <!-- Password Field -->
+        <PasswordField fx:id="passwordField" layoutX="253.0" layoutY="275.0" prefHeight="31.0" prefWidth="155.0" promptText="Password" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-prompt-text-fill: #95a5a6;" />
+
+        <!-- Sign Up Button -->
+        <Button fx:id="Register" layoutX="256.0" layoutY="334.0" onAction="#handleRegister" prefHeight="25.0" prefWidth="149.0" style="-fx-background-color: #2ecc71; -fx-text-fill: white;" text="Register" />
+        <HBox alignment="CENTER_LEFT" layoutX="19.0" layoutY="14.0" prefHeight="35.0" prefWidth="625.0" spacing="20" style="-fx-background-color: #1a2530; -fx-padding: 10; -fx-background-radius: 5;">
+            <!-- Logo Label -->
+            <Label style="-fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: #3498db;" text="OMG" />
+
+            <!-- Spacer to push elements apart -->
+            <Region prefHeight="20.0" prefWidth="513.0" HBox.hgrow="ALWAYS" />
+        </HBox>
+
+        <Text fill="#3498db" layoutX="265.0" layoutY="576.0" strokeType="OUTSIDE" strokeWidth="0.0" text="© 2025 OMG. All Rights Reserved." wrappingWidth="132.0">
+         <font>
+            <Font name="System Bold" size="8.0" />
+         </font>
+      </Text>
+      <Label layoutX="241.0" layoutY="156.0" prefHeight="26.0" prefWidth="179.0" style="-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #3498db;" text="Sign up / Registration">
+         <font>
+            <Font size="5.0" />
+         </font>
+      </Label>
+        <!--
+        <ImageView fitHeight="138.0" fitWidth="323.0" layoutX="68.0" layoutY="87.0" opacity="0.86" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../../../../OneDrive/Desktop/11154439.jpg" />
+            </image>
+        </ImageView>
+
+        <ImageView fitHeight="138.0" fitWidth="323.0" layoutX="261.0" layoutY="87.0" opacity="0.86" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../../../../OneDrive/Desktop/11151414.jpg" />
+            </image>
+        </ImageView>
+
+        <ImageView fitHeight="138.0" fitWidth="323.0" layoutX="444.0" layoutY="87.0" opacity="0.86" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../../../../../OneDrive/Desktop/4460454.jpg" />
+            </image>
+        </ImageView>
+        Game Images -->
+    </children>
+</AnchorPane>

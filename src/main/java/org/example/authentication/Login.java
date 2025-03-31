@@ -24,6 +24,7 @@ public class Login extends UserDatabaseStub{
         //get current password to change
         String currentPassword = getCurrentPassword(username);
 
+        //update password
         update_password(username, currentPassword, newPassword);
         System.out.println("password changed sucessfully");
         return true;

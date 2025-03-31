@@ -1,9 +1,38 @@
 package org.example.networking;
 
+import java.util.ArrayList;
+import java.util.List;
 public class Server {
+    //server is going to be expecting network connections to come in through this port
     private int port;
     private boolean isRunning;
+    private List<GameSession> activeSessions;
 
+    public Server(){
+        this.activeSessions = new ArrayList<>();
+        this.isRunning = false;
+    }
+
+    public void start(int port){
+        if (!isRunning){
+            this.port = port;
+            this.isRunning = true;
+            System.out.println("Server has started on port "+port);
+        }else{
+            System.out.println("Server is already running!");
+        }
+    }
+
+    public GameSession createGameSession(String gameType){
+        if (!isRunning){
+            System.out.println("Cannot create a game session because server is not running.");
+            return null;
+        }
+        GameSession newGameSession = new GameSession;
+        activeSessions.add(newGameSession);
+        System.out.println("New "+gameType+" game session created!");
+        return newGameSession;
+    }
 
 
 

@@ -40,6 +40,11 @@ public class Client {
         }
     }
 
+    public void sendGameMove(String moveData){
+        //check if move is valid by calling game logic system
+        //if move is valid, update game state and send to all players
+    }
+
 
 
     //everything below this may be removed later

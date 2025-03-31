@@ -1,7 +1,7 @@
 package org.example.game.connectFour;
 
 public class ConnectFourBoard {
-    public static ConnectFourBoard Game;
+    private static ConnectFourBoard Game;
     public static final int EMP = Game.EMP;
     /**
      * Connect-L Red Piece

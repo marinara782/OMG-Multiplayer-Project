@@ -2,6 +2,7 @@ package org.example.gui;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -20,7 +21,7 @@ public class LoginWindowController {
     @FXML private PasswordField passwordField;
     @FXML private Button loginButton;
     @FXML private Button signupButton;
-    //@FXML private Button guestButton; Might add in Later
+    @FXML private Button guestButton;
 
     private final UserDatabaseStub userDatabase = new UserDatabaseStub();
     private Stage stage;
@@ -67,10 +68,12 @@ public class LoginWindowController {
 
     private void OpenMainMenu(UserProfile user) {
         try {
-            MainMenuWindow mainMenu = new MainMenuWindow(stage,user);
-            mainMenu.show();
+            Stage mainMenuStage = new Stage(); // Create a new Stage for the main menu
+            MainMenuWindow mainMenu = new MainMenuWindow(mainMenuStage, user);
+            mainMenuStage.show(); // Show the new main menu stage
 
-            Stage loginStage = (Stage) signupButton.getScene().getWindow();
+            // Close the login window
+            Stage loginStage = (Stage) loginButton.getScene().getWindow();
             loginStage.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -107,11 +110,26 @@ public class LoginWindowController {
     }
 
     public void handleForgetPassword(ActionEvent actionEvent) {
-        Stage loginStage = (Stage) signupButton.getScene().getWindow();
-        loginStage.close();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("ForgetPasswordWindow.fxml"));
+            Parent root = loader.load();
+            Stage ForgetPasswordStage = new Stage();
+            ForgetPasswordStage.setTitle("Sign Up");
+            ForgetPasswordStage.setScene(new Scene(root));
+            ForgetPasswordStage.show();
+
+            // Close the login window using the button's stage
+            Stage loginStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            loginStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to load the sign-up window.");
+        }
+
     }
 
     public void handleJoinGuest(ActionEvent actionEvent) {
-        OpenMainMenu(null);
+        UserProfile currentUser = new UserProfile(null,null,null,null);
+        OpenMainMenu(currentUser);
     }
 }

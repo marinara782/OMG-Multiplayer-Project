@@ -132,11 +132,11 @@ public class LeaderboardDatabaseStub  {
         // add Lebron
         Player lebron = new Player("Lebron");
         lebron.setCheckerWins(84);
-        lebron.setCheckerLosses(1);
+        lebron.setCheckerLosses(0);
         lebron.setConnect4Wins(23);
-        lebron.setConnect4Losses(12);
+        lebron.setConnect4Losses(0);
         lebron.setTictactoeWins(24);
-        lebron.setTictactoeLosses(17);
+        lebron.setTictactoeLosses(0);
         leaderboard.addPlayer(lebron);
 
         // add Mathew

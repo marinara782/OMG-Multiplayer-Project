@@ -89,8 +89,9 @@ public class ConnectFourGame {
         int counter = 0;
         for(int row = 0; row <= rows - goal; row++){
             for (int col = 0; col <= columns - goal; col++){
+                counter = 0;
                 for(int i = 0 ; i < goal; i++){
-                    if(this.board[row + i][col + 1] == player){
+                    if(this.board[row + i][col + i] == player){
                         counter++;
                     }else {
                         break;

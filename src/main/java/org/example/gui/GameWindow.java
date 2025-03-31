@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -527,14 +528,17 @@ public class GameWindow {
                 if(connectFourGame.checkWinnerHorizontal() == true || connectFourGame.checkWinnerVertical() == true || connectFourGame.checkWinnerDiagonal() == true){
                     if (player == 1) {
                         showGameOverDialog("Player Red Wins!" , true);
+                        return;
                     }
                     else if (player == 2) {
                         showGameOverDialog("Player Blue Wins!" , true);
+                        return;
                     }
                 }
 
                 if(connectFourGame.checkDraw() ==  true){
                     showGameOverDialog("Draw!" , false);
+                    return;
                 }
 
                 connectFourGame.switchTurn();
@@ -554,9 +558,43 @@ public class GameWindow {
 
     private void updateBoardUI(int row, int column, int player) {
 
+        GridPane boardContainer = (GridPane) ((VBox)gameBoard.getChildren().get(0)).getChildren().get(1);
+        StackPane cell = (StackPane) getNodeByRowColumnIndex(row, column, boardContainer);
+        Region piece = new Region();
+        piece.setPrefSize(50, 50);
+        if(player == 1) {
+            piece.setStyle("-fx-background-color: #e74c3c; -fx-background-radius: 25; ");
+        }else if (player == 2) {
+            piece.setStyle("-fx-background-color: #3498db; -fx-background-radius: 25; ");
+        }
+        cell.getChildren().add(piece);
+
 
     }
+
+    private Node getNodeByRowColumnIndex(int row, int column, GridPane boardContainer) {
+        for(Node node: boardContainer.getChildren()){
+            if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex((Node) node) == column){
+                return node;
+            }
+        }
+        return null;
+    }
+
     private void updateTurnLabel() {
+        int currentPlayer = connectFourGame.getPlayer();
+        String label = "";
+        if(currentPlayer == 1){
+            label = "Its Red's Turn";
+            turnLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #e74c3c; -fx-font-weight: bold;");
+        }
+        else if(currentPlayer == 2){
+            label = "Its Blue's Turn";
+            turnLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #3498db; -fx-font-weight: bold;");
+        }
+        turnLabel.setText(label);
+
+
     }
 
     private void selectCheckersPiece(int row, int col) {

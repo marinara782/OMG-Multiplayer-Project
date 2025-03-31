@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.authentication.UserProfile;
 import org.example.game.checkers.CheckersGame;
+import org.example.game.connectFour.ConnectFourBoard;
 import org.example.game.connectFour.ConnectFourGame;
 import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.networking.GameSession;
@@ -32,12 +33,20 @@ public class GameWindow {
     private Label turnLabel;
     private Label timerLabel;
 
+    //connectFour
+    private ConnectFourGame connectFourGame;
+
     public GameWindow(Stage stage, Object gameInstance, UserProfile currentUser) {
         this.stage = stage;
         this.gameInstance = gameInstance;
         this.currentUser = currentUser;
         this.gameSession = new GameSession();
         this.gameTimer = new GameTimer();
+
+        //ConnectFourGame logic
+        if(gameInstance instanceof ConnectFourGame) {
+            this.connectFourGame = (ConnectFourGame) gameInstance;
+        }
 
         // Initialize chatManager based on selected game
         if (gameInstance instanceof TicTacToeGame) {
@@ -498,9 +507,56 @@ public class GameWindow {
     }
 
     private void makeConnectFourMove(int column) {
-        System.out.println("Dropping piece in column: " + column);
-        // This would call the actual game logic in a real implementation
-        simulateOpponentTurn();
+//        System.out.println("Dropping piece in column: " + column);
+//        // This would call the actual game logic in a real implementation
+//        simulateOpponentTurn();
+        
+        if(connectFourGame == null) {
+            return;
+        }
+        
+        int[][] board = connectFourGame.getBoard();
+        int rows  = connectFourGame.getRows();
+        int player = connectFourGame.getPlayer();
+        
+        for(int row = rows - 1; row >= 0 ;  row--){
+            if(board[row][column] == 0 ){
+                connectFourGame.makeMove(row, column);
+                updateBoardUI(row, column, player);
+
+                if(connectFourGame.checkWinnerHorizontal() == true || connectFourGame.checkWinnerVertical() == true || connectFourGame.checkWinnerDiagonal() == true){
+                    if (player == 1) {
+                        showGameOverDialog("Player Red Wins!" , true);
+                    }
+                    else if (player == 2) {
+                        showGameOverDialog("Player Blue Wins!" , true);
+                    }
+                }
+
+                if(connectFourGame.checkDraw() ==  true){
+                    showGameOverDialog("Draw!" , false);
+                }
+
+                connectFourGame.switchTurn();
+                updateTurnLabel();
+
+                return;
+            }
+        }
+
+        Alert columnFullAlert = new Alert(Alert.AlertType.WARNING);
+        columnFullAlert.setTitle("Invalid Move");
+        columnFullAlert.setHeaderText("This Column is full");
+        columnFullAlert.setContentText("Please select another column");
+        columnFullAlert.showAndWait();
+    }
+
+
+    private void updateBoardUI(int row, int column, int player) {
+
+
+    }
+    private void updateTurnLabel() {
     }
 
     private void selectCheckersPiece(int row, int col) {

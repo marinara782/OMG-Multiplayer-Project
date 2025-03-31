@@ -2,7 +2,6 @@ package org.example.gui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
@@ -12,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.authentication.UserProfile;
-import org.example.leaderboard.Leaderboard;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,7 +21,7 @@ public class UserProfileWindow {
     private BorderPane mainLayout;
     private UserProfile userProfile;
     private TabPane tabPane;
-// testing commit
+
     // Mock data for the profile
     private Map<String, Integer> gameStats;
     private Map<String, Integer> ranks;
@@ -78,15 +76,70 @@ public class UserProfileWindow {
     }
 
     private Node createSettingsPane() {
-        return null;
+        VBox settingsPane = new VBox(20);
+        settingsPane.setPadding(new Insets(20));
+        settingsPane.setStyle("-fx-background-color: #2c3e50;");
+
+        Label settingsTitle = new Label("Settings");
+        settingsTitle.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
+
+        Button changePasswordButton = new Button("Change Password");
+        changePasswordButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
+
+        Button notificationSettingsButton = new Button("Notification Settings");
+        notificationSettingsButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
+
+        settingsPane.getChildren().addAll(settingsTitle, changePasswordButton, notificationSettingsButton);
+
+        return settingsPane;
     }
 
     private Node createMatchHistoryPane() {
-        return null;
+        VBox matchHistoryPane = new VBox(20);
+        matchHistoryPane.setPadding(new Insets(20));
+        matchHistoryPane.setStyle("-fx-background-color: #2c3e50;");
+
+        Label matchHistoryTitle = new Label("Match History");
+        matchHistoryTitle.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
+
+        // Add logic to fetch and display match history here
+        ListView<String> matchListView = new ListView<>();
+        matchListView.getItems().addAll(
+                "Won against PlayerA in Tic-Tac-Toe (Feb 12, 2023)",
+                "Lost against PlayerB in Connect Four (Feb 10, 2023)",
+                "Draw with PlayerC in Checkers (Feb 8, 2023)"
+        );
+        matchListView.setStyle("-fx-control-inner-background: #1a2530; -fx-text-fill: white;");
+
+        matchHistoryPane.getChildren().addAll(matchHistoryTitle, matchListView);
+
+        return matchHistoryPane;
     }
 
     private Node createStatsPane() {
-        return null;
+        VBox statsPane = new VBox(20);
+        statsPane.setPadding(new Insets(20));
+        statsPane.setStyle("-fx-background-color: #2c3e50;");
+
+        Label statsTitle = new Label("Game Stats");
+        statsTitle.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
+
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
+        barChart.setTitle("Games Played by Type");
+        barChart.setLegendVisible(false);
+
+        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        for (Map.Entry<String, Integer> entry : gameStats.entrySet()) {
+            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+        }
+
+        barChart.getData().add(series);
+
+        statsPane.getChildren().addAll(statsTitle, barChart);
+
+        return statsPane;
     }
 
     private HBox createHeader() {
@@ -105,10 +158,10 @@ public class UserProfileWindow {
         Label nameLabel = new Label(userProfile.getUsername());
         nameLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-        Label joinDateLabel = new Label("Member since: January 15, 2023");
+        Label joinDateLabel = new Label("Member since: " + userProfile.getJoinDate());
         joinDateLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #bdc3c7;");
 
-        Label statusLabel = new Label("Online");
+        Label statusLabel = new Label(userProfile.getStatus());
         statusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #2ecc71;");
 
         userInfo.getChildren().addAll(nameLabel, joinDateLabel, statusLabel);
@@ -227,9 +280,21 @@ public class UserProfileWindow {
     }
 
     private VBox createStatBox(String title, String value, String color) {
-        return null;
+        VBox statBox = new VBox(5);
+        statBox.setStyle("-fx-background-color: " + color + "; -fx-background-radius: 5; -fx-padding: 10;");
+
+        Label titleLabel = new Label(title);
+        titleLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+
+        Label valueLabel = new Label(value);
+        valueLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;");
+
+        statBox.getChildren().addAll(titleLabel, valueLabel);
+
+        return statBox;
     }
 
     public void show() {
+        stage.show();
     }
 }

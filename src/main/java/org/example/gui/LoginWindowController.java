@@ -23,12 +23,16 @@ public class LoginWindowController {
     //@FXML private Button guestButton; Might add in Later
 
     private final UserDatabaseStub userDatabase = new UserDatabaseStub();
+    private Stage stage;
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
 
     //will check the information inputted into the text field and password field and login the user if correct info inputted
     public void handleLogin(ActionEvent actionEvent) {
        String username = usernameField.getText();
-        String password = passwordField.getText();
-
+       String password = passwordField.getText();
 
         if (username.isEmpty()) {
             showAlert("Error", "Username cannot be empty. Please fill in your username!");
@@ -49,21 +53,25 @@ public class LoginWindowController {
                 showAlert("Error", "Incorrect password. Please try again.");
             } else {
                 showAlert("Success", "Login successful!");
-                User user = new User(username, password, "", ""); // Fetch full user details if needed
-                OpenMainMenu(user);
+                UserProfile authenticatedUser = new UserProfile(username, password, "", ""); // Fetch full user details if needed
+                OpenMainMenu(authenticatedUser);
             }
-        } catch (FileNotFoundException e) {
-            showAlert("Error", "User database not found.");
-            e.printStackTrace();
+        } catch(FileNotFoundException e) {
+        showAlert("Error", "User database not found.");
+        e.printStackTrace();
+        } catch(IOException e) {
+        showAlert("Error", "Error loading user data.");
+        e.printStackTrace();
         }
     }
 
-    private void OpenMainMenu() {
+    private void OpenMainMenu(UserProfile user) {
         try {
-            Stage stage = (Stage) usernameField.getScene().getWindow();
-            UserProfile currentUser = new UserProfile(      );
-            MainMenuWindow mainMenuWindow = new MainMenuWindow(stage, currentUser);
-            mainMenuWindow.show();
+            MainMenuWindow mainMenu = new MainMenuWindow(stage,user);
+            mainMenu.show();
+
+            Stage loginStage = (Stage) signupButton.getScene().getWindow();
+            loginStage.close();
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Error", "Failed to load the main menu.");
@@ -75,13 +83,17 @@ public class LoginWindowController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("SignUpWindow.fxml"));
             Parent root = loader.load();
-
             Stage signUpStage = new Stage();
             signUpStage.setTitle("Sign Up");
             signUpStage.setScene(new Scene(root));
             signUpStage.show();
+
+            // Close the login window using the button's stage
+            Stage loginStage = (Stage) signupButton.getScene().getWindow();
+            loginStage.close();
         } catch (IOException e) {
             e.printStackTrace();
+            showAlert("Error", "Failed to load the sign-up window.");
         }
     }
 
@@ -94,6 +106,12 @@ public class LoginWindowController {
         alert.showAndWait();
     }
 
-//    public void guestButton(ActionEvent actionEvent) {}
+    public void handleForgetPassword(ActionEvent actionEvent) {
+        Stage loginStage = (Stage) signupButton.getScene().getWindow();
+        loginStage.close();
+    }
 
+    public void handleJoinGuest(ActionEvent actionEvent) {
+        OpenMainMenu(null);
+    }
 }

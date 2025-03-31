@@ -20,11 +20,11 @@ public class HelloApplication extends Application {
         loginStage.show();
 
         // Assuming you already have a UserProfile object (replace with actual logic)
-        UserProfile currentUser = new UserProfile(); // Or get the actual user
+       // UserProfile currentUser = new UserProfile(); // Or get the actual user
 
         // Create and show the MainMenuWindow with the stage and user
-        MainMenuWindow mainMenuWindow = new MainMenuWindow(stage, currentUser);
-        mainMenuWindow.show();
+        //MainMenuWindow mainMenuWindow = new MainMenuWindow(stage, currentUser);
+       // mainMenuWindow.show();
     }
 
     public static void main(String[] args) {

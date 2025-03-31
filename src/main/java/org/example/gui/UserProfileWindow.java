@@ -13,7 +13,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.authentication.UserProfile;
 import org.example.leaderboard.Leaderboard;
-//test
+
 import java.util.HashMap;
 import java.util.Map;
 

@@ -40,9 +40,24 @@ public class TicTacToeGame {
         //Diagonal 2:
         //So we could have a diagonal win from the left side (Diagonal Part 1) or we could have a diagonal win form the right side, which is the following:
 
-        if((board[2][2] == player) && (board[1][1] == player) && (board[2][0] == player))
+        if((board[0][2] == player) && (board[1][1] == player) && (board[2][0] == player))
             return true; // true meaning, this is a win, if condition is fulfilled
 
+        //For Columns
+        for(short i = 0; 3 > i;i++)
+        {
+            if((board[0][i] == player) && board[1][i] == player && board[2][i] == player)
+                return true;
+        }
+
+        //For Rows
+        for(short i = 0; 3 > i;i++)
+        {
+            if((board[i][0] == player) && board[i][1] == player && board[i][2] == player)
+                return true;
+        }
+
+        return false;
     }
 
     public boolean isBoardFull() {

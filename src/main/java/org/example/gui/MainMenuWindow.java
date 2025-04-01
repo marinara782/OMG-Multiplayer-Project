@@ -347,7 +347,9 @@ public class MainMenuWindow {
                 new GameWindow(stage, new TicTacToeGame(), currentUser);
                 break;
             case "connectfour", "connectFour", "connect-four":
-                new GameWindow(stage, new ConnectFourGame(1,6,7,4), currentUser);
+                boolean vsComputer = showConnectFourModeDialog();
+                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, vsComputer), currentUser);
+                //new GameWindow(stage, new ConnectFourGame(1,6,7,4), currentUser);
                 break;
             case "checkers":
                 new GameWindow(stage, new CheckersGame(), currentUser);
@@ -355,6 +357,40 @@ public class MainMenuWindow {
             default:
                 System.out.println("Unknown game type: " + gameType);
         }
+    }
+
+    private boolean showConnectFourModeDialog() {
+        Alert modeDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        modeDialog.setTitle("Choose Game Mode");
+        modeDialog.setHeaderText("Select Connect Four Mode");
+        modeDialog.setContentText("Do you want to play against the computer or another player?");
+
+        ButtonType vsComputerButton = new ButtonType("Computer");
+        ButtonType multiplayerButton = new ButtonType("Multiplayer (Same Device)");
+
+        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        modeDialog.getButtonTypes().setAll(vsComputerButton, multiplayerButton);
+
+
+        ButtonType result = modeDialog.showAndWait().orElse(multiplayerButton);
+
+/*/
+        modeDialog.showAndWait().ifPresent(response -> {
+            boolean vsComputer;
+            if (response == vsComputerButton) {
+                // Single Player
+                vsComputer = true;
+                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, vsComputer), currentUser);
+            } else {
+                //Local Multiplayer
+                vsComputer = false;
+                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, vsComputer), currentUser);
+            }
+        });
+
+ */
+        return result == vsComputerButton;
     }
 
     private void openLeaderboard() {

@@ -524,11 +524,11 @@ public class GameWindow {
         int player = connectFourGame.getPlayer();
         
         for(int row = rows - 1; row >= 0 ;  row--){
-            if(board[row][column] == 0 ){
+            if(board[row][column] == ConnectFourBoard.Empty ){
                 connectFourGame.makeMove(row, column);
                 updateBoardUI(row, column, player);
 
-                if(connectFourGame.checkWinnerHorizontal() == true || connectFourGame.checkWinnerVertical() == true || connectFourGame.checkWinnerDiagonal() == true){
+                if(connectFourGame.checkWinnerHorizontal() || connectFourGame.checkWinnerVertical() || connectFourGame.checkWinnerDiagonal()){
                     if (player == 1) {
                         showGameOverDialog("Player Red Wins!" , true);
                         return;
@@ -539,7 +539,7 @@ public class GameWindow {
                     }
                 }
 
-                if(connectFourGame.checkDraw() ==  true){
+                if(connectFourGame.checkDraw()){
                     showGameOverDialog("Draw!" , false);
                     return;
                 }
@@ -547,8 +547,10 @@ public class GameWindow {
                 connectFourGame.switchTurn();
                 updateTurnLabel();
 
-                // Computer (AI) move if mode is single-player
-                makeComputerMove(); // Call this to trigger AI move
+                // **Only** do AI move if vsComputer == true **and** it's now the AI's turn
+                if (connectFourGame.isVsComputer() && connectFourGame.getPlayer() == ConnectFourBoard.Blue) {
+                    simulateComputerMove();
+                }
 
                 return;
             }
@@ -596,6 +598,9 @@ public class GameWindow {
                     if (connectFourGame.checkDraw()) {
                         showGameOverDialog("Draw!", false);
                         return;
+                    }
+                    if (connectFourGame.isVsComputer()) {
+                        makeComputerMove();
                     }
 
                     connectFourGame.switchTurn();
@@ -736,4 +741,31 @@ public class GameWindow {
         MainMenuWindow mainMenu = new MainMenuWindow(stage, currentUser);
         mainMenu.show();
     }
+
+    private void simulateComputerMove() {
+        // Simple random AI logic:
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), e -> {
+            int[][] board = connectFourGame.getBoard();
+            int rows = connectFourGame.getRows();
+            int cols = connectFourGame.getColumns();
+            int player = connectFourGame.getPlayer();
+
+            // Find valid columns
+            List<Integer> validCols = new ArrayList<>();
+            for (int col = 0; col < cols; col++) {
+                if (board[0][col] == ConnectFourBoard.Empty) {
+                    validCols.add(col);
+                }
+            }
+
+            // If no valid columns, do nothing
+            if (validCols.isEmpty()) return;
+
+            // Choose random column
+            int randomCol = validCols.get((int) (Math.random() * validCols.size()));
+            makeConnectFourMove(randomCol);
+        }));
+        timeline.play();
+    }
+
 }

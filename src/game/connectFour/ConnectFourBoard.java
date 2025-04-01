@@ -1,7 +1,5 @@
 package game.connectFour;
 
-import static org.example.game.connectFour.ConnectFourBoard.Game;
-
 public class ConnectFourBoard {
     public static final int EMP = Game.EMP;
     /**

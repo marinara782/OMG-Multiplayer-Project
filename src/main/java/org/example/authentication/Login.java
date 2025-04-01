@@ -24,4 +24,24 @@ public class Login {
             return false;
         }
     }
+
+    private static boolean loggedIn = true;
+
+    public static void logout(){
+        if (loggedIn){
+            System.out.println("Logging out..");
+            loggedIn = false;
+            returnToLoginScreen();
+        } else {
+            System.out.println("No user is currently logged in.");
+        }
+    }
+
+    private static void returnToLoginScreen(){
+        System.out.println("Return to the login screen...");
+        // GUI must implement a method to load the login UI
+
+    }
+
+
 }

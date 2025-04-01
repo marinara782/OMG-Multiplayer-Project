@@ -35,6 +35,11 @@ public class Server {
         return newGameSession;
     }
 
+    public List<GameSession> getActiveSessions() {
+        return new ArrayList<>(activeSessions);
+    }
+
+
 
 
 

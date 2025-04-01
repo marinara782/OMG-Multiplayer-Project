@@ -2,7 +2,6 @@ package org.example.utilities;
 
 import java.util.*;
 
-
 public class GameTimer {
     private long phaseStartTime;
     private long pausedTime;

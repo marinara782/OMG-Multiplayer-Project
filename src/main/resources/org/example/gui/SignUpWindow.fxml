@@ -56,19 +56,19 @@
         <!--
         <ImageView fitHeight="138.0" fitWidth="323.0" layoutX="68.0" layoutY="87.0" opacity="0.86" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../../../../../OneDrive/Desktop/11154439.jpg" />
+                <Image url="@../../../../../../../OneDrive/Desktop/CheckersIMG.jpg" />
             </image>
         </ImageView>
 
         <ImageView fitHeight="138.0" fitWidth="323.0" layoutX="261.0" layoutY="87.0" opacity="0.86" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../../../../../OneDrive/Desktop/11151414.jpg" />
+                <Image url="@../../../../../../../OneDrive/Desktop/TicTacToeIMG.jpg" />
             </image>
         </ImageView>
 
         <ImageView fitHeight="138.0" fitWidth="323.0" layoutX="444.0" layoutY="87.0" opacity="0.86" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@../../../../../../../OneDrive/Desktop/4460454.jpg" />
+                <Image url="@../../../../../../../OneDrive/Desktop/Connect4IMG.jpg" />
             </image>
         </ImageView>
         Game Images -->

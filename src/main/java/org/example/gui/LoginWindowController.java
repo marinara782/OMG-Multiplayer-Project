@@ -129,7 +129,7 @@ public class LoginWindowController {
     }
 
     public void handleJoinGuest(ActionEvent actionEvent) {
-        UserProfile currentUser = new UserProfile(null,null,null,null);
+        UserProfile currentUser = new UserProfile("Guest",null,null,null);
         OpenMainMenu(currentUser);
     }
 }

@@ -60,8 +60,29 @@ public class TicTacToeGame {
         return false;
     }
 
-    public boolean isBoardFull() {
-        return false;
+    public boolean isBoardFull()
+    {
+        //We return true if the board is full
+        //And we return false if its not full, so if at least one cell is empty, we return false
+
+        for(short row = 0; 3>row;row++)
+        {
+            for(short col = 0; 3>col;col++)
+            {
+                if(board[row][col] == '/')
+                    return false;
+                else
+                    continue;
+            }
+        }
+        //The above for loop goes through every single cell on board and checks if its empty or not.
+        //A cell is empty if it equals "/".
+        //If at any point we find a cell that equals "/", then we return false, meaning the board is not full as there is at least one spot empty
+        //Our goal is not to check how many cells are empty, but rather, to see if there is any empty cell
+
+        return true;
+        //if no cells are empty, then we don't execute the return false statement which would get us out of the function, and therefore we reach the return true statement
+        //If we reach the return true statement, then it means the board is full, and there are no empty cells.
     }
 
     public boolean getOpponentSymbol() {

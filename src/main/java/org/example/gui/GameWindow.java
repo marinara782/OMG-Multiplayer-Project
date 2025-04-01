@@ -20,6 +20,9 @@ import org.example.networking.GameSession;
 import org.example.utilities.ChatManager;
 import org.example.utilities.GameTimer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameWindow {
     private Stage stage;
     private Scene scene;
@@ -544,6 +547,9 @@ public class GameWindow {
                 connectFourGame.switchTurn();
                 updateTurnLabel();
 
+                // Computer (AI) move if mode is single-player
+                makeComputerMove(); // Call this to trigger AI move
+
                 return;
             }
         }
@@ -554,6 +560,53 @@ public class GameWindow {
         columnFullAlert.setContentText("Please select another column");
         columnFullAlert.showAndWait();
     }
+
+
+    private void makeComputerMove() {
+        int player = connectFourGame.getPlayer();
+
+        // Delay to simulate thinking
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), e -> {
+            int[][] board = connectFourGame.getBoard();
+            int rows = connectFourGame.getRows();
+
+            // Simple random AI to pick a valid column
+            List<Integer> validCols = new ArrayList<>();
+            for (int col = 0; col < connectFourGame.getColumns(); col++) {
+                if (board[0][col] == ConnectFourBoard.Empty) {
+                    validCols.add(col);
+                }
+            }
+
+            if (validCols.isEmpty()) return;
+
+            int randomCol = validCols.get((int)(Math.random() * validCols.size()));
+
+            // Drop piece in that column
+            for (int row = rows - 1; row >= 0 ; row--) {
+                if (board[row][randomCol] == ConnectFourBoard.Empty) {
+                    connectFourGame.makeMove(row, randomCol);
+                    updateBoardUI(row, randomCol, player);
+
+                    if (connectFourGame.checkWinnerHorizontal() || connectFourGame.checkWinnerVertical() || connectFourGame.checkWinnerDiagonal()) {
+                        showGameOverDialog((player == 1 ? "Player Red Wins!" : "Computer Wins!"), true);
+                        return;
+                    }
+
+                    if (connectFourGame.checkDraw()) {
+                        showGameOverDialog("Draw!", false);
+                        return;
+                    }
+
+                    connectFourGame.switchTurn();
+                    updateTurnLabel();
+                    break;
+                }
+            }
+        }));
+        timeline.play();
+    }
+
 
 
     private void updateBoardUI(int row, int column, int player) {

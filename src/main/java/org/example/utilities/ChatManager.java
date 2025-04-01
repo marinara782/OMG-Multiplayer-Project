@@ -112,21 +112,96 @@ public class ChatManager {
         System.out.println("[LOG - " + eventType + "] " + timestamp + ": " + details);
     }
 
+    // ===== NETWORKING SIMULATION STUBS =====
+
+    public void sendMessage(String message) {
+        if (!connected) {
+            System.out.println("[ERROR] Cannot send message. Disconnected.");
+            return;
+        }
+        simulateLatency();
+        if (simulatePacketLoss()) {
+            System.out.println("[SEND FAILED] Message lost: " + message);
+            return;
+        }
+        System.out.println("[SEND] " + message);
+        logEvent("Message Sent", message);
+    }
+
+    public String receiveMessage() {
+        if (!connected) {
+            System.out.println("[ERROR] Cannot receive message. Disconnected.");
+            return null;
+        }
+        simulateLatency();
+        String[] serverMessages = {
+                "Welcome!",
+                "Ping acknowledged.",
+                "Opponent has joined.",
+                "You have been disconnected.",
+                "Game in progress..."
+        };
+        String message = serverMessages[random.nextInt(serverMessages.length)];
+        System.out.println("[RECEIVE] " + message);
+        logEvent("Message Received", message);
+        return message;
+    }
+
+    public boolean simulateAck(String messageId) {
+        simulateLatency();
+        if (simulatePacketLoss()) {
+            System.out.println("[ACK] Lost for message ID: " + messageId);
+            return false;
+        }
+        System.out.println("[ACK] Received for message ID: " + messageId);
+        return true;
+    }
+
+    public boolean performHandshake() {
+        simulateLatency();
+        if (!connected) {
+            System.out.println("[HANDSHAKE] Failed. Not connected.");
+            return false;
+        }
+        System.out.println("[HANDSHAKE] Successful.");
+        logEvent("Handshake", "Connection handshake completed.");
+        return true;
+    }
+
+    public void keepAlivePing() {
+        if (!connected) {
+            System.out.println("[KEEP-ALIVE] Ping failed. Disconnected.");
+            return;
+        }
+        simulateLatency();
+        System.out.println("[KEEP-ALIVE] Ping -> Pong successful.");
+        logEvent("KeepAlive", "Ping response received.");
+    }
+
+    public void syncClientState(Map<String, String> clientData) {
+        System.out.println("[SYNC] Sending client state...");
+        for (Map.Entry<String, String> entry : clientData.entrySet()) {
+            System.out.println(" > " + entry.getKey() + ": " + entry.getValue());
+        }
+        logEvent("Sync", "Client state sent to server.");
+    }
+
     // ===== GAME STATE STUBS =====
+
     public void resetBot() {
-        // TODO: Reset internal state
+        System.out.println("[BOT] Resetting internal state...");
     }
 
     public void notifyGameOver(boolean playerWon) {
-        // TODO: Trigger final response
+        System.out.println("[BOT] Game over. Player won: " + playerWon);
     }
 
     public void sendPlayerMove(String move) {
-        // TODO: Analyze or record strategy
+        System.out.println("[BOT] Received player move: " + move);
     }
 
     public void handleRestart() {
-        // TODO: Reset and acknowledge
+        System.out.println("[BOT] Game restarting...");
     }
 
     // ===== TIC TAC TOE BOT CLASS =====

@@ -2,9 +2,7 @@ package org.example.utilities;
 
 import java.util.*;
 
-/**
- * A general-purpose game timer that supports turn-based, round-based, or real-time games.
- */
+
 public class GameTimer {
     private long phaseStartTime;
     private long pausedTime;

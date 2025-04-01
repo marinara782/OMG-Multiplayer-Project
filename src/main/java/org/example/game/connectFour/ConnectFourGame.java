@@ -1,5 +1,7 @@
 package org.example.game.connectFour;
 
+import java.util.ArrayList;
+
 public class ConnectFourGame {
 
     public int player;
@@ -7,6 +9,7 @@ public class ConnectFourGame {
     public int columns;
     public int goal;
     public int[][] board;
+    public ArrayList<int[]> winningCells = new ArrayList<>();
 
     public ConnectFourGame(int player, int rows, int columns, int goal) {
         this.player = player;
@@ -14,6 +17,10 @@ public class ConnectFourGame {
         this.columns = columns;
         this.goal = goal;
         this.board = ConnectFourBoard.createBoard(rows, columns);
+    }
+
+    public ArrayList<int[]> getWinningCells() {
+        return winningCells;
     }
 
     public int[][] getBoard() {
@@ -51,6 +58,13 @@ public class ConnectFourGame {
         else if(player == ConnectFourBoard.Blue){
             player = ConnectFourBoard.Red;
         }
+    }
+    public boolean checkWinner() {
+        this.winningCells.clear();
+        if(checkWinnerHorizontal() == true || checkWinnerVertical() == true || checkWinnerDiagonal() == true){
+            return true;
+        }
+        return false;
     }
     public boolean checkWinnerHorizontal() {
 

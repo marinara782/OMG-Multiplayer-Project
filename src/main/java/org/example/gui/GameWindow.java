@@ -594,7 +594,6 @@ public class GameWindow {
         }
         turnLabel.setText(label);
 
-
     }
 
     private void selectCheckersPiece(int row, int col) {

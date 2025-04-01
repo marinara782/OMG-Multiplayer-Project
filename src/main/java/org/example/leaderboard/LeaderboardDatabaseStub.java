@@ -131,11 +131,11 @@ public class LeaderboardDatabaseStub  {
 
         // add Lebron
         Player lebron = new Player("Lebron");
-        lebron.setCheckerWins(84);
+        lebron.setCheckerWins(90);
         lebron.setCheckerLosses(0);
-        lebron.setConnect4Wins(23);
+        lebron.setConnect4Wins(93);
         lebron.setConnect4Losses(0);
-        lebron.setTictactoeWins(24);
+        lebron.setTictactoeWins(67);
         lebron.setTictactoeLosses(0);
         leaderboard.addPlayer(lebron);
 
@@ -196,6 +196,15 @@ public class LeaderboardDatabaseStub  {
                 case "connect4 losses":
                     System.out.println(p.getUsername() + " - " + p.getConnect4Losses());
                     break;
+                case "total wins":
+                    System.out.println(p.getUsername() + " - " + p.getTotalWins());
+                    break;
+                case "total losses":
+                    System.out.println(p.getUsername() + " - " + p.getTotalLosses());
+                case "win percentage":
+                    double winPercentage = p.getWinPercentage();
+                    String percentFormat = String.format("%.2f%%", winPercentage * 100);
+                    System.out.println(p.getUsername() + " - " + percentFormat);
             }
         }
     }
@@ -220,5 +229,13 @@ public class LeaderboardDatabaseStub  {
 
         // Print top 5 players by connect4 Losses
         stub.printTopPlayers(5, "connect4 losses");
+
+        // Print top 5 players with most wins
+        stub.printTopPlayers(5, "total wins");
+
+        // print top 4 players with most losses
+        stub.printTopPlayers(4, "total losses");
+
+        stub.printTopPlayers(7, "win percentage");
     }
 }

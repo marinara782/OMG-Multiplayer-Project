@@ -7,4 +7,5 @@ module org.example.gui {
 
     opens org.example.gui to javafx.fxml;
     exports org.example.gui;
+    exports org.example.game.ticTacToe to javafx.fxml;
 }

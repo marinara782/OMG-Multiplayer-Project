@@ -6,6 +6,6 @@ public class TicTacToeRules {
     public void goBackToMainMenu(ActionEvent actionEvent) {
     }
 
-    public void startGame(ActionEvent actionEvent) {
+    public void startGame(javafx.event.ActionEvent actionEvent) {
     }
 }

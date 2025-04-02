@@ -132,8 +132,8 @@ public class TicTacToeGame {
         return false;
     }
 
-    public char[] getPlayerSymbol() {
-        return new char[0];
+    public char getPlayerSymbol() {
+        return opponent;
     }
 
     public boolean makeMove(int i, int i1) {

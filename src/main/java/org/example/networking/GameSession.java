@@ -24,14 +24,23 @@ public class GameSession {
 
         }
     }
-    public void waitForOpponentMove(Object o)
-    {
+    public void waitForOpponentMove(Object o) {
         System.out.print("Waiting for opponent's move...");
+        try{
+            Thread.sleep(2000);
+        }catch(InterruptedException e){
+            System.out.println("Connection interrupted!");
+    }
     }
 
-    public void processMove(String move)
-    {
-        System.out.println("Processing move: " + move);
+    public String processMove(Client player, String moveData) {
+        if (players.contains(player)){
+            System.out.println("Processing move: " + moveData);
+            return ("Move processed: " +moveData)
+        }else{
+            return "Player is not part of this session!"
+        }
+
     }
 
     public void sendChat(String message)

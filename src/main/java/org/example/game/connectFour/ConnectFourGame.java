@@ -126,6 +126,34 @@ public class ConnectFourGame {
         return false;
     }
 
+    public boolean canWinWithMove(int col) {
+        // We simulate dropping a piece in 'col' and see if it creates a win.
+        int row = getAvailableRow(col);
+        if (row == -1) return false; // Column full
+
+        // Temporarily place piece
+        int original = board[row][col];
+        board[row][col] = player;
+
+        // Check if we win
+        boolean canWin = checkWinnerHorizontal() || checkWinnerVertical() || checkWinnerDiagonal();
+
+        // Revert the board
+        board[row][col] = original;
+
+        return canWin;
+    }
+
+    public int getAvailableRow(int col) {
+        for (int r = rows - 1; r >= 0; r--) {
+            if (board[r][col] == ConnectFourBoard.Empty) {
+                return r;
+            }
+        }
+        return -1; // Column is full
+    }
+
+
     public boolean checkDraw() {
 
         for (int row = 0; row < rows; row++) {

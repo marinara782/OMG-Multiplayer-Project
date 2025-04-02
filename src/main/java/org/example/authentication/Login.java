@@ -31,18 +31,17 @@ public class Login extends UserDatabaseStub {
 
     public boolean login_account(String username, String password) {
 
-        // Username & Password String input by user, will be compared with database
-        String username_entered;
-        String password_entered;
-
-        // if-else block that checks if account is verified, use the true/false to determine next action in GUI
         try {
+            // if-else block that checks if account is verified, use the true/false to determine next action in GUI
             if (verify_account(username, password)) {
                 return true;
             }
             else {
                 return false;
             }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }

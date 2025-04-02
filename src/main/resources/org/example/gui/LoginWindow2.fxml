@@ -5,26 +5,37 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #2c3e50;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.gui.LoginWindowController">
     <children>
-      <ImageView fitHeight="524.0" fitWidth="407.0" layoutX="20.0" layoutY="47.0" pickOnBounds="true">
-         <image>
-            <Image url="@../../../TicTacToeIMG.jpg" />
-         </image>
-         <effect>
-            <Blend />
-         </effect>
-      </ImageView>
+        <!-- Image Carousel -->
+        <StackPane fx:id="imageCarousel" layoutX="20.0" layoutY="34.0" prefHeight="549.0" prefWidth="407.0">
+            <ImageView fx:id="image2" fitHeight="530.0" fitWidth="406.0" pickOnBounds="true" visible="false">
+                <image>
+                    <Image url="@../../../CheckersIMG.jpg" />
+                </image>
+            </ImageView>
+            <ImageView fx:id="image3" fitHeight="530.0" fitWidth="406.0" pickOnBounds="true" visible="false">
+                <image>
+                    <Image url="@../../../Connect4IMG.jpg" />
+                </image>
+            </ImageView>
+            <ImageView fx:id="image1" fitHeight="530.0" fitWidth="406.0" pickOnBounds="true">
+                <image>
+                    <Image url="@../../../TicTacToeIMG.jpg" />
+                </image>
+            </ImageView>
+        </StackPane>
+
         <!-- Username Field -->
         <TextField fx:id="usernameField" layoutX="545.0" layoutY="227.0" promptText="Username" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-prompt-text-fill: #95a5a6;" />
 
@@ -55,20 +66,6 @@
       <Hyperlink layoutX="580.0" layoutY="426.0" onAction="#handleJoinGuest" text="Join as Guest" />
       <Label layoutX="588.0" layoutY="156.0" style="-fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: #3498db;" text="LOGIN" />
       <Label layoutX="30.0" layoutY="466.0" prefHeight="100.0" prefWidth="205.0" style="-fx-font-size: 21px; -fx-font-weight: bold; -fx-text-fill: white;" text="Welcome To OMG! Unleash Strategy. Connect. Compete." textFill="#ededed" wrapText="true" />
-      <Line endX="-101.0" endY="506.0" layoutX="528.0" layoutY="65.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="3.0" />
-
-        <!--
-        <ImageView fitHeight="138.0" fitWidth="323.0" layoutX="261.0" layoutY="87.0" opacity="0.86" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../../../../../../OneDrive/Desktop/TicTacToeIMG.jpg" />
-            </image>
-        </ImageView>
-
-        <ImageView fitHeight="138.0" fitWidth="323.0" layoutX="444.0" layoutY="87.0" opacity="0.86" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../../../../../../OneDrive/Desktop/Connect4IMG.jpg" />
-            </image>
-        </ImageView>
-        Game Images -->
+      <Line endX="-101.0" endY="506.0" layoutX="528.0" layoutY="65.0" startX="-100.0" stroke="WHITE" strokeLineCap="ROUND" strokeWidth="5.0" />
     </children>
 </AnchorPane>

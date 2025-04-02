@@ -1,5 +1,8 @@
 package org.example.gui;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -9,7 +12,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import org.example.authentication.*;
 import javafx.event.ActionEvent;
 
@@ -21,7 +26,12 @@ public class LoginWindowController {
     @FXML private PasswordField passwordField;
     @FXML private Button loginButton;
     @FXML private Button signupButton;
-    @FXML private Button guestButton;
+    @FXML private ImageView image1;
+    @FXML private ImageView image2;
+    @FXML private ImageView image3;
+
+    private ImageView[] images;
+    private int currentIndex = 0;
 
     private final UserDatabaseStub userDatabase = new UserDatabaseStub();
     private Stage stage;
@@ -132,4 +142,45 @@ public class LoginWindowController {
         UserProfile currentUser = new UserProfile("Guest",null,null,null);
         OpenMainMenu(currentUser);
     }
+
+    //Mainly for LoginWindow2 as extra features, can be taken out if not needed
+    public void initialize() {
+        images = new ImageView[]{image1, image2, image3};
+
+        // Ensure only the first image is visible initially
+        for (int i = 1; i < images.length; i++) {
+            images[i].setVisible(false);
+        }
+
+        // Timeline for automatic rotation
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(8), event -> rotateImages()));
+        timeline.setCycleCount(Timeline.INDEFINITE); // Loop forever
+        timeline.play();
+    }
+
+    private void rotateImages() {
+        ImageView currentImage = images[currentIndex];
+        currentIndex = (currentIndex + 1) % images.length;
+        ImageView nextImage = images[currentIndex];
+
+        System.out.println("Switching to image index: " + currentIndex); // Debugging
+
+        // Smooth fade-out of the current image
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(1.5), currentImage);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+        fadeOut.setOnFinished(event -> {
+            currentImage.setVisible(false); // Hide current image
+            nextImage.setVisible(true); // Show next image
+
+            // Smooth fade-in of the next image
+            FadeTransition fadeIn = new FadeTransition(Duration.seconds(1.5), nextImage);
+            fadeIn.setFromValue(0.0);
+            fadeIn.setToValue(1.0);
+            fadeIn.play();
+        });
+
+        fadeOut.play();
+    }
 }
+

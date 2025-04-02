@@ -13,7 +13,8 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         //Shows the UI for Login
         Stage loginStage = new Stage();
-        FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("LoginWindow.fxml"));
+        //Can change to LoginWindow.fxml
+        FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("LoginWindow2.fxml"));
         Scene loginScene = new Scene(loginLoader.load());
         loginStage.setTitle("Login - OMG");
         loginStage.setScene(loginScene);

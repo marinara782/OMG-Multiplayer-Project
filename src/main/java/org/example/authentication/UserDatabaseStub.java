@@ -138,4 +138,5 @@ public class UserDatabaseStub {
         }
         return null;
     }
+    }
 }

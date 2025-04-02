@@ -4,14 +4,12 @@ public class TicTacToeGame {
 
     private char[][] board;
     private char player;
-    private char playerSymbol;
-    private char opponentSymbol;
+    private char opponent;
     private int sizeOfTheBoard;
 
     public TicTacToeGame()
     {
         this.sizeOfTheBoard = 3;
-        this.player = 'O';
         this.board = new char[3][3];
         //We also have to initialize the cells of the board, they need to be empty at first, whenever a game starts
         BoardInitialization();
@@ -24,19 +22,14 @@ public class TicTacToeGame {
 
         if(randomNum == 1)
         {
-            playerSymbol = 'X';
-            opponentSymbol = 'O';
+            player = 'X';
+            opponent = 'O';
         }
         else
         {
-            playerSymbol = 'O';
-            opponentSymbol = 'X';
+            player = 'O';
+            opponent = 'X';
         }
-
-        if (playerSymbol == 'X')
-            player = playerSymbol;
-        else
-            player = opponentSymbol;
     }
 
     private void BoardInitialization()
@@ -50,33 +43,33 @@ public class TicTacToeGame {
     }
 
 
-    public boolean checkForWin()
+    public boolean checkForWin(char symbol)
     {
         //There are 3 possibilities for a win. We need to check diagonals, columns and rows.
 
         //Diagonal Part:
         //The board is 3 by 3, and we could only have 2 diagonals.
         //Diagonal 1:
-        if((board[0][0] == player) && (board[1][1] == player) && (board[2][2] == player))
+        if((board[0][0] == symbol) && (board[1][1] == symbol) && (board[2][2] == symbol))
             return true; // true meaning, this is a win, if condition is fulfilled
 
         //Diagonal 2:
         //So we could have a diagonal win from the left side (Diagonal Part 1) or we could have a diagonal win form the right side, which is the following:
 
-        if((board[0][2] == player) && (board[1][1] == player) && (board[2][0] == player))
+        if((board[0][2] == symbol) && (board[1][1] == symbol) && (board[2][0] == symbol))
             return true; // true meaning, this is a win, if condition is fulfilled
 
         //For Columns
         for(short i = 0; 3 > i;i++)
         {
-            if((board[0][i] == player) && board[1][i] == player && board[2][i] == player)
+            if((board[0][i] == symbol) && board[1][i] == symbol && board[2][i] == symbol)
                 return true;
         }
 
         //For Rows
         for(short i = 0; 3 > i;i++)
         {
-            if((board[i][0] == player) && board[i][1] == player && board[i][2] == player)
+            if((board[i][0] == symbol) && board[i][1] == symbol && board[i][2] == symbol)
                 return true;
         }
 
@@ -108,8 +101,10 @@ public class TicTacToeGame {
         //If we reach the return true statement, then it means the board is full, and there are no empty cells.
     }
 
-    public char getOpponentSymbol() {
-        return 'x';
+    public char getOpponentSymbol()
+    {
+        return opponent;
+
     }
 
     public int[] getAIMove() {

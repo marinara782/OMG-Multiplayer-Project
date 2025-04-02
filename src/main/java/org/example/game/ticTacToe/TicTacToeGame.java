@@ -75,6 +75,10 @@ public class TicTacToeGame {
 
         return false;
     }
+    public boolean checkForWin()
+    {
+        return (checkForWin(opponent) || checkForWin(player));
+    }
 
     public boolean isBoardFull()
     {

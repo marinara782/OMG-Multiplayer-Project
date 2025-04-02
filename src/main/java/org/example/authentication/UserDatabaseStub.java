@@ -129,6 +129,14 @@ public class UserDatabaseStub {
         }
         write_users_to_file(users);
     }
-    
-
+    public String getCurrentPassword(String username) throws FileNotFoundException{
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if (user.getUsername().equals(username)){
+                return user.getPassword();
+            }
+        }
+        return null;
+    }
+    }
 }

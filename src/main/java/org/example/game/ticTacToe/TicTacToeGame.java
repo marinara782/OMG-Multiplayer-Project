@@ -128,7 +128,8 @@ public class TicTacToeGame {
         return null;
     }
 
-    public boolean isNetworkGame() {
+    public boolean isNetworkGame() //NOT DONE
+    {
         return false;
     }
 
@@ -136,15 +137,18 @@ public class TicTacToeGame {
         return opponent;
     }
 
-    public boolean makeMove(int i, int i1) {
+    public boolean makeMove(int i, int i1) //NOT DONE
+    {
         return false;
     }
 
-    public boolean isPlayerTurn() {
+    public boolean isPlayerTurn() //NOT DONE
+    {
         return false;
     }
 
-    public char getBoardValue(int row, int col) {
+    public char getBoardValue(int row, int col) //NOT DONE
+    {
         return 0;
     }
 

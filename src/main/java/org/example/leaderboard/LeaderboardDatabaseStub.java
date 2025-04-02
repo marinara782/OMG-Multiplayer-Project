@@ -11,14 +11,11 @@ import org.example.Player;
  */
 public class LeaderboardDatabaseStub  {
     private Leaderboard leaderboard;
-
     public LeaderboardDatabaseStub(){
         leaderboard = new Leaderboard();
         initializePlayers();
     }
-
     public void initializePlayers() {
-
         // add Alice
         Player alice = new Player("Alice");
         alice.setCheckerWins(2);
@@ -131,11 +128,11 @@ public class LeaderboardDatabaseStub  {
 
         // add Lebron
         Player lebron = new Player("Lebron");
-        lebron.setCheckerWins(84);
+        lebron.setCheckerWins(90);
         lebron.setCheckerLosses(0);
-        lebron.setConnect4Wins(23);
+        lebron.setConnect4Wins(93);
         lebron.setConnect4Losses(0);
-        lebron.setTictactoeWins(24);
+        lebron.setTictactoeWins(67);
         lebron.setTictactoeLosses(0);
         leaderboard.addPlayer(lebron);
 
@@ -196,29 +193,57 @@ public class LeaderboardDatabaseStub  {
                 case "connect4 losses":
                     System.out.println(p.getUsername() + " - " + p.getConnect4Losses());
                     break;
+                case "total wins":
+                    System.out.println(p.getUsername() + " - " + p.getTotalWins());
+                    break;
+                case "total losses":
+                    System.out.println(p.getUsername() + " - " + p.getTotalLosses());
+                case "win percentage":
+                    double winPercentage = p.getWinPercentage();
+                    String percentFormat = String.format("%.2f%%", winPercentage * 100);
+                    System.out.println(p.getUsername() + " - " + percentFormat);
             }
         }
     }
 
+
     public static void main(String[] args) {
         LeaderboardDatabaseStub stub = new LeaderboardDatabaseStub();
+
 
         // Print top 4 players by Checkers Wins
         stub.printTopPlayers(4, "checkers wins");
 
+
         // Print top 6 players by Tic-Tac-Toe Losses
         stub.printTopPlayers(6, "tictactoe losses");
+
 
         // Print top 7 players by Connect4 Wins
         stub.printTopPlayers(7, "connect4 wins");
 
+
         // Print top 10 players by Checkers Losses
         stub.printTopPlayers(10, "checkers losses");
+
 
         // Print top 3 players by Tic-Tac-Toe wins
         stub.printTopPlayers(3, "tictactoe wins");
 
+
         // Print top 5 players by connect4 Losses
         stub.printTopPlayers(5, "connect4 losses");
+
+
+        // Print top 5 players with most wins
+        stub.printTopPlayers(5, "total wins");
+
+
+        // print top 4 players with most losses
+        stub.printTopPlayers(4, "total losses");
+
+        // print top 7 players with the highest win percentage
+        stub.printTopPlayers(7, "win percentage");
     }
 }
+

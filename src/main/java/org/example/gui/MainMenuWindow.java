@@ -347,7 +347,10 @@ public class MainMenuWindow {
                 new GameWindow(stage, new TicTacToeGame(), currentUser);
                 break;
             case "connectfour", "connectFour", "connect-four":
-                boolean vsComputer = showConnectFourModeDialog();
+                Boolean vsComputer = showConnectFourModeDialog();
+                if (vsComputer == null) {
+                    return;
+                }
                 new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, vsComputer), currentUser);
                 //new GameWindow(stage, new ConnectFourGame(1,6,7,4), currentUser);
                 break;
@@ -359,7 +362,7 @@ public class MainMenuWindow {
         }
     }
 
-    private boolean showConnectFourModeDialog() {
+    private Boolean showConnectFourModeDialog() {
         Alert modeDialog = new Alert(Alert.AlertType.CONFIRMATION);
         modeDialog.setTitle("Choose Game Mode");
         modeDialog.setHeaderText("Select Connect Four Mode");
@@ -370,10 +373,15 @@ public class MainMenuWindow {
 
         ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-        modeDialog.getButtonTypes().setAll(vsComputerButton, multiplayerButton);
+        modeDialog.getButtonTypes().setAll(vsComputerButton, multiplayerButton, cancel);
 
 
-        ButtonType result = modeDialog.showAndWait().orElse(multiplayerButton);
+        ButtonType result = modeDialog.showAndWait().orElse(cancel);
+        if (result == cancel) {
+            return null;
+        }
+
+
 
 /*/
         modeDialog.showAndWait().ifPresent(response -> {

@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.authentication.UserProfile;
+import org.example.game.checkers.CheckersBoard;
 import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourBoard;
 import org.example.game.connectFour.ConnectFourGame;
@@ -337,7 +338,11 @@ public class GameWindow {
             setupConnectFourBoard();
         } else if (gameInstance instanceof CheckersGame) {
             System.out.println("Setting up Checkers board");
-            setupCheckersBoard();
+            // setupCheckersBoard();
+            // Added by game logic team (Jacob Baggott)
+            gameBoard.getChildren().clear();
+            CheckersBoard checkersBoard = new CheckersBoard((CheckersGame) gameInstance);
+            gameBoard.getChildren().add(checkersBoard);
         }
     }
 
@@ -425,6 +430,7 @@ public class GameWindow {
         gameBoard.getChildren().add(boardContainer);
     }
 
+    // Game logic team -> chosen to initialize the board in CheckersBoard class (Jacob Baggott)
     private void setupCheckersBoard() {
         VBox boardContainer = new VBox(20);
         boardContainer.setAlignment(Pos.CENTER);

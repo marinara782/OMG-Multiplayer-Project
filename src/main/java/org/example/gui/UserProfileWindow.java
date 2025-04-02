@@ -95,24 +95,93 @@ public class UserProfileWindow {
         return settingsPane;
     }
 
+    private Node createAllGamesTab() {
+        VBox allGamesTab = new VBox(20);
+        allGamesTab.setStyle("-fx-background-color: #2c3e50;");
+
+        // Title for All Games
+        Label allGamesTitle = new Label("Recent Matches (Last 20 Played)");
+        allGamesTitle.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
+
+        // ListView to display match history
+        ListView<String> matchListView = new ListView<>();
+        matchListView.setPrefHeight(400); // Adjust height as needed
+        matchListView.setStyle("-fx-control-inner-background: #1a2530; -fx-text-fill: white;");
+
+        // Mock match data
+        String[] allMatches = {
+                "Won against PlayerA in Tic-Tac-Toe (Feb 12, 2023)",
+                "Lost against PlayerB in Connect Four (Feb 10, 2023)",
+                "Draw with PlayerC in Checkers (Feb 8, 2023)",
+                "Won against PlayerD in Tic-Tac-Toe (Feb 7, 2023)",
+                "Lost against PlayerE in Connect Four (Feb 5, 2023)"
+        };
+
+        // Populate the ListView
+        matchListView.getItems().addAll(allMatches);
+
+        // Add title and ListView to the tab
+        allGamesTab.getChildren().addAll(allGamesTitle, matchListView);
+
+        return allGamesTab;
+    }
+
+    private Node createGameTab(String gameType) {
+        VBox gameTab = new VBox(20);
+        gameTab.setStyle("-fx-background-color: #2c3e50;");
+
+        // Title for the specific game
+        Label gameTitle = new Label("Recent Matches in " + gameType);
+        gameTitle.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
+
+        // ListView to display filtered match history
+        ListView<String> matchListView = new ListView<>();
+        matchListView.setPrefHeight(400); // Adjust height as needed
+        matchListView.setStyle("-fx-control-inner-background: #1a2530; -fx-text-fill: white;");
+
+        // Mock match data
+        String[] allMatches = {
+                "Won against PlayerA in Tic-Tac-Toe (Feb 12, 2023)",
+                "Lost against PlayerB in Connect Four (Feb 10, 2023)",
+                "Draw with PlayerC in Checkers (Feb 8, 2023)",
+                "Won against PlayerD in Tic-Tac-Toe (Feb 7, 2023)",
+                "Lost against PlayerE in Connect Four (Feb 5, 2023)"
+        };
+
+        // Filter matches for the specific game type
+        for (String match : allMatches) {
+            if (match.contains(gameType)) {
+                matchListView.getItems().add(match);
+            }
+        }
+
+        // Add title and ListView to the tab
+        gameTab.getChildren().addAll(gameTitle, matchListView);
+
+        return gameTab;
+    }
+
     private Node createMatchHistoryPane() {
+        // Main container for Match History
         VBox matchHistoryPane = new VBox(20);
-        matchHistoryPane.setPadding(new Insets(20));
         matchHistoryPane.setStyle("-fx-background-color: #2c3e50;");
 
+        // Title for Match History
         Label matchHistoryTitle = new Label("Match History");
         matchHistoryTitle.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
 
-        // Add logic to fetch and display match history here
-        ListView<String> matchListView = new ListView<>();
-        matchListView.getItems().addAll(
-                "Won against PlayerA in Tic-Tac-Toe (Feb 12, 2023)",
-                "Lost against PlayerB in Connect Four (Feb 10, 2023)",
-                "Draw with PlayerC in Checkers (Feb 8, 2023)"
-        );
-        matchListView.setStyle("-fx-control-inner-background: #1a2530; -fx-text-fill: white;");
+        // TabPane for different game types
+        TabPane matchTabs = new TabPane();
+        matchTabs.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        matchHistoryPane.getChildren().addAll(matchHistoryTitle, matchListView);
+        // Add tabs for All Games, Tic-Tac-Toe, Connect Four, and Checkers
+        matchTabs.getTabs().add(new Tab("All Games", createAllGamesTab()));
+        matchTabs.getTabs().add(new Tab("Tic-Tac-Toe", createGameTab("Tic-Tac-Toe")));
+        matchTabs.getTabs().add(new Tab("Connect Four", createGameTab("Connect Four")));
+        matchTabs.getTabs().add(new Tab("Checkers", createGameTab("Checkers")));
+
+        // Add title and tabs to the main container
+        matchHistoryPane.getChildren().addAll(matchHistoryTitle, matchTabs);
 
         return matchHistoryPane;
     }

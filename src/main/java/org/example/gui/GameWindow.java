@@ -12,6 +12,7 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.authentication.UserProfile;
+import org.example.game.checkers.CheckersBoard;
 import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourBoard;
 import org.example.game.connectFour.ConnectFourGame;

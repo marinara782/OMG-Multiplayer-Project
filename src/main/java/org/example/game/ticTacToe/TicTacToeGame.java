@@ -4,6 +4,8 @@ public class TicTacToeGame {
 
     private char[][] board;
     private char player;
+    private char playerSymbol;
+    private char opponentSymbol;
     private int sizeOfTheBoard;
 
     public TicTacToeGame()
@@ -14,6 +16,27 @@ public class TicTacToeGame {
         //We also have to initialize the cells of the board, they need to be empty at first, whenever a game starts
 
        BoardInitialization();
+    }
+
+    public void randomizePlayersSymbols()
+    {
+        int randomNum = (int)(Math.random() * 2) + 1;
+
+        if(randomNum == 1)
+        {
+            playerSymbol = 'X';
+            opponentSymbol = 'O';
+        }
+        else
+        {
+            playerSymbol = 'O';
+            opponentSymbol = 'X';
+        }
+
+        if (playerSymbol == 'X')
+            player = playerSymbol;
+        else
+            player = opponentSymbol;
     }
 
     private void BoardInitialization()
@@ -85,8 +108,8 @@ public class TicTacToeGame {
         //If we reach the return true statement, then it means the board is full, and there are no empty cells.
     }
 
-    public boolean getOpponentSymbol() {
-        return false;
+    public char getOpponentSymbol() {
+        return 'x';
     }
 
     public int[] getAIMove() {

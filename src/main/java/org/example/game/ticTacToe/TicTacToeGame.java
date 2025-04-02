@@ -112,7 +112,7 @@ public class TicTacToeGame {
     }
 
     public int[] getAIMove() {
-        return new int[0];
+
     }
 
     public boolean isNetworkGame() {

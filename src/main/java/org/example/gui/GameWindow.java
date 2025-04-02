@@ -18,6 +18,9 @@ import org.example.networking.GameSession;
 import org.example.utilities.ChatManager;
 import org.example.utilities.GameTimer;
 
+// addition from game logic team (Jacob Baggott)
+import org.example.game.checkers.CheckersBoard;
+
 public class GameWindow {
     private Stage stage;
     private Scene scene;
@@ -324,7 +327,11 @@ public class GameWindow {
             setupConnectFourBoard();
         } else if (gameInstance instanceof CheckersGame) {
             System.out.println("Setting up Checkers board");
-            setupCheckersBoard();
+            // setupCheckersBoard();
+            // Added by game logic team (Jacob Baggott)
+            gameBoard.getChildren().clear();
+            CheckersBoard checkersBoard = new CheckersBoard((CheckersGame) gameInstance);
+            gameBoard.getChildren().add(checkersBoard);
         }
     }
 
@@ -412,6 +419,7 @@ public class GameWindow {
         gameBoard.getChildren().add(boardContainer);
     }
 
+    // Game logic team -> chosen to initialize the board in CheckersBoard class (Jacob Baggott)
     private void setupCheckersBoard() {
         VBox boardContainer = new VBox(20);
         boardContainer.setAlignment(Pos.CENTER);

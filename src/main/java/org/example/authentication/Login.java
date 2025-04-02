@@ -88,7 +88,7 @@ public class Login extends UserDatabaseStub {
             return false;
         }
 
-        //newpassowrd has length >=8
+        //newPassword has length >=8
         boolean isLongEnough = newPassword.length() >= 8;
         //new password has at least one letter
         boolean hasLetter = newPassword.matches(".*[a-zA-Z].*");
@@ -106,6 +106,16 @@ public class Login extends UserDatabaseStub {
         //change password
         update_password(username, oldPassword, newPassword);
         System.out.println("Password changed successfully");
+        return true;
+    }
+    public boolean change_email(String username, String password, String oldEmail, String newEmail) throws FileNotFoundException{
+        //verify that the password is correct and matches username
+        if (!verify_password(username, password)){
+            System.out.println("Incorrect password. Email update failed");
+            return false;
+        }
+        //change email
+        update_email(username, newEmail, password);
         return true;
     }
 

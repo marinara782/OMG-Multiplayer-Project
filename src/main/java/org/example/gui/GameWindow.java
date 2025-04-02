@@ -24,6 +24,8 @@ import org.example.utilities.GameTimer;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javafx.geometry.Pos.CENTER;
+
 public class GameWindow {
     private Stage stage;
     private Scene scene;
@@ -76,7 +78,7 @@ public class GameWindow {
 
         // Center section - Game board placeholder (will be set in setupGameBoard)
         gameBoard = new VBox();
-        gameBoard.setAlignment(Pos.CENTER);
+        gameBoard.setAlignment(CENTER);
         gameBoard.setStyle("-fx-background-color: #34495e; -fx-background-radius: 5;");
         mainLayout.setCenter(gameBoard);
 
@@ -302,7 +304,7 @@ public class GameWindow {
     private HBox createBottomBar() {
         HBox bottomBar = new HBox(15);
         bottomBar.setPadding(new Insets(10, 5, 5, 5));
-        bottomBar.setAlignment(Pos.CENTER);
+        bottomBar.setAlignment(CENTER);
         bottomBar.setStyle("-fx-background-color: #1a2530; -fx-background-radius: 5;");
 
         Button undoButton = new Button("Undo");
@@ -348,10 +350,10 @@ public class GameWindow {
 
     private void setupTicTacToeBoard() {
         VBox boardContainer = new VBox(20);
-        boardContainer.setAlignment(Pos.CENTER);
+        boardContainer.setAlignment(CENTER);
 
         GridPane board = new GridPane();
-        board.setAlignment(Pos.CENTER);
+        board.setAlignment(CENTER);
         board.setHgap(10);
         board.setVgap(10);
 
@@ -386,6 +388,13 @@ public class GameWindow {
     }
 
     private void setupConnectFourBoard() {
+
+        if (!(gameInstance instanceof ConnectFourGame)) return;
+
+        ConnectFourGame connectFourGame = (ConnectFourGame) gameInstance;
+        int rows = connectFourGame.getRows();
+        int cols = connectFourGame.getColumns();
+
         VBox boardContainer = new VBox(20);
         boardContainer.setAlignment(Pos.CENTER);
 
@@ -394,9 +403,9 @@ public class GameWindow {
         board.setHgap(5);
         board.setVgap(5);
 
-        // Create the 7x6 grid (7 columns, 6 rows)
-        for (int row = 0; row < 6; row++) {
-            for (int col = 0; col < 7; col++) {
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
                 StackPane cell = new StackPane();
                 cell.setPrefSize(60, 60);
                 cell.setStyle("-fx-background-color: #3498db; -fx-background-radius: 30;");
@@ -410,11 +419,10 @@ public class GameWindow {
             }
         }
 
-        // Create column buttons for dropping pieces
         HBox columnButtons = new HBox(5);
         columnButtons.setAlignment(Pos.CENTER);
 
-        for (int col = 0; col < 7; col++) {
+        for (int col = 0; col < cols; col++) {
             Button dropButton = new Button("Drop");
             dropButton.setPrefWidth(60);
             dropButton.setUserData(col);
@@ -427,16 +435,63 @@ public class GameWindow {
         }
 
         boardContainer.getChildren().addAll(columnButtons, board);
+        gameBoard.getChildren().clear();
         gameBoard.getChildren().add(boardContainer);
+
+
+// OLD CODE NOT DYNAMIC - hardcoded 6x7 board
+//
+//        VBox boardContainer = new VBox(20);
+//        boardContainer.setAlignment(Pos.CENTER);
+//
+//        GridPane board = new GridPane();
+//        board.setAlignment(Pos.CENTER);
+//        board.setHgap(5);
+//        board.setVgap(5);
+//
+//        // Create the 7x6 grid (7 columns, 6 rows)
+//        for (int row = 0; row < 6; row++) {
+//            for (int col = 0; col < 7; col++) {
+//                StackPane cell = new StackPane();
+//                cell.setPrefSize(60, 60);
+//                cell.setStyle("-fx-background-color: #3498db; -fx-background-radius: 30;");
+//
+//                Region innerCircle = new Region();
+//                innerCircle.setPrefSize(50, 50);
+//                innerCircle.setStyle("-fx-background-color: #1a2530; -fx-background-radius: 25;");
+//
+//                cell.getChildren().add(innerCircle);
+//                board.add(cell, col, row);
+//            }
+//        }
+//
+//        // Create column buttons for dropping pieces
+//        HBox columnButtons = new HBox(5);
+//        columnButtons.setAlignment(Pos.CENTER);
+//
+//        for (int col = 0; col < 7; col++) {
+//            Button dropButton = new Button("Drop");
+//            dropButton.setPrefWidth(60);
+//            dropButton.setUserData(col);
+//            dropButton.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white;");
+//
+//            final int column = col;
+//            dropButton.setOnAction(e -> makeConnectFourMove(column));
+//
+//            columnButtons.getChildren().add(dropButton);
+//        }
+//
+//        boardContainer.getChildren().addAll(columnButtons, board);
+//        gameBoard.getChildren().add(boardContainer);
     }
 
     // Game logic team -> chosen to initialize the board in CheckersBoard class (Jacob Baggott)
     private void setupCheckersBoard() {
         VBox boardContainer = new VBox(20);
-        boardContainer.setAlignment(Pos.CENTER);
+        boardContainer.setAlignment(CENTER);
 
         GridPane board = new GridPane();
-        board.setAlignment(Pos.CENTER);
+        board.setAlignment(CENTER);
 
         // Create the 8x8 grid
         for (int row = 0; row < 8; row++) {
@@ -736,7 +791,9 @@ public class GameWindow {
         alert.setHeaderText(victory ? "Victory!" : "Defeat");
         alert.setContentText("Game over: " + reason);
 
-        alert.showAndWait().ifPresent(response -> returnToMainMenu());
+        alert.show();
+
+        alert.setOnCloseRequest(e -> returnToMainMenu());
     }
 
     private void returnToMainMenu() {
@@ -756,19 +813,38 @@ public class GameWindow {
             int cols = connectFourGame.getColumns();
             int player = connectFourGame.getPlayer();
 
-            // Find valid columns
+            // 1) Attempt immediate win
+            for (int col = 0; col < cols; col++) {
+                if (connectFourGame.canWinWithMove(col)) {
+                    makeConnectFourMove(col);
+                    return;
+                }
+            }
+
+            // 2) Block Opponent’s immediate win
+            // Temporarily switch to the other player
+            connectFourGame.switchTurn();
+            for (int col = 0; col < cols; col++) {
+                if (connectFourGame.canWinWithMove(col)) {
+                    // Switch back to AI
+                    connectFourGame.switchTurn();
+                    makeConnectFourMove(col);
+                    return;
+                }
+            }
+            // Switch back to AI if not blocked
+            connectFourGame.switchTurn();
+
+            // 3) Fallback random
             List<Integer> validCols = new ArrayList<>();
             for (int col = 0; col < cols; col++) {
                 if (board[0][col] == ConnectFourBoard.Empty) {
                     validCols.add(col);
                 }
             }
-
-            // If no valid columns, do nothing
             if (validCols.isEmpty()) return;
 
-            // Choose random column
-            int randomCol = validCols.get((int) (Math.random() * validCols.size()));
+            int randomCol = validCols.get((int)(Math.random() * validCols.size()));
             makeConnectFourMove(randomCol);
         }));
         timeline.play();

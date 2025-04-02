@@ -14,8 +14,8 @@ public class TicTacToeGame {
         this.player = 'O';
         this.board = new char[3][3];
         //We also have to initialize the cells of the board, they need to be empty at first, whenever a game starts
-
-       BoardInitialization();
+        BoardInitialization();
+        randomizePlayersSymbols();
     }
 
     public void randomizePlayersSymbols()

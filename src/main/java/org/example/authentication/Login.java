@@ -11,10 +11,10 @@ public class Login extends UserDatabaseStub {
     public boolean forgot_password(String username, String email, String newPassword) throws FileNotFoundException{
         //verify that the username exists
         if(!verify_username(username)){
-            System.out.println("useername does not exist");
+            System.out.println("username does not exist");
             return false;
         }
-        //verify that the email matchs the username
+        //verify that the email matches the username
         if(!verify_email(username, email)){
             System.out.println(("Email does not match username"));
             return false;
@@ -24,10 +24,9 @@ public class Login extends UserDatabaseStub {
 
         //update password
         update_password(username, currentPassword, newPassword);
-        System.out.println("password changed sucessfully");
+        System.out.println("password changed successfully");
         return true;
     }
-}
 
     public boolean login_account(String username, String password) {
 
@@ -42,9 +41,8 @@ public class Login extends UserDatabaseStub {
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
         }
+        return false;
     }
 
     private static boolean loggedIn = true;
@@ -62,13 +60,11 @@ public class Login extends UserDatabaseStub {
     private static void returnToLoginScreen(){
         System.out.println("Return to the login screen...");
         // GUI must implement a method to load the login UI
-
     }
 
     public static boolean createAccount(String new_username, String password, String email, String phone) {
 
             System.out.println("\nAttempting to create account for: " + new_username);
-
 
             UserDatabaseStub databaseStub = new UserDatabaseStub();
         // authenticate users

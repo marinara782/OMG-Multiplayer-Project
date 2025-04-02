@@ -54,7 +54,7 @@ public class Leaderboard {
     }
     /**
      * Is a helper method for sortRanking. Get the comparator based on the game name and criteria
-     * 
+     *
      * @param gameName the name of the game
      * @param criteriaString the criteria like wins/losses
      * @return the comparator
@@ -68,6 +68,8 @@ public class Leaderboard {
                     return Comparator.comparingInt(Player::getTictactoeWins).reversed();
                 case "connect4":
                     return Comparator.comparingInt(Player::getConnect4Wins).reversed();
+                case "total":
+                    return Comparator.comparingInt(Player::getTotalWins).reversed();
                 default:
                     throw new IllegalArgumentException("invalid game name: "+gameName);
             }
@@ -79,11 +81,16 @@ public class Leaderboard {
                     return Comparator.comparingInt(Player::getTictactoeLosses);
                 case "connect4":
                     return Comparator.comparingInt(Player::getConnect4Losses);
+                case "total":
+                    return Comparator.comparingInt(Player::getTotalLosses).reversed();
                 default:
                     throw new IllegalArgumentException("invalid game name: "+gameName);
             }
+        } else if ("percentage".equals(criteriaString)) {
+            return Comparator.comparingDouble(Player::getWinPercentage).reversed();
         } else {
             throw new IllegalArgumentException("invalid sorting criteria: "+criteriaString);
-        } 
+        }
     }
 }
+

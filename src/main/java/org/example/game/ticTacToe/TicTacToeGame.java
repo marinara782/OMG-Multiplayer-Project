@@ -111,8 +111,21 @@ public class TicTacToeGame {
 
     }
 
-    public int[] getAIMove() {
-
+    public int[] getAIMove()
+    {
+        if (isBoardFull())
+            return null;
+        for(short i = 0; 3>i;i++)
+        {
+            for(short j = 0; 3>j;j++)
+            {
+                if(board[i][j] == '/')
+                    return new int[]{i, j};
+                else
+                    continue;
+            }
+        }
+        return null;
     }
 
     public boolean isNetworkGame() {

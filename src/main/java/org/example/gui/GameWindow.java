@@ -791,7 +791,9 @@ public class GameWindow {
         alert.setHeaderText(victory ? "Victory!" : "Defeat");
         alert.setContentText("Game over: " + reason);
 
-        alert.showAndWait().ifPresent(response -> returnToMainMenu());
+        alert.show();
+
+        alert.setOnCloseRequest(e -> returnToMainMenu());
     }
 
     private void returnToMainMenu() {
@@ -811,19 +813,38 @@ public class GameWindow {
             int cols = connectFourGame.getColumns();
             int player = connectFourGame.getPlayer();
 
-            // Find valid columns
+            // 1) Attempt immediate win
+            for (int col = 0; col < cols; col++) {
+                if (connectFourGame.canWinWithMove(col)) {
+                    makeConnectFourMove(col);
+                    return;
+                }
+            }
+
+            // 2) Block Opponent’s immediate win
+            // Temporarily switch to the other player
+            connectFourGame.switchTurn();
+            for (int col = 0; col < cols; col++) {
+                if (connectFourGame.canWinWithMove(col)) {
+                    // Switch back to AI
+                    connectFourGame.switchTurn();
+                    makeConnectFourMove(col);
+                    return;
+                }
+            }
+            // Switch back to AI if not blocked
+            connectFourGame.switchTurn();
+
+            // 3) Fallback random
             List<Integer> validCols = new ArrayList<>();
             for (int col = 0; col < cols; col++) {
                 if (board[0][col] == ConnectFourBoard.Empty) {
                     validCols.add(col);
                 }
             }
-
-            // If no valid columns, do nothing
             if (validCols.isEmpty()) return;
 
-            // Choose random column
-            int randomCol = validCols.get((int) (Math.random() * validCols.size()));
+            int randomCol = validCols.get((int)(Math.random() * validCols.size()));
             makeConnectFourMove(randomCol);
         }));
         timeline.play();

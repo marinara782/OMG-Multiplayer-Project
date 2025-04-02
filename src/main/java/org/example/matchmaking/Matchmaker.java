@@ -5,6 +5,36 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.example.Player;
 
+/**
+ * Represents a player in the matchmaking system.
+ */
+public class Player {
+    private String username;
+
+    private int checkerWins;
+
+    private int checkerLosses;
+
+    private int tictactoeWins;
+
+    private int tictactoeLosses;
+
+    private int connect4Wins;
+
+    private int connect4Losses;
+
+    public Player(String username) {
+        this.username = username;
+        this.checkerWins = 0;
+        this.checkerLosses = 0;
+        this.tictactoeWins = 0;
+        this.tictactoeLosses = 0;
+        this.connect4Wins = 0;
+        this.connect4Losses = 0;
+    }
+
+
+}
 public class Matchmaker {
 
     private List<Player> players; // List of all players in matchmaking pool
@@ -21,22 +51,6 @@ public class Matchmaker {
      * @return The best-matched opponent, or null if no suitable match is found.
      */
     public Player findMatch(Player player) {
-        Player bestMatch = null;
-        int minSkillDifference = Integer.MAX_VALUE;
-
-        for (Player opponent : players) {
-            if (!opponent.equals(player)) { // Ensures that we don't match a player with themselves
-                int skillDifference = Math.abs(player.getSkillLevel() - opponent.getSkillLevel());
-
-                // Choose the opponent with the closest skill level
-                if (skillDifference < minSkillDifference) {
-                    minSkillDifference = skillDifference;
-                    bestMatch = opponent;
-                }
-            }
-        }
-
-        return bestMatch; // Return the best match found, or null if no match is available.
     }
 
     /**

@@ -101,3 +101,4 @@ public class CheckersBoard extends VBox {
         alert.showAndWait();
     }
 }
+

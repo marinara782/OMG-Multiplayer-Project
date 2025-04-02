@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import org.example.Player;
 
+// Try and look over the related problem later.
 public class Matchmaker {
     private List<Player> players; // List of all players in matchmaking pool
     private List<Player> topPlayers; // Leaderboard containing top-ranked players

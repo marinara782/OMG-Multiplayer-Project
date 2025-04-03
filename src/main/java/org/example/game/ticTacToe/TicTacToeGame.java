@@ -3,8 +3,10 @@ package org.example.game.ticTacToe;
 public class TicTacToeGame {
 
     private char[][] board;
+    private char currentPlayer;
     private char player;
     private char opponent;
+    private boolean playerAndComputer;
     private int sizeOfTheBoard;
     private boolean playerTurn = True;
     private boolean opponentTurn = False;
@@ -12,6 +14,8 @@ public class TicTacToeGame {
     public TicTacToeGame()
     {
         this.sizeOfTheBoard = 3;
+        this.currentPlayer = player;
+        this.playerAndComputer = false;
         this.board = new char[3][3];
         //We also have to initialize the cells of the board, they need to be empty at first, whenever a game starts
         BoardInitialization();
@@ -117,6 +121,53 @@ public class TicTacToeGame {
     {
         if (isBoardFull())
             return null;
+
+        for(short i = 0; 3>i;i++)
+        {
+            for(short j = 0; 3>j;j++)
+            {
+                if(board[i][j] == '/')
+                {
+                    board[i][j] = opponent;
+                    if(checkForWin(opponent))
+                    {
+                        board[i][j] = '/';
+                        return new int[]{i, j};
+                    }
+                    board[i][j] = '/';
+                }
+            }
+        }
+
+        if(board[1][1] == '/')
+            return new int[]{1, 1};
+
+        for(short i = 0; 3>i;i++)
+        {
+            for(short j = 0; 3>j;j++)
+            {
+                if(board[i][j] == '/')
+                {
+                    board[i][j] = player;
+                    if(checkForWin(player))
+                    {
+                        board[i][j] = '/';
+                        return new int[]{i, j};
+                    }
+                    board[i][j] = '/';
+                }
+            }
+        }
+
+        if(board[0][0] == '/')
+            return new int[]{0, 0};
+        if(board[0][2] == '/')
+            return new int[]{0, 2};
+        if(board[2][0] == '/')
+            return new int[]{2, 0};
+        if(board[2][2] == '/')
+            return new int[]{2, 2};
+
         for(short i = 0; 3>i;i++)
         {
             for(short j = 0; 3>j;j++)
@@ -127,6 +178,8 @@ public class TicTacToeGame {
                     continue;
             }
         }
+
+
         return null;
     }
 
@@ -136,7 +189,7 @@ public class TicTacToeGame {
     }
 
     public char getPlayerSymbol() {
-        return opponent;
+        return player;
     }
 
     public boolean makeMove(int row, int col, String turn)

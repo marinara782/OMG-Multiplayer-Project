@@ -12,6 +12,8 @@ public class TicTacToeGame {
     public TicTacToeGame()
     {
         this.sizeOfTheBoard = 3;
+        this.currentPlayer = player;
+        this.playerAndComputer = false;
         this.board = new char[3][3];
         //We also have to initialize the cells of the board, they need to be empty at first, whenever a game starts
         BoardInitialization();

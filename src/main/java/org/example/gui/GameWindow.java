@@ -5,21 +5,24 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.authentication.UserProfile;
+import org.example.game.checkers.CheckersBoard;
 import org.example.game.checkers.CheckersGame;
+import org.example.game.connectFour.ConnectFourBoard;
 import org.example.game.connectFour.ConnectFourGame;
 import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.networking.GameSession;
 import org.example.utilities.ChatManager;
 import org.example.utilities.GameTimer;
 
-// addition from game logic team (Jacob Baggott)
-import org.example.game.checkers.CheckersBoard;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javafx.geometry.Pos.CENTER;
 
@@ -37,12 +40,20 @@ public class GameWindow {
     private Label turnLabel;
     private Label timerLabel;
 
+    //connectFour
+    private ConnectFourGame connectFourGame;
+
     public GameWindow(Stage stage, Object gameInstance, UserProfile currentUser) {
         this.stage = stage;
         this.gameInstance = gameInstance;
         this.currentUser = currentUser;
         this.gameSession = new GameSession();
         this.gameTimer = new GameTimer();
+
+        //ConnectFourGame logic
+        if(gameInstance instanceof ConnectFourGame) {
+            this.connectFourGame = (ConnectFourGame) gameInstance;
+        }
 
         // Initialize chatManager based on selected game
         if (gameInstance instanceof TicTacToeGame) {
@@ -561,9 +572,147 @@ public class GameWindow {
     }
 
     private void makeConnectFourMove(int column) {
-        System.out.println("Dropping piece in column: " + column);
-        // This would call the actual game logic in a real implementation
-        simulateOpponentTurn();
+//        System.out.println("Dropping piece in column: " + column);
+//        // This would call the actual game logic in a real implementation
+//        simulateOpponentTurn();
+        
+        if(connectFourGame == null) {
+            return;
+        }
+        
+        int[][] board = connectFourGame.getBoard();
+        int rows  = connectFourGame.getRows();
+        int player = connectFourGame.getPlayer();
+        
+        for(int row = rows - 1; row >= 0 ;  row--){
+            if(board[row][column] == ConnectFourBoard.Empty ){
+                connectFourGame.makeMove(row, column);
+                updateBoardUI(row, column, player);
+
+                if(connectFourGame.checkWinnerHorizontal() || connectFourGame.checkWinnerVertical() || connectFourGame.checkWinnerDiagonal()){
+                    if (player == 1) {
+                        showGameOverDialog("Player Red Wins!" , true);
+                        return;
+                    }
+                    else if (player == 2) {
+                        showGameOverDialog("Player Blue Wins!" , true);
+                        return;
+                    }
+                }
+
+                if(connectFourGame.checkDraw()){
+                    showGameOverDialog("Draw!" , false);
+                    return;
+                }
+
+                connectFourGame.switchTurn();
+                updateTurnLabel();
+
+                // **Only** do AI move if vsComputer == true **and** it's now the AI's turn
+                if (connectFourGame.isVsComputer() && connectFourGame.getPlayer() == ConnectFourBoard.Blue) {
+                    simulateComputerMove();
+                }
+
+                return;
+            }
+        }
+
+        Alert columnFullAlert = new Alert(Alert.AlertType.WARNING);
+        columnFullAlert.setTitle("Invalid Move");
+        columnFullAlert.setHeaderText("This Column is full");
+        columnFullAlert.setContentText("Please select another column");
+        columnFullAlert.showAndWait();
+    }
+
+
+    private void makeComputerMove() {
+        int player = connectFourGame.getPlayer();
+
+        // Delay to simulate thinking
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), e -> {
+            int[][] board = connectFourGame.getBoard();
+            int rows = connectFourGame.getRows();
+
+            // Simple random AI to pick a valid column
+            List<Integer> validCols = new ArrayList<>();
+            for (int col = 0; col < connectFourGame.getColumns(); col++) {
+                if (board[0][col] == ConnectFourBoard.Empty) {
+                    validCols.add(col);
+                }
+            }
+
+            if (validCols.isEmpty()) return;
+
+            int randomCol = validCols.get((int)(Math.random() * validCols.size()));
+
+            // Drop piece in that column
+            for (int row = rows - 1; row >= 0 ; row--) {
+                if (board[row][randomCol] == ConnectFourBoard.Empty) {
+                    connectFourGame.makeMove(row, randomCol);
+                    updateBoardUI(row, randomCol, player);
+
+                    if (connectFourGame.checkWinnerHorizontal() || connectFourGame.checkWinnerVertical() || connectFourGame.checkWinnerDiagonal()) {
+                        showGameOverDialog((player == 1 ? "Player Red Wins!" : "Computer Wins!"), true);
+                        return;
+                    }
+
+                    if (connectFourGame.checkDraw()) {
+                        showGameOverDialog("Draw!", false);
+                        return;
+                    }
+                    if (connectFourGame.isVsComputer()) {
+                        makeComputerMove();
+                    }
+
+                    connectFourGame.switchTurn();
+                    updateTurnLabel();
+                    break;
+                }
+            }
+        }));
+        timeline.play();
+    }
+
+
+
+    private void updateBoardUI(int row, int column, int player) {
+
+        GridPane boardContainer = (GridPane) ((VBox)gameBoard.getChildren().get(0)).getChildren().get(1);
+        StackPane cell = (StackPane) getNodeByRowColumnIndex(row, column, boardContainer);
+        Region piece = new Region();
+        piece.setPrefSize(50, 50);
+        if(player == 1) {
+            piece.setStyle("-fx-background-color: #e74c3c; -fx-background-radius: 25; ");
+        }else if (player == 2) {
+            piece.setStyle("-fx-background-color: #3498db; -fx-background-radius: 25; ");
+        }
+        cell.getChildren().add(piece);
+
+
+    }
+
+    private Node getNodeByRowColumnIndex(int row, int column, GridPane boardContainer) {
+        for(Node node: boardContainer.getChildren()){
+            if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex((Node) node) == column){
+                return node;
+            }
+        }
+        return null;
+    }
+
+    private void updateTurnLabel() {
+        int currentPlayer = connectFourGame.getPlayer();
+        String label = "";
+        if(currentPlayer == 1){
+            label = "Its Red's Turn";
+            turnLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #e74c3c; -fx-font-weight: bold;");
+        }
+        else if(currentPlayer == 2){
+            label = "Its Blue's Turn";
+            turnLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #3498db; -fx-font-weight: bold;");
+        }
+        turnLabel.setText(label);
+
     }
 
     private void selectCheckersPiece(int row, int col) {
@@ -655,7 +804,6 @@ public class GameWindow {
         MainMenuWindow mainMenu = new MainMenuWindow(stage, currentUser);
         mainMenu.show();
     }
-}
 
     private void simulateComputerMove() {
         // Simple random AI logic:

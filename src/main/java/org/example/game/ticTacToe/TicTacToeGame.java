@@ -119,6 +119,53 @@ public class TicTacToeGame {
     {
         if (isBoardFull())
             return null;
+
+        for(short i = 0; 3>i;i++)
+        {
+            for(short j = 0; 3>j;j++)
+            {
+                if(board[i][j] == '/')
+                {
+                    board[i][j] = opponent;
+                    if(checkForWin(opponent))
+                    {
+                        board[i][j] = '/';
+                        return new int[]{i, j};
+                    }
+                    board[i][j] = '/';
+                }
+            }
+        }
+
+        if(board[1][1] == '/')
+            return new int[]{1, 1};
+
+        for(short i = 0; 3>i;i++)
+        {
+            for(short j = 0; 3>j;j++)
+            {
+                if(board[i][j] == '/')
+                {
+                    board[i][j] = player;
+                    if(checkForWin(player))
+                    {
+                        board[i][j] = '/';
+                        return new int[]{i, j};
+                    }
+                    board[i][j] = '/';
+                }
+            }
+        }
+
+        if(board[0][0] == '/')
+            return new int[]{0, 0};
+        if(board[0][2] == '/')
+            return new int[]{0, 2};
+        if(board[2][0] == '/')
+            return new int[]{2, 0};
+        if(board[2][2] == '/')
+            return new int[]{2, 2};
+
         for(short i = 0; 3>i;i++)
         {
             for(short j = 0; 3>j;j++)
@@ -129,6 +176,8 @@ public class TicTacToeGame {
                     continue;
             }
         }
+
+
         return null;
     }
 

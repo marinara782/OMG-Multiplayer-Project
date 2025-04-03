@@ -13,47 +13,39 @@ import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourGame;
 import org.example.game.ticTacToe.GameModeSelection;
 import org.example.game.ticTacToe.SymbolSelection;
-import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.leaderboard.Leaderboard;
 import org.example.matchmaking.Matchmaker;
 
 public class MainMenuWindow {
     private final Stage stage;
-    private Scene scene;
-    private BorderPane mainLayout;
     private final UserProfile currentUser;
-    private Matchmaker matchmaker;
-    private String ProfileName;
 
     public MainMenuWindow(Stage stage, UserProfile currentUser) {
         this.stage = stage;
         this.currentUser = currentUser;
-        this.matchmaker = new Matchmaker();
+        SceneManager.setPrimaryStage(new Stage());
+        Matchmaker matchmaker = new Matchmaker();
         initializeUI();
     }
 
     private void initializeUI() {
-        mainLayout = new BorderPane();
+        BorderPane mainLayout = new BorderPane();
         mainLayout.setPadding(new Insets(20));
         mainLayout.setStyle("-fx-background-color: #2c3e50;");
 
-        // Top section - Header with logo and user info
         HBox header = createHeader();
         mainLayout.setTop(header);
 
-        // Center section - Game selection
         VBox gameSelection = createGameSelection();
         mainLayout.setCenter(gameSelection);
 
-        // Right section - Leaderboard and active players
         VBox rightPanel = createRightPanel();
         mainLayout.setRight(rightPanel);
 
-        // Bottom section - Status bar
         HBox statusBar = createStatusBar();
         mainLayout.setBottom(statusBar);
 
-        scene = new Scene(mainLayout, 1200, 800);
+        Scene scene = new Scene(mainLayout, 1200, 800);
         stage.setTitle("OMG - Online Multiplayer Game Platform");
         stage.setScene(scene);
         stage.setMinWidth(800);
@@ -66,45 +58,37 @@ public class MainMenuWindow {
         header.setAlignment(Pos.CENTER_LEFT);
         header.setStyle("-fx-background-color: #1a2530; -fx-background-radius: 5;");
 
-        // Logo placeholder
         Label logoLabel = new Label("OMG");
         logoLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3498db;");
 
-        // User profile button
         Button profileButton = new Button("Profile");
         profileButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
-        profileButton.setOnAction(e -> openUserProfile());
+        profileButton.setOnAction(e -> {
+            SceneManager.loadScene("userProfileWindow.fxml");
+        });
 
-        // Spacer
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        // User info
         Login login = new Login(stage);
+        String profileName;
         if(login.checkLoginValidity()){
-            ProfileName = currentUser.getUsername();
+            profileName = currentUser.getUsername();
         }else{
-            ProfileName = "Player";
+            profileName = "Player";
         }
-        Label userLabel = new Label("Welcome, " + ProfileName);
+        Label userLabel = new Label("Welcome, " + profileName);
         userLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
 
-        // SignIn button
         Button signUpButton = new Button("SignUp");
         signUpButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
         signUpButton.setOnAction(e -> signUp());
 
-        // Login button
-        Button loginButton = new Button("Login");
-        loginButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
-        loginButton.setOnAction(e -> login());
+        Button logoutButton = new Button("Logout");
+        logoutButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+        logoutButton.setOnAction(e -> login());
 
-//        // Logout button
-//        Button logoutButton = new Button("Logout");
-//        logoutButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
-//        logoutButton.setOnAction(e -> login());
-
-        header.getChildren().addAll(logoLabel, spacer, userLabel, profileButton, signUpButton, loginButton);
+        header.getChildren().addAll(logoLabel, spacer, userLabel, profileButton, signUpButton, logoutButton);
 
         return header;
     }
@@ -120,21 +104,17 @@ public class MainMenuWindow {
         HBox gamesContainer = new HBox(30);
         gamesContainer.setAlignment(Pos.CENTER);
 
-        // TicTacToe Game Card
         VBox ticTacToeCard = createGameCard("Tic-Tac-Toe", "ticTacToe");
         ticTacToeCard.setOnMouseClicked(e -> startMatchmaking("ticTacToe"));
 
-        // Connect Four Game Card
         VBox connectFourCard = createGameCard("Connect Four", "connectFour");
         connectFourCard.setOnMouseClicked(e -> startMatchmaking("connectFour"));
 
-        // Checkers Game Card
         VBox checkersCard = createGameCard("Checkers", "checkers");
         checkersCard.setOnMouseClicked(e -> startMatchmaking("checkers"));
 
         gamesContainer.getChildren().addAll(ticTacToeCard, connectFourCard, checkersCard);
 
-        // Matchmaking section
         VBox matchmakingSection = new VBox(15);
         matchmakingSection.setPadding(new Insets(20, 0, 0, 0));
         matchmakingSection.setAlignment(Pos.CENTER);
@@ -292,12 +272,6 @@ public class MainMenuWindow {
         statusBar.getChildren().addAll(statusLabel, separator, playersLabel, separator2, gamesLabel);
 
         return statusBar;
-    }
-
-    // Event handlers
-    private void openUserProfile() {
-        UserProfileWindow profileWindow = new UserProfileWindow(new Stage(), currentUser);
-        profileWindow.show();
     }
 
     private void signUp() {

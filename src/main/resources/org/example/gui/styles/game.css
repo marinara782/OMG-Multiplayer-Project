@@ -140,12 +140,10 @@
 }
 
 .win-symbol {
-    -fx-font-weight: extra-bold;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 2, 0, 0, 1);
 }
 
 .strategy-symbol {
-    -fx-font-weight: extra-bold;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 1, 0, 0, 1);
 }
 

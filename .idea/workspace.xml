@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Formatted/Layout TicTacToe rules (working on the designing)">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/tictactoe_rule.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/ticTacToe/TicTacToeRules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/game/ticTacToe/TicTacToeRules.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/hello-view.fxml" afterDir="false" />
+    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Designing TicTacToe rules (Done)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/MainMenuWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/MainMenuWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/UserProfileWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/UserProfileWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/game.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/game.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/tictactoe_rule.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/tictactoe_rules.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/styles/game.css" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,21 +76,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;bhuvan&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/bhuva/OneDrive/Desktop/GitHub Projects/DuplicateGame&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.13477087&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.17471737&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HelloApplication.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "bhuvan",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "C:/Users/bhuva/OneDrive/Desktop/SENG 300/seng300-w25-project/src/main/java/org/example/gui",
+    "last_opened_file_path": "C:/Users/bhuva/OneDrive/Desktop/GitHub Projects/DuplicateGame",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.13477087",
+    "project.structure.side.proportion": "0.17471737",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="org.example.authentication" />
@@ -364,7 +361,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743452372181</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Designing TicTacToe rules (Done)">
+      <option name="closed" value="true" />
+      <created>1743494164214</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1743494164218</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -379,7 +384,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Computer Chat Box" />
     <MESSAGE value="Tic-Tac-Toe ChatBox has been created." />
     <MESSAGE value="Created Docs &gt; UseCaseDescriptions" />
     <MESSAGE value="Developed UserProfileWindow" />
@@ -404,6 +408,7 @@
     <MESSAGE value="Setting up game window and sign-up and login fxml files" />
     <MESSAGE value="Working on TicTacToe rules Board" />
     <MESSAGE value="Formatted/Layout TicTacToe rules (working on the designing)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Formatted/Layout TicTacToe rules (working on the designing)" />
+    <MESSAGE value="Designing TicTacToe rules (Done)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Designing TicTacToe rules (Done)" />
   </component>
 </project>

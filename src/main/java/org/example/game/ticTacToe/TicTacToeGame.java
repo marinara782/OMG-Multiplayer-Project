@@ -8,8 +8,8 @@ public class TicTacToeGame {
     private char opponent;
     private boolean playerAndComputer;
     private int sizeOfTheBoard;
-    private boolean playerTurn = True;
-    private boolean opponentTurn = False;
+    private boolean playerTurn = true;
+    private boolean opponentTurn = false;
 
     public TicTacToeGame()
     {

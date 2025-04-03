@@ -252,3 +252,5 @@ public class CheckersBoard extends VBox {
 //        alert.setContentText(message);
 //        alert.showAndWait();
 //    }
+
+

@@ -10,7 +10,7 @@ import org.example.authentication.UserProfile;
 
 public class UserProfileWindow {
     public Label welcomeLabel;
-    public BarChart gameDistributionChart;
+    public PieChart gameDistributionPieChart;
     public Label totalGamesLabel;
     public Label winsLabel;
     public Label lossesLabel;
@@ -33,7 +33,6 @@ public class UserProfileWindow {
     public TextArea bioArea;
     public CheckBox gameInviteCheck;
     public CheckBox friendRequestCheck;
-    public CheckBox achievementCheck;
     public CheckBox rankChangeCheck;
     public CheckBox platformNewsCheck;
     public CheckBox inAppCheck;

@@ -16,8 +16,7 @@
         <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER">
             <VBox styleClass="overview-pane">
                 <Label fx:id="welcomeLabel" styleClass="welcome-label"/>
-
-                <HBox styleClass="summary-box">
+                <HBox styleClass="summary-box" spacing="20">
                     <VBox styleClass="stat-box highlight-border">
                         <Label text="Total Games" styleClass="stat-title"/>
                         <Label text="116" styleClass="stat-value"/>
@@ -31,26 +30,19 @@
                         <Label text="Platinum III" styleClass="stat-value"/>
                     </VBox>
                     <VBox styleClass="stat-box info-border">
-                        <Label text="Last Played" styleClass="stat-title"/>
+                        <Label text="Last Played" styleClass="stat-value"/>
                         <Label text="2 hours ago" styleClass="stat-value"/>
                     </VBox>
                 </HBox>
-
                 <TitledPane text="Game Distribution" styleClass="titled-pane">
                     <VBox styleClass="chart-content">
-                        <BarChart fx:id="gameDistributionChart" styleClass="bar-chart">
-                            <xAxis>
-                                <CategoryAxis side="BOTTOM"/>
-                            </xAxis>
-                            <yAxis>
-                                <NumberAxis side="LEFT"/>
-                            </yAxis>
-                        </BarChart>
+                        <PieChart fx:id="gameDistributionPieChart" styleClass="pie-chart">
+                            <title>Games Distribution</title>
+                        </PieChart>
                         <Label text="You've played Tic-Tac-Toe the most. Try other games to earn more XP!"
                                styleClass="chart-note"/>
                     </VBox>
                 </TitledPane>
-
                 <TitledPane text="Recent Matches" styleClass="titled-pane">
                     <VBox styleClass="recent-matches-content">
                         <!-- Match rows would be added programmatically -->
@@ -59,24 +51,15 @@
                         </HBox>
                     </VBox>
                 </TitledPane>
-
-                <TitledPane text="Recent Achievements" styleClass="titled-pane">
-                    <VBox styleClass="achievements-content">
-                        <!-- Achievement rows would be added programmatically -->
-                        <HBox styleClass="achievement-button-box">
-                            <Button text="View All Achievements" styleClass="button highlight-button"/>
-                        </HBox>
-                    </VBox>
-                </TitledPane>
             </VBox>
         </ScrollPane>
     </Tab>
 
     <!-- Stats Tab -->
-    <Tab text="Statistics">
+    <Tab text="Game Stats">
         <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER">
             <VBox styleClass="stats-pane">
-                <TitledPane text="Overall Statistics" styleClass="stats-titled-pane">
+                <TitledPane text="Overall Stats" styleClass="stats-titled-pane">
                     <HBox styleClass="stats-boxes">
                         <VBox styleClass="stat-box highlight-border">
                             <Label text="Total Games" styleClass="stat-title"/>
@@ -111,46 +94,6 @@
                                 <TableColumn text="Highest Rank" styleClass="table-column"/>
                             </columns>
                         </TableView>
-                    </VBox>
-                </TitledPane>
-
-                <TitledPane text="Performance Over Time" styleClass="stats-titled-pane">
-                    <VBox styleClass="performance-content">
-                        <HBox styleClass="chart-controls">
-                            <Label text="Select Game:" styleClass="control-label"/>
-                            <ComboBox fx:id="gameSelector" styleClass="stats-combo-box"/>
-                            <Label text="Time Range:" styleClass="control-label"/>
-                            <RadioButton text="Week" fx:id="weekBtn" styleClass="stats-radio-button"/>
-                            <RadioButton text="Month" fx:id="monthBtn" styleClass="stats-radio-button"/>
-                            <RadioButton text="All Time" fx:id="allTimeBtn" selected="true"
-                                         styleClass="stats-radio-button"/>
-                        </HBox>
-                        <LineChart fx:id="performanceChart" styleClass="line-chart">
-                            <xAxis>
-                                <CategoryAxis label="Date" side="BOTTOM"/>
-                            </xAxis>
-                            <yAxis>
-                                <NumberAxis label="Rating" side="LEFT"/>
-                            </yAxis>
-                        </LineChart>
-                        <HBox styleClass="additional-stats-boxes">
-                            <VBox styleClass="mini-stat-box">
-                                <Label text="Avg. Game Time" styleClass="mini-stat-title"/>
-                                <Label text="15:42" styleClass="mini-stat-value info-color"/>
-                            </VBox>
-                            <VBox styleClass="mini-stat-box">
-                                <Label text="Longest Win Streak" styleClass="mini-stat-title"/>
-                                <Label text="8 games" styleClass="mini-stat-value streak-color"/>
-                            </VBox>
-                            <VBox styleClass="mini-stat-box">
-                                <Label text="Favorite Game" styleClass="mini-stat-title"/>
-                                <Label text="Connect Four" styleClass="mini-stat-value favorite-color"/>
-                            </VBox>
-                            <VBox styleClass="mini-stat-box">
-                                <Label text="Highest Improvement" styleClass="mini-stat-title"/>
-                                <Label text="+103 pts" styleClass="mini-stat-value success-color"/>
-                            </VBox>
-                        </HBox>
                     </VBox>
                 </TitledPane>
             </VBox>

@@ -54,25 +54,17 @@ public class LoginWindowController {
             return;
         }
 
-        try {
-            boolean usernameExists = userDatabase.verify_username(username);
-            boolean authenticated = userDatabase.verify_account(username, password);
+        boolean usernameExists = userDatabase.verify_username(username);
+        boolean authenticated = userDatabase.verify_account(username, password);
 
-            if (!usernameExists) {
-                showAlert("Error", "Username not found. Please sign up.");
-            } else if (!authenticated) {
-                showAlert("Error", "Incorrect password. Please try again.");
-            } else {
-                showAlert("Success", "Login successful!");
-                UserProfile authenticatedUser = new UserProfile(username, password, "", ""); // Fetch full user details if needed
-                OpenMainMenu(authenticatedUser);
-            }
-        } catch(FileNotFoundException e) {
-        showAlert("Error", "User database not found.");
-        e.printStackTrace();
-        } catch(IOException e) {
-        showAlert("Error", "Error loading user data.");
-        e.printStackTrace();
+        if (!usernameExists) {
+            showAlert("Error", "Username not found. Please sign up.");
+        } else if (!authenticated) {
+            showAlert("Error", "Incorrect password. Please try again.");
+        } else {
+            showAlert("Success", "Login successful!");
+            UserProfile authenticatedUser = new UserProfile(username, password, "", ""); // Fetch full user details if needed
+            OpenMainMenu(authenticatedUser);
         }
     }
 

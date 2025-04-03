@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Designing TicTacToe rules (Done)">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/MainMenuWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/MainMenuWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/authentication/UserDatabaseStub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/authentication/UserDatabaseStub.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/LoginWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/LoginWindowController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/UserProfileWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/UserProfileWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/game.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/game.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/userProfileWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/userProfileWindow.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/userprofile.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/userprofile.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,10 +85,14 @@
     "Application.Unnamed.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "bhuvan",
+    "git-widget-placeholder": "GUI__iteration3",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "C:/Users/bhuva/OneDrive/Desktop/SENG 300/seng300-w25-project/src/main/java/org/example/gui",
     "last_opened_file_path": "C:/Users/bhuva/OneDrive/Desktop/GitHub Projects/DuplicateGame",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
     "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.13477087",
     "project.structure.side.proportion": "0.17471737",

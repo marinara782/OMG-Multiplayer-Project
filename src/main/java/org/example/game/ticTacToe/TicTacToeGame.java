@@ -6,6 +6,8 @@ public class TicTacToeGame {
     private char player;
     private char opponent;
     private int sizeOfTheBoard;
+    private boolean playerTurn = True;
+    private boolean opponentTurn = False;
 
     public TicTacToeGame()
     {
@@ -137,19 +139,37 @@ public class TicTacToeGame {
         return opponent;
     }
 
-    public boolean makeMove(int i, int i1) //NOT DONE
+    public boolean makeMove(int row, int col, String turn)
     {
-        return false;
+        if (row < 0 || row >= 3 || col < 0 || col >= 3 || board[row][col] != '/') {
+            return false; // Invalid move
+        }
+
+        if (turn == "player") {
+            board[row][col] = player;
+            playerTurn = false; // Switch turn
+            opponentTurn = true; // Switch turn
+        }
+
+        if (turn == "opponent") {
+            board[row][col] = opponent;
+            opponentTurn = false; // Switch turn
+            playerTurn = true; // Switch turn
+        }
+        return true;
     }
 
-    public boolean isPlayerTurn() //NOT DONE
-    {
-        return false;
+    public boolean isPlayerTurn() {
+
     }
 
-    public char getBoardValue(int row, int col) //NOT DONE
+    public boolean isOpponentTurn(){
+
+    }
+
+    public char getBoardValue(int row, int col)
     {
-        return 0;
+        return player; // plavceholder
     }
 
 

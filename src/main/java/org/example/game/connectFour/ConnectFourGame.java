@@ -59,6 +59,7 @@ public class ConnectFourGame {
 
         int counter = 0;
         for (int row = 0; row < rows; row++) {
+            counter = 0;
             for (int column = 0; column < columns; column++) {
                 if (this.board[row][column] == player) {
                     counter++;
@@ -76,6 +77,7 @@ public class ConnectFourGame {
     public boolean checkWinnerVertical() {
         int counter = 0;
         for (int column = 0; column < columns; column++) {
+            counter = 0;
             for (int row = 0; row < rows; row++) {
                 if (this.board[row][column] == player) {
                     counter++;
@@ -91,18 +93,17 @@ public class ConnectFourGame {
     }
 
     public boolean checkWinnerDiagonal() {
-        int counter = 0;
+
         for (int row = 0; row <= rows - goal; row++) {
             for (int col = 0; col <= columns - goal; col++) {
-                counter = 0;
+                boolean result = true;
                 for (int i = 0; i < goal; i++) {
-                    if (this.board[row + i][col + i] == player) {
-                        counter++;
-                    } else {
+                    if (this.board[row + i][col + i] != player) {
+                        result = false;
                         break;
                     }
                 }
-                if (counter == goal) {
+                if (result) {
                     return true;
                 }
             }
@@ -110,15 +111,14 @@ public class ConnectFourGame {
 
         for (int row = goal - 1; row < rows; row++) {
             for (int col = 0; col <= columns - goal; col++) {
-                counter = 0;
+                boolean result = true;
                 for (int i = 0; i < goal; i++) {
-                    if (this.board[row - i][col + i] == player) {
-                        counter++;
-                    } else {
+                    if (this.board[row - i][col + i] != player) {
+                        result = false;
                         break;
                     }
                 }
-                if (counter == goal) {
+                if (result) {
                     return true;
                 }
             }
@@ -166,18 +166,18 @@ public class ConnectFourGame {
         }
 
         if (!checkWinnerHorizontal() && !checkWinnerVertical() && !checkWinnerDiagonal()) {
-            return false;
+            return true;
         }
-
-// because we're using GUI for now we can keep this method empty
-//    public void printBoard(){
-//
-//    }
-    return checkDraw();
+        return false;
     }
 
     public boolean isVsComputer() {
         return vsComputer;
     }
+
+    // because we're using GUI for now we can keep this method empty
+//    public void printBoard(){
+//
+//    }
 }
 

@@ -248,7 +248,24 @@ public class CheckersGame {
         return r >= 0 && r < 8 && c >= 0 && c < 8;
     }
 
-    /** Simple helper class to represent a move. */
+    public boolean checkWin() {
+        boolean red = false, black = false;
+        for (int[] row : board) {
+            for (int cell : row) {
+                if (cell > 0) red = true;
+                if (cell < 0) black = true;
+            }
+        }
+        return !(red && black);
+    }
+
+    public int[][] computerMoveWithPreview() {
+        return new int[0][];
+    }
+
+    public void finalizeComputerMove() {
+    }
+
     private static class Move {
         int fromRow, fromCol, toRow, toCol;
         Move(int fr, int fc, int tr, int tc) {
@@ -257,5 +274,49 @@ public class CheckersGame {
             toRow = tr;
             toCol = tc;
         }
+    }
+
+
+    // --- In CheckersGame.java ---
+    // Add this method inside the CheckersGame class
+    public List<int[]> getValidMoves(int row, int col) {
+        List<int[]> validMoves = new ArrayList<>();
+        int piece = board[row][col];
+        if (piece == 0) return validMoves;
+
+        boolean isPlayerPiece = piece < 0;
+        boolean isKing = Math.abs(piece) == 2;
+
+        int[][] directions = isKing ? new int[][]{
+                {-1, -1}, {-1, 1}, {1, -1}, {1, 1}
+        } : (isPlayerPiece ? new int[][]{
+                {-1, -1}, {-1, 1}
+        } : new int[][]{
+                {1, -1}, {1, 1}
+        });
+
+        for (int[] dir : directions) {
+            int newRow = row + dir[0];
+            int newCol = col + dir[1];
+
+            if (isInBounds(newRow, newCol)) {
+                if (board[newRow][newCol] == 0) {
+                    validMoves.add(new int[]{newRow, newCol});
+                } else if ((isPlayerPiece && board[newRow][newCol] > 0) || (!isPlayerPiece && board[newRow][newCol] < 0)) {
+                    // Jump check
+                    int jumpRow = newRow + dir[0];
+                    int jumpCol = newCol + dir[1];
+                    if (isInBounds(jumpRow, jumpCol) && board[jumpRow][jumpCol] == 0) {
+                        validMoves.add(new int[]{jumpRow, jumpCol});
+                    }
+                }
+            }
+        }
+
+        return validMoves;
+    }
+
+    private boolean isInBounds(int row, int col) {
+        return row >= 0 && row < 8 && col >= 0 && col < 8;
     }
 }

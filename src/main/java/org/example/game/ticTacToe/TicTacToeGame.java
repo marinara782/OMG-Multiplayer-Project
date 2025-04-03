@@ -213,16 +213,19 @@ public class TicTacToeGame {
     }
 
     public boolean isPlayerTurn() {
-
+        return playerTurn;
     }
 
     public boolean isOpponentTurn(){
-
+        return opponentTurn;
     }
 
     public char getBoardValue(int row, int col)
     {
-        return player; // plavceholder
+        if (row < 0 || row >= 3 || col < 0 || col >= 3) {
+            return 0; // Return an invalid character
+        }
+        return board[row][col];
     }
 
 

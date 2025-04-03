@@ -20,7 +20,9 @@ public class Leaderboard {
      * @param player: the player to be added to the leaderboard
      */
     public void addPlayer(Player player) {
-        players.add(player); // add player to the list of players
+        if (!players.contains(player)) {
+            players.add(player); // add player to the list of players
+        }
     }
 
     /**

@@ -3,8 +3,10 @@ package org.example.game.ticTacToe;
 public class TicTacToeGame {
 
     private char[][] board;
+    private char currentPlayer;
     private char player;
     private char opponent;
+    private boolean playerAndComputer;
     private int sizeOfTheBoard;
 
     public TicTacToeGame()
@@ -134,7 +136,7 @@ public class TicTacToeGame {
     }
 
     public char getPlayerSymbol() {
-        return opponent;
+        return player;
     }
 
     public boolean makeMove(int i, int i1) //NOT DONE

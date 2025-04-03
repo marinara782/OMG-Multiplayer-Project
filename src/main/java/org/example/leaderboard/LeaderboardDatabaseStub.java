@@ -198,6 +198,7 @@ public class LeaderboardDatabaseStub  {
                     break;
                 case "total losses":
                     System.out.println(p.getUsername() + " - " + p.getTotalLosses());
+                    break;
                 case "win percentage":
                     double winPercentage = p.getWinPercentage();
                     String percentFormat = String.format("%.2f%%", winPercentage * 100);

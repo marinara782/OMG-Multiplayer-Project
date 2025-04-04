@@ -14,19 +14,19 @@ import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourGame;
 import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.leaderboard.Leaderboard;
-import org.example.matchmaking.Matchmaker;
+//import org.example.matchmaking.Matchmaker;
 
 public class MainMenuWindow {
     private Stage stage;
     private Scene scene;
     private BorderPane mainLayout;
     private UserProfile currentUser;
-    private Matchmaker matchmaker;
+//    private Matchmaker matchmaker;
 
     public MainMenuWindow(Stage stage, UserProfile currentUser) {
         this.stage = stage;
         this.currentUser = currentUser;
-        this.matchmaker = new Matchmaker();
+//        this.matchmaker = new Matchmaker();
         initializeUI();
     }
 

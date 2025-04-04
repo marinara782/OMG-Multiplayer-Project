@@ -135,7 +135,7 @@ public class LeaderboardTest {
     @Test
     void testGetTop4Players_SortByTicTacToeLosses() {
         List<Player> topPlayers = leaderboard.getTopNPlayers(4, "tictactoe losses");
-        assertEquals(6, topPlayers.size());
+        assertEquals(4, topPlayers.size());
         assertEquals(erick, topPlayers.get(0));
         assertEquals(fred, topPlayers.get(1));
         assertEquals(dave, topPlayers.get(2));
@@ -154,7 +154,7 @@ public class LeaderboardTest {
 
     @Test
     void testGetTop3Players_SortByTotalWins() {
-        List<Player> topPlayers = leaderboard.getTopNPlayers(4, "total wins");
+        List<Player> topPlayers = leaderboard.getTopNPlayers(3, "total wins");
         assertEquals(3, topPlayers.size());
         assertEquals(erick, topPlayers.get(0));
         assertEquals(fred, topPlayers.get(1));
@@ -163,8 +163,8 @@ public class LeaderboardTest {
 
     @Test
     void testGetTop2Players_SortByTotalLosses() {
-        List<Player> topPlayers = leaderboard.getTopNPlayers(4, "total losses");
-        assertEquals(6, topPlayers.size());
+        List<Player> topPlayers = leaderboard.getTopNPlayers(2, "total losses");
+        assertEquals(2, topPlayers.size());
         assertEquals(erick, topPlayers.get(0));
         assertEquals(dave, topPlayers.get(1));
     }

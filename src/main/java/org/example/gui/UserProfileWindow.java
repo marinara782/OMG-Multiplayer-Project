@@ -15,8 +15,14 @@ public class UserProfileWindow {
     public Label winsLabel;
     public Label lossesLabel;
     public Label winRateStatLabel;
-    public PieChart gamesPieChart;
-    public TableView gameStatsTable;
+    public PieChart allGamesPieChart;
+    public TableView allGamesTable;
+    public PieChart ticTacToePieChart;
+    public TableView ticTacToeTable;
+    public PieChart checkersPieChart;
+    public TableView checkersTable;
+    public PieChart connect4PieChart;
+    public TableView connect4Table;
     public ComboBox gameSelector;
     public RadioButton weekBtn;
     public RadioButton monthBtn;

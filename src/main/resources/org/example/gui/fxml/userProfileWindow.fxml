@@ -59,26 +59,24 @@
     <Tab text="Game Stats">
         <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER">
             <VBox styleClass="stats-pane">
-                <TitledPane text="Overall Stats" styleClass="stats-titled-pane">
-                    <HBox styleClass="stats-boxes">
-                        <VBox styleClass="stat-box highlight-border">
-                            <Label text="Total Games" styleClass="stat-title"/>
-                            <Label fx:id="totalGamesLabel" text="116" styleClass="stat-value"/>
-                        </VBox>
-                        <VBox styleClass="stat-box success-border">
-                            <Label text="Wins" styleClass="stat-title"/>
-                            <Label fx:id="winsLabel" text="72" styleClass="stat-value"/>
-                        </VBox>
-                        <VBox styleClass="stat-box error-border">
-                            <Label text="Losses" styleClass="stat-title"/>
-                            <Label fx:id="lossesLabel" text="44" styleClass="stat-value"/>
-                        </VBox>
-                        <VBox styleClass="stat-box warning-border">
-                            <Label text="Win Rate" styleClass="stat-title"/>
-                            <Label fx:id="winRateStatLabel" text="62%" styleClass="stat-value"/>
-                        </VBox>
-                    </HBox>
-                </TitledPane>
+                <HBox styleClass="summary-box" spacing="20">
+                    <VBox styleClass="stat-box highlight-border">
+                        <Label text="Total Games" styleClass="stat-title"/>
+                        <Label fx:id="totalGamesLabel" text="116" styleClass="stat-value"/>
+                    </VBox>
+                    <VBox styleClass="stat-box success-border">
+                        <Label text="Wins" styleClass="stat-title"/>
+                        <Label fx:id="winsLabel" text="72" styleClass="stat-value"/>
+                    </VBox>
+                    <VBox styleClass="stat-box error-border">
+                        <Label text="Losses" styleClass="stat-title"/>
+                        <Label fx:id="lossesLabel" text="44" styleClass="stat-value"/>
+                    </VBox>
+                    <VBox styleClass="stat-box warning-border">
+                        <Label text="Win Rate" styleClass="stat-title"/>
+                        <Label fx:id="winRateStatLabel" text="62%" styleClass="stat-value"/>
+                    </VBox>
+                </HBox>
 
                 <TitledPane text="Game Breakdown" styleClass="stats-titled-pane">
                     <VBox styleClass="breakdown-content">
@@ -86,7 +84,7 @@
                         <TitledPane text="All Games" styleClass="sub-titled-pane">
                             <VBox styleClass="sub-breakdown-content">
                                 <PieChart fx:id="allGamesPieChart" styleClass="pie-chart">
-                                    <title>All Games Distribution</title>
+                                    <title>All Games Stats</title>
                                 </PieChart>
                                 <TableView fx:id="allGamesTable" styleClass="game-stats-table">
                                     <columns>
@@ -104,7 +102,7 @@
                         <TitledPane text="Tic Tac Toe" styleClass="sub-titled-pane">
                             <VBox styleClass="sub-breakdown-content">
                                 <PieChart fx:id="ticTacToePieChart" styleClass="pie-chart">
-                                    <title>Tic Tac Toe Distribution</title>
+                                    <title>Tic Tac Toe Stats</title>
                                 </PieChart>
                                 <TableView fx:id="ticTacToeTable" styleClass="game-stats-table">
                                     <columns>
@@ -122,7 +120,7 @@
                         <TitledPane text="Checkers" styleClass="sub-titled-pane">
                             <VBox styleClass="sub-breakdown-content">
                                 <PieChart fx:id="checkersPieChart" styleClass="pie-chart">
-                                    <title>Checkers Distribution</title>
+                                    <title>Checkers Stats</title>
                                 </PieChart>
                                 <TableView fx:id="checkersTable" styleClass="game-stats-table">
                                     <columns>
@@ -140,7 +138,7 @@
                         <TitledPane text="Connect 4" styleClass="sub-titled-pane">
                             <VBox styleClass="sub-breakdown-content">
                                 <PieChart fx:id="connect4PieChart" styleClass="pie-chart">
-                                    <title>Connect 4 Distribution</title>
+                                    <title>Connect 4 Stats</title>
                                 </PieChart>
                                 <TableView fx:id="connect4Table" styleClass="game-stats-table">
                                     <columns>

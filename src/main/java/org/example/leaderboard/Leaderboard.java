@@ -78,11 +78,11 @@ public class Leaderboard {
         } else if ("losses".equals(criteriaString)){ // if the criteria is losses
             switch (gameName) { // switch based on the game name
                 case "checkers":
-                    return Comparator.comparingInt(Player::getCheckerLosses);
+                    return Comparator.comparingInt(Player::getCheckerLosses).reversed();
                 case "tictactoe":
-                    return Comparator.comparingInt(Player::getTictactoeLosses);
+                    return Comparator.comparingInt(Player::getTictactoeLosses).reversed();
                 case "connect4":
-                    return Comparator.comparingInt(Player::getConnect4Losses);
+                    return Comparator.comparingInt(Player::getConnect4Losses).reversed();
                 case "total":
                     return Comparator.comparingInt(Player::getTotalLosses).reversed();
                 default:

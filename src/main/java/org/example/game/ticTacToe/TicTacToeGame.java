@@ -54,7 +54,7 @@ public class TicTacToeGame {
         playerAndComputer = false;
     }
 
-    public void playervsAIGame()
+    public void playerVSAIGame()
     {
         currentPlayer = player;
         playerAndComputer = true;
@@ -205,6 +205,16 @@ public class TicTacToeGame {
         currentPlayer = player;
     }
 
+    boolean checkIfGameOver()
+    {
+        if(checkForWin())
+            return true;
+        if(isBoardFull())
+            return true;
+
+        return false;
+    }
+
     public boolean isNetworkGame() //NOT DONE
     {
         return false;
@@ -214,23 +224,22 @@ public class TicTacToeGame {
         return player;
     }
 
-    public boolean makeMove(int row, int col, String turn)
+    public boolean makeMove(int row, int col)
     {
-        if (row < 0 || row >= 3 || col < 0 || col >= 3 || board[row][col] != '/') {
-            return false; // Invalid move
-        }
+        if (row < 0 || row >= 3 || col < 0 || col >= 3)
+            return false;
 
-        if (turn == "player") {
-            board[row][col] = player;
-            playerTurn = false; // Switch turn
-            opponentTurn = true; // Switch turn
-        }
+        if(currentPlayer != player)
+            return false;
 
-        if (turn == "opponent") {
-            board[row][col] = opponent;
-            opponentTurn = false; // Switch turn
-            playerTurn = true; // Switch turn
-        }
+        if(board[row][col] != '/')
+            return false;
+
+        board[row][col] = currentPlayer;
+        currentPlayer = opponent;
+        if (!(checkIfGameOver()) && playerAndComputer)
+            makeAIMove();
+
         return true;
     }
 

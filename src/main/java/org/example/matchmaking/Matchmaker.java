@@ -7,10 +7,10 @@ import org.example.Player;
 // Try and look over the related problem later.
 public class Matchmaker {
     private List<Player> players; // List of all players in matchmaking pool
-    private List<Player> topPlayers; // Leaderboard containing top-ranked players
+    private final List<Player> topPlayers; // Leaderboard containing top-ranked players
 
-    public Matchmaker(List<Player> players) {
-        this.players = new ArrayList<>(players);
+    public Matchmaker() {
+        //this.players = new ArrayList<>(players);
         this.topPlayers = new ArrayList<>();
     }
 
@@ -88,7 +88,7 @@ public class Matchmaker {
      * @param player1 The first player in the match.
      * @param player2 The second player in the match.
      */
-    private void simulateMatchResult(Player player1, Player player2) {
+   private void simulateMatchResult(Player player1, Player player2) {
         Player winner = ThreadLocalRandom.current().nextBoolean() ? player1 : player2;
         Player loser = (winner.equals(player1)) ? player2 : player1;
 

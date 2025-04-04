@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Designing TicTacToe rules (Done)">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Updated the Profile visuals a bit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/authentication/UserDatabaseStub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/authentication/UserDatabaseStub.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/LoginWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/LoginWindowController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/UserProfileWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/UserProfileWindow.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/userProfileWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/userProfileWindow.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/userprofile.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/userprofile.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -376,7 +371,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743494164218</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Updated the Profile visuals a bit">
+      <option name="closed" value="true" />
+      <created>1743722793103</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1743722793103</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -391,7 +394,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Tic-Tac-Toe ChatBox has been created." />
     <MESSAGE value="Created Docs &gt; UseCaseDescriptions" />
     <MESSAGE value="Developed UserProfileWindow" />
     <MESSAGE value="Developed UserProfileWindow and HelloApplication" />
@@ -416,6 +418,7 @@
     <MESSAGE value="Working on TicTacToe rules Board" />
     <MESSAGE value="Formatted/Layout TicTacToe rules (working on the designing)" />
     <MESSAGE value="Designing TicTacToe rules (Done)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Designing TicTacToe rules (Done)" />
+    <MESSAGE value="Updated the Profile visuals a bit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated the Profile visuals a bit" />
   </component>
 </project>

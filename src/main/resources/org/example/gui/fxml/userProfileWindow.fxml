@@ -82,18 +82,77 @@
 
                 <TitledPane text="Game Breakdown" styleClass="stats-titled-pane">
                     <VBox styleClass="breakdown-content">
-                        <PieChart fx:id="gamesPieChart" styleClass="pie-chart">
-                            <title>Games Distribution</title>
-                        </PieChart>
-                        <TableView fx:id="gameStatsTable" styleClass="game-stats-table">
-                            <columns>
-                                <TableColumn text="Game" styleClass="table-column"/>
-                                <TableColumn text="Games Played" styleClass="table-column"/>
-                                <TableColumn text="Win Rate" styleClass="table-column"/>
-                                <TableColumn text="Rank" styleClass="table-column"/>
-                                <TableColumn text="Highest Rank" styleClass="table-column"/>
-                            </columns>
-                        </TableView>
+                        <!-- All Games -->
+                        <TitledPane text="All Games" styleClass="sub-titled-pane">
+                            <VBox styleClass="sub-breakdown-content">
+                                <PieChart fx:id="allGamesPieChart" styleClass="pie-chart">
+                                    <title>All Games Distribution</title>
+                                </PieChart>
+                                <TableView fx:id="allGamesTable" styleClass="game-stats-table">
+                                    <columns>
+                                        <TableColumn text="Game" styleClass="table-column"/>
+                                        <TableColumn text="Games Played" styleClass="table-column"/>
+                                        <TableColumn text="Win Rate" styleClass="table-column"/>
+                                        <TableColumn text="Rank" styleClass="table-column"/>
+                                        <TableColumn text="Highest Rank" styleClass="table-column"/>
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                        </TitledPane>
+
+                        <!-- Tic Tac Toe -->
+                        <TitledPane text="Tic Tac Toe" styleClass="sub-titled-pane">
+                            <VBox styleClass="sub-breakdown-content">
+                                <PieChart fx:id="ticTacToePieChart" styleClass="pie-chart">
+                                    <title>Tic Tac Toe Distribution</title>
+                                </PieChart>
+                                <TableView fx:id="ticTacToeTable" styleClass="game-stats-table">
+                                    <columns>
+                                        <TableColumn text="Game" styleClass="table-column"/>
+                                        <TableColumn text="Games Played" styleClass="table-column"/>
+                                        <TableColumn text="Win Rate" styleClass="table-column"/>
+                                        <TableColumn text="Rank" styleClass="table-column"/>
+                                        <TableColumn text="Highest Rank" styleClass="table-column"/>
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                        </TitledPane>
+
+                        <!-- Checkers -->
+                        <TitledPane text="Checkers" styleClass="sub-titled-pane">
+                            <VBox styleClass="sub-breakdown-content">
+                                <PieChart fx:id="checkersPieChart" styleClass="pie-chart">
+                                    <title>Checkers Distribution</title>
+                                </PieChart>
+                                <TableView fx:id="checkersTable" styleClass="game-stats-table">
+                                    <columns>
+                                        <TableColumn text="Game" styleClass="table-column"/>
+                                        <TableColumn text="Games Played" styleClass="table-column"/>
+                                        <TableColumn text="Win Rate" styleClass="table-column"/>
+                                        <TableColumn text="Rank" styleClass="table-column"/>
+                                        <TableColumn text="Highest Rank" styleClass="table-column"/>
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                        </TitledPane>
+
+                        <!-- Connect 4 -->
+                        <TitledPane text="Connect 4" styleClass="sub-titled-pane">
+                            <VBox styleClass="sub-breakdown-content">
+                                <PieChart fx:id="connect4PieChart" styleClass="pie-chart">
+                                    <title>Connect 4 Distribution</title>
+                                </PieChart>
+                                <TableView fx:id="connect4Table" styleClass="game-stats-table">
+                                    <columns>
+                                        <TableColumn text="Game" styleClass="table-column"/>
+                                        <TableColumn text="Games Played" styleClass="table-column"/>
+                                        <TableColumn text="Win Rate" styleClass="table-column"/>
+                                        <TableColumn text="Rank" styleClass="table-column"/>
+                                        <TableColumn text="Highest Rank" styleClass="table-column"/>
+                                    </columns>
+                                </TableView>
+                            </VBox>
+                        </TitledPane>
                     </VBox>
                 </TitledPane>
             </VBox>

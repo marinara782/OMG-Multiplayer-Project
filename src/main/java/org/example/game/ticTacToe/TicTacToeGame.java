@@ -48,6 +48,18 @@ public class TicTacToeGame {
         }
     }
 
+    public void twoPlayersGame()
+    {
+        currentPlayer = player;
+        playerAndComputer = false;
+    }
+
+    public void playervsAIGame()
+    {
+        currentPlayer = player;
+        playerAndComputer = true;
+    }
+
 
     public boolean checkForWin(char symbol)
     {

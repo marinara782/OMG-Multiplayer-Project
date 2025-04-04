@@ -235,7 +235,7 @@ public class TicTacToeGame {
     }
 
     public boolean isPlayerTurn() {
-        return playerTurn;
+        return currentPlayer == player;
     }
 
     public boolean isOpponentTurn(){

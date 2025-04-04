@@ -107,7 +107,7 @@ public class MainMenuWindow {
 
         // TicTacToe Game Card
         VBox ticTacToeCard = createGameCard("Tic-Tac-Toe", "ticTacToe");
-        ticTacToeCard.setOnMouseClicked(e -> startMatchmaking("ticTacToe"));
+        ticTacToeCard.setOnMouseClicked(e -> handleTicTacToeClick());
 
         // Connect Four Game Card
         VBox connectFourCard = createGameCard("Connect Four", "connectFour");
@@ -414,8 +414,6 @@ public class MainMenuWindow {
             return null;
         }
 
-
-
 /*/
         modeDialog.showAndWait().ifPresent(response -> {
             boolean vsComputer;
@@ -434,6 +432,57 @@ public class MainMenuWindow {
         return result == vsComputerButton;
     }
 
+    private Boolean showTicTacToeModeDialog() {
+        Alert modeDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        modeDialog.setTitle("Choose Game Mode");
+        modeDialog.setHeaderText("Select Tic Tac Toe Mode");
+        modeDialog.setContentText("Do you want to play against the computer or another player?");
+
+        ButtonType vsComputerButton = new ButtonType("Computer");
+        ButtonType multiplayerButton = new ButtonType("Multiplayer (Same Device)");
+
+        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        modeDialog.getButtonTypes().setAll(vsComputerButton, multiplayerButton, cancel);
+
+        DialogPane dialogPane = modeDialog.getDialogPane();
+
+        dialogPane.setStyle("-fx-background-color: #3498db");
+
+        Node header = dialogPane.lookup(".header-panel");
+        if(header != null) {
+            header.setStyle("-fx-background-color: #3498db;");
+        }
+        Label content = (Label) dialogPane.lookup(".content.label");
+        if(content != null) {
+            content.setStyle("-fx-text-fill: white;");
+        }
+        Node buttonBar = dialogPane.lookup(".buttonBar");
+        if(buttonBar != null) {
+            buttonBar.setStyle("-fx-background-color: white;");
+        }
+
+        modeDialog.showingProperty().addListener((obs, wasShowing, isNowShowing) -> {
+            if (isNowShowing) {
+                Button computerButton = (Button) dialogPane.lookupButton(vsComputerButton);
+                Button multiButton = (Button) dialogPane.lookupButton(multiplayerButton);
+                Button cancelButton = (Button) dialogPane.lookupButton(cancel);
+
+                computerButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; ");
+                multiButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
+                cancelButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+            }
+        });
+
+
+        ButtonType result = modeDialog.showAndWait().orElse(cancel);
+        if (result == cancel) {
+            return null;
+        }
+
+        return result == vsComputerButton;
+    }
+
     private void handleConnectFourClick() {
         Boolean vsComputer = showConnectFourModeDialog();
         if (vsComputer == null) {
@@ -446,6 +495,14 @@ public class MainMenuWindow {
 //        }else{
 //            startMatchmaking("connectFour");
 //        }
+    }
+
+    private void handleTicTacToeClick() {
+        Boolean vsComputer = showTicTacToeModeDialog();
+        if (vsComputer == null) {
+            return;
+        }
+
     }
 
     /*

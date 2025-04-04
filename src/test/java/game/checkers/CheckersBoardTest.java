@@ -96,3 +96,4 @@ public class CheckersBoardTest {
         }
     }
 }
+//Changes will occure if problem occurs again !

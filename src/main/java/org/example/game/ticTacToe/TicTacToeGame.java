@@ -8,8 +8,7 @@ public class TicTacToeGame {
     private char opponent;
     private boolean playerAndComputer;
     private int sizeOfTheBoard;
-    private boolean playerTurn = true;
-    private boolean opponentTurn = false;
+
 
     public TicTacToeGame()
     {
@@ -248,7 +247,7 @@ public class TicTacToeGame {
     }
 
     public boolean isOpponentTurn(){
-        return opponentTurn;
+        return currentPlayer == opponent;
     }
 
     public char getBoardValue(int row, int col)

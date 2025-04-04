@@ -183,6 +183,16 @@ public class TicTacToeGame {
         return null;
     }
 
+    private void makeAIMove()
+    {
+        int[] move = getAIMove();
+        if(move == null)
+            return;
+
+        board[move[0]][move[1]] = opponent;
+        currentPlayer = player;
+    }
+
     public boolean isNetworkGame() //NOT DONE
     {
         return false;

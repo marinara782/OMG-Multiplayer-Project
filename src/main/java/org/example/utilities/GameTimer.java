@@ -126,10 +126,10 @@ public class GameTimer {
         if (hasTimedOut()) {
             System.out.println("⚠️ [WARNING] Phase timed out!");
         }
-        System.out.println("==============================");
+        System.out.println("=============================");
     }
 
-    // ========== AUTO-END SUPPORT ==========
+    // AUTO-END SUPPORT
 
     public void enableAutoEnd(Runnable onTimeoutCallback, int checkIntervalMs) {
         if (!isRunning || autoEndEnabled) return;

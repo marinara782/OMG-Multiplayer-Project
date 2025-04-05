@@ -160,9 +160,70 @@ public class MainMenuWindow {
         Label playersLabel = new Label("Online: 42 players");
         playersLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #bdc3c7;");
 
-        card.getChildren().addAll(iconPlaceholder, nameLabel, playersLabel);
+        Button rulesButton = new Button("View Rules");
+        rulesButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
+        rulesButton.setOnAction(e -> showGameRules(gameType));
+
+        card.getChildren().addAll(iconPlaceholder, nameLabel, playersLabel, rulesButton);
 
         return card;
+    }
+
+    private void showGameRules(String gameType) {
+        String rules = "";
+        if (gameType.toLowerCase().equals("connectfour")) {
+            rules = """
+                CONNECT FOUR RULES:
+                • Players take turns dropping discs into columns.
+                • The first to connect the target number in a row (horizontally, vertically, or diagonally) wins.
+                • If the board fills up with no winner, it's a draw.
+                • Use the drop buttons at the top of the board to make a move.
+                """;
+        }else if (gameType.toLowerCase().equals("tictactoe")) {
+            rules = """
+                TIC-TAC-TOE RULES:
+                • Two players take turns placing X or O.
+                • The first to get 3 in a row (horizontal, vertical, diagonal) wins.
+                • If all 9 spaces are filled and no winner, it's a draw.
+                """;
+        } else if (gameType.toLowerCase().equals("checkers")) {
+            rules = """
+                CHECKERS RULES:
+                • Each player moves diagonally and captures opponent's pieces by jumping over them.
+                • Reach the last row to crown a piece (king).
+                • Player with no remaining moves or pieces loses.
+                """;
+        }else {
+            rules = "No rules available for this game.";
+        }
+
+        Alert rulesDialog = new Alert(Alert.AlertType.INFORMATION);
+        rulesDialog.setTitle("Game Rules");
+        rulesDialog.setHeaderText("Rules for " + formatGameTitle(gameType));
+        rulesDialog.setContentText(rules);
+
+        DialogPane rulesDialogPane = rulesDialog.getDialogPane();
+        rulesDialogPane.setStyle("-fx-background-color: #2c3e50;");
+        rulesDialogPane.lookup(".content.label").setStyle("-fx-text-fill: white;");
+        rulesDialogPane.lookup(".header-panel").setStyle("-fx-background-color: #3498db;");
+
+        rulesDialog.showAndWait();
+
+    }
+
+    private String formatGameTitle(String gameType) {
+        if (gameType.toLowerCase().equals("connectfour")) {
+            return "Connect Four";
+        }
+        else if (gameType.toLowerCase().equals("tictactoe")) {
+            return "Tic-Tac-Toe";
+        }
+        else if (gameType.toLowerCase().equals("checkers")) {
+            return "Checkers";
+        }
+        else {
+            return "Unknown Game";
+        }
     }
 
     private VBox createRightPanel() {

@@ -20,7 +20,7 @@ public class TicTacToeGame {
         this.playerAndComputer = isComputerGame;;
         //We also have to initialize the cells of the board, they need to be empty at first, whenever a game starts
         BoardInitialization();
-        //randomizePlayersSymbols();
+        //randomizePlayersSymbols(); thats gonna be for later
     }
 
     public void randomizePlayersSymbols()
@@ -41,6 +41,8 @@ public class TicTacToeGame {
 
     private void BoardInitialization()
     {
+        //So here we're just initializing the board which is 3 by 3, so that all cells are empty and so that the board is ready for a gameplay
+        //We go through every cell and mark it as / meaning empty, and thats what the for loop below does.
         board = new char[3][3];
         for(short i = 0; 3>i;i++) {
             for (short j = 0; 3 > j; j++) {
@@ -51,21 +53,29 @@ public class TicTacToeGame {
 
     public void twoPlayersGame()
     {
+        //So this is a game mode that offers a player vs paler experience
+        //So the currentPlayer is always equal to player and playerAndComputer is set to false as we're not playing against a computer.
         currentPlayer = player;
         playerAndComputer = false;
     }
 
     public void playerVSAIGame()
     {
+        //So this is a game mode that offers a player vs AI experience
+        //So the currentPlayer is always equal to player and playerAndComputer is set to true as we're playing against a computer.
         currentPlayer = player;
         playerAndComputer = true;
     }
 
-    public boolean isPlayerAndComputer(){
+    public boolean isPlayerAndComputer()
+    {
+        //we return true if game mode is player vs computer, false otherwise
         return playerAndComputer;
     }
 
-    public char getCurrentPlayer(){
+    public char getCurrentPlayer()
+    {
+        //we return true if game is player vs player, false otherwise
         return currentPlayer;
     }
 
@@ -132,15 +142,19 @@ public class TicTacToeGame {
 
     public char getOpponentSymbol()
     {
+        //This method returns/gives us the symbol used by the opponent
         return opponent;
 
     }
 
     public int[] getAIMove()
     {
+        //This is a method made for the computer so that it can play against humans and possibly win games too
+        //if the board is full then we return null which means we can't make any moves and game is over.
         if (isBoardFull())
             return null;
 
+        //This small portion below checks if the AI can win by making a move
         for(short i = 0; 3>i;i++)
         {
             for(short j = 0; 3>j;j++)
@@ -158,9 +172,11 @@ public class TicTacToeGame {
             }
         }
 
+        //These two lines here, if the middle cell is empty, then AI picks that cell and assigns its symbol
         if(board[1][1] == '/')
             return new int[]{1, 1};
 
+        //This portion here checks if the player is close to winning, and so our goal is to make the AI block it and not give player the win
         for(short i = 0; 3>i;i++)
         {
             for(short j = 0; 3>j;j++)
@@ -178,6 +194,7 @@ public class TicTacToeGame {
             }
         }
 
+        //This option, if any corners are open, then the AI occupies whatever corner is available
         if(board[0][0] == '/')
             return new int[]{0, 0};
         if(board[0][2] == '/')
@@ -187,6 +204,7 @@ public class TicTacToeGame {
         if(board[2][2] == '/')
             return new int[]{2, 2};
 
+        //This last option here is when none of the above options are available, the AI will just pick whatever first empty cells it encounters
         for(short i = 0; 3>i;i++)
         {
             for(short j = 0; 3>j;j++)
@@ -198,12 +216,14 @@ public class TicTacToeGame {
             }
         }
 
+        //if none of the above options are executed, then we return null
 
         return null;
     }
 
     private void makeAIMove()
     {
+        //Now whatever the AI confirms as a move, we just make that move using this method
         int[] move = getAIMove();
         if(move == null)
             return;

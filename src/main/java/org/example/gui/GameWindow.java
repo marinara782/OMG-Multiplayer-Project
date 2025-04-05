@@ -5,18 +5,26 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.example.authentication.UserProfile;
+import org.example.game.checkers.CheckersBoard;
 import org.example.game.checkers.CheckersGame;
+import org.example.game.connectFour.ConnectFourBoard;
 import org.example.game.connectFour.ConnectFourGame;
 import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.networking.GameSession;
 import org.example.utilities.ChatManager;
 import org.example.utilities.GameTimer;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static javafx.geometry.Pos.CENTER;
 
 public class GameWindow {
     private Stage stage;
@@ -32,12 +40,20 @@ public class GameWindow {
     private Label turnLabel;
     private Label timerLabel;
 
+    //connectFour
+    private ConnectFourGame connectFourGame;
+
     public GameWindow(Stage stage, Object gameInstance, UserProfile currentUser) {
         this.stage = stage;
         this.gameInstance = gameInstance;
         this.currentUser = currentUser;
         this.gameSession = new GameSession();
         this.gameTimer = new GameTimer();
+
+        //ConnectFourGame logic
+        if(gameInstance instanceof ConnectFourGame) {
+            this.connectFourGame = (ConnectFourGame) gameInstance;
+        }
 
         // Initialize chatManager based on selected game
         if (gameInstance instanceof TicTacToeGame) {
@@ -62,7 +78,7 @@ public class GameWindow {
 
         // Center section - Game board placeholder (will be set in setupGameBoard)
         gameBoard = new VBox();
-        gameBoard.setAlignment(Pos.CENTER);
+        gameBoard.setAlignment(CENTER);
         gameBoard.setStyle("-fx-background-color: #34495e; -fx-background-radius: 5;");
         mainLayout.setCenter(gameBoard);
 
@@ -288,7 +304,7 @@ public class GameWindow {
     private HBox createBottomBar() {
         HBox bottomBar = new HBox(15);
         bottomBar.setPadding(new Insets(10, 5, 5, 5));
-        bottomBar.setAlignment(Pos.CENTER);
+        bottomBar.setAlignment(CENTER);
         bottomBar.setStyle("-fx-background-color: #1a2530; -fx-background-radius: 5;");
 
         Button undoButton = new Button("Undo");
@@ -324,16 +340,20 @@ public class GameWindow {
             setupConnectFourBoard();
         } else if (gameInstance instanceof CheckersGame) {
             System.out.println("Setting up Checkers board");
-            setupCheckersBoard();
+            // setupCheckersBoard();
+            // Added by game logic team (Jacob Baggott)
+            gameBoard.getChildren().clear();
+            CheckersBoard checkersBoard = new CheckersBoard((CheckersGame) gameInstance);
+            gameBoard.getChildren().add(checkersBoard);
         }
     }
 
     private void setupTicTacToeBoard() {
         VBox boardContainer = new VBox(20);
-        boardContainer.setAlignment(Pos.CENTER);
+        boardContainer.setAlignment(CENTER);
 
         GridPane board = new GridPane();
-        board.setAlignment(Pos.CENTER);
+        board.setAlignment(CENTER);
         board.setHgap(10);
         board.setVgap(10);
 
@@ -368,6 +388,13 @@ public class GameWindow {
     }
 
     private void setupConnectFourBoard() {
+
+        if (!(gameInstance instanceof ConnectFourGame)) return;
+
+        ConnectFourGame connectFourGame = (ConnectFourGame) gameInstance;
+        int rows = connectFourGame.getRows();
+        int cols = connectFourGame.getColumns();
+
         VBox boardContainer = new VBox(20);
         boardContainer.setAlignment(Pos.CENTER);
 
@@ -376,9 +403,9 @@ public class GameWindow {
         board.setHgap(5);
         board.setVgap(5);
 
-        // Create the 7x6 grid (7 columns, 6 rows)
-        for (int row = 0; row < 6; row++) {
-            for (int col = 0; col < 7; col++) {
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
                 StackPane cell = new StackPane();
                 cell.setPrefSize(60, 60);
                 cell.setStyle("-fx-background-color: #3498db; -fx-background-radius: 30;");
@@ -392,11 +419,10 @@ public class GameWindow {
             }
         }
 
-        // Create column buttons for dropping pieces
         HBox columnButtons = new HBox(5);
         columnButtons.setAlignment(Pos.CENTER);
 
-        for (int col = 0; col < 7; col++) {
+        for (int col = 0; col < cols; col++) {
             Button dropButton = new Button("Drop");
             dropButton.setPrefWidth(60);
             dropButton.setUserData(col);
@@ -409,15 +435,63 @@ public class GameWindow {
         }
 
         boardContainer.getChildren().addAll(columnButtons, board);
+        gameBoard.getChildren().clear();
         gameBoard.getChildren().add(boardContainer);
+
+
+// OLD CODE NOT DYNAMIC - hardcoded 6x7 board
+//
+//        VBox boardContainer = new VBox(20);
+//        boardContainer.setAlignment(Pos.CENTER);
+//
+//        GridPane board = new GridPane();
+//        board.setAlignment(Pos.CENTER);
+//        board.setHgap(5);
+//        board.setVgap(5);
+//
+//        // Create the 7x6 grid (7 columns, 6 rows)
+//        for (int row = 0; row < 6; row++) {
+//            for (int col = 0; col < 7; col++) {
+//                StackPane cell = new StackPane();
+//                cell.setPrefSize(60, 60);
+//                cell.setStyle("-fx-background-color: #3498db; -fx-background-radius: 30;");
+//
+//                Region innerCircle = new Region();
+//                innerCircle.setPrefSize(50, 50);
+//                innerCircle.setStyle("-fx-background-color: #1a2530; -fx-background-radius: 25;");
+//
+//                cell.getChildren().add(innerCircle);
+//                board.add(cell, col, row);
+//            }
+//        }
+//
+//        // Create column buttons for dropping pieces
+//        HBox columnButtons = new HBox(5);
+//        columnButtons.setAlignment(Pos.CENTER);
+//
+//        for (int col = 0; col < 7; col++) {
+//            Button dropButton = new Button("Drop");
+//            dropButton.setPrefWidth(60);
+//            dropButton.setUserData(col);
+//            dropButton.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white;");
+//
+//            final int column = col;
+//            dropButton.setOnAction(e -> makeConnectFourMove(column));
+//
+//            columnButtons.getChildren().add(dropButton);
+//        }
+//
+//        boardContainer.getChildren().addAll(columnButtons, board);
+//        gameBoard.getChildren().add(boardContainer);
     }
 
+    // Game logic team -> chosen to initialize the board in CheckersBoard class (Jacob Baggott)
     private void setupCheckersBoard() {
         VBox boardContainer = new VBox(20);
-        boardContainer.setAlignment(Pos.CENTER);
+        boardContainer.setAlignment(CENTER);
 
         GridPane board = new GridPane();
-        board.setAlignment(Pos.CENTER);
+        board.setAlignment(CENTER);
 
         // Create the 8x8 grid
         for (int row = 0; row < 8; row++) {
@@ -498,9 +572,147 @@ public class GameWindow {
     }
 
     private void makeConnectFourMove(int column) {
-        System.out.println("Dropping piece in column: " + column);
-        // This would call the actual game logic in a real implementation
-        simulateOpponentTurn();
+//        System.out.println("Dropping piece in column: " + column);
+//        // This would call the actual game logic in a real implementation
+//        simulateOpponentTurn();
+        
+        if(connectFourGame == null) {
+            return;
+        }
+        
+        int[][] board = connectFourGame.getBoard();
+        int rows  = connectFourGame.getRows();
+        int player = connectFourGame.getPlayer();
+        
+        for(int row = rows - 1; row >= 0 ;  row--){
+            if(board[row][column] == ConnectFourBoard.Empty ){
+                connectFourGame.makeMove(row, column);
+                updateBoardUI(row, column, player);
+
+                if(connectFourGame.checkWinnerHorizontal() || connectFourGame.checkWinnerVertical() || connectFourGame.checkWinnerDiagonal()){
+                    if (player == 1) {
+                        showGameOverDialog("Player Red Wins!" , true);
+                        return;
+                    }
+                    else if (player == 2) {
+                        showGameOverDialog("Player Blue Wins!" , true);
+                        return;
+                    }
+                }
+
+                if(connectFourGame.checkDraw()){
+                    showGameOverDialog("Draw!" , false);
+                    return;
+                }
+
+                connectFourGame.switchTurn();
+                updateTurnLabel();
+
+                // **Only** do AI move if vsComputer == true **and** it's now the AI's turn
+                if (connectFourGame.isVsComputer() && connectFourGame.getPlayer() == ConnectFourBoard.Blue) {
+                    simulateComputerMove();
+                }
+
+                return;
+            }
+        }
+
+        Alert columnFullAlert = new Alert(Alert.AlertType.WARNING);
+        columnFullAlert.setTitle("Invalid Move");
+        columnFullAlert.setHeaderText("This Column is full");
+        columnFullAlert.setContentText("Please select another column");
+        columnFullAlert.showAndWait();
+    }
+
+
+    private void makeComputerMove() {
+        int player = connectFourGame.getPlayer();
+
+        // Delay to simulate thinking
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), e -> {
+            int[][] board = connectFourGame.getBoard();
+            int rows = connectFourGame.getRows();
+
+            // Simple random AI to pick a valid column
+            List<Integer> validCols = new ArrayList<>();
+            for (int col = 0; col < connectFourGame.getColumns(); col++) {
+                if (board[0][col] == ConnectFourBoard.Empty) {
+                    validCols.add(col);
+                }
+            }
+
+            if (validCols.isEmpty()) return;
+
+            int randomCol = validCols.get((int)(Math.random() * validCols.size()));
+
+            // Drop piece in that column
+            for (int row = rows - 1; row >= 0 ; row--) {
+                if (board[row][randomCol] == ConnectFourBoard.Empty) {
+                    connectFourGame.makeMove(row, randomCol);
+                    updateBoardUI(row, randomCol, player);
+
+                    if (connectFourGame.checkWinnerHorizontal() || connectFourGame.checkWinnerVertical() || connectFourGame.checkWinnerDiagonal()) {
+                        showGameOverDialog((player == 1 ? "Player Red Wins!" : "Computer Wins!"), true);
+                        return;
+                    }
+
+                    if (connectFourGame.checkDraw()) {
+                        showGameOverDialog("Draw!", false);
+                        return;
+                    }
+                    if (connectFourGame.isVsComputer()) {
+                        makeComputerMove();
+                    }
+
+                    connectFourGame.switchTurn();
+                    updateTurnLabel();
+                    break;
+                }
+            }
+        }));
+        timeline.play();
+    }
+
+
+
+    private void updateBoardUI(int row, int column, int player) {
+
+        GridPane boardContainer = (GridPane) ((VBox)gameBoard.getChildren().get(0)).getChildren().get(1);
+        StackPane cell = (StackPane) getNodeByRowColumnIndex(row, column, boardContainer);
+        Region piece = new Region();
+        piece.setPrefSize(50, 50);
+        if(player == 1) {
+            piece.setStyle("-fx-background-color: #e74c3c; -fx-background-radius: 25; ");
+        }else if (player == 2) {
+            piece.setStyle("-fx-background-color: #3498db; -fx-background-radius: 25; ");
+        }
+        cell.getChildren().add(piece);
+
+
+    }
+
+    private Node getNodeByRowColumnIndex(int row, int column, GridPane boardContainer) {
+        for(Node node: boardContainer.getChildren()){
+            if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex((Node) node) == column){
+                return node;
+            }
+        }
+        return null;
+    }
+
+    private void updateTurnLabel() {
+        int currentPlayer = connectFourGame.getPlayer();
+        String label = "";
+        if(currentPlayer == 1){
+            label = "Its Red's Turn";
+            turnLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #e74c3c; -fx-font-weight: bold;");
+        }
+        else if(currentPlayer == 2){
+            label = "Its Blue's Turn";
+            turnLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #3498db; -fx-font-weight: bold;");
+        }
+        turnLabel.setText(label);
+
     }
 
     private void selectCheckersPiece(int row, int col) {
@@ -579,7 +791,9 @@ public class GameWindow {
         alert.setHeaderText(victory ? "Victory!" : "Defeat");
         alert.setContentText("Game over: " + reason);
 
-        alert.showAndWait().ifPresent(response -> returnToMainMenu());
+        alert.show();
+
+        alert.setOnCloseRequest(e -> returnToMainMenu());
     }
 
     private void returnToMainMenu() {
@@ -590,4 +804,50 @@ public class GameWindow {
         MainMenuWindow mainMenu = new MainMenuWindow(stage, currentUser);
         mainMenu.show();
     }
+
+    private void simulateComputerMove() {
+        // Simple random AI logic:
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), e -> {
+            int[][] board = connectFourGame.getBoard();
+            int rows = connectFourGame.getRows();
+            int cols = connectFourGame.getColumns();
+            int player = connectFourGame.getPlayer();
+
+            // 1) Attempt immediate win
+            for (int col = 0; col < cols; col++) {
+                if (connectFourGame.canWinWithMove(col)) {
+                    makeConnectFourMove(col);
+                    return;
+                }
+            }
+
+            // 2) Block Opponent’s immediate win
+            // Temporarily switch to the other player
+            connectFourGame.switchTurn();
+            for (int col = 0; col < cols; col++) {
+                if (connectFourGame.canWinWithMove(col)) {
+                    // Switch back to AI
+                    connectFourGame.switchTurn();
+                    makeConnectFourMove(col);
+                    return;
+                }
+            }
+            // Switch back to AI if not blocked
+            connectFourGame.switchTurn();
+
+            // 3) Fallback random
+            List<Integer> validCols = new ArrayList<>();
+            for (int col = 0; col < cols; col++) {
+                if (board[0][col] == ConnectFourBoard.Empty) {
+                    validCols.add(col);
+                }
+            }
+            if (validCols.isEmpty()) return;
+
+            int randomCol = validCols.get((int)(Math.random() * validCols.size()));
+            makeConnectFourMove(randomCol);
+        }));
+        timeline.play();
+    }
+
 }

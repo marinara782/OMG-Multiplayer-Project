@@ -48,4 +48,48 @@ public class UserProfile extends UserDatabaseStub {
             }
         }
     }
-}
+
+
+    public boolean change_phone_number(String new_phone_number, String password, String confirmPassword) {
+        try {
+            // 1.Verify password
+            if (!verify_password(getUsername(), password)) {
+                System.out.println("Error: Current password is incorrect");
+                return false;
+            }
+
+            // 2.Verify confirmation password
+            if (!verify_password(getCurrentPassword(getUsername()), confirmPassword)) {
+                System.out.println("Error: Confirmation password is incorrect");
+                return false;
+            }
+
+            // 3.Verify passwords
+            if (!password.equals(confirmPassword)) {
+                System.out.println("Error: Passwords do not match");
+                return false;
+            }
+
+            if (!verify_phone_number(getUsername(), new_phone_number)) {
+                System.out.println("Error: Invalid phone number format");
+                return false;
+            }
+
+            // 5. Update phone number in database
+            linked_phone_number(getUsername(), new_phone_number);
+            System.out.println("Success: Phone number updated for " + getUsername());
+            return true;
+
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: Could not access user database");
+            return false;
+        }
+
+
+    }
+
+
+
+
+    }
+

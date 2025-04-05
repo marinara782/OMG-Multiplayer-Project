@@ -64,15 +64,14 @@ public class Login extends UserDatabaseStub {
 
     public static boolean createAccount(String new_username, String password, String email, String phone) {
 
-        System.out.println("\nAttempting to create account for: " + new_username);
+            System.out.println("\nAttempting to create account for: " + new_username);
 
-        UserDatabaseStub databaseStub = new UserDatabaseStub();
+            UserDatabaseStub databaseStub = new UserDatabaseStub();
         // authenticate users
         try {
-            if (databaseStub.Authenticate_user(new_username, password, email, phone)) {
+            if(databaseStub.Authenticate_user(new_username, password, email, phone)){
                 System.out.println("User already exists.");
-                return false;
-            }
+                return false;}
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException("User database file not found.");
@@ -117,6 +116,12 @@ public class Login extends UserDatabaseStub {
         //change email
         update_email(username, newEmail, password);
         return true;
+    }
+
+    public Login(Stage stage) {
+    }
+
+    public void show() {
     }
 
 }

@@ -22,8 +22,10 @@ public class LeaderboardDatabaseStub  {
         alice.setCheckerLosses(5);
         alice.setConnect4Wins(5);
         alice.setConnect4Losses(2);
+        alice.setConnect4Draws(5);
         alice.setTictactoeWins(15);
         alice.setTictactoeLosses(12);
+        alice.setTictactoeDraws(3);
         leaderboard.addPlayer(alice);
 
         // add Bob
@@ -32,8 +34,10 @@ public class LeaderboardDatabaseStub  {
         bob.setCheckerLosses(4);
         bob.setConnect4Wins(4);
         bob.setConnect4Losses(3);
+        bob.setConnect4Draws(9);
         bob.setTictactoeWins(10);
         bob.setTictactoeLosses(15);
+        bob.setTictactoeDraws(4);
         leaderboard.addPlayer(bob);
 
         // add Charlie
@@ -42,8 +46,10 @@ public class LeaderboardDatabaseStub  {
         charlie.setCheckerLosses(10);
         charlie.setConnect4Wins(16);
         charlie.setConnect4Losses(10);
+        charlie.setConnect4Draws(10);
         charlie.setTictactoeWins(13);
         charlie.setTictactoeLosses(7);
+        charlie.setTictactoeDraws(12);
         leaderboard.addPlayer(charlie);
 
         // add Dave
@@ -52,8 +58,10 @@ public class LeaderboardDatabaseStub  {
         dave.setCheckerLosses(12);
         dave.setConnect4Wins(39);
         dave.setConnect4Losses(45);
+        dave.setConnect4Draws(22);
         dave.setTictactoeWins(11);
         dave.setTictactoeLosses(19);
+        dave.setTictactoeDraws(33);
         leaderboard.addPlayer(dave);
 
         // add Erick
@@ -62,8 +70,10 @@ public class LeaderboardDatabaseStub  {
         erick.setCheckerLosses(56);
         erick.setConnect4Wins(86);
         erick.setConnect4Losses(14);
+        erick.setConnect4Draws(3);
         erick.setTictactoeWins(56);
         erick.setTictactoeLosses(98);
+        erick.setTictactoeDraws(0);
         leaderboard.addPlayer(erick);
 
         // add Fred
@@ -72,8 +82,10 @@ public class LeaderboardDatabaseStub  {
         fred.setCheckerLosses(9);
         fred.setConnect4Wins(12);
         fred.setConnect4Losses(2);
+        fred.setConnect4Draws(43);
         fred.setTictactoeWins(98);
         fred.setTictactoeLosses(45);
+        fred.setTictactoeDraws(0);
         leaderboard.addPlayer(fred);
 
         // add Gary
@@ -82,8 +94,10 @@ public class LeaderboardDatabaseStub  {
         gary.setCheckerLosses(22);
         gary.setConnect4Wins(33);
         gary.setConnect4Losses(66);
+        gary.setConnect4Draws(3);
         gary.setTictactoeWins(55);
         gary.setTictactoeLosses(44);
+        gary.setTictactoeDraws(32);
         leaderboard.addPlayer(gary);
 
         // add Haley
@@ -92,8 +106,10 @@ public class LeaderboardDatabaseStub  {
         haley.setCheckerLosses(16);
         haley.setConnect4Wins(4);
         haley.setConnect4Losses(10);
+        haley.setConnect4Draws(8);
         haley.setTictactoeWins(5);
         haley.setTictactoeLosses(24);
+        haley.setTictactoeDraws(9);
         leaderboard.addPlayer(haley);
 
         // add Isiah
@@ -102,8 +118,10 @@ public class LeaderboardDatabaseStub  {
         isiah.setCheckerLosses(12);
         isiah.setConnect4Wins(65);
         isiah.setConnect4Losses(34);
+        isiah.setConnect4Draws(6);
         isiah.setTictactoeWins(90);
         isiah.setTictactoeLosses(83);
+        isiah.setTictactoeDraws(6);
         leaderboard.addPlayer(isiah);
 
         // add Jack
@@ -112,8 +130,10 @@ public class LeaderboardDatabaseStub  {
         jack.setCheckerLosses(23);
         jack.setConnect4Wins(23);
         jack.setConnect4Losses(53);
+        jack.setConnect4Draws(7);
         jack.setTictactoeWins(13);
         jack.setTictactoeLosses(98);
+        jack.setTictactoeDraws(91);
         leaderboard.addPlayer(jack);
 
         // add Kylie
@@ -122,8 +142,10 @@ public class LeaderboardDatabaseStub  {
         kylie.setCheckerLosses(12);
         kylie.setConnect4Wins(42);
         kylie.setConnect4Losses(1);
+        kylie.setConnect4Draws(3);
         kylie.setTictactoeWins(41);
         kylie.setTictactoeLosses(24);
+        kylie.setTictactoeDraws(42);
         leaderboard.addPlayer(kylie);
 
         // add Lebron
@@ -132,8 +154,10 @@ public class LeaderboardDatabaseStub  {
         lebron.setCheckerLosses(0);
         lebron.setConnect4Wins(93);
         lebron.setConnect4Losses(0);
+        lebron.setConnect4Draws(0);
         lebron.setTictactoeWins(67);
         lebron.setTictactoeLosses(0);
+        lebron.setTictactoeDraws(0);
         leaderboard.addPlayer(lebron);
 
         // add Mathew
@@ -142,8 +166,10 @@ public class LeaderboardDatabaseStub  {
         mathew.setCheckerLosses(12);
         mathew.setConnect4Wins(23);
         mathew.setConnect4Losses(45);
+        mathew.setConnect4Draws(3);
         mathew.setTictactoeWins(37);
         mathew.setTictactoeLosses(85);
+        mathew.setTictactoeDraws(8);
         leaderboard.addPlayer(mathew);
 
         // add Nick
@@ -152,8 +178,10 @@ public class LeaderboardDatabaseStub  {
         nick.setCheckerLosses(23);
         nick.setConnect4Wins(75);
         nick.setConnect4Losses(24);
+        nick.setConnect4Draws(32);
         nick.setTictactoeWins(74);
         nick.setTictactoeLosses(25);
+        nick.setTictactoeDraws(12);
         leaderboard.addPlayer(nick);
 
         // add Obi
@@ -162,8 +190,10 @@ public class LeaderboardDatabaseStub  {
         obi.setCheckerLosses(34);
         obi.setConnect4Wins(36);
         obi.setConnect4Losses(53);
+        obi.setConnect4Draws(8);
         obi.setTictactoeWins(37);
         obi.setTictactoeLosses(23);
+        obi.setTictactoeDraws(45);
         leaderboard.addPlayer(obi);
     }
 

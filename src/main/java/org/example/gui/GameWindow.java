@@ -43,6 +43,10 @@ public class GameWindow {
     //connectFour
     private ConnectFourGame connectFourGame;
 
+    //Tic Tac Toe
+    private TicTacToeGame ticTacToeGame;
+
+
     public GameWindow(Stage stage, Object gameInstance, UserProfile currentUser) {
         this.stage = stage;
         this.gameInstance = gameInstance;
@@ -57,9 +61,7 @@ public class GameWindow {
 
         // Initialize chatManager based on selected game
         if (gameInstance instanceof TicTacToeGame) {
-            this.chatManager = new ChatManager.TicTacToeBot(); // Use the TicTacToeBot//
-        } else {
-            this.chatManager = new ChatManager(); // Use the default ChatManager
+            this.ticTacToeGame = (TicTacToeGame) gameInstance;
         }
 
         initializeUI();
@@ -334,7 +336,7 @@ public class GameWindow {
 
         if (gameInstance instanceof TicTacToeGame) {
             System.out.println("Setting up TicTacToe board");
-            setupTicTacToeBoard();
+            playTicTacToeGame();
         } else if (gameInstance instanceof ConnectFourGame) {
             System.out.println("Setting up ConnectFour board");
             setupConnectFourBoard();
@@ -348,7 +350,7 @@ public class GameWindow {
         }
     }
 
-    private void setupTicTacToeBoard() {
+    private void playTicTacToeGame() {
         VBox boardContainer = new VBox(20);
         boardContainer.setAlignment(CENTER);
 
@@ -370,12 +372,36 @@ public class GameWindow {
                 cell.setOnAction(e -> {
                     Button clicked = (Button) e.getSource();
                     int[] position = (int[]) clicked.getUserData();
-                    makeMove(position[0], position[1]);
+                    System.out.println("making move at " + position[0] + " " + position[1] );
+                    System.out.println(ticTacToeGame.getBoardValue(position[0],position[1]));
 
-                    // For demo, just set X
+
+
+
+
+
+                    char currentPlayer = ticTacToeGame.getCurrentPlayer();
+
                     if (clicked.getText().isEmpty()) {
-                        clicked.setText("X");
-                        simulateOpponentTurn();
+                        if (currentPlayer == 'O') {
+                            clicked.setText("O");
+                            ticTacToeGame.makeMove(position[0], position[1],'O');
+                            boolean playerWin = ticTacToeGame.checkForWin('X');
+                            if (playerWin){
+                                showGameOverDialog("You Win!");
+                            }
+                            ticTacToeGame.isPlayerTurn();
+
+                        }
+                        if (currentPlayer == 'X') {
+                            clicked.setText("X");
+                            ticTacToeGame.makeMove(position[0], position[1],'X');
+                            boolean OpponentWin = ticTacToeGame.checkForWin('O');
+                            if (OpponentWin){
+                                showGameOverDialog("Opponent Wins!");
+                            }
+                            ticTacToeGame.isOpponentTurn();
+                        }
                     }
                 });
 
@@ -386,6 +412,15 @@ public class GameWindow {
         boardContainer.getChildren().add(board);
         gameBoard.getChildren().add(boardContainer);
     }
+
+    private void showGameOverDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Game Over");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
     private void setupConnectFourBoard() {
 
@@ -623,7 +658,6 @@ public class GameWindow {
         columnFullAlert.setContentText("Please select another column");
         columnFullAlert.showAndWait();
     }
-
 
     private void makeComputerMove() {
         int player = connectFourGame.getPlayer();

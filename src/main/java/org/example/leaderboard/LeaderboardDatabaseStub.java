@@ -233,6 +233,22 @@ public class LeaderboardDatabaseStub  {
                     double winPercentage = p.getWinPercentage();
                     String percentFormat = String.format("%.2f%%", winPercentage * 100);
                     System.out.println(p.getUsername() + " - " + percentFormat);
+                    break;
+                case "checkers percentage":
+                    double checkersPercentage = p.getCheckersWinPercentage();
+                    String checkersFormat = String.format("%.2f%%", checkersPercentage * 100);
+                    System.out.println(p.getUsername() + " - " + checkersFormat);
+                    break;
+                case "tictactoe percentage":
+                    double ticTacToePercentage = p.getTicTacToeWinPercentage();
+                    String ticTacToeFormat = String.format("%.2f%%", ticTacToePercentage * 100);
+                    System.out.println(p.getUsername() + " - " + ticTacToeFormat);
+                    break;
+                case "connect4 percentage":
+                    double connect4Percentage = p.getWinPercentage();
+                    String connect4Format = String.format("%.2f%%", connect4Percentage * 100);
+                    System.out.println(p.getUsername() + " - " + connect4Format);
+                    break;
             }
         }
     }
@@ -275,6 +291,15 @@ public class LeaderboardDatabaseStub  {
 
         // print top 7 players with the highest win percentage
         stub.printTopPlayers(7, "win percentage");
+
+        // print top 4 players with the highest checkers win percentage
+        stub.printTopPlayers(4, "checkers percentage");
+
+        // print top 8 players with the highest tictactoe win percentage
+        stub.printTopPlayers(8, "tictactoe percentage");
+
+        // print top 4 players with the highest connect4 win percentage
+        stub.printTopPlayers(9, "connect4 percentage");
     }
 }
 

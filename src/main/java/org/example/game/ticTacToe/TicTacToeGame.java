@@ -16,6 +16,7 @@ public class TicTacToeGame {
         this.currentPlayer = player;
         this.playerAndComputer = false;
         this.board = new char[3][3];
+        //The player's selected game mode which is a paramater in the constructor set through the main menu dialogue box is now set to our local variable here
         this.playerAndComputer = isComputerGame;;
         //We also have to initialize the cells of the board, they need to be empty at first, whenever a game starts
         BoardInitialization();
@@ -53,15 +54,15 @@ public class TicTacToeGame {
     }
 
 
+    //This method returns whether or not the game is against the computer
     public boolean isPlayerAndComputer(){
         return playerAndComputer;
     }
 
+    //This method returns whose turn it is(Player's or opponent's)
     public char getCurrentPlayer(){
         return currentPlayer;
     }
-
-
 
     public boolean checkForWin(char symbol)
     {
@@ -201,37 +202,27 @@ public class TicTacToeGame {
         currentPlayer = player;
     }
 
-    /*public boolean checkIfGameOver()
-    {
-        if(checkForWin())
-            return true;
-        if(isBoardFull())
-            return true;
-
-        return false;
-    }*/
-
-
-
     public char getPlayerSymbol() {
         return player;
     }
 
+    //This method makes the move made by the player on the GUI on the 2d array so we can use it for game logic
     public void makeMove(int row, int col,char player)
     {
         board[row][col] = player;
-
-
     }
 
+    //This method is used to switch it to the player's turn
     public void isPlayerTurn() {
         currentPlayer = player;
     }
 
+    //This method is used to switch it to the opponent's turn
     public void isOpponentTurn(){
         currentPlayer = opponent;
     }
 
+    //This was mainly used as a debugging method to make sure the GUI board positions lined up with the 2d board's positions
     public char getBoardValue(int row, int col)
     {
         if (row < 0 || row >= 3 || col < 0 || col >= 3) {

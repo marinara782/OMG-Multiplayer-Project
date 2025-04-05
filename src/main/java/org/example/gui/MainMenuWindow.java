@@ -489,6 +489,7 @@ public class MainMenuWindow {
         return result == vsComputerButton;
     }
 
+    //This method shows the dialogue box when tic tac toe is selected allowing the player to choose a multipllayer or computer game
     private Boolean showTicTacToeModeDialog() {
         Alert modeDialog = new Alert(Alert.AlertType.CONFIRMATION);
         modeDialog.setTitle("Choose Game Mode");
@@ -554,6 +555,7 @@ public class MainMenuWindow {
 //        }
     }
 
+    //This method makes a new tic tac toe game with the parameter of whether the game is against the computer or not through the selected option in the dialogue box
     public boolean isComputerGameTTT;
     private void runTicTacToeGame() {
         isComputerGameTTT = showTicTacToeModeDialog();

@@ -372,22 +372,34 @@ public class GameWindow {
                 cell.setOnAction(e -> {
                     Button clicked = (Button) e.getSource();
                     int[] position = (int[]) clicked.getUserData();
+                    System.out.println("making move at " + position[0] + " " + position[1] );
+                    System.out.println(ticTacToeGame.getBoardValue(position[0],position[1]));
+
+
+
+
+
 
                     char currentPlayer = ticTacToeGame.getCurrentPlayer();
-                    boolean moveMade = ticTacToeGame.makeMove(position[0], position[1]);
-                    char playerSymbol = ticTacToeGame.getPlayerSymbol();
-                    char opponentSymbol = ticTacToeGame.getOpponentSymbol();
-                    makeMove(position[0], position[1]);
 
-                    // For demo, just set X
                     if (clicked.getText().isEmpty()) {
                         if (currentPlayer == 'O') {
                             clicked.setText("O");
+                            ticTacToeGame.makeMove(position[0], position[1],'O');
+                            boolean playerWin = ticTacToeGame.checkForWin('X');
+                            if (playerWin){
+                                showGameOverDialog("You Win!");
+                            }
                             ticTacToeGame.isPlayerTurn();
 
                         }
                         if (currentPlayer == 'X') {
                             clicked.setText("X");
+                            ticTacToeGame.makeMove(position[0], position[1],'X');
+                            boolean OpponentWin = ticTacToeGame.checkForWin('O');
+                            if (OpponentWin){
+                                showGameOverDialog("Opponent Wins!");
+                            }
                             ticTacToeGame.isOpponentTurn();
                         }
                     }
@@ -401,7 +413,13 @@ public class GameWindow {
         gameBoard.getChildren().add(boardContainer);
     }
 
-
+    private void showGameOverDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Game Over");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
 
     private void setupConnectFourBoard() {

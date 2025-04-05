@@ -9,7 +9,6 @@ public class TicTacToeGame {
     private boolean playerAndComputer;
     private int sizeOfTheBoard;
 
-    private char winnerSymbol;
 
     public TicTacToeGame(boolean isComputerGame)
     {
@@ -23,23 +22,21 @@ public class TicTacToeGame {
         //randomizePlayersSymbols();
     }
 
-    public void randomizePlayersSymbols()
+    /*public void randomizePlayersSymbols()
     {
         int randomNum = (int)(Math.random() * 2) + 1;
 
         if(randomNum == 1)
         {
-            player = 'X';
-            opponent = 'O';
+            currentPlayer = player;
         }
         else
         {
-            player = 'O';
-            opponent = 'X';
+            currentPlayer = opponent;
         }
-    }
+    }*/
 
-    private void BoardInitialization()
+    public void BoardInitialization()
     {
         board = new char[3][3];
         for(short i = 0; 3>i;i++) {
@@ -55,11 +52,6 @@ public class TicTacToeGame {
         playerAndComputer = false;
     }
 
-    public void playerVSAIGame()
-    {
-        currentPlayer = player;
-        playerAndComputer = true;
-    }
 
     public boolean isPlayerAndComputer(){
         return playerAndComputer;
@@ -73,7 +65,6 @@ public class TicTacToeGame {
 
     public boolean checkForWin(char symbol)
     {
-        winnerSymbol = symbol;
         //There are 3 possibilities for a win. We need to check diagonals, columns and rows.
 
         //Diagonal Part:
@@ -116,8 +107,6 @@ public class TicTacToeGame {
             {
                 if(board[row][col] == '/')
                     return false;
-                else
-                    continue;
             }
         }
         //The above for loop goes through every single cell on board and checks if its empty or not.

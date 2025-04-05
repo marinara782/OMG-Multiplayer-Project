@@ -1,7 +1,9 @@
 package org.example.gui;
 
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -15,6 +17,8 @@ import org.example.game.connectFour.ConnectFourGame;
 import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.leaderboard.Leaderboard;
 import org.example.matchmaking.Matchmaker;
+
+import java.io.IOException;
 
 public class MainMenuWindow {
     private Stage stage;
@@ -283,9 +287,16 @@ public class MainMenuWindow {
     }
 
     private void logout() {
-        Login loginScreen = new Login(stage);
-        loginScreen.show();
-    }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("loginWindow2.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Login");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }}
 
     private void startMatchmaking(String gameType) {
         System.out.println("Starting matchmaking for " + gameType);
@@ -358,9 +369,19 @@ public class MainMenuWindow {
     }
 
     private void openLeaderboard() {
-        Leaderboard leaderboard = new Leaderboard();
-        leaderboard.showLeaderboard(new Stage());
-    }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LeaderboardWindow.fxml"));
+            Parent root = loader.load();
+            LeaderBoardController controller = loader.getController();
+            controller.setUser(currentUser);
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("OMG - Leaderboard");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }}
+
 
     private void challengePlayer(String playerName) {
         Alert challenge = new Alert(Alert.AlertType.CONFIRMATION);

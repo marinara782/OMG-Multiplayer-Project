@@ -34,6 +34,7 @@ public class LoginWindowController {
     private int currentIndex = 0;
 
     private final UserDatabaseStub userDatabase = new UserDatabaseStub();
+    private final Login login = new Login();
     private Stage stage;
 
     public void setStage(Stage stage) {
@@ -56,7 +57,7 @@ public class LoginWindowController {
 
         try {
             boolean usernameExists = userDatabase.verify_username(username);
-            boolean authenticated = userDatabase.verify_account(username, password);
+            boolean authenticated = login.login_account(username, password);
 
             if (!usernameExists) {
                 showAlert("Error", "Username not found. Please sign up.");
@@ -69,10 +70,6 @@ public class LoginWindowController {
             }
         } catch(FileNotFoundException e) {
         showAlert("Error", "User database not found.");
-        e.printStackTrace();
-        } catch(IOException e) {
-        showAlert("Error", "Error loading user data.");
-        e.printStackTrace();
         }
     }
 

@@ -9,7 +9,7 @@ public class UserDatabaseStub {
     //return a list of registered users
     public List<User> registered_users_list() throws FileNotFoundException {
         List<User> users = new ArrayList<>();
-        File file = new File("temp.txt");
+        File file = new File("C:\\Users\\dhawa\\seng300-w25-project\\src\\main\\java\\org\\example\\authentication\\temp.txt");
 
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
@@ -91,7 +91,7 @@ public class UserDatabaseStub {
     }
 
     private void write_users_to_file(List<User> users) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("temp.txt"))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter("C:\\Users\\dhawa\\seng300-w25-project\\src\\main\\java\\org\\example\\authentication\\temp.txt"))) {
             for (User user : users) {
                 writer.println(user.getUsername() + ", " + user.getPassword() + ", " + user.getEmail() + ", " + user.getPhone());
             }

@@ -3,13 +3,11 @@ package org.example.authentication;
 import java.io.FileNotFoundException;
 
 public class UserProfile extends UserDatabaseStub {
-public class UserProfile {
     public UserProfile(String username, String password, String email, String phone) {
     }
     public UserProfile() {
 
     }
-
 
     public String getUsername() {
         return "";

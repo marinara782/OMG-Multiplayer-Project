@@ -372,24 +372,23 @@ public class GameWindow {
                 cell.setOnAction(e -> {
                     Button clicked = (Button) e.getSource();
                     int[] position = (int[]) clicked.getUserData();
-                    System.out.println("making move at " + position[0] + " " + position[1] );
-                    System.out.println(ticTacToeGame.getBoardValue(position[0],position[1]));
+                    System.out.println("making move at " + position[0] + " " + position[1]);
+                    System.out.println(ticTacToeGame.getBoardValue(position[0], position[1]));
 
                     //Multiplayer Tic Tac Toe game
                     //boolean computerTTTGame = ticTacToeGame.isPlayerAndComputer();
                     char currentPlayer = ticTacToeGame.getCurrentPlayer();
-                    boolean isBoardFull = ticTacToeGame.isBoardFull();
-                    System.out.println(isBoardFull);
-                    if(!ticTacToeGame.isPlayerAndComputer()) {
+                    if (!ticTacToeGame.isPlayerAndComputer()) {
                         if (clicked.getText().isEmpty()) {
                             if (currentPlayer == 'O') {
                                 clicked.setText("O");
                                 ticTacToeGame.makeMove(position[0], position[1], 'O');
                                 boolean OpponentWin = ticTacToeGame.checkForWin('O');
+                                boolean full = ticTacToeGame.isBoardFull();
                                 if (OpponentWin) {
                                     showGameOverDialog("Player O Wins!");
                                 }
-                                if(isBoardFull){
+                                else if (full) {
                                     showGameOverDialog("Draw!");
                                 }
                                 ticTacToeGame.isPlayerTurn();
@@ -399,58 +398,70 @@ public class GameWindow {
                                 clicked.setText("X");
                                 ticTacToeGame.makeMove(position[0], position[1], 'X');
                                 boolean PlayerWin = ticTacToeGame.checkForWin('X');
+                                boolean full = ticTacToeGame.isBoardFull();
                                 if (PlayerWin) {
                                     showGameOverDialog("Player X Wins!");
                                 }
-                                if(isBoardFull){
+                                else if (full) {
                                     showGameOverDialog("Draw!");
                                 }
                                 ticTacToeGame.isOpponentTurn();
                             }
                         }
                     }
-                    if(ticTacToeGame.isPlayerAndComputer()) {
+                    if (ticTacToeGame.isPlayerAndComputer()) {
                         if (currentPlayer == 'X') {
                             if (clicked.getText().isEmpty()) {
                                 clicked.setText("X");
                                 ticTacToeGame.makeMove(position[0], position[1], 'X');
-                                boolean PlayerWin = ticTacToeGame.checkForWin('X');
-                                if (PlayerWin) {
+                                boolean playerWin = ticTacToeGame.checkForWin('X');
+                                boolean full = ticTacToeGame.isBoardFull();
+
+                                if (playerWin) {
                                     showGameOverDialog("Player Wins!");
-                                }
-                                if (isBoardFull) {
+                                    return;
+                                } else if (full) {
                                     showGameOverDialog("Draw!");
+                                    return;
                                 }
+
                                 ticTacToeGame.isOpponentTurn();
+
+                                //Automatically trigger computer move after player's turn
+                                //Simulate thinking of a turn
+                                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), f -> {
+                                    int[] aiMove = ticTacToeGame.getAIMove();
+                                    if (aiMove != null) {
+                                        ticTacToeGame.makeMove(aiMove[0], aiMove[1], 'O');
+
+                                        // Update the GUI with AI's move
+                                        for (Node node : board.getChildren()) {
+                                            if (GridPane.getRowIndex(node) == aiMove[0] && GridPane.getColumnIndex(node) == aiMove[1]) {
+                                                if (node instanceof Button) {
+                                                    ((Button) node).setText("O");
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        boolean computerWin = ticTacToeGame.checkForWin('O');
+                                        boolean boardFull = ticTacToeGame.isBoardFull();
+                                        Platform.runLater(() -> {
+                                            if (computerWin) {
+                                                showGameOverDialog("Computer Wins!");
+                                            } else if (boardFull) {
+                                                showGameOverDialog("Draw!");
+                                            } else {
+                                                ticTacToeGame.isPlayerTurn();
+                                            }
+                                        });
+                                    }
+                                }));
+                                timeline.play();
+
                             }
                         }
                     }
-                        if (currentPlayer == 'O'){
-                            int[] aiMove = ticTacToeGame.getAIMove();
-                            if (aiMove != null) {
-                                ticTacToeGame.makeMove(aiMove[0], aiMove[1], 'O');
-
-                                // Update the GUI button for the AI's move
-                                for (Node node : board.getChildren()) {
-                                    if (GridPane.getRowIndex(node) == aiMove[0] && GridPane.getColumnIndex(node) == aiMove[1]) {
-                                        if (node instanceof Button) {
-                                            ((Button) node).setText("O");
-                                            break;
-                                        }
-                                    }
-                                }
-                                boolean computerWin = ticTacToeGame.checkForWin('O');
-                                if (computerWin) {
-                                    showGameOverDialog("Computer Wins!");
-                                }
-                                if (isBoardFull) {
-                                    showGameOverDialog("Draw!");
-                                }
-                                ticTacToeGame.isPlayerTurn();
-                            }
-                        }
-
-
                 });
 
                 board.add(cell, col, row);

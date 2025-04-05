@@ -2,31 +2,34 @@ package org.example.gui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.example.authentication.Login;
 import org.example.authentication.UserProfile;
 import org.example.game.checkers.CheckersGame;
+import org.example.game.connectFour.ConnectFourBoard;
 import org.example.game.connectFour.ConnectFourGame;
 import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.leaderboard.Leaderboard;
-import org.example.matchmaking.Matchmaker;
+//import org.example.matchmaking.Matchmaker;
 
 public class MainMenuWindow {
     private Stage stage;
     private Scene scene;
     private BorderPane mainLayout;
     private UserProfile currentUser;
-    private Matchmaker matchmaker;
+//    private Matchmaker matchmaker;
 
     public MainMenuWindow(Stage stage, UserProfile currentUser) {
         this.stage = stage;
         this.currentUser = currentUser;
-        this.matchmaker = new Matchmaker();
+//        this.matchmaker = new Matchmaker();
         initializeUI();
     }
 
@@ -108,7 +111,7 @@ public class MainMenuWindow {
 
         // Connect Four Game Card
         VBox connectFourCard = createGameCard("Connect Four", "connectFour");
-        connectFourCard.setOnMouseClicked(e -> startMatchmaking("connectFour"));
+        connectFourCard.setOnMouseClicked(e -> handleConnectFourClick());
 
         // Checkers Game Card
         VBox checkersCard = createGameCard("Checkers", "checkers");
@@ -141,6 +144,7 @@ public class MainMenuWindow {
         return gameSelection;
     }
 
+
     private VBox createGameCard(String gameName, String gameType) {
         VBox card = new VBox(10);
         card.setPadding(new Insets(15));
@@ -160,9 +164,70 @@ public class MainMenuWindow {
         Label playersLabel = new Label("Online: 42 players");
         playersLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #bdc3c7;");
 
-        card.getChildren().addAll(iconPlaceholder, nameLabel, playersLabel);
+        Button rulesButton = new Button("View Rules");
+        rulesButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
+        rulesButton.setOnAction(e -> showGameRules(gameType));
+
+        card.getChildren().addAll(iconPlaceholder, nameLabel, playersLabel, rulesButton);
 
         return card;
+    }
+
+    private void showGameRules(String gameType) {
+        String rules = "";
+        if (gameType.toLowerCase().equals("connectfour")) {
+            rules = """
+                CONNECT FOUR RULES:
+                • Players take turns dropping discs into columns.
+                • The first to connect the target number in a row (horizontally, vertically, or diagonally) wins.
+                • If the board fills up with no winner, it's a draw.
+                • Use the drop buttons at the top of the board to make a move.
+                """;
+        }else if (gameType.toLowerCase().equals("tictactoe")) {
+            rules = """
+                TIC-TAC-TOE RULES:
+                • Two players take turns placing X or O.
+                • The first to get 3 in a row (horizontal, vertical, diagonal) wins.
+                • If all 9 spaces are filled and no winner, it's a draw.
+                """;
+        } else if (gameType.toLowerCase().equals("checkers")) {
+            rules = """
+                CHECKERS RULES:
+                • Each player moves diagonally and captures opponent's pieces by jumping over them.
+                • Reach the last row to crown a piece (king).
+                • Player with no remaining moves or pieces loses.
+                """;
+        }else {
+            rules = "No rules available for this game.";
+        }
+
+        Alert rulesDialog = new Alert(Alert.AlertType.INFORMATION);
+        rulesDialog.setTitle("Game Rules");
+        rulesDialog.setHeaderText("Rules for " + formatGameTitle(gameType));
+        rulesDialog.setContentText(rules);
+
+        DialogPane rulesDialogPane = rulesDialog.getDialogPane();
+        rulesDialogPane.setStyle("-fx-background-color: #2c3e50;");
+        rulesDialogPane.lookup(".content.label").setStyle("-fx-text-fill: white;");
+        rulesDialogPane.lookup(".header-panel").setStyle("-fx-background-color: #3498db;");
+
+        rulesDialog.showAndWait();
+
+    }
+
+    private String formatGameTitle(String gameType) {
+        if (gameType.toLowerCase().equals("connectfour")) {
+            return "Connect Four";
+        }
+        else if (gameType.toLowerCase().equals("tictactoe")) {
+            return "Tic-Tac-Toe";
+        }
+        else if (gameType.toLowerCase().equals("checkers")) {
+            return "Checkers";
+        }
+        else {
+            return "Unknown Game";
+        }
     }
 
     private VBox createRightPanel() {
@@ -347,7 +412,12 @@ public class MainMenuWindow {
                 new GameWindow(stage, new TicTacToeGame(), currentUser);
                 break;
             case "connectfour", "connectFour", "connect-four":
-                new GameWindow(stage, new ConnectFourGame(), currentUser);
+//                Boolean vsComputer = showConnectFourModeDialog();
+//                if (vsComputer == null) {
+//                    return;
+//                }
+                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, false), currentUser);
+                //new GameWindow(stage, new ConnectFourGame(1,6,7,4), currentUser);
                 break;
             case "checkers":
                 new GameWindow(stage, new CheckersGame(), currentUser);
@@ -356,6 +426,158 @@ public class MainMenuWindow {
                 System.out.println("Unknown game type: " + gameType);
         }
     }
+
+    private Boolean showConnectFourModeDialog() {
+        Alert modeDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        modeDialog.setTitle("Choose Game Mode");
+        modeDialog.setHeaderText("Select Connect Four Mode");
+        modeDialog.setContentText("Do you want to play against the computer or another player?");
+
+        ButtonType vsComputerButton = new ButtonType("Computer");
+        ButtonType multiplayerButton = new ButtonType("Multiplayer (Same Device)");
+
+        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        modeDialog.getButtonTypes().setAll(vsComputerButton, multiplayerButton, cancel);
+
+        DialogPane dialogPane = modeDialog.getDialogPane();
+
+        dialogPane.setStyle("-fx-background-color: #3498db");
+
+        Node header = dialogPane.lookup(".header-panel");
+        if(header != null) {
+            header.setStyle("-fx-background-color: #3498db;");
+        }
+        Label content = (Label) dialogPane.lookup(".content.label");
+        if(content != null) {
+            content.setStyle("-fx-text-fill: white;");
+        }
+        Node buttonBar = dialogPane.lookup(".buttonBar");
+        if(buttonBar != null) {
+            buttonBar.setStyle("-fx-background-color: white;");
+        }
+
+        modeDialog.showingProperty().addListener((obs, wasShowing, isNowShowing) -> {
+            if (isNowShowing) {
+                Button computerButton = (Button) dialogPane.lookupButton(vsComputerButton);
+                Button multiButton = (Button) dialogPane.lookupButton(multiplayerButton);
+                Button cancelButton = (Button) dialogPane.lookupButton(cancel);
+
+                computerButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; ");
+                multiButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
+                cancelButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+            }
+        });
+
+
+        ButtonType result = modeDialog.showAndWait().orElse(cancel);
+        if (result == cancel) {
+            return null;
+        }
+
+
+
+/*/
+        modeDialog.showAndWait().ifPresent(response -> {
+            boolean vsComputer;
+            if (response == vsComputerButton) {
+                // Single Player
+                vsComputer = true;
+                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, vsComputer), currentUser);
+            } else {
+                //Local Multiplayer
+                vsComputer = false;
+                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, vsComputer), currentUser);
+            }
+        });
+
+ */
+        return result == vsComputerButton;
+    }
+
+    private void handleConnectFourClick() {
+        Boolean vsComputer = showConnectFourModeDialog();
+        if (vsComputer == null) {
+            return;
+        }
+        showBoardOptionsDialog(vsComputer);
+//        if (vsComputer) {
+//            ConnectFourGame game = new ConnectFourGame(1, 6, 7, 4, true);
+//            new GameWindow(stage, game, currentUser);
+//        }else{
+//            startMatchmaking("connectFour");
+//        }
+    }
+
+    /*
+    *  THIS METHOD TAKES CARE OF CUSTOM BOARD SIZES WHICH WAS SUGGESTED IN FEATURE PROPOSAL
+    * */
+    private void showBoardOptionsDialog(boolean vsComputer) {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Select board settings");
+        dialog.setHeaderText(null);
+
+        Label customHeader = new Label("Choose board size and Win Condition");
+        customHeader.setStyle("-fx-text-fill: white; -fx-font-size: 16px;-fx-font-weight: bold;");
+        VBox headerBox = new VBox(customHeader);
+        headerBox.setPadding(new Insets(10));
+        headerBox.setAlignment(Pos.CENTER_LEFT);
+        dialog.getDialogPane().setHeader(headerBox);
+
+        ComboBox<String> boardSize = new ComboBox<>();
+        boardSize.getItems().addAll("6 x 7", "5 x 5", "4 x 5", "7 x 8", "8 x 8", "10 x 10");
+        boardSize.setValue("6 x 7");
+
+        ComboBox<Integer> goalBox = new ComboBox<>();
+        goalBox.setDisable(true);
+
+        Label noteLabel = new Label("Select a goal that fits the board size");
+        noteLabel.setStyle("-fx-text-fill: #bdc3c7; -fx-font-size: 12px;");
+
+        boardSize.setOnAction(e -> {
+            String[] parts = boardSize.getValue().split(" x ");
+            int rows  = Integer.parseInt(parts[0].trim());
+            int cols  = Integer.parseInt(parts[1].trim());
+
+            int maxGoal = Math.min(rows, cols);
+            goalBox.getItems().clear();
+            for (int i = 3; i <= maxGoal; i++) {
+                goalBox.getItems().add(i);
+            }
+
+            goalBox.setDisable(false);
+            goalBox.setValue(Math.min(4, maxGoal));
+        });
+
+        boardSize.getOnAction().handle(null);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+        grid.add(new Label("Board Size:"), 0, 0);
+        grid.add(boardSize, 1, 0);
+        grid.add(new Label("Goal Size:"), 0, 1);
+        grid.add(goalBox, 1, 1);
+        grid.add(noteLabel, 1, 2);
+
+        dialog.getDialogPane().setContent(grid);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        dialog.getDialogPane().setStyle("-fx-background-color: #3498db;");
+
+        dialog.showAndWait().ifPresent(result -> {
+            if(result == ButtonType.OK) {
+                String[] size = boardSize.getValue().split("x");
+                int rows = Integer.parseInt(size[0].trim());
+                int cols = Integer.parseInt(size[1].trim());
+                int goal = goalBox.getValue();
+
+                ConnectFourGame game = new ConnectFourGame(1, rows, cols, goal, vsComputer);
+                new GameWindow(stage, game, currentUser);
+            }
+        });
+    }
+
 
     private void openLeaderboard() {
         Leaderboard leaderboard = new Leaderboard();

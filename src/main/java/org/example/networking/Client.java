@@ -16,9 +16,9 @@ public class Client {
             //sleep the program for 1 second to simulate a real connection attempt
             //Thread.sleep is in a try/catch block because although an interruption in the fake connection attempt is unlikely, it's good practice in case the thread running Thread.sleep is interrupted by another thread
             try{
-                Thread.sleep(1000)
+                Thread.sleep(1000);
             }catch(InterruptedException e){
-                System.out.println("Connection attempt was interrupted!")
+                System.out.println("Connection attempt was interrupted!");
             }
             this.isConnected=true;
             this.serverAddress = address;

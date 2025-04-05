@@ -36,20 +36,18 @@ public class GameSession {
     public String processMove(Client player, String moveData) {
         if (players.contains(player)){
             System.out.println("Processing move: " + moveData);
-            return ("Move processed: " +moveData)
+            return ("Move processed: " +moveData);
         }else{
-            return "Player is not part of this session!"
+            return ("Player is not part of this session!");
         }
 
     }
 
-    public void sendChat(String message)
-    {
+    public void sendChat(String message){
         System.out.println("Sending chat: " + message);
     }
 
-    public void completeSession()
-    {
+    public void completeSession(){
         System.out.println("Complete game session...");
     }
 }

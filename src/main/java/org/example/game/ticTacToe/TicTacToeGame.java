@@ -4,21 +4,23 @@ public class TicTacToeGame {
 
     private char[][] board;
     private char currentPlayer;
-    private char player;
-    private char opponent;
+    private char player = 'X';
+    private char opponent = 'O';
     private boolean playerAndComputer;
     private int sizeOfTheBoard;
 
+    private char winnerSymbol;
 
-    public TicTacToeGame()
+    public TicTacToeGame(boolean isComputerGame)
     {
         this.sizeOfTheBoard = 3;
         this.currentPlayer = player;
         this.playerAndComputer = false;
         this.board = new char[3][3];
+        this.playerAndComputer = isComputerGame;;
         //We also have to initialize the cells of the board, they need to be empty at first, whenever a game starts
         BoardInitialization();
-        randomizePlayersSymbols();
+        //randomizePlayersSymbols();
     }
 
     public void randomizePlayersSymbols()
@@ -59,9 +61,19 @@ public class TicTacToeGame {
         playerAndComputer = true;
     }
 
+    public boolean isPlayerAndComputer(){
+        return playerAndComputer;
+    }
+
+    public char getCurrentPlayer(){
+        return currentPlayer;
+    }
+
+
 
     public boolean checkForWin(char symbol)
     {
+        winnerSymbol = symbol;
         //There are 3 possibilities for a win. We need to check diagonals, columns and rows.
 
         //Diagonal Part:
@@ -204,7 +216,7 @@ public class TicTacToeGame {
         currentPlayer = player;
     }
 
-    boolean checkIfGameOver()
+    public boolean checkIfGameOver()
     {
         if(checkForWin())
             return true;
@@ -214,10 +226,7 @@ public class TicTacToeGame {
         return false;
     }
 
-    public boolean isNetworkGame() //NOT DONE
-    {
-        return false;
-    }
+
 
     public char getPlayerSymbol() {
         return player;
@@ -242,12 +251,12 @@ public class TicTacToeGame {
         return true;
     }
 
-    public boolean isPlayerTurn() {
-        return currentPlayer == player;
+    public void isPlayerTurn() {
+        currentPlayer = player;
     }
 
-    public boolean isOpponentTurn(){
-        return currentPlayer == opponent;
+    public void isOpponentTurn(){
+        currentPlayer = opponent;
     }
 
     public char getBoardValue(int row, int col)

@@ -5,15 +5,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.example.authentication.Login;
 import org.example.authentication.UserProfile;
 import org.example.game.checkers.CheckersGame;
-import org.example.game.connectFour.ConnectFourBoard;
 import org.example.game.connectFour.ConnectFourGame;
 import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.leaderboard.Leaderboard;
@@ -107,7 +103,7 @@ public class MainMenuWindow {
 
         // TicTacToe Game Card
         VBox ticTacToeCard = createGameCard("Tic-Tac-Toe", "ticTacToe");
-        ticTacToeCard.setOnMouseClicked(e -> handleTicTacToeClick());
+        ticTacToeCard.setOnMouseClicked(e -> runTicTacToeGame());
 
         // Connect Four Game Card
         VBox connectFourCard = createGameCard("Connect Four", "connectFour");
@@ -348,7 +344,7 @@ public class MainMenuWindow {
     private void startGame(String gameType) {
         switch (gameType) {
             case "ticTacToe", "tictactoe", "tic-tac-toe":
-                new GameWindow(stage, new TicTacToeGame(), currentUser);
+                new GameWindow(stage, new TicTacToeGame(isComputerGameTTT), currentUser);
                 break;
             case "connectfour", "connectFour", "connect-four":
 //                Boolean vsComputer = showConnectFourModeDialog();
@@ -497,13 +493,13 @@ public class MainMenuWindow {
 //        }
     }
 
-    private void handleTicTacToeClick() {
-        Boolean vsComputer = showTicTacToeModeDialog();
-        if (vsComputer == null) {
-            return;
+    public boolean isComputerGameTTT;
+    private void runTicTacToeGame() {
+        isComputerGameTTT = showTicTacToeModeDialog();
+        TicTacToeGame ticTacToeGame = new TicTacToeGame(isComputerGameTTT);
+        new GameWindow(stage, ticTacToeGame, currentUser);
         }
 
-    }
 
     /*
     *  THIS METHOD TAKES CARE OF CUSTOM BOARD SIZES WHICH WAS SUGGESTED IN FEATURE PROPOSAL

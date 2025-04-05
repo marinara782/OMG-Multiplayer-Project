@@ -7,12 +7,16 @@ public class Player {
     private int checkerLosses;
     private int tictactoeWins;
     private int tictactoeLosses;
+
+    private int tictactoeDraws;
     private int connect4Wins;
     private int connect4Losses;
 
+    private int connect4Draws;
 
     private int totalWins;
     private int totalLosses;
+    private int totalDraws;
 
 
     private double winPercentage;
@@ -24,8 +28,11 @@ public class Player {
         this.checkerLosses = 0;
         this.tictactoeWins = 0;
         this.tictactoeLosses = 0;
+        this.tictactoeDraws = 0;
         this.connect4Wins = 0;
         this.connect4Losses = 0;
+        this.connect4Draws = 0;
+        this.totalDraws = 0;
     }
 
 
@@ -38,16 +45,18 @@ public class Player {
         this.totalLosses = this.checkerLosses + this.tictactoeLosses + this.connect4Losses;
     }
 
+    public void updateTotalDraws() {
+        this.totalDraws = this.connect4Draws + this.tictactoeDraws;
+    }
 
     public void updateWinPercentage() {
         int wins = getTotalWins();
-        int totalGamesPlayed = getTotalWins() + getTotalLosses();
+        int totalGamesPlayed = getTotalWins() + getTotalLosses() + getTotalDraws();
         this.winPercentage = (double) wins /totalGamesPlayed;
     }
 
 
     // setters for Database Stub
-
 
     public void setCheckerWins(int checkerWins) {
         this.checkerWins = checkerWins;
@@ -77,6 +86,11 @@ public class Player {
         updateWinPercentage();
     }
 
+    public void setTictactoeDraws(int tictactoeDraws) {
+        this.tictactoeDraws = tictactoeDraws;
+        updateTotalDraws();
+    }
+
     public void setConnect4Wins(int connect4Wins) {
         this.connect4Wins = connect4Wins;
         updateTotalWins();
@@ -89,6 +103,11 @@ public class Player {
         this.connect4Losses = connect4Losses;
         updateTotalLosses();
         updateWinPercentage();
+    }
+
+    public void setConnect4Draws(int connect4Draws) {
+        this.connect4Draws = connect4Draws;
+        updateTotalDraws();
     }
 
 
@@ -137,6 +156,10 @@ public class Player {
         return winPercentage;
     }
 
+    public int getTotalDraws() {
+        return totalDraws;
+    }
+
     public void updateCheckerWins() {
         this.checkerWins += 1;
         updateTotalWins();
@@ -162,6 +185,11 @@ public class Player {
         updateWinPercentage();
     }
 
+    public void updateTictactoeDraws() {
+        this.tictactoeDraws += 1;
+        updateTotalDraws();
+    }
+
     public void updateConnect4Wins() {
         this.connect4Wins += 1;
         updateTotalWins();
@@ -172,6 +200,11 @@ public class Player {
         this.connect4Losses += 1;
         updateTotalLosses();
         updateWinPercentage();
+    }
+
+    public void updateConnect4Draws() {
+        this.connect4Draws += 1;
+        updateTotalDraws();
     }
 }
 

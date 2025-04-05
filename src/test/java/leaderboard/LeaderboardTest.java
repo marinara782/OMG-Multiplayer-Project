@@ -76,6 +76,22 @@ public class LeaderboardTest {
         leaderboard.addPlayer(fred);
     }
 
+    @Test
+    void testAddPlayer() {
+        Player testPlayer = new Player("testPlayer");
+        leaderboard.addPlayer(testPlayer);
+        Boolean expected = true;
+        Boolean actual = leaderboard.isPlayerInLeaderboard(testPlayer);
+        assertEquals(expected, actual );
+    }
+
+    @Test
+    void testPlayerNotInLeaderBoard() {
+        Player testPlayer = new Player("testPlayer");
+        Boolean expected = false;
+        Boolean actual = leaderboard.isPlayerInLeaderboard(testPlayer);
+        assertEquals(expected,actual);
+    }
 
     @Test
     void testGetTop2Players_SortByCheckersWins() {
@@ -167,6 +183,36 @@ public class LeaderboardTest {
         assertEquals(2, topPlayers.size());
         assertEquals(erick, topPlayers.get(0));
         assertEquals(dave, topPlayers.get(1));
+    }
+
+    @Test
+    void testGetTop4Players_SortByCheckersWinPercentage() {
+        List<Player> topPlayers = leaderboard.getTopNPlayers(4, "checkers percentage");
+        assertEquals(4, topPlayers.size());
+        assertEquals(fred, topPlayers.get(0));
+        assertEquals(dave, topPlayers.get(1));
+        assertEquals(erick, topPlayers.get(2));
+        assertEquals(bob, topPlayers.get(3));
+    }
+
+    @Test
+    void testGetTop3Players_SortByTicTacToeWinPercentage() {
+        List<Player> topPlayers = leaderboard.getTopNPlayers(3, "tictactoe percentage");
+        assertEquals(3, topPlayers.size());
+        assertEquals(fred, topPlayers.get(0));
+        assertEquals(charlie, topPlayers.get(1));
+        assertEquals(alice, topPlayers.get(2));
+    }
+
+    @Test
+    void testGetTop5Players_SortByConnect4WinPercentage() {
+        List<Player> topPlayers = leaderboard.getTopNPlayers(5, "connect4 percentage");
+        assertEquals(5, topPlayers.size());
+        assertEquals(erick, topPlayers.get(0));
+        assertEquals(fred, topPlayers.get(1));
+        assertEquals(alice, topPlayers.get(2));
+        assertEquals(charlie, topPlayers.get(3));
+        assertEquals(bob, topPlayers.get(4));
     }
 
     @Test

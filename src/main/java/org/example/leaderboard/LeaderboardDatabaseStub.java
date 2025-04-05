@@ -245,7 +245,7 @@ public class LeaderboardDatabaseStub  {
                     System.out.println(p.getUsername() + " - " + ticTacToeFormat);
                     break;
                 case "connect4 percentage":
-                    double connect4Percentage = p.getWinPercentage();
+                    double connect4Percentage = p.getConnect4WinPercentage();
                     String connect4Format = String.format("%.2f%%", connect4Percentage * 100);
                     System.out.println(p.getUsername() + " - " + connect4Format);
                     break;

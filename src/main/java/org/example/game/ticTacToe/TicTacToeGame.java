@@ -2,40 +2,273 @@ package org.example.game.ticTacToe;
 
 public class TicTacToeGame {
 
-    public boolean checkForWin() {
+    private char[][] board;
+    private char currentPlayer;
+    private char player = 'X';
+    private char opponent = 'O';
+    private boolean playerAndComputer;
+    private int sizeOfTheBoard;
+
+    private char winnerSymbol;
+
+    public TicTacToeGame(boolean isComputerGame)
+    {
+        this.sizeOfTheBoard = 3;
+        this.currentPlayer = player;
+        this.playerAndComputer = false;
+        this.board = new char[3][3];
+        this.playerAndComputer = isComputerGame;;
+        //We also have to initialize the cells of the board, they need to be empty at first, whenever a game starts
+        BoardInitialization();
+        //randomizePlayersSymbols(); thats gonna be for later
+    }
+
+    public void randomizePlayersSymbols()
+    {
+        int randomNum = (int)(Math.random() * 2) + 1;
+
+        if(randomNum == 1)
+        {
+            player = 'X';
+            opponent = 'O';
+        }
+        else
+        {
+            player = 'O';
+            opponent = 'X';
+        }
+    }
+
+    private void BoardInitialization()
+    {
+        //So here we're just initializing the board which is 3 by 3, so that all cells are empty and so that the board is ready for a gameplay
+        //We go through every cell and mark it as / meaning empty, and thats what the for loop below does.
+        board = new char[3][3];
+        for(short i = 0; 3>i;i++) {
+            for (short j = 0; 3 > j; j++) {
+                board[i][j] = '/';
+            }
+        }
+    }
+
+    public void twoPlayersGame()
+    {
+        //So this is a game mode that offers a player vs paler experience
+        //So the currentPlayer is always equal to player and playerAndComputer is set to false as we're not playing against a computer.
+        currentPlayer = player;
+        playerAndComputer = false;
+    }
+
+    public void playerVSAIGame()
+    {
+        //So this is a game mode that offers a player vs AI experience
+        //So the currentPlayer is always equal to player and playerAndComputer is set to true as we're playing against a computer.
+        currentPlayer = player;
+        playerAndComputer = true;
+    }
+
+    public boolean isPlayerAndComputer()
+    {
+        //we return true if game mode is player vs computer, false otherwise
+        return playerAndComputer;
+    }
+
+    public char getCurrentPlayer()
+    {
+        //we return true if game is player vs player, false otherwise
+        return currentPlayer;
+    }
+
+
+
+    public boolean checkForWin(char symbol)
+    {
+        winnerSymbol = symbol;
+        //There are 3 possibilities for a win. We need to check diagonals, columns and rows.
+
+        //Diagonal Part:
+        //The board is 3 by 3, and we could only have 2 diagonals.
+        //Diagonal 1:
+        if((board[0][0] == symbol) && (board[1][1] == symbol) && (board[2][2] == symbol))
+            return true; // true meaning, this is a win, if condition is fulfilled
+
+        //Diagonal 2:
+        //So we could have a diagonal win from the left side (Diagonal Part 1) or we could have a diagonal win form the right side, which is the following:
+
+        if((board[0][2] == symbol) && (board[1][1] == symbol) && (board[2][0] == symbol))
+            return true; // true meaning, this is a win, if condition is fulfilled
+
+        //For Columns
+        for(short i = 0; 3 > i;i++)
+        {
+            if((board[0][i] == symbol) && board[1][i] == symbol && board[2][i] == symbol)
+                return true;
+        }
+
+        //For Rows
+        for(short i = 0; 3 > i;i++)
+        {
+            if((board[i][0] == symbol) && board[i][1] == symbol && board[i][2] == symbol)
+                return true;
+        }
+
         return false;
     }
 
-    public boolean isBoardFull() {
+    public boolean isBoardFull()
+    {
+        //We return true if the board is full
+        //And we return false if its not full, so if at least one cell is empty, we return false
+
+        for(short row = 0; 3>row;row++)
+        {
+            for(short col = 0; 3>col;col++)
+            {
+                if(board[row][col] == '/')
+                    return false;
+                else
+                    continue;
+            }
+        }
+        //The above for loop goes through every single cell on board and checks if its empty or not.
+        //A cell is empty if it equals "/".
+        //If at any point we find a cell that equals "/", then we return false, meaning the board is not full as there is at least one spot empty
+        //Our goal is not to check how many cells are empty, but rather, to see if there is any empty cell
+
+        return true;
+        //if no cells are empty, then we don't execute the return false statement which would get us out of the function, and therefore we reach the return true statement
+        //If we reach the return true statement, then it means the board is full, and there are no empty cells.
+    }
+
+    public char getOpponentSymbol()
+    {
+        //This method returns/gives us the symbol used by the opponent
+        return opponent;
+
+    }
+
+    public int[] getAIMove()
+    {
+        //This is a method made for the computer so that it can play against humans and possibly win games too
+        //if the board is full then we return null which means we can't make any moves and game is over.
+        if (isBoardFull())
+            return null;
+
+        //This small portion below checks if the AI can win by making a move
+        for(short i = 0; 3>i;i++)
+        {
+            for(short j = 0; 3>j;j++)
+            {
+                if(board[i][j] == '/')
+                {
+                    board[i][j] = opponent;
+                    if(checkForWin(opponent))
+                    {
+                        board[i][j] = '/';
+                        return new int[]{i, j};
+                    }
+                    board[i][j] = '/';
+                }
+            }
+        }
+
+        //These two lines here, if the middle cell is empty, then AI picks that cell and assigns its symbol
+        if(board[1][1] == '/')
+            return new int[]{1, 1};
+
+        //This portion here checks if the player is close to winning, and so our goal is to make the AI block it and not give player the win
+        for(short i = 0; 3>i;i++)
+        {
+            for(short j = 0; 3>j;j++)
+            {
+                if(board[i][j] == '/')
+                {
+                    board[i][j] = player;
+                    if(checkForWin(player))
+                    {
+                        board[i][j] = '/';
+                        return new int[]{i, j};
+                    }
+                    board[i][j] = '/';
+                }
+            }
+        }
+
+        //This option, if any corners are open, then the AI occupies whatever corner is available
+        if(board[0][0] == '/')
+            return new int[]{0, 0};
+        if(board[0][2] == '/')
+            return new int[]{0, 2};
+        if(board[2][0] == '/')
+            return new int[]{2, 0};
+        if(board[2][2] == '/')
+            return new int[]{2, 2};
+
+        //This last option here is when none of the above options are available, the AI will just pick whatever first empty cells it encounters
+        for(short i = 0; 3>i;i++)
+        {
+            for(short j = 0; 3>j;j++)
+            {
+                if(board[i][j] == '/')
+                    return new int[]{i, j};
+                else
+                    continue;
+            }
+        }
+
+        //if none of the above options are executed, then we return null
+
+        return null;
+    }
+
+    private void makeAIMove()
+    {
+        //Now whatever the AI confirms as a move, we just make that move using this method
+        int[] move = getAIMove();
+        if(move == null)
+            return;
+
+        board[move[0]][move[1]] = opponent;
+        currentPlayer = player;
+    }
+
+    /*public boolean checkIfGameOver()
+    {
+        if(checkForWin())
+            return true;
+        if(isBoardFull())
+            return true;
+
         return false;
+    }*/
+
+
+
+    public char getPlayerSymbol() {
+        return player;
     }
 
-    public boolean getOpponentSymbol() {
-        return false;
+    public void makeMove(int row, int col,char player)
+    {
+        board[row][col] = player;
+
+
     }
 
-    public int[] getAIMove() {
-        return new int[0];
+    public void isPlayerTurn() {
+        currentPlayer = player;
     }
 
-    public boolean isNetworkGame() {
-        return false;
+    public void isOpponentTurn(){
+        currentPlayer = opponent;
     }
 
-    public char[] getPlayerSymbol() {
-        return new char[0];
-    }
-
-    public boolean makeMove(int i, int i1) {
-        return false;
-    }
-
-    public boolean isPlayerTurn() {
-        return false;
-    }
-
-    public char getBoardValue(int row, int col) {
-        return 0;
+    public char getBoardValue(int row, int col)
+    {
+        if (row < 0 || row >= 3 || col < 0 || col >= 3) {
+            return 0; // Return an invalid character
+        }
+        return board[row][col];
     }
 
 

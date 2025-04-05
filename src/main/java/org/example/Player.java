@@ -128,6 +128,12 @@ public class Player {
         return checkerLosses;
     }
 
+    public double getCheckersWinPercentage() {
+        int wins = getCheckerWins();
+        int games = wins + getCheckerLosses();
+        return (double) wins/games;
+    }
+
     public int getTictactoeWins() {
         return tictactoeWins;
     }
@@ -136,12 +142,27 @@ public class Player {
         return tictactoeLosses;
     }
 
+    public int getTictactoeDraws() {return tictactoeDraws;}
+
+    public double getTicTacToeWinPercentage() {
+        int wins = getTictactoeWins();
+        int games = wins + getTictactoeLosses();
+        return (double) wins/games;
+    }
     public int getConnect4Wins() {
         return connect4Wins;
     }
 
     public int getConnect4Losses() {
         return connect4Losses;
+    }
+
+    public int getConnect4Draws() {return connect4Draws;}
+
+    public double getConnect4WinPercentage() {
+        int wins = getConnect4Wins();
+        int games = wins + getConnect4Losses();
+        return (double) wins/games;
     }
 
     public int getTotalWins() {

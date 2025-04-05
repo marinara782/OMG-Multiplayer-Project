@@ -20,13 +20,35 @@ public class Leaderboard {
      * @param player: the player to be added to the leaderboard
      */
     public void addPlayer(Player player) {
-        if (!players.contains(player)) {
+        if (!isPlayerInLeaderboard(player)) {
             players.add(player); // add player to the list of players
         }
     }
 
     /**
+     * Checks if a player is already inside the leaderboard
+     * @param player player to check
+     * @return true if player is in leaderboard, otherwise false
+     */
+    public Boolean isPlayerInLeaderboard(Player player) {
+        return players.contains(player);
+    }
+
+    /**
      * view the top n players of the leaderboard in a certain sorting criteria (i.e. top 5 checker wins, top 10 tic-tac-toe losses, etc.)
+     * Pass sorting criteria via the following approved criteria:
+     *          "checkers wins": sort via checkers wins
+     *          "tictactoe wins": sort via tictactoe wins
+     *          "connect4 wins": sort via connect4 wins
+     *          "total wins": sort via total wins (all games)
+     *          "checkers losses": sort via checkers losses
+     *          "tictactoe losses": sort via tictactoe losses
+     *          "connect4 losses": sort viaconnect4 losses
+     *          "total losses": sort via total losses (all games)
+     *          "checkers percentage": sort via checkers percentage (checkers win percentage)
+     *          "tictactoe percentage": sort via tictactoe percentage (tictactoe win percentage)
+     *          "connect4 percentage": sort via connect4 percentage (connect4 win percentage)
+     *          "win percentage": sort via win percentage (total win percentage [all games])
      * @param amount the amount of players to be viewed (i.e. top 5, bottom 3, etc.)
      * @param sortingCriteria the sorting criteria to view to top players (i.e. sort by checker wins, connect4 losses, etc.)
      */
@@ -89,7 +111,18 @@ public class Leaderboard {
                     throw new IllegalArgumentException("invalid game name: "+gameName);
             }
         } else if ("percentage".equals(criteriaString)) {
-            return Comparator.comparingDouble(Player::getWinPercentage).reversed();
+            switch (gameName) {
+                case "checkers":
+                    return Comparator.comparingDouble(Player::getCheckersWinPercentage).reversed();
+                case "tictactoe":
+                    return Comparator.comparingDouble(Player::getTicTacToeWinPercentage).reversed();
+                case "connect4":
+                    return Comparator.comparingDouble(Player::getConnect4WinPercentage).reversed();
+                case "win":
+                    return Comparator.comparingDouble(Player::getWinPercentage).reversed();
+                default:
+                    throw new IllegalArgumentException("invalid game name: " + gameName);
+            }
         } else {
             throw new IllegalArgumentException("invalid sorting criteria: "+criteriaString);
         }

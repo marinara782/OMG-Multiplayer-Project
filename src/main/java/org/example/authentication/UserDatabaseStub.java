@@ -91,10 +91,14 @@ public class UserDatabaseStub {
     }
 
     private void write_users_to_file(List<User> users) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("temp.txt"))) {
+        File file = new File("temp.txt");
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (User user : users) {
-                writer.println(user.getUsername() + ", " + user.getPassword() + ", " + user.getEmail() + ", " + user.getPhone());
+                writer.write(user.getUsername() + "," + user.getPassword() + "," + user.getEmail() + "," + user.getPhone());
+                writer.newLine();
             }
+            writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

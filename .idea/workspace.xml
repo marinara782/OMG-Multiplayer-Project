@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Designing TicTacToe rules (Done)">
+    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/MainMenuWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/MainMenuWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/UserProfileWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/UserProfileWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/game.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/game.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="LEADERBOARD" />
+        <entry key="$PROJECT_DIR$" value="bhuvan" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -85,7 +82,7 @@
     "git-widget-placeholder": "bhuvan",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "C:/Users/bhuva/OneDrive/Desktop/SENG 300/seng300-w25-project/src/main/java/org/example/gui",
-    "last_opened_file_path": "C:/Users/bhuva/OneDrive/Desktop/GitHub Projects/DuplicateGame",
+    "last_opened_file_path": "C:/Users/bhuva/OneDrive/Desktop/SENG 300/seng300-w25-project",
     "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.13477087",
     "project.structure.side.proportion": "0.17471737",
@@ -369,7 +366,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743494164218</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Profile Window fxml file and CSS file">
+      <option name="closed" value="true" />
+      <created>1743658514760</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1743658514760</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -384,7 +389,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Tic-Tac-Toe ChatBox has been created." />
     <MESSAGE value="Created Docs &gt; UseCaseDescriptions" />
     <MESSAGE value="Developed UserProfileWindow" />
     <MESSAGE value="Developed UserProfileWindow and HelloApplication" />
@@ -409,6 +413,7 @@
     <MESSAGE value="Working on TicTacToe rules Board" />
     <MESSAGE value="Formatted/Layout TicTacToe rules (working on the designing)" />
     <MESSAGE value="Designing TicTacToe rules (Done)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Designing TicTacToe rules (Done)" />
+    <MESSAGE value="Profile Window fxml file and CSS file" />
+    <option name="LAST_COMMIT_MESSAGE" value="Profile Window fxml file and CSS file" />
   </component>
 </project>

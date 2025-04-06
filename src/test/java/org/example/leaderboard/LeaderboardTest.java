@@ -221,8 +221,23 @@ public class LeaderboardTest {
     }
 
     @Test
-    void testInvalidGameName() {
+    void testInvalidSortingFormat(){
+        assertThrows(IllegalArgumentException.class, () -> leaderboard.getTopNPlayers(2, "checkers win percentage"));
+    }
+
+    @Test
+    void testInvalidGameNameWithWins() {
         assertThrows(IllegalArgumentException.class, () -> leaderboard.getTopNPlayers(2, "chess wins"));
+    }
+
+    @Test
+    void testInvalidGameNameWithLosses() {
+        assertThrows(IllegalArgumentException.class, () -> leaderboard.getTopNPlayers(2, "chess losses"));
+    }
+
+    @Test
+    void testInvalidGameNameWithPercentage() {
+        assertThrows(IllegalArgumentException.class, () -> leaderboard.getTopNPlayers(2, "chess percentage"));
     }
 
     @Test

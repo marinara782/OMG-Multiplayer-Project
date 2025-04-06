@@ -45,6 +45,7 @@ public class Server {
                 players = mapper.readValue(playerFile, new TypeReference<List<Player>>(){});
                 System.out.println("Players loaded from file.");
             }catch (IOException e){
+                //e.getMessage() returns a human-readable description of what caused the exception
                 System.err.println("Error loading players: "+ e.getMessage());
             }
         }
@@ -53,6 +54,13 @@ public class Server {
     private void savePlayers(){
         //Jackson ObjectMapper to handle conversion between Java objects and JSON
         ObjectMapper mapper = new ObjectMapper();
+        try{
+            mapper.writerWithDefaultPrettyPrinter().writeValue(playerFile, players);
+            System.out.println("Players saved to file");
+        }catch (IOException e) {
+            //e.getMessage() returns a human-readable description of what caused the exception
+            System.err.println("Error saving players: "+e.getMessage());
+        }
 
     }
 

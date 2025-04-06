@@ -1,6 +1,7 @@
 package org.example.authentication;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 public class UserProfile extends UserDatabaseStub {
     public String getUsername() {
@@ -84,11 +85,6 @@ public class UserProfile extends UserDatabaseStub {
             System.err.println("Error: Could not access user database");
             return false;
         }
-
-
-
-
-
     }
 
     public boolean set_phone_number(String phone_number, String password, String confirm_password) {
@@ -130,8 +126,32 @@ public class UserProfile extends UserDatabaseStub {
         }
     }
 
+    public void enable_2_factor(String username, String first_password, String second_password) throws FileNotFoundException {
 
+        String phone_number = "none";
+        String email = "none";
 
+        // creating boolean variable that acts as a flag to see if the first password enters matches the password of the account
+        boolean password_matches;
 
+        // creating boolean variable that acts as a flag to see if both passwords entered are the same
+        boolean passwords_are_equal = first_password.equals(second_password);
+
+        // accessing database
+        List<User> users = registered_users_list();
+
+        // accessing the assigned phone number and email for 2FA
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                phone_number = user.getPhone();
+                email = user.getEmail();
+            }
+        }
+
+        // equates password_matches to a verify_password call
+        password_matches = verify_password(username, first_password);
     }
+}
+
+
 

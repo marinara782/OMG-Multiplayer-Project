@@ -83,7 +83,7 @@ public class UserDatabaseStub {
     public boolean verify_phone_number(String username, String phone) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
-            if(user.getUsername().equals(username)){
+            if(user.getUsername().equals(username) && user.getPhone().equals(phone)){
                 return true;
             }
         }
@@ -99,8 +99,6 @@ public class UserDatabaseStub {
             e.printStackTrace();
         }
     }
-
-
 
     public void update_username(String oldUsername, String newUsername) throws FileNotFoundException {
         List<User> users = registered_users_list();
@@ -149,4 +147,11 @@ public class UserDatabaseStub {
         }
     }
 
+    public void send_email(String email) throws FileNotFoundException {
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+            }
+        }
+    }
 }

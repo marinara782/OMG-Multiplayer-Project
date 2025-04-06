@@ -90,7 +90,7 @@ public class UserDatabaseStub {
         return false;
     }
 
-    private void write_users_to_file(List<User> users) {
+    public void write_users_to_file(List<User> users) {
         try (PrintWriter writer = new PrintWriter(new FileWriter("temp.txt"))) {
             for (User user : users) {
                 writer.println(user.getUsername() + ", " + user.getPassword() + ", " + user.getEmail() + ", " + user.getPhone());
@@ -99,6 +99,8 @@ public class UserDatabaseStub {
             e.printStackTrace();
         }
     }
+
+
 
     public void update_username(String oldUsername, String newUsername) throws FileNotFoundException {
         List<User> users = registered_users_list();
@@ -138,4 +140,6 @@ public class UserDatabaseStub {
         }
         return null;
     }
+
+
 }

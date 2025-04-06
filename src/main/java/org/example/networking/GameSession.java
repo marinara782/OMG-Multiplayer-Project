@@ -1,10 +1,23 @@
 package org.example.networking;
 
+import java.util.UUID;
+
 public class GameSession {
 
-    private int sessionid;
+    private int GameID;
     private String gameType;
     private List<Client> players;
+
+    public String createGame(String gameType){
+        this.gameId = UUID.random(UUID).toString();
+        System.out.println(gameType+" game created with ID: "+gameID);
+        return gameId;
+    }
+
+    public void joinGame(String gameId){
+        this.GameID = gameId;
+        System.out.println("Game joined with ID: "+gameId);
+    }
 
     public boolean addPlayer(Client player){
         if (players.contains(player)) {

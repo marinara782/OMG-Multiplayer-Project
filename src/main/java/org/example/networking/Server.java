@@ -7,6 +7,7 @@ public class Server {
     private int port;
     private boolean isRunning;
     private List<GameSession> activeSessions;
+    private String playerID;
 
     public Server(){
         this.activeSessions = new ArrayList<>();
@@ -17,7 +18,7 @@ public class Server {
         if (!isRunning){
             this.port = port;
             this.isRunning = true;
-            System.out.println("Server has started on port "+port);
+            System.out.println("Server has started on port "+port "for player "+ playerID);
         }else{
             System.out.println("Server is already running!");
         }

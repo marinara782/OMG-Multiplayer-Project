@@ -1,6 +1,5 @@
-package game.checkers;
+package org.example.game.checkers;
 
-import org.example.game.checkers.CheckersGame;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,8 +1,7 @@
-package leaderboard;
+package org.example.leaderboard;
 
 
 import org.example.Player;
-import org.example.leaderboard.Leaderboard;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 

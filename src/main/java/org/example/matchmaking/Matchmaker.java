@@ -9,7 +9,7 @@ public class Matchmaker {
     private List<Player> players; // List of all players in matchmaking pool
     private List<Player> topPlayers; // Leaderboard containing top-ranked players
 
-    public Matchmaker(List<Player> players) {
+    public Matchmaker() {
         this.players = new ArrayList<>(players);
         this.topPlayers = new ArrayList<>();
     }

@@ -1,4 +1,4 @@
-package matchmaking;
+package org.example.matchmaking;
 
 public class SkillBasedMatchMaking {
 }

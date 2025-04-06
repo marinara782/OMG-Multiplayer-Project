@@ -1,4 +1,4 @@
-package game.ticTacToe;
+package org.example.game.ticTacToe;
 
 public class TicTacToeGameTest {
 }

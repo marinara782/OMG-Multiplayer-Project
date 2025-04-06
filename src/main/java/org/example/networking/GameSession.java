@@ -5,7 +5,7 @@ import java.util.List;
 
 public class GameSession {
 
-    private int sessionid;
+    private int GameID;
     private String gameType;
     private List<Client> players;
     private static int counter_id = 0;
@@ -54,13 +54,11 @@ public class GameSession {
 
     }
 
-    public void sendChat(String message)
-    {
+    public void sendChat(String message){
         System.out.println("Sending chat: " + message);
     }
 
-    public void completeSession()
-    {
+    public void completeSession(){
         System.out.println("Complete game session...");
     }
 

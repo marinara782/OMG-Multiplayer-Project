@@ -18,7 +18,7 @@ public class Server {
         if (!isRunning){
             this.port = port;
             this.isRunning = true;
-            System.out.println("Server has started on port "+port);
+            System.out.println("Server has started on port "+port "for player "+ playerID);
         }else{
             System.out.println("Server is already running!");
         }
@@ -83,4 +83,6 @@ public class Server {
 
         }
     }
+
+    //new server (using firebase)
 }

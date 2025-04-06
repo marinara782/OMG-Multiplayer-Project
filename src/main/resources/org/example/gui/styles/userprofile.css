@@ -199,11 +199,10 @@
 }
 
 .stat-box {
-    -fx-background-color: -element-bg;
-    -fx-background-radius: 8;
-    -fx-border-radius: 8;
-    -fx-border-width: 2;
-    -fx-padding: 15;
+    -fx-background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background */
+    -fx-border-radius: 4px;
+    -fx-border-width: 2px;
+    -fx-padding: 10px;
     -fx-min-width: 150;
     -fx-max-width: 200;
     -fx-min-height: 100;
@@ -212,29 +211,31 @@
 }
 
 .highlight-border {
-    -fx-border-color: -highlight-color;
+    -fx-border-color: #3498db; /* Blue border */
 }
 
 .success-border {
-    -fx-border-color: -success-color;
+    -fx-border-color: #2ecc71; /* Green border */
 }
 
 .warning-border {
-    -fx-border-color: -warning-color;
+    -fx-border-color: #f39c12; /* Orange border */
 }
 
 .info-border {
-    -fx-border-color: -info-color;
+    -fx-border-color: #bdc3c7; /* Gray border */
 }
 
+/* Titles and Values */
 .stat-title {
-    -fx-text-fill: -text-secondary;
-    -fx-font-size: 14;
+    -fx-font-size: 14px;
+    -fx-text-fill: #cccccc; /* Light gray for titles */
 }
 
 .stat-value {
-    -fx-font-size: 24;
+    -fx-font-size: 18px;
     -fx-font-weight: bold;
+    -fx-text-fill: white; /* Bold white for values */
 }
 
 .titled-pane {

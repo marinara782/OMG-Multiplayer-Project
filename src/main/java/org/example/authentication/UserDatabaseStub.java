@@ -3,6 +3,13 @@ package org.example.authentication;
 import java.util.Map;
 
 public class UserDatabaseStub {
+    public boolean verify_username(String username) {
+        return false;
+    }
+
+    public boolean verify_account(String username, String password) {
+        return false;
+    }
     /*
 
     public String[] getUserIds(){

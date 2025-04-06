@@ -91,7 +91,45 @@ public class Login extends UserDatabaseStub {
         System.out.println("✅ Account successfully created for: " + new_username);
 
         return true;
+    }
+
+    public boolean change_password(String username, String oldPassword, String newPassword, String confirmPassword) throws FileNotFoundException{
+        //verify old password
+        if(!verify_password(username, oldPassword)){
+            System.out.println("Password is incorrect");
+            return false;
         }
+
+        //newPassword has length >=8
+        boolean isLongEnough = newPassword.length() >= 8;
+        //new password has at least one letter
+        boolean hasLetter = newPassword.matches(".*[a-zA-Z].*");
+        //new password has at least 1 digit
+        boolean hasNumber= newPassword.matches(".*\\d.*");
+        if(!(isLongEnough && hasLetter && hasNumber)){
+            System.out.println("newPassword does not match requirements: it must be at east 8 characters long and contain at least 1 letter and 1 number ");
+        }
+
+        //verify that new password matches confirmation input
+        if(!newPassword.equals(confirmPassword)){
+            System.out.println("New password and confirmation do not match");
+            return false;
+        }
+        //change password
+        update_password(username, oldPassword, newPassword);
+        System.out.println("Password changed successfully");
+        return true;
+    }
+    public boolean change_email(String username, String password, String oldEmail, String newEmail) throws FileNotFoundException{
+        //verify that the password is correct and matches username
+        if (!verify_password(username, password)){
+            System.out.println("Incorrect password. Email update failed");
+            return false;
+        }
+        //change email
+        update_email(username, newEmail, password);
+        return true;
+    }
 
     public Login(Stage stage) {
     }

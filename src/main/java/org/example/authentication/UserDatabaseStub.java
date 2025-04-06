@@ -140,6 +140,13 @@ public class UserDatabaseStub {
         }
         return null;
     }
-
+    public void update_email(String username, String newEmail, String password) throws  FileNotFoundException{
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                user.setEmail(newEmail);
+            }
+        }
+    }
 
 }

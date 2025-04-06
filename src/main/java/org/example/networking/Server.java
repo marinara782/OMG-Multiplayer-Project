@@ -2,11 +2,25 @@ package org.example.networking;
 
 import java.util.ArrayList;
 import java.util.List;
+
+//imports for .json file
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+import java.io.File;
+import java.io.IOException;
+
+
+
+
 public class Server {
     //server is going to be expecting network connections to come in through this port
     private int port;
-    private boolean isRunning;
-    private List<GameSession> activeSessions;
+    private static boolean isRunning;
+    private static List<GameSession> activeSessions;
+
+    //.json file variables
+    private final File playerFile = new File("players.json");
+    private List<Player> players = new ArrayList<>();
 
     public Server(){
         this.activeSessions = new ArrayList<>();
@@ -17,19 +31,38 @@ public class Server {
         if (!isRunning){
             this.port = port;
             this.isRunning = true;
-            System.out.println("Server has started on port "+port);
+            System.out.println("Server has started on port "+port "for player "+ playerID);
         }else{
             System.out.println("Server is already running!");
         }
     }
 
+    private void loadPlayers(){
+        //Jackson ObjectMapper to handle conversion between Java objects and JSON
+        ObjectMapper mapper = new ObjectMapper();
+        if (playerFile.exists()){
+            try{
+                players = mapper.readValue(playerFile, new TypeReference<List<Player>>(){});
+                System.out.println("Players loaded from file.");
+            }catch (IOException e){
+                System.err.println("Error loading players: "+ e.getMessage());
+            }
+        }
+    }
+
+    private void savePlayers(){
+        //Jackson ObjectMapper to handle conversion between Java objects and JSON
+        ObjectMapper mapper = new ObjectMapper();
+
+    }
+
     //Checks if server is running, creates a new game session, adds the session to the list of active sessions and returns the session
-    public GameSession createGameSession(String gameType){
+    public static GameSession createGameSession(String gameType){
         if (!isRunning){
             System.out.println("Cannot create a game session because server is not running.");
             return null;
         }
-        GameSession newGameSession = new GameSession;
+        GameSession newGameSession = new GameSession(gameType);
         activeSessions.add(newGameSession);
         System.out.println("New "+gameType+" game session created!");
         return newGameSession;
@@ -37,6 +70,23 @@ public class Server {
 
     public List<GameSession> getActiveSessions() {
         return new ArrayList<>(activeSessions);
+    }
+
+    public static String processRequest(String request, String username, String password) {
+        if (request.equals("LOGIN"))
+        {
+            if (username.equals("Username") && password.equals("pass")){
+                return "Successful Login";
+            }
+            else
+            {
+                return "Invalid Credentials";
+            }
+        }
+        else
+        {
+            return "Unknown Request";
+        }
     }
 
 
@@ -65,4 +115,6 @@ public class Server {
 
         }
     }
+
+    //new server (using firebase)
 }

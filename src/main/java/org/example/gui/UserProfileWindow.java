@@ -1,235 +1,83 @@
 package org.example.gui;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
+import javafx.event.ActionEvent;
 import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.authentication.UserProfile;
-import org.example.leaderboard.Leaderboard;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class UserProfileWindow {
-    private Stage stage;
-    private Scene scene;
-    private BorderPane mainLayout;
-    private UserProfile userProfile;
-    private TabPane tabPane;
+    public Label welcomeLabel;
+    public PieChart gameDistributionPieChart;
+    public Label totalGamesLabel;
+    public Label winsLabel;
+    public Label lossesLabel;
+    public Label winRateStatLabel;
+    public PieChart allGamesPieChart;
+    public TableView allGamesTable;
+    public PieChart ticTacToePieChart;
+    public TableView ticTacToeTable;
+    public PieChart checkersPieChart;
+    public TableView checkersTable;
+    public PieChart connect4PieChart;
+    public TableView connect4Table;
+    public ComboBox gameSelector;
+    public RadioButton weekBtn;
+    public RadioButton monthBtn;
+    public RadioButton allTimeBtn;
+    public LineChart performanceChart;
+    public ComboBox gameTypeCombo;
+    public ComboBox resultCombo;
+    public ComboBox dateRangeCombo;
+    public TextField searchField;
+    public TableView matchHistoryTable;
+    public TextField usernameField;
+    public TextField emailField;
+    public TextField displayNameField;
+    public TextArea bioArea;
+    public CheckBox gameInviteCheck;
+    public CheckBox friendRequestCheck;
+    public CheckBox rankChangeCheck;
+    public CheckBox platformNewsCheck;
+    public CheckBox inAppCheck;
+    public CheckBox emailCheck;
+    public CheckBox pushCheck;
+    public CheckBox dndCheck;
+    public CheckBox showGameHistoryCheck;
+    public CheckBox showRankingsCheck;
+    public RadioButton appearOfflineRadio;
+    public RadioButton onlineForAllRadio;
+    public RadioButton onlineForFriendsRadio;
+    public RadioButton publicRadio;
+    public RadioButton friendsRadio;
+    public RadioButton privateRadio;
+    public CheckBox showCurrentGameCheck;
+    public RadioButton darkThemeRadio;
+    public RadioButton lightThemeRadio;
+    public RadioButton systemThemeRadio;
+    public RadioButton blueColorRadio;
+    public RadioButton greenColorRadio;
+    public RadioButton orangeColorRadio;
+    public RadioButton redColorRadio;
+    public RadioButton purpleColorRadio;
+    public Slider fontSizeSlider;
+    public Label fontSizeValueLabel;
+    public CheckBox enableAnimationsCheck;
 
-    // Mock data for the profile
-    private Map<String, Integer> gameStats;
-    private Map<String, Integer> ranks;
-
-    public UserProfileWindow(Stage stage, UserProfile userProfile) {
-        this.stage = stage;
-        this.userProfile = userProfile;
-        initializeMockData();
-        initializeUI();
+    public UserProfileWindow() {
     }
 
-    private void initializeMockData() {
-        // Mock game statistics
-        gameStats = new HashMap<>();
-        gameStats.put("Tic-Tac-Toe", 42);
-        gameStats.put("Connect Four", 28);
-        gameStats.put("Checkers", 16);
-
-        // Mock ranks
-        ranks = new HashMap<>();
-        ranks.put("Tic-Tac-Toe", 1250);
-        ranks.put("Connect Four", 1423);
-        ranks.put("Checkers", 1342);
+    public UserProfileWindow(Stage primaryStage, UserProfile userProfile) {
     }
 
-    private void initializeUI() {
-        mainLayout = new BorderPane();
-        mainLayout.setStyle("-fx-background-color: #2c3e50;");
-
-        // Header with user info
-        HBox header = createHeader();
-        mainLayout.setTop(header);
-
-        // Main content with tabs
-        tabPane = new TabPane();
-        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-
-        Tab overviewTab = new Tab("Overview", createOverviewPane());
-        Tab statsTab = new Tab("Game Stats", createStatsPane());
-        Tab matchHistoryTab = new Tab("Match History", createMatchHistoryPane());
-        Tab settingsTab = new Tab("Settings", createSettingsPane());
-
-        tabPane.getTabs().addAll(overviewTab, statsTab, matchHistoryTab, settingsTab);
-
-        mainLayout.setCenter(tabPane);
-
-        scene = new Scene(mainLayout, 900, 700);
-        stage.setTitle("User Profile - OMG Platform");
-        stage.setScene(scene);
-        stage.setMinWidth(700);
-        stage.setMinHeight(500);
+    public void handleChangePassword(ActionEvent actionEvent) {
     }
 
-    private Node createSettingsPane() {
-        return null;
+    public void handleResetTheme(ActionEvent actionEvent) {
     }
 
-    private Node createMatchHistoryPane() {
-        return null;
-    }
-
-    private Node createStatsPane() {
-        return null;
-    }
-
-    private HBox createHeader() {
-        HBox header = new HBox(20);
-        header.setPadding(new Insets(20));
-        header.setAlignment(Pos.CENTER_LEFT);
-        header.setStyle("-fx-background-color: #1a2530;");
-
-        // User avatar placeholder
-        Region avatarPlaceholder = new Region();
-        avatarPlaceholder.setPrefSize(80, 80);
-        avatarPlaceholder.setStyle("-fx-background-color: #3498db; -fx-background-radius: 40;");
-
-        // User info
-        VBox userInfo = new VBox(5);
-        Label nameLabel = new Label(userProfile.getUsername());
-        nameLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;");
-
-        Label joinDateLabel = new Label("Member since: January 15, 2023");
-        joinDateLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #bdc3c7;");
-
-        Label statusLabel = new Label("Online");
-        statusLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #2ecc71;");
-
-        userInfo.getChildren().addAll(nameLabel, joinDateLabel, statusLabel);
-
-        // Rank badge
-        VBox rankInfo = new VBox(5);
-        rankInfo.setAlignment(Pos.CENTER);
-        rankInfo.setPadding(new Insets(0, 0, 0, 40));
-
-        Label rankLabel = new Label("Gold");
-        rankLabel.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #f39c12;");
-
-        Label ratingLabel = new Label("1342");
-        ratingLabel.setStyle("-fx-font-size: 24px; -fx-text-fill: white;");
-
-        Label ratingTextLabel = new Label("Overall Rating");
-        ratingTextLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #bdc3c7;");
-
-        rankInfo.getChildren().addAll(rankLabel, ratingLabel, ratingTextLabel);
-
-        // Spacer
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-
-        // Close button
-        Button closeButton = new Button("Close");
-        closeButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
-        closeButton.setOnAction(e -> stage.close());
-
-        header.getChildren().addAll(avatarPlaceholder, userInfo, rankInfo, spacer, closeButton);
-
-        return header;
-    }
-
-    private VBox createOverviewPane() {
-        VBox overviewPane = new VBox(20);
-        overviewPane.setPadding(new Insets(20));
-        overviewPane.setStyle("-fx-background-color: #2c3e50;");
-
-        // Summary section
-        HBox summary = new HBox(20);
-        summary.setAlignment(Pos.CENTER);
-
-        // Total games stat
-        VBox totalGamesBox = createStatBox("Total Games", "86", "#3498db");
-
-        // Win rate stat
-        VBox winRateBox = createStatBox("Win Rate", "62%", "#2ecc71");
-
-        // Highest rank stat
-        VBox highestRankBox = createStatBox("Highest Rank", "Gold II", "#f39c12");
-
-        summary.getChildren().addAll(totalGamesBox, winRateBox, highestRankBox);
-
-        // Game distribution chart
-        TitledPane chartContainer = new TitledPane();
-        chartContainer.setText("Game Distribution");
-        chartContainer.setCollapsible(false);
-
-        CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis();
-        BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
-        barChart.setTitle("Games Played by Type");
-        barChart.setLegendVisible(false);
-
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
-        for (Map.Entry<String, Integer> entry : gameStats.entrySet()) {
-            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
-        }
-
-        barChart.getData().add(series);
-        chartContainer.setContent(barChart);
-
-        // Recent achievements
-        TitledPane achievementsContainer = new TitledPane();
-        achievementsContainer.setText("Recent Achievements");
-        achievementsContainer.setCollapsible(false);
-
-        VBox achievementsList = new VBox(10);
-        achievementsList.setPadding(new Insets(10));
-
-        String[] achievements = {
-                "First Win in Connect Four",
-                "5-Win Streak in Tic-Tac-Toe",
-                "Reached Gold Rank",
-                "Played 50 Games"
-        };
-
-        for (String achievement : achievements) {
-            HBox achievementRow = new HBox(10);
-            achievementRow.setAlignment(Pos.CENTER_LEFT);
-
-            // Achievement icon placeholder
-            Region iconPlaceholder = new Region();
-            iconPlaceholder.setPrefSize(30, 30);
-            iconPlaceholder.setStyle("-fx-background-color: #f39c12; -fx-background-radius: 15;");
-
-            Label achievementLabel = new Label(achievement);
-            achievementLabel.setStyle("-fx-text-fill: white;");
-
-            Region spacer = new Region();
-            HBox.setHgrow(spacer, Priority.ALWAYS);
-
-            Label dateLabel = new Label("Feb 12, 2023");
-            dateLabel.setStyle("-fx-text-fill: #bdc3c7;");
-
-            achievementRow.getChildren().addAll(iconPlaceholder, achievementLabel, spacer, dateLabel);
-            achievementsList.getChildren().add(achievementRow);
-        }
-
-        achievementsContainer.setContent(achievementsList);
-
-        overviewPane.getChildren().addAll(summary, chartContainer, achievementsContainer);
-
-        return overviewPane;
-    }
-
-    private VBox createStatBox(String title, String value, String color) {
-        return null;
-    }
-
-    public void show() {
+    public void handleSaveSettings(ActionEvent actionEvent) {
     }
 }

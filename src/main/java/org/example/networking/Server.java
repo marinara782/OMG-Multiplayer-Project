@@ -2,12 +2,23 @@ package org.example.networking;
 
 import java.util.ArrayList;
 import java.util.List;
+
+//imports for .json file
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.type.TypeReference;
+import java.io.File;
+import java.io.IOException;
+
+
+
 public class Server {
     //server is going to be expecting network connections to come in through this port
     private int port;
     private boolean isRunning;
     private List<GameSession> activeSessions;
     private String playerID;
+    private final File playerFile = new File("players.json");
+    private List<Player> players = new ArrayList<>();
 
     public Server(){
         this.activeSessions = new ArrayList<>();
@@ -21,6 +32,18 @@ public class Server {
             System.out.println("Server has started on port "+port "for player "+ playerID);
         }else{
             System.out.println("Server is already running!");
+        }
+    }
+
+    private void loadPlayers(){
+        ObjectMapper mapper = new ObjectMapper();
+        if (playerFile.exists()){
+            try{
+                players = mapper.readValue(playerFile, new TypeReference<List<Player>>(){});
+                System.out.println("Players loaded from file.");
+            }catch (IOException e){
+                System.err.println("Error loading players: "+ e.getMessage());
+            }
         }
     }
 

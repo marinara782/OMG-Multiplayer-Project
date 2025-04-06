@@ -18,6 +18,10 @@ public class Server {
     private static boolean isRunning;
     private static List<GameSession> activeSessions;
 
+    //.json file variables
+    private final File playerFile = new File("players.json");
+    private List<Player> players = new ArrayList<>();
+
     public Server(){
         this.activeSessions = new ArrayList<>();
         this.isRunning = false;
@@ -34,6 +38,7 @@ public class Server {
     }
 
     private void loadPlayers(){
+        //Jackson ObjectMapper to handle conversion between Java objects and JSON
         ObjectMapper mapper = new ObjectMapper();
         if (playerFile.exists()){
             try{
@@ -43,6 +48,12 @@ public class Server {
                 System.err.println("Error loading players: "+ e.getMessage());
             }
         }
+    }
+
+    private void savePlayers(){
+        //Jackson ObjectMapper to handle conversion between Java objects and JSON
+        ObjectMapper mapper = new ObjectMapper();
+
     }
 
     //Checks if server is running, creates a new game session, adds the session to the list of active sessions and returns the session

@@ -43,6 +43,10 @@ public class GameWindow {
     //connectFour
     private ConnectFourGame connectFourGame;
 
+    //Tic Tac Toe game object
+    private TicTacToeGame ticTacToeGame;
+
+
     public GameWindow(Stage stage, Object gameInstance, UserProfile currentUser) {
         this.stage = stage;
         this.gameInstance = gameInstance;
@@ -55,11 +59,9 @@ public class GameWindow {
             this.connectFourGame = (ConnectFourGame) gameInstance;
         }
 
-        // Initialize chatManager based on selected game
+        //Class tic tac toe object is set to the tic tac toe object given by the main menu window
         if (gameInstance instanceof TicTacToeGame) {
-            this.chatManager = new ChatManager.TicTacToeBot(); // Use the TicTacToeBot//
-        } else {
-            this.chatManager = new ChatManager(); // Use the default ChatManager
+            this.ticTacToeGame = (TicTacToeGame) gameInstance;
         }
 
         initializeUI();
@@ -334,7 +336,7 @@ public class GameWindow {
 
         if (gameInstance instanceof TicTacToeGame) {
             System.out.println("Setting up TicTacToe board");
-            setupTicTacToeBoard();
+            playTicTacToeGame();
         } else if (gameInstance instanceof ConnectFourGame) {
             System.out.println("Setting up ConnectFour board");
             setupConnectFourBoard();
@@ -348,7 +350,8 @@ public class GameWindow {
         }
     }
 
-    private void setupTicTacToeBoard() {
+    //This is the method that has all the GUI and game logic for the tic tac toe game
+    private void playTicTacToeGame() {
         VBox boardContainer = new VBox(20);
         boardContainer.setAlignment(CENTER);
 
@@ -367,15 +370,121 @@ public class GameWindow {
                 // Store row and col in button properties for easy access in event handler
                 cell.setUserData(new int[]{row, col});
 
+                //When a player clicks on a box on the board
                 cell.setOnAction(e -> {
                     Button clicked = (Button) e.getSource();
                     int[] position = (int[]) clicked.getUserData();
-                    makeMove(position[0], position[1]);
+                    System.out.println("making move at " + position[0] + " " + position[1]);
 
-                    // For demo, just set X
-                    if (clicked.getText().isEmpty()) {
-                        clicked.setText("X");
-                        simulateOpponentTurn();
+                    //Debugging line
+                    //System.out.println(ticTacToeGame.getBoardValue(position[0], position[1]));
+
+                    //Get whose turn it is each time a box is clicked on
+                    char currentPlayer = ticTacToeGame.getCurrentPlayer();
+                    //Multiplayer Tic Tac Toe game
+                    if (!ticTacToeGame.isPlayerAndComputer()) {
+                        if (clicked.getText().isEmpty()) {
+                            //Set the clicked box to O if its O's turn
+                            if (currentPlayer == 'O') {
+                                clicked.setText("O");
+                                //Update our 2d array copy of the game board
+                                ticTacToeGame.makeMove(position[0], position[1], 'O');
+                                //Check on the 2d array if player O has won
+                                boolean OpponentWin = ticTacToeGame.checkForWin('O');
+                                boolean full = ticTacToeGame.isBoardFull();
+                                //Player O wins
+                                if (OpponentWin) {
+                                    showGameOverDialog("Player O Wins!");
+                                }
+                                else if (full) {
+                                    showGameOverDialog("Draw!");
+                                }
+                                //Switch to other player's turn
+                                ticTacToeGame.isPlayerTurn();
+
+                            }
+                            //Set the clicked box to X if its X's turn
+                            if (currentPlayer == 'X') {
+                                clicked.setText("X");
+                                //Update our 2d array copy of the game board
+                                ticTacToeGame.makeMove(position[0], position[1], 'X');
+                                //Check on the 2d array if player X has won
+                                boolean PlayerWin = ticTacToeGame.checkForWin('X');
+                                boolean full = ticTacToeGame.isBoardFull();
+                                //Player X wins
+                                if (PlayerWin) {
+                                    showGameOverDialog("Player X Wins!");
+                                }
+                                else if (full) {
+                                    showGameOverDialog("Draw!");
+                                }
+                                //Switch to other player's turn
+                                ticTacToeGame.isOpponentTurn();
+                            }
+                        }
+                    }
+                    //If playing against the computer
+                    if (ticTacToeGame.isPlayerAndComputer()) {
+                        //Set the clicked box to X if it's the player's turn
+                        if (currentPlayer == 'X') {
+                            if (clicked.getText().isEmpty()) {
+                                clicked.setText("X");
+                                //Update our 2d array copy of the game board
+                                ticTacToeGame.makeMove(position[0], position[1], 'X');
+                                //Check on the 2d array game board if player has won
+                                boolean playerWin = ticTacToeGame.checkForWin('X');
+                                boolean full = ticTacToeGame.isBoardFull();
+                                //PLayer wins
+                                if (playerWin) {
+                                    showGameOverDialog("Player Wins!");
+                                    return;
+                                } else if (full) {
+                                    showGameOverDialog("Draw!");
+                                    return;
+                                }
+                                //Switch to computer's turn
+                                ticTacToeGame.isOpponentTurn();
+
+                                //Automatically trigger computer move after player's turn
+                                //Simulate thinking of a turn
+                                Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), f -> {
+                                    //Get the computer's move from the tic tac toe logic class
+                                    int[] aiMove = ticTacToeGame.getAIMove();
+                                    if (aiMove != null) {
+                                        //Update the 2d array game board with the computer's move
+                                        ticTacToeGame.makeMove(aiMove[0], aiMove[1], 'O');
+
+                                        // Update the GUI with the computer's move
+                                        for (Node node : board.getChildren()) {
+                                            if (GridPane.getRowIndex(node) == aiMove[0] && GridPane.getColumnIndex(node) == aiMove[1]) {
+                                                if (node instanceof Button) {
+                                                    ((Button) node).setText("O");
+                                                    break;
+                                                }
+                                            }
+                                        }
+
+                                        //Check if the computer has won on the 2d array game board
+                                        boolean computerWin = ticTacToeGame.checkForWin('O');
+                                        boolean boardFull = ticTacToeGame.isBoardFull();
+                                        //Wait for the thinking animation of the computer to finish placing the computer's move
+                                        Platform.runLater(() -> {
+                                            //Computer wins
+                                            if (computerWin) {
+                                                showGameOverDialog("Computer Wins!");
+                                            } else if (boardFull) {
+                                                showGameOverDialog("Draw!");
+                                            } else {
+                                                //Switch to player's turn
+                                                ticTacToeGame.isPlayerTurn();
+                                            }
+                                        });
+                                    }
+                                }));
+                                timeline.play();
+
+                            }
+                        }
                     }
                 });
 
@@ -386,6 +495,16 @@ public class GameWindow {
         boardContainer.getChildren().add(board);
         gameBoard.getChildren().add(boardContainer);
     }
+
+    //Game over dialogue box used to show whose won or if the game was a draw for tic tac toe
+    private void showGameOverDialog(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Game Over");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
     private void setupConnectFourBoard() {
 
@@ -623,7 +742,6 @@ public class GameWindow {
         columnFullAlert.setContentText("Please select another column");
         columnFullAlert.showAndWait();
     }
-
 
     private void makeComputerMove() {
         int player = connectFourGame.getPlayer();

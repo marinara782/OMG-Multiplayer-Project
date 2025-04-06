@@ -4,40 +4,40 @@ public class TicTacToeGame {
 
     private char[][] board;
     private char currentPlayer;
-    private char player;
-    private char opponent;
+    private char player = 'X';
+    private char opponent = 'O';
     private boolean playerAndComputer;
     private int sizeOfTheBoard;
 
 
-    public TicTacToeGame()
+    public TicTacToeGame(boolean isComputerGame)
     {
         this.sizeOfTheBoard = 3;
         this.currentPlayer = player;
         this.playerAndComputer = false;
         this.board = new char[3][3];
+        //The player's selected game mode which is a paramater in the constructor set through the main menu dialogue box is now set to our local variable here
+        this.playerAndComputer = isComputerGame;;
         //We also have to initialize the cells of the board, they need to be empty at first, whenever a game starts
         BoardInitialization();
-        randomizePlayersSymbols();
+        //randomizePlayersSymbols();
     }
 
-    public void randomizePlayersSymbols()
+    /*public void randomizePlayersSymbols()
     {
         int randomNum = (int)(Math.random() * 2) + 1;
 
         if(randomNum == 1)
         {
-            player = 'X';
-            opponent = 'O';
+            currentPlayer = player;
         }
         else
         {
-            player = 'O';
-            opponent = 'X';
+            currentPlayer = opponent;
         }
-    }
+    }*/
 
-    private void BoardInitialization()
+    public void BoardInitialization()
     {
         board = new char[3][3];
         for(short i = 0; 3>i;i++) {
@@ -53,12 +53,16 @@ public class TicTacToeGame {
         playerAndComputer = false;
     }
 
-    public void playerVSAIGame()
-    {
-        currentPlayer = player;
-        playerAndComputer = true;
+
+    //This method returns whether or not the game is against the computer
+    public boolean isPlayerAndComputer(){
+        return playerAndComputer;
     }
 
+    //This method returns whose turn it is(Player's or opponent's)
+    public char getCurrentPlayer(){
+        return currentPlayer;
+    }
 
     public boolean checkForWin(char symbol)
     {
@@ -92,10 +96,6 @@ public class TicTacToeGame {
 
         return false;
     }
-    public boolean checkForWin()
-    {
-        return (checkForWin(opponent) || checkForWin(player));
-    }
 
     public boolean isBoardFull()
     {
@@ -108,8 +108,6 @@ public class TicTacToeGame {
             {
                 if(board[row][col] == '/')
                     return false;
-                else
-                    continue;
             }
         }
         //The above for loop goes through every single cell on board and checks if its empty or not.
@@ -204,52 +202,27 @@ public class TicTacToeGame {
         currentPlayer = player;
     }
 
-    boolean checkIfGameOver()
-    {
-        if(checkForWin())
-            return true;
-        if(isBoardFull())
-            return true;
-
-        return false;
-    }
-
-    public boolean isNetworkGame() //NOT DONE
-    {
-        return false;
-    }
-
     public char getPlayerSymbol() {
         return player;
     }
 
-    public boolean makeMove(int row, int col)
+    //This method makes the move made by the player on the GUI on the 2d array so we can use it for game logic
+    public void makeMove(int row, int col,char player)
     {
-        if (row < 0 || row >= 3 || col < 0 || col >= 3)
-            return false;
+        board[row][col] = player;
+    }
 
-        if(currentPlayer != player)
-            return false;
+    //This method is used to switch it to the player's turn
+    public void isPlayerTurn() {
+        currentPlayer = player;
+    }
 
-        if(board[row][col] != '/')
-            return false;
-
-        board[row][col] = currentPlayer;
+    //This method is used to switch it to the opponent's turn
+    public void isOpponentTurn(){
         currentPlayer = opponent;
-        if (!(checkIfGameOver()) && playerAndComputer)
-            makeAIMove();
-
-        return true;
     }
 
-    public boolean isPlayerTurn() {
-        return currentPlayer == player;
-    }
-
-    public boolean isOpponentTurn(){
-        return currentPlayer == opponent;
-    }
-
+    //This was mainly used as a debugging method to make sure the GUI board positions lined up with the 2d board's positions
     public char getBoardValue(int row, int col)
     {
         if (row < 0 || row >= 3 || col < 0 || col >= 3) {

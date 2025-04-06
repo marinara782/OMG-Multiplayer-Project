@@ -48,4 +48,90 @@ public class UserProfile extends UserDatabaseStub {
             }
         }
     }
-}
+
+
+    public boolean change_phone_number(String new_phone_number, String password, String confirmPassword) {
+        try {
+            // 1.Verify password
+            if (!verify_password(getUsername(), password)) {
+                System.out.println("Error: Current password is incorrect");
+                return false;
+            }
+
+            // 2.Verify confirmation password
+            if (!verify_password(getCurrentPassword(getUsername()), confirmPassword)) {
+                System.out.println("Error: Confirmation password is incorrect");
+                return false;
+            }
+
+            // 3.Verify passwords
+            if (!password.equals(confirmPassword)) {
+                System.out.println("Error: Passwords do not match");
+                return false;
+            }
+
+            if (!verify_phone_number(getUsername(), new_phone_number)) {
+                System.out.println("Error: Invalid phone number format");
+                return false;
+            }
+
+            // 5. Update phone number in database
+            linked_phone_number(getUsername(), new_phone_number);
+            System.out.println("Success: Phone number updated for " + getUsername());
+            return true;
+
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: Could not access user database");
+            return false;
+        }
+
+
+
+
+
+    }
+
+    public boolean set_phone_number(String phone_number, String password, String confirm_password) {
+        try {
+            String username = getUsername(); // Get current logged-in username
+
+            // 1. Verify current password
+            if (!verify_password(username, password)) {
+                System.out.println("Error: Current password is incorrect");
+                return false;
+            }
+
+            // 2. Verify confirmation password
+            if (!verify_password(username, confirm_password)) {
+                System.out.println("Error: Confirmation password is incorrect");
+                return false;
+            }
+
+            // 3. Verify passwords match
+            if (!password.equals(confirm_password)) {
+                System.out.println("Error: Passwords do not match");
+                return false;
+            }
+            // 4. Verify phone number
+            if(!verify_phone_number(username, phone_number)){
+                System.out.println("Error: Account not found!");
+                return false;
+            }
+
+
+            // 5. Update phone number in database
+            linked_phone_number(username, phone_number);
+            System.out.println("Success: Phone number updated for " + username);
+            return true;
+
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: Could not access user database");
+            return false;
+        }
+    }
+
+
+
+
+    }
+

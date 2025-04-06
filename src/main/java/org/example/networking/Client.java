@@ -1,4 +1,7 @@
 package org.example.networking;
+
+import org.example.authentication.UserProfile;
+
 public class Client {
     //direct access to these is restricted (they are private) for encapsulation
     //instead we provide controlled access through getters and setters
@@ -40,11 +43,46 @@ public class Client {
         }
     }
 
-    public void sendGameMove(String moveData){
-        //check if move is valid by calling game logic system
-        //if move is valid, update game state and send to all players
+    public void login(String username, String password){
+        System.out.println("Attempt to Login...");
+        String response_login = Server.processRequest("LOGIN", username, password);
+        if (response_login.equals("Successful Login")) {
+            System.out.println(response_login);
+        }
+        else {
+            System.out.println(response_login);
+        }
     }
 
+    public void createGame (String game) {
+        GameSession session = Server.createGameSession(game);
+        if (session != null) {
+            session.addPlayer(this);
+        }
+    }
+
+    public void joinGame(GameSession gameSession) {
+        boolean game_joined = gameSession.addPlayer(this);
+        if (game_joined == false) {
+            System.out.println("Game Session Not Joined");
+        }
+    }
+
+    public void sendGameMove(GameSession gameSession, String moveData){
+        String response_move = gameSession.processMove(this, moveData);
+        System.out.println(response_move);
+        gameSession.broadcastGameState();
+    }
+
+    public void completeGame(GameSession gameSession)
+    {
+        gameSession.completeSession();
+    }
+
+    public void sendChat(GameSession gameSession, String chatMessage)
+    {
+        gameSession.sendChat(chatMessage);
+    }
 
 
     //everything below this may be removed later

@@ -1,24 +1,21 @@
 package org.example.networking;
 
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameSession {
 
     private int GameID;
     private String gameType;
     private List<Client> players;
+    private static int counter_id = 0;
 
-    public String createGame(String gameType){
-        this.gameId = UUID.random(UUID).toString();
-        System.out.println(gameType+" game created with ID: "+gameID);
-        return gameId;
+
+    public GameSession(String gameType) {
+        this.gameType = gameType;
+        this.players = new ArrayList<>();
+        this.sessionid = ++counter_id;
     }
-
-    public void joinGame(String gameId){
-        this.GameID = gameId;
-        System.out.println("Game joined with ID: "+gameId);
-    }
-
     public boolean addPlayer(Client player){
         if (players.contains(player)) {
             System.out.println("Player already in the session!");
@@ -31,19 +28,20 @@ public class GameSession {
     }
 
     public void broadcastGameState(){
-        System.out.println("Broadcasting game state to "+players.size()+" players.");
-        //broadcast state to the client of each player in players list
-        for (Client player: players){
+        System.out.println("Broadcasting game state to "+ players.size() +" players.");
 
-        }
     }
+
     public void waitForOpponentMove(Object o) {
         System.out.print("Waiting for opponent's move...");
-        try{
+        try
+        {
             Thread.sleep(2000);
-        }catch(InterruptedException e){
+        }
+        catch(InterruptedException e)
+        {
             System.out.println("Connection interrupted!");
-    }
+        }
     }
 
     public String processMove(Client player, String moveData) {
@@ -51,7 +49,7 @@ public class GameSession {
             System.out.println("Processing move: " + moveData);
             return ("Move processed: " +moveData);
         }else{
-            return ("Player is not part of this session!");
+            return "Player is not part of this session!";
         }
 
     }
@@ -62,5 +60,10 @@ public class GameSession {
 
     public void completeSession(){
         System.out.println("Complete game session...");
+    }
+
+    public int getSessionid()
+    {
+        return sessionid;
     }
 }

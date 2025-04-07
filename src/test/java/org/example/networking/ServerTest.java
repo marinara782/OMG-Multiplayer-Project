@@ -1,5 +1,4 @@
 package org.example.networking;
-package org.example.networking;
 
 import org.junit.jupiter.api.*;
 import java.io.File;

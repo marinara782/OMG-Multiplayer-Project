@@ -5,15 +5,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.example.authentication.Login;
 import org.example.authentication.UserProfile;
 import org.example.game.checkers.CheckersGame;
-import org.example.game.connectFour.ConnectFourBoard;
 import org.example.game.connectFour.ConnectFourGame;
 import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.leaderboard.Leaderboard;
@@ -107,7 +103,7 @@ public class MainMenuWindow {
 
         // TicTacToe Game Card
         VBox ticTacToeCard = createGameCard("Tic-Tac-Toe", "ticTacToe");
-        ticTacToeCard.setOnMouseClicked(e -> startMatchmaking("ticTacToe"));
+        ticTacToeCard.setOnMouseClicked(e -> runTicTacToeGame());
 
         // Connect Four Game Card
         VBox connectFourCard = createGameCard("Connect Four", "connectFour");
@@ -409,7 +405,7 @@ public class MainMenuWindow {
     private void startGame(String gameType) {
         switch (gameType) {
             case "ticTacToe", "tictactoe", "tic-tac-toe":
-                new GameWindow(stage, new TicTacToeGame(), currentUser);
+                new GameWindow(stage, new TicTacToeGame(isComputerGameTTT), currentUser);
                 break;
             case "connectfour", "connectFour", "connect-four":
 //                Boolean vsComputer = showConnectFourModeDialog();
@@ -475,8 +471,6 @@ public class MainMenuWindow {
             return null;
         }
 
-
-
 /*/
         modeDialog.showAndWait().ifPresent(response -> {
             boolean vsComputer;
@@ -495,6 +489,58 @@ public class MainMenuWindow {
         return result == vsComputerButton;
     }
 
+    //This method shows the dialogue box when tic tac toe is selected allowing the player to choose a multipllayer or computer game
+    private Boolean showTicTacToeModeDialog() {
+        Alert modeDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        modeDialog.setTitle("Choose Game Mode");
+        modeDialog.setHeaderText("Select Tic Tac Toe Mode");
+        modeDialog.setContentText("Do you want to play against the computer or another player?");
+
+        ButtonType vsComputerButton = new ButtonType("Computer");
+        ButtonType multiplayerButton = new ButtonType("Multiplayer (Same Device)");
+
+        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        modeDialog.getButtonTypes().setAll(vsComputerButton, multiplayerButton, cancel);
+
+        DialogPane dialogPane = modeDialog.getDialogPane();
+
+        dialogPane.setStyle("-fx-background-color: #3498db");
+
+        Node header = dialogPane.lookup(".header-panel");
+        if(header != null) {
+            header.setStyle("-fx-background-color: #3498db;");
+        }
+        Label content = (Label) dialogPane.lookup(".content.label");
+        if(content != null) {
+            content.setStyle("-fx-text-fill: white;");
+        }
+        Node buttonBar = dialogPane.lookup(".buttonBar");
+        if(buttonBar != null) {
+            buttonBar.setStyle("-fx-background-color: white;");
+        }
+
+        modeDialog.showingProperty().addListener((obs, wasShowing, isNowShowing) -> {
+            if (isNowShowing) {
+                Button computerButton = (Button) dialogPane.lookupButton(vsComputerButton);
+                Button multiButton = (Button) dialogPane.lookupButton(multiplayerButton);
+                Button cancelButton = (Button) dialogPane.lookupButton(cancel);
+
+                computerButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; ");
+                multiButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
+                cancelButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+            }
+        });
+
+
+        ButtonType result = modeDialog.showAndWait().orElse(cancel);
+        if (result == cancel) {
+            return null;
+        }
+
+        return result == vsComputerButton;
+    }
+
     private void handleConnectFourClick() {
         Boolean vsComputer = showConnectFourModeDialog();
         if (vsComputer == null) {
@@ -508,6 +554,15 @@ public class MainMenuWindow {
 //            startMatchmaking("connectFour");
 //        }
     }
+
+    //This method makes a new tic tac toe game with the parameter of whether the game is against the computer or not through the selected option in the dialogue box
+    public boolean isComputerGameTTT;
+    private void runTicTacToeGame() {
+        isComputerGameTTT = showTicTacToeModeDialog();
+        TicTacToeGame ticTacToeGame = new TicTacToeGame(isComputerGameTTT);
+        new GameWindow(stage, ticTacToeGame, currentUser);
+        }
+
 
     /*
     *  THIS METHOD TAKES CARE OF CUSTOM BOARD SIZES WHICH WAS SUGGESTED IN FEATURE PROPOSAL

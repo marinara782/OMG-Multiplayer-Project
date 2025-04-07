@@ -13,14 +13,27 @@ import java.io.IOException;
 
 
 public class Server {
-    //server is going to be expecting network connections to come in through this port
-    private int port;
+    //variable instantiation
+    private int port;   //server is going to be expecting network connections to come in through this port
     private static boolean isRunning;
     private static List<GameSession> activeSessions;
 
     //.json file variables
     private final File playerFile = new File("players.json");
     private List<Player> players = new ArrayList<>();
+
+
+    //GETTERS
+    //port getter
+    public int getPort(){
+        return port;
+    }
+
+
+    //getter for list of active sessions
+    public static List<GameSession> getActiveSessions(){
+        return new ArrayList<>(activeSessions);
+    }
 
     public Server(){
         this.activeSessions = new ArrayList<>();

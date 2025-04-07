@@ -13,7 +13,7 @@ public class ServerTest {
 
     //set up-- make a server object
     @BeforeEach
-    void SetUp(){
+    void setUp(){
         //before each test, make a new server object
         server = new Server();
     }
@@ -28,11 +28,22 @@ public class ServerTest {
     }
 
     @Test
-    void TestStart(){
+    void testStart(){
         //enter port number 80 as parameter
         server.start(80);
         //create a game session
-        GameSession gameSession = server.createGameSession("test");
+        assertTrue(server.isRunning(), "Server should be running after start()");
+        assertEquals(80, server.getPort(), "Port number should be set correctly.");
+    }
+
+    @Test
+    void testCreateGameSessionWhileServerRunning(){
+        server.createGameSession("test");
+        //check if new game session was returned
+        server.start(80);
+        GameSession session = server.createGameSession("checkers");
+        assertNotNull(session);
+        //check if session has been added to list of active sessions
 
     }
 

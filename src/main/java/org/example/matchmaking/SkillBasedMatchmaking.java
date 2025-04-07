@@ -46,7 +46,7 @@ public class SkillBasedMatchmaking {
 
 
     /**
-     * Adds a new player to the matchmaking pool.
+     * Adds a new player to the matchmaking pool. We need to grab the time they joined the pool.
      *
      * @param player The player that is to be added
      */
@@ -58,7 +58,7 @@ public class SkillBasedMatchmaking {
 
     /**
      * Attempts to match players in the pool based on skill similarity.
-     * Tolerance increases the longer a player waits.
+     * Tolerance increases the longer players wait.
      *
      * @return A list of matched player ID pairs.
      */

@@ -20,11 +20,16 @@ public class SkillBasedMatchmaking {
      */
     public SkillBasedMatchmaking(int baseTolerance, int maxWaitTimeSeconds, int toleranceIncrement) {
         this.players = new ArrayList<>(players); //Match pool
-        player.joinTime = System.currentTimeMillis()
     }
 
-    public double joinTime() {
-        return System.currentTimeMillis();
+    /**
+     * Allows us to create and access the time a player joins the match pool (joinTime)
+     * without modifying the Player.java class unnecessarily (no other classes we have made
+     * will utilize it).
+     */
+    private static class QueuedPlayer {
+        private Player player;
+        private long joinTime; //this is when the player joined the match pool; will be set to System.currentTimeMillis()
     }
 
     /**

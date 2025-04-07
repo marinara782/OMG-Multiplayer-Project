@@ -66,7 +66,7 @@ public class SkillBasedMatchmaking {
         List<String[]> matchedPlayers = new ArrayList<>(); //This is our list of matched Players that we will return
 
         while (players.size() >= 2) { //While we have at least 2 people looking for a match
-            QueuedPlayer p1 = players.getFirst(); //Gets the first player in the queue
+            QueuedPlayer p1 = players.get(0); //Gets the first player in the queue
             QueuedPlayer p2 = players.get(1); //Gets the second player in the queue
 
             if(p1 != p2) { //We can't let a player match with themselves
@@ -76,12 +76,10 @@ public class SkillBasedMatchmaking {
                 if (Math.abs(p1Skill - p2Skill) <= baseTolerance) { //If the skills fit within the tolerance level, match them
                     matchedPlayers.add(new String[]{p1.player.toString(), p2.player.toString()});
                     players.remove(p1); //remove them from the list
-                    players.remove(p2);
+                    players.remove(p2); //remove them from the list
                 }
 
                 else { //The only other option is that the skills do not fit within the tolerance pool.
-                    players.add(p1);//In this case, add the players back to the QueuedPlayer list.
-                    players.add(p2); //Add the second player back to the QueuedPlayer list
                     baseTolerance += toleranceIncrement; //Increase the tolerance limit so it's easier to find a match
 
                 }

@@ -11,7 +11,6 @@ import org.example.Player;
 public class SkillBasedMatchmaking {
 
     private List<Player> players; // List of all players in matchmaking pool
-    private List<Player> topPlayers; // Leaderboard containing top-ranked players
 
     /**
      * Constructs a matchmaking system.
@@ -20,8 +19,7 @@ public class SkillBasedMatchmaking {
      * @param toleranceIncrement Amount to expand tolerance after wait time.
      */
     public SkillBasedMatchmaking(int baseTolerance, int maxWaitTimeSeconds, int toleranceIncrement) {
-        this.players = new ArrayList<>(players);
-        this.topPlayers = new ArrayList<>();
+        this.players = new ArrayList<>(players); //List of players
 
 
     }
@@ -35,7 +33,6 @@ public class SkillBasedMatchmaking {
         Player player = new Player(id);
         skillLevel = player.getWinPercentage();
         players.add(player);
-
     }
 
     /**
@@ -44,7 +41,6 @@ public class SkillBasedMatchmaking {
      * @return A list of matched player ID pairs.
      */
     public List<String[]> findMatches() {
-        List<String[]> matches = new ArrayList<>(); //A list of matches
 
     }
 

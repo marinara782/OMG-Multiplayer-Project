@@ -1,23 +1,66 @@
 package org.example.matchmaking;
 
+import java.util.*;
+
+/**
+ * Represents a player in the matchmaking system.
+ */
+class Player {
+
+
+    /**
+     * Constructs a player with ID and skill level.
+     * @param id unique player identifier
+     * @param skillLevel Player's skill level (used for matchmaking).
+     */
+    public Player (String id, int skillLevel) {
+
+    }
+}
+
+
+/**
+ * Implements a skill-based matchmaking system that matches players based on similar skill levels,
+ * with dynamic tolerance adjustment to reduce wait times.
+ */
 public class SkillBasedMatchmaking {
 
-    // Basic structure:
-    //if players skill level is on par with another players skill level
-    // they should play together
-    // otherwise, continue searching and prevent search from picking up that user again
 
-    //Extremities:
-    //If a player has not been matched after x amount of time, the skill level threshold
-    //should be increased so as to not make the player wait too long.
-    //There needs to be a certain amount of time that a player has to wait. In extreme cases,
-    //a player may need to be told that a match could not be found at this time.
+    /**
+     * Constructs a matchmaking system.
+     * @param baseTolerance Initial skill difference allowed between players.
+     * @param maxWaitTimeSeconds Max time before expanding the tolerance (in seconds).
+     * @param toleranceIncrement Amount to expand tolerance after wait time.
+     */
+    public SkillBasedMatchmaking(int baseTolerance, int maxWaitTimeSeconds, int toleranceIncrement) {
 
-    //High-level Structure
-    //1. Iterate through all players looking for a match
-    //2. Identify their respective skill levels
-    //3. Match players with similar skill levels
-    //4. If match found, remove those players from the pool of players looking for match
-    //5. Ensure two players that are incompatible do not get matched repeatedly, and handle
-    //other extremities as well.
+    }
+
+    /**
+     * Adds a new player to the matchmaking pool.
+     * @param id Unique player identifier
+     * @param skillLevel Player's skill level.
+     */
+    public void addPlayer(String id, int skillLevel) {
+
+    }
+
+    /**
+     * Attempts to match players in the pool based on skill similarity.
+     * Tolerance increases the longer a player waits.
+     * @return A list of matched player ID pairs.
+     */
+    //public List<String[]> findMatches() {
+
+    //}
+
+    /**
+     * Gets a list of players who have been waiting too long and may need to be notified or handled specially.
+     * @return List of player IDs who are waiting beyond double the max wait time.
+     */
+    //public List<String> getUnmatchedPlayers(){
+
+    //}
 }
+
+

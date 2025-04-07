@@ -23,7 +23,7 @@ public class SkillBasedMatchmaking {
      * @param toleranceIncrement Amount to expand tolerance after wait time.
      */
     public SkillBasedMatchmaking(int baseTolerance, int maxWaitTimeSeconds, int toleranceIncrement) {
-        this.players = new ArrayList<>(players); //Match pool
+        this.players = new ArrayList<>(); //Match pool
         this.baseTolerance = baseTolerance;
         this.maxWaitTimeSeconds = maxWaitTimeSeconds;
         this.toleranceIncrement = toleranceIncrement;

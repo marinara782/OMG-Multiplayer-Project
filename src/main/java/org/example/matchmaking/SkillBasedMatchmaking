@@ -3,6 +3,14 @@ package org.example.matchmaking;
 import java.util.*;
 import org.example.Player;
 
+/**
+ * Constructs a player with ID and skill level.
+ * @param id unique player identifier
+ * @param skillLevel Player's skill level (used for matchmaking).
+ */
+public Player (String id, int skillLevel) {
+
+}
 
 /**
  * Implements a skill-based matchmaking system that matches players based on similar skill levels,
@@ -10,8 +18,6 @@ import org.example.Player;
  */
 public class SkillBasedMatchmaking {
 
-    private List<Player> players; // List of all players in matchmaking pool
-    private List<Player> topPlayers; // Leaderboard containing top-ranked players
 
     /**
      * Constructs a matchmaking system.
@@ -20,9 +26,6 @@ public class SkillBasedMatchmaking {
      * @param toleranceIncrement Amount to expand tolerance after wait time.
      */
     public SkillBasedMatchmaking(int baseTolerance, int maxWaitTimeSeconds, int toleranceIncrement) {
-        this.players = new ArrayList<>(players);
-        this.topPlayers = new ArrayList<>();
-
 
     }
 
@@ -31,10 +34,8 @@ public class SkillBasedMatchmaking {
      * @param id Unique player identifier
      * @param skillLevel Player's skill level.
      */
-    public void addPlayer(String id, double skillLevel) {
-        Player player = new Player(id);
-        skillLevel = player.getWinPercentage();
-        players.add(player);
+    public void addPlayer(String id, int skillLevel) {
+
     }
 
     /**
@@ -42,10 +43,9 @@ public class SkillBasedMatchmaking {
      * Tolerance increases the longer a player waits.
      * @return A list of matched player ID pairs.
      */
-    public List<String[]> findMatches() {
-        List<String[]> matches = new ArrayList<>(); //A list of matches
+    //public List<String[]> findMatches() {
 
-    }
+    //}
 
     /**
      * Gets a list of players who have been waiting too long and may need to be notified or handled specially.
@@ -55,7 +55,6 @@ public class SkillBasedMatchmaking {
 
     //}
 }
-
 
 
 

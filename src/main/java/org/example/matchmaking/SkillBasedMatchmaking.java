@@ -67,26 +67,26 @@ public class SkillBasedMatchmaking {
 
         while (players.size() >= 2) { //While we have at least 2 people looking for a match
             QueuedPlayer p1 = players.get(0); //Gets the first player in the queue
-            QueuedPlayer p2 = players.get(1); //Gets the second player in the queue
+            QueuedPlayer p2 = null; //Null at first until we find an appropriate partner
 
-            if(p1 != p2) { //We can't let a player match with themselves
-                double p1Skill = p1.player.getWinPercentage(); //Gets the skill level of the first player
-                double p2Skill = p2.player.getWinPercentage(); //Gets the skill level of the second player
+            for (int i = 0; i < players.size(); i++) { //For loop to iterate through queue to find an appropriate player to match with (p2)
+                if (players.get(i) != p1) { //We can't match the player with themselves
+                    double p1Skill = p1.player.getWinPercentage(); //Grab their skill levels
+                    double p2Skill = players.get(i).player.getWinPercentage(); //Grab their skill levels
 
-                if (Math.abs(p1Skill - p2Skill) <= baseTolerance) { //If the skills fit within the tolerance level, match them
-                    matchedPlayers.add(new String[]{p1.player.toString(), p2.player.toString()});
-                    players.remove(p1); //remove them from the list
-                    players.remove(p2); //remove them from the list
+                    if (Math.abs(p1Skill - p2Skill) <= baseTolerance) { //if the skill levels fit within the tolerance limits
+                        p2 = players.get(i); //Then p2 is whatever player we are at right now
+                        matchedPlayers.add(new String[]{p1.player.toString(), p2.player.toString()});
+                        players.remove(p2); //remove them from the match pool
+                        players.remove(p1); //remove them from the match pool
+                    }
+
+                    else { //If it is not less than the baseTolerance
+                        baseTolerance += toleranceIncrement; //Increase the tolerance limit so it's easier to find a match
+                    }
                 }
 
-                else { //The only other option is that the skills do not fit within the tolerance pool.
-                    baseTolerance += toleranceIncrement; //Increase the tolerance limit so it's easier to find a match
-
-                }
             }
-
-
-
 
         }
         return matchedPlayers;

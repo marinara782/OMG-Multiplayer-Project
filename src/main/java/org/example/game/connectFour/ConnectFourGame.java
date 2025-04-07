@@ -175,9 +175,5 @@ public class ConnectFourGame {
         return vsComputer;
     }
 
-    // because we're using GUI for now we can keep this method empty
-//    public void printBoard(){
-//
-//    }
 }
 

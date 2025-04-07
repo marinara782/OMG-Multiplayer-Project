@@ -29,7 +29,6 @@ public class GameSession {
 
     public void broadcastGameState(){
         System.out.println("Broadcasting game state to "+ players.size() +" players.");
-
     }
 
     public void waitForOpponentMove(Object o) {

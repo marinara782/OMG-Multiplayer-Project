@@ -5,13 +5,14 @@ import java.util.List;
 
 public class GameSession {
 
+    private final int sessionid;
     private int GameID;
     private String gameType;
     private List<Client> players;
     private static int counter_id = 0;
 
 
-    public GameSession(String gameType) {
+    public GameSession() {
         this.gameType = gameType;
         this.players = new ArrayList<>();
         this.sessionid = ++counter_id;

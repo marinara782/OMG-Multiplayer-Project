@@ -1,11 +1,14 @@
 package org.example.networking;
 
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
 //imports for .json file
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.type.TypeReference;
+import org.example.Player;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -31,7 +34,7 @@ public class Server {
 
 
     //getter for list of active sessions
-    public static List<GameSession> getActiveSessions(){
+    AbstractList<GameSession> getActiveSessions(){
         return new ArrayList<>(activeSessions);
     }
 
@@ -44,7 +47,8 @@ public class Server {
         if (!isRunning){
             this.port = port;
             this.isRunning = true;
-            System.out.println("Server has started on port "+port "for player "+ playerID);
+            String playerID = null;
+            System.out.println("Server has started on port "+port+"for player "+ playerID);
         }else{
             System.out.println("Server is already running!");
         }
@@ -83,15 +87,16 @@ public class Server {
             System.out.println("Cannot create a game session because server is not running.");
             return null;
         }
-        GameSession newGameSession = new GameSession(gameType);
+        GameSession newGameSession = new GameSession();
         activeSessions.add(newGameSession);
         System.out.println("New "+gameType+" game session created!");
         return newGameSession;
     }
 
-    public List<GameSession> getActiveSessions() {
-        return new ArrayList<>(activeSessions);
-    }
+
+
+
+
 
     public static String processRequest(String request, String username, String password) {
         if (request.equals("LOGIN"))
@@ -135,6 +140,10 @@ public class Server {
                 return "Unknown Request";
 
         }
+    }
+
+    public boolean isRunning() {
+        return false;
     }
 
     //new server (using firebase)

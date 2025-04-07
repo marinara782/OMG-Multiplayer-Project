@@ -108,7 +108,16 @@ public class SkillBasedMatchmaking {
      * @return List of player IDs who are waiting beyond double the max wait time.
      */
     public List<String> getUnmatchedPlayers(){
+        List<String> unMatchedPlayers = new ArrayList<>(); //This is our list of unmatched Players that we will return
 
+        for (int i = 0; i < players.size(); i++) { //Iterate through remaining players
+            QueuedPlayer currentPlayer = players.get(i); //Grab the current player
+            long waitTime = System.currentTimeMillis() - currentPlayer.joinTime; //Grab the current wait time of the current player
+            if (waitTime >= (2L * maxWaitTimeSeconds)) { //If the current players been waiting for more than double the max wait time,
+                unMatchedPlayers.add(currentPlayer.player.getUsername()); //Add the current player to the unMatchedPlayers list
+            }
+        }
+        return unMatchedPlayers;
     }
 
 }

@@ -108,6 +108,7 @@ public class Login extends UserDatabaseStub {
         boolean hasNumber= newPassword.matches(".*\\d.*");
         if(!(isLongEnough && hasLetter && hasNumber)){
             System.out.println("newPassword does not match requirements: it must be at east 8 characters long and contain at least 1 letter and 1 number ");
+            return false;
         }
 
         //verify that new password matches confirmation input

@@ -5,7 +5,4 @@ public class GameTimer {
         return 0;
     }
 
-    public int getElapsedSeconds() {
-        return 0;
-    }
 }

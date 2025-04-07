@@ -76,16 +76,25 @@ public class SkillBasedMatchmaking {
 
                     if (Math.abs(p1Skill - p2Skill) <= baseTolerance) { //if the skill levels fit within the tolerance limits
                         p2 = players.get(i); //Then p2 is whatever player we are at right now
-                        matchedPlayers.add(new String[]{p1.player.toString(), p2.player.toString()});
-                        players.remove(p2); //remove them from the match pool
-                        players.remove(p1); //remove them from the match pool
+                        matchedPlayers.add(new String[]{p1.player.getUsername(), p2.player.getUsername()});
+                        break; //We need to exit immediately so that we can remove the players from the pool.
                     }
 
                     else { //If it is not less than the baseTolerance
-                        baseTolerance += toleranceIncrement; //Increase the tolerance limit so it's easier to find a match
+                        long timeWaitedP1 = System.currentTimeMillis() - p1.joinTime; //Get the time waited for p1
+                        p2 = players.get(i); //Grab the current player anyways because at this point, we need to increase tolerance
+                        long timeWaitedP2 = System.currentTimeMillis() - p2.joinTime; //Get the time waited for p2
+
+                        if (timeWaitedP1 > maxWaitTimeSeconds || timeWaitedP2 > maxWaitTimeSeconds) { //If the time waited is too much for either player...
+                            baseTolerance += toleranceIncrement; //...increase the tolerance limit so it's easier to find a match
+                        }
                     }
                 }
+            }
 
+            if (p2 != null) { //we only remove players if a match actually happened and that is proved if p2 is not null
+                players.remove(p1);
+                players.remove(p2);
             }
 
         }

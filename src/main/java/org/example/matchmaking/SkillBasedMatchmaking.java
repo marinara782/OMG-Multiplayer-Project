@@ -34,12 +34,11 @@ public class SkillBasedMatchmaking {
 
     /**
      * Adds a new player to the matchmaking pool.
-     * @param id Unique player identifier
-     * @param skillLevel Player's skill level.
+     * @param player The player that will is to be added
      */
-    public void addPlayer(String id, double skillLevel) {
-        Player player = new Player(id);
-        skillLevel = player.getWinPercentage();
+    public void addPlayer(Player player) {
+        double skillLevel = player.getWinPercentage(); //Grabs their winPercentage to be their skillLevel for matchmaking tolerance
+        String id = player.getUsername(); //Grabs their username so that we can return it
         players.add(player);
     }
 

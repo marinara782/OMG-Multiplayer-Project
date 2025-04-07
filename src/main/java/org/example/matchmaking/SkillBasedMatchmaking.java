@@ -35,6 +35,7 @@ public class SkillBasedMatchmaking {
         Player player = new Player(id);
         skillLevel = player.getWinPercentage();
         players.add(player);
+
     }
 
     /**

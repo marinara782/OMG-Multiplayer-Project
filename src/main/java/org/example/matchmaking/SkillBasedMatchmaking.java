@@ -14,7 +14,8 @@ public class SkillBasedMatchmaking {
 
     /**
      * Constructs a matchmaking system.
-     * @param baseTolerance Initial skill difference allowed between players.
+     *
+     * @param baseTolerance      Initial skill difference allowed between players.
      * @param maxWaitTimeSeconds Max time before expanding the tolerance (in seconds).
      * @param toleranceIncrement Amount to expand tolerance after wait time.
      */
@@ -30,6 +31,8 @@ public class SkillBasedMatchmaking {
     private static class QueuedPlayer {
         private Player player;
         private long joinTime; //this is when the player joined the match pool; will be set to System.currentTimeMillis()
+
+        //This is a constructor so we can call it in the addPlayer method
         private QueuedPlayer(Player player, long joinTime) {
             this.player = player;
             this.joinTime = joinTime;
@@ -39,22 +42,31 @@ public class SkillBasedMatchmaking {
 
     /**
      * Adds a new player to the matchmaking pool.
-     * @param player The player that will is to be added
+     *
+     * @param player The player that is to be added
      */
     public void addPlayer(Player player) {
         long matchTime = System.currentTimeMillis();
-        addedPlayer = new QueuedPlayer(player, matchTime);
-        players.add(addedPlayer);
+        QueuedPlayer queuedPlayer = new QueuedPlayer(player, matchTime);
+        players.add(queuedPlayer);
     }
 
     /**
      * Attempts to match players in the pool based on skill similarity.
      * Tolerance increases the longer a player waits.
+     *
      * @return A list of matched player ID pairs.
      */
-    //public List<String[]> findMatches() {
+    public List<String[]> findMatches() {
+        List<String[]> matchedPlayers = new ArrayList<>(); //This is our list of matched Players that we will return
+        while (players.size() >= 2) { //While we have at least 2 people looking for a match
 
+
+        }
+        return matchedPlayers;
     }
+}
+
 
     /**
      * Gets a list of players who have been waiting too long and may need to be notified or handled specially.

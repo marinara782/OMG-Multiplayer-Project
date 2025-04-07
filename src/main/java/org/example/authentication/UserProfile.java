@@ -126,7 +126,7 @@ public class UserProfile extends UserDatabaseStub {
         }
     }
 
-    public void enable_2_factor(String username, String first_password, String second_password) throws FileNotFoundException {
+    public void enable_2_factor(String username, String first_password, String second_password, int choice) throws FileNotFoundException {
 
         String phone_number = "none";
         String email = "none";
@@ -150,6 +150,51 @@ public class UserProfile extends UserDatabaseStub {
 
         // equates password_matches to a verify_password call
         password_matches = verify_password(username, first_password);
+
+        // equates password_matches to a verify_password call
+        if (password_matches && passwords_are_equal) {
+
+            String code_sent_phone = "none";
+            String code_sent_email = "none";
+
+            // switch statement that goes over the various options the user can use for 2FA
+            switch (choice) {
+                // case to handle verification via email
+                case 1:
+
+                    // calling send_email method which is a 6-digit code
+                    code_sent_email = send_email(email);
+
+                    // informing the user a code was sent
+                    System.out.println("A code has been sent to " + email);
+                    break;
+
+                // case to handle verification via phone #
+                case 2:
+
+                    // calling send_text method which is a 6-digit code
+                    code_sent_phone = send_text(phone_number);
+
+                    // informing the user a code was sent
+                    System.out.println("A code has been sent to " + phone_number);
+                    break;
+            }
+
+            // Need GUI to have a text-field here that gets user input
+            String user_input = "no number";
+            if (user_input.equals(code_sent_phone)) {
+                System.out.println("Email successfully verified, two-factor authentication has been enabled.");
+            }
+            else if(user_input.equals(code_sent_email)){
+                System.out.println("Phone number successfully verified, two-factor authentication has been enabled.");
+            }
+            else {
+                System.out.println("The code entered is incorrect, please try again.");
+            }
+        }
+        else {
+            System.out.println("Passwords do not match or an incorrect password has been entered, please try again.");
+        }
     }
 }
 

@@ -10,7 +10,7 @@ import org.example.Player;
  */
 public class SkillBasedMatchmaking {
 
-    private List<Player> players; // List of all players in matchmaking pool
+    private List<QueuedPlayer> players; // List of all players waiting to be matched up
 
     /**
      * Constructs a matchmaking system.
@@ -30,16 +30,21 @@ public class SkillBasedMatchmaking {
     private static class QueuedPlayer {
         private Player player;
         private long joinTime; //this is when the player joined the match pool; will be set to System.currentTimeMillis()
+        private QueuedPlayer(Player player, long joinTime) {
+            this.player = player;
+            this.joinTime = joinTime;
+        }
     }
+
 
     /**
      * Adds a new player to the matchmaking pool.
      * @param player The player that will is to be added
      */
     public void addPlayer(Player player) {
-        double skillLevel = player.getWinPercentage(); //Grabs their winPercentage to be their skillLevel for matchmaking tolerance
-        String id = player.getUsername(); //Grabs their username so that we can return it
-        players.add(player);
+        long matchTime = System.currentTimeMillis();
+        addedPlayer = new QueuedPlayer(player, matchTime);
+        players.add(addedPlayer);
     }
 
     /**
@@ -47,7 +52,7 @@ public class SkillBasedMatchmaking {
      * Tolerance increases the longer a player waits.
      * @return A list of matched player ID pairs.
      */
-    public List<String[]> findMatches() {
+    //public List<String[]> findMatches() {
 
     }
 
@@ -58,7 +63,7 @@ public class SkillBasedMatchmaking {
     //public List<String> getUnmatchedPlayers(){
 
     //}
-}
+
 
 
 

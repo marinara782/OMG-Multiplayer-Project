@@ -83,7 +83,7 @@ public class UserDatabaseStub {
     public boolean verify_phone_number(String username, String phone) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
-            if(user.getUsername().equals(username)){
+            if(user.getUsername().equals(username) && user.getPhone().equals(phone)){
                 return true;
             }
         }
@@ -99,8 +99,6 @@ public class UserDatabaseStub {
             e.printStackTrace();
         }
     }
-
-
 
     public void update_username(String oldUsername, String newUsername) throws FileNotFoundException {
         List<User> users = registered_users_list();
@@ -149,4 +147,41 @@ public class UserDatabaseStub {
         }
     }
 
+    public String send_email(String email) throws FileNotFoundException {
+
+        // accessing database
+        List<User> users = registered_users_list();
+
+        // for loop - checks database email with email entered, gives random 6-digit code if email matches
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+
+                Random random = new Random();
+
+                int random_number = random.nextInt(1000000);
+
+                return String.format("%06d", random_number);
+            }
+        }
+        return "Email not found";
+    }
+
+    public String send_text(String phone_number) throws FileNotFoundException {
+
+        // accessing database
+        List<User> users = registered_users_list();
+
+        // for loop - checks database phone # with phone # entered, gives random 6-digit code if phone # matches
+        for (User user : users) {
+            if (user.getPhone().equals(phone_number)) {
+
+                Random random = new Random();
+
+                int random_number = random.nextInt(1000000);
+
+                return String.format("%06d", random_number);
+            }
+        }
+        return "Phone number not found";
+    }
 }

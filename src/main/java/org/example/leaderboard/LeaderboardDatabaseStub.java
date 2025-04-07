@@ -221,4 +221,9 @@ public class LeaderboardDatabaseStub  {
         // Print top 5 players by connect4 Losses
         stub.printTopPlayers(5, "connect4 losses");
     }
+
+    public List<Player> getSortedPlayers(String criteria) {
+        int totalPlayers = leaderboard.getPlayers().size();
+        return leaderboard.getTopNPlayers(totalPlayers, criteria);
+    }
 }

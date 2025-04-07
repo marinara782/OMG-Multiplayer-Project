@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.List;
+
 public class Player {
     private String username;
     private int checkerWins;
@@ -88,6 +90,10 @@ public class Player {
     public int getConnect4Losses() {
         return connect4Losses;
     }
+
+    public int getTotalWins() {return checkerWins + connect4Wins + tictactoeWins;}
+
+    public int getTotalLosses() {return checkerLosses + connect4Losses + tictactoeLosses;}
 
     public void updateCheckerWins() {
         this.checkerWins += 1;

@@ -164,4 +164,7 @@ public class GameTimer {
         System.out.println("[TIMER] Auto-end disabled.");
     }
 
+    public int getElapsedSeconds() {
+        return 0;
+    }
 }

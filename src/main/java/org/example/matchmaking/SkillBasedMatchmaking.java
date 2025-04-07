@@ -24,7 +24,9 @@ public class SkillBasedMatchmaking {
      */
     public SkillBasedMatchmaking(int baseTolerance, int maxWaitTimeSeconds, int toleranceIncrement) {
         this.players = new ArrayList<>(players); //Match pool
-
+        this.baseTolerance = baseTolerance;
+        this.maxWaitTimeSeconds = maxWaitTimeSeconds;
+        this.toleranceIncrement = toleranceIncrement;
     }
 
 

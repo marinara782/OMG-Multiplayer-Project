@@ -72,7 +72,7 @@ class UserDatabaseStubTest {
 
     @Test
     void testVerifyPhoneNumber() throws FileNotFoundException {
-        assertTrue(dataBase.verify_phone_number("bob", "anything")); // logic only checks username
+        assertTrue(dataBase.verify_phone_number("bob", "444-555-6666"));
     }
 
     @Test

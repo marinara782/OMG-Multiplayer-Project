@@ -6,7 +6,7 @@ import java.util.*;
 public class UserDatabaseStub {
 
 
-    //return a list of registered users
+    // return a list of registered users from temp.txt, returns List<User>
     public List<User> registered_users_list() throws FileNotFoundException {
         List<User> users = new ArrayList<>();
         File file = new File("temp.txt");
@@ -27,6 +27,7 @@ public class UserDatabaseStub {
 
     }
 
+    // checks if given parameters match with a user in database, returns bool
     public boolean Authenticate_user(String username, String password, String email, String phone) throws FileNotFoundException {
         List<User> users = registered_users_list();
         boolean userExists = false;
@@ -39,6 +40,7 @@ public class UserDatabaseStub {
         return userExists;
     }
 
+    // checks if username and password exist in database and returns bool
     public boolean verify_account(String username, String password) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
@@ -49,7 +51,7 @@ public class UserDatabaseStub {
         return false;
     }
 
-
+    // checks if user is in database, returns true if exist
     public boolean verify_username(String username) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
@@ -60,6 +62,7 @@ public class UserDatabaseStub {
         return false;
     }
 
+    // checks if password matches password in database, returns true if so
     public boolean verify_password(String username, String password) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
@@ -70,6 +73,7 @@ public class UserDatabaseStub {
         return false;
     }
 
+    // checks if given email matches email in database, returns true if so
     public boolean verify_email(String username, String email) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
@@ -80,16 +84,18 @@ public class UserDatabaseStub {
         return false;
     }
 
+    // checks if given phone matches phone in database, returns true if so
     public boolean verify_phone_number(String username, String phone) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
-            if(user.getUsername().equals(username)){
+            if(user.getUsername().equals(username) && user.getPhone().equals(phone)){
                 return true;
             }
         }
         return false;
     }
 
+    // writes given user list to database, overwrites anything already in, returns void
     private void write_users_to_file(List<User> users) {
         File file = new File("temp.txt");
 
@@ -104,6 +110,7 @@ public class UserDatabaseStub {
         }
     }
 
+    // updates username in data base, returns void
     public void update_username(String oldUsername, String newUsername) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
@@ -114,6 +121,7 @@ public class UserDatabaseStub {
         write_users_to_file(users);
     }
 
+    // updates password in database, returns void
     public void update_password(String username, String oldPassword, String newPassword) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
@@ -124,6 +132,7 @@ public class UserDatabaseStub {
         write_users_to_file(users);
     }
 
+    // updates phone number in database, returns void
     public void linked_phone_number(String username, String newPhone) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
@@ -133,6 +142,8 @@ public class UserDatabaseStub {
         }
         write_users_to_file(users);
     }
+
+    // returns password of username
     public String getCurrentPassword(String username) throws FileNotFoundException{
         List<User> users = registered_users_list();
         for (User user : users) {

@@ -1,12 +1,22 @@
 package org.example.authentication;
 
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
-import java.util.*;
 
 public class Login extends UserDatabaseStub {
 
+    /**
+     * * This method is used to verify the username and password of a user then checks if the account is verified by checking the password
+     * @param username the username of the user
+     * @param email the email of the user
+     * @param newPassword the new password of the user
+     * @return true if the password is changed successfully, false when not
+     * @throws FileNotFoundException if the file is not found
+     */
     public boolean forgot_password(String username, String email, String newPassword) throws FileNotFoundException{
         //verify that the username exists
         if(!verify_username(username)){
@@ -27,6 +37,12 @@ public class Login extends UserDatabaseStub {
         return true;
     }
 
+    /**
+     * * This method is used to verify the username and password of a user then checks if the account is verified by checking the password
+     * @param username username of the user
+     * @param password password of the user
+     * @return true if verified, false if not
+     */
     public boolean login_account(String username, String password) {
 
         try {
@@ -46,6 +62,9 @@ public class Login extends UserDatabaseStub {
 
     private static boolean loggedIn = true;
 
+    /**
+     * logout method
+     */
     public static void logout(){
         if (loggedIn){
             System.out.println("Logging out..");
@@ -56,11 +75,21 @@ public class Login extends UserDatabaseStub {
         }
     }
 
+    // return to login screen after logging out
     private static void returnToLoginScreen(){
         System.out.println("Return to the login screen...");
         // GUI must implement a method to load the login UI
     }
 
+    /**
+     * * This method is used to create a new account for the user. It checks if the username already exists in the database and if not, it creates a new account.
+     * @param new_username the  new username of the user
+     * @param password password of the user
+     * @param email email of the user
+     * @param phone phone number of the user
+     * @return true when a new account is created, false when not
+     * @throws FileNotFoundException when the file is not found
+     */
     public static  boolean createAccount(String new_username, String password, String email, String phone) throws FileNotFoundException {
 
             System.out.println("\nAttempting to create account for: " + new_username);
@@ -93,6 +122,15 @@ public class Login extends UserDatabaseStub {
         return true;
     }
 
+    /**
+     * checks if password is correct and matches the given username
+     * @param username username of the user
+     * @param oldPassword old password of the user
+     * @param newPassword new password of the user
+     * @param confirmPassword confirmation password of the user, retyped new password
+     * @return true if new password implemented, false if not
+     * @throws FileNotFoundException when the file is not found
+     */
     public boolean change_password(String username, String oldPassword, String newPassword, String confirmPassword) throws FileNotFoundException{
         //verify old password
         if(!verify_password(username, oldPassword)){
@@ -121,6 +159,16 @@ public class Login extends UserDatabaseStub {
         System.out.println("Password changed successfully");
         return true;
     }
+    
+    /**
+     * verifies that the password is correct and matches with the given username, then change the email
+     * @param username username of the user
+     * @param password password of the user
+     * @param oldEmail the old password of the user
+     * @param newEmail the new password of the user
+     * @return true when email is changed, false when not
+     * @throws FileNotFoundException when the file is not found
+     */
     public boolean change_email(String username, String password, String oldEmail, String newEmail) throws FileNotFoundException{
         //verify that the password is correct and matches username
         if (!verify_password(username, password)){

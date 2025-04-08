@@ -13,6 +13,12 @@ public class Client {
     public Client(){
         this.isConnected = false;
     }
+    /**
+     * * This method simulates a connection to a server. It takes an address and port as parameters.
+     * @param address String address of the server to connect to
+     * @param port int port of the server to connect to
+     * @return true when connected successfully, false if already connected
+     */
     public boolean connect(String address, int port){
         System.out.println("Attempting to connect to server at "+ address +" on port " + port + "...");
         if(!isConnected){
@@ -33,6 +39,7 @@ public class Client {
         }
     }
 
+    
     public void disconnect(){
         System.out.println("Disconnecting from server...");
         if(!isConnected){

@@ -9,7 +9,10 @@ public class TicTacToeGame {
     private boolean playerAndComputer;
     private int sizeOfTheBoard;
 
-
+    /**
+     * * Constructor for TicTacToeGame which initializes the game board and sets the current player.
+     * @param isComputerGame boolean true if against a computer, false if against another user player
+     */
     public TicTacToeGame(boolean isComputerGame)
     {
         this.sizeOfTheBoard = 3;
@@ -37,6 +40,7 @@ public class TicTacToeGame {
         }
     }*/
 
+    // initializes the board with empty cells
     public void BoardInitialization()
     {
         board = new char[3][3];
@@ -47,6 +51,7 @@ public class TicTacToeGame {
         }
     }
 
+    // set the game against another player
     public void twoPlayersGame()
     {
         currentPlayer = player;
@@ -64,6 +69,11 @@ public class TicTacToeGame {
         return currentPlayer;
     }
 
+    /**
+     * check for win if find 3 symbols in a row, column or diagonal
+     * @param symbol the symbol to check for
+     * @return true if the given symbol is found in a row, column or diagonal, false otherwise
+     */
     public boolean checkForWin(char symbol)
     {
         //There are 3 possibilities for a win. We need to check diagonals, columns and rows.
@@ -97,6 +107,10 @@ public class TicTacToeGame {
         return false;
     }
 
+    /**
+     * method checks if the game board is full
+     * @return true if the board is full, false otherwise
+     */
     public boolean isBoardFull()
     {
         //We return true if the board is full
@@ -120,16 +134,21 @@ public class TicTacToeGame {
         //If we reach the return true statement, then it means the board is full, and there are no empty cells.
     }
 
+    // getter for opponent symbol
     public char getOpponentSymbol()
     {
         return opponent;
 
     }
 
+    /**
+     * determines the next move for the AI opponent
+     * @return an array of two integers which represents the row and column of the selected move, or null if no other moves possible
+     */
     public int[] getAIMove()
     {
         if (isBoardFull())
-            return null;
+            return null; // no possible moves since board is full
 
         for(short i = 0; 3>i;i++)
         {
@@ -149,8 +168,9 @@ public class TicTacToeGame {
         }
 
         if(board[1][1] == '/')
-            return new int[]{1, 1};
+            return new int[]{1, 1}; //  if center is empty, select it
 
+        // check if player can win in the next move then block it
         for(short i = 0; 3>i;i++)
         {
             for(short j = 0; 3>j;j++)
@@ -167,7 +187,7 @@ public class TicTacToeGame {
                 }
             }
         }
-
+        // choose the available corner cells
         if(board[0][0] == '/')
             return new int[]{0, 0};
         if(board[0][2] == '/')
@@ -177,6 +197,7 @@ public class TicTacToeGame {
         if(board[2][2] == '/')
             return new int[]{2, 2};
 
+        // choose the remaining available cells
         for(short i = 0; 3>i;i++)
         {
             for(short j = 0; 3>j;j++)
@@ -192,7 +213,7 @@ public class TicTacToeGame {
         return null;
     }
 
-
+    //This method is used to make the AI move, it gets the AI move from the getAIMove method and makes the move on the board
     private void makeAIMove()
     {
         int[] move = getAIMove();

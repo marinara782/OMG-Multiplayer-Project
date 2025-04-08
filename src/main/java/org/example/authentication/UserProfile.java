@@ -227,24 +227,6 @@ public class UserProfile extends UserDatabaseStub {
             System.out.println("Passwords do not match or an incorrect password has been entered, please try again.");
         }
     }
-
-    public void change_current_status(String username, StatusOptions new_status) throws FileNotFoundException {
-        // accessing database
-        List<User> users = registered_users_list();
-
-        // for loop - iterates through database and checks if username matches, updates status if new status is chosen
-        for (User user : users) {
-            if (user.getUsername().equals(username) && user.getCurrentStatus() != new_status) {
-                user.setCurrentStatus(new_status);
-                System.out.println("Your status has been changed to " + new_status.toString());
-            }
-            else if (user.getUsername().equals(username) && user.getCurrentStatus() == new_status) {
-                System.out.println("Your current status is already set to " + new_status.toString());
-            }
-        }
-
-
-    }
 }
 
 

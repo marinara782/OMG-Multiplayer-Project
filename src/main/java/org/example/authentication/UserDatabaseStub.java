@@ -143,6 +143,17 @@ public class UserDatabaseStub {
         write_users_to_file(users);
     }
 
+    // returns username if username is in database
+    public String getUsername(String username) throws FileNotFoundException {
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return user.getUsername();
+            }
+        }
+        return null;
+    }
+
     // returns password of username
     public String getCurrentPassword(String username) throws FileNotFoundException{
         List<User> users = registered_users_list();
@@ -153,6 +164,29 @@ public class UserDatabaseStub {
         }
         return null;
     }
+
+    // returns email of username
+    public String getCurrentEmail(String username) throws FileNotFoundException{
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if (user.getUsername().equals(username)){
+                return user.getEmail();
+            }
+        }
+        return null;
+    }
+
+    // returns phone number of username
+    public String getCurrentPhone(String username) throws FileNotFoundException{
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if (user.getUsername().equals(username)){
+                return user.getPhone();
+            }
+        }
+        return null;
+    }
+
     public void update_email(String username, String newEmail, String password) throws  FileNotFoundException{
         List<User> users = registered_users_list();
         for (User user : users) {

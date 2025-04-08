@@ -192,6 +192,7 @@ public class TicTacToeGame {
         return null;
     }
 
+
     private void makeAIMove()
     {
         int[] move = getAIMove();
@@ -230,6 +231,8 @@ public class TicTacToeGame {
         }
         return board[row][col];
     }
+
+
 
 
 }

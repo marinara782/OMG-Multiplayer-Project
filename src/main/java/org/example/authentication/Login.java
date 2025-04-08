@@ -7,6 +7,35 @@ import java.util.*;
 
 public class Login extends UserDatabaseStub {
 
+    public String forgot_username(String email) throws FileNotFoundException {
+
+        // accessing database
+        List<User> users = registered_users_list();
+
+        String code_sent = "none";
+        String username = "";
+
+        // for loop that checks if the email entered is the same and sends a 6-digit code to the email
+        for (User user : users) {
+            if (user.getEmail().equalsIgnoreCase(email)){
+                code_sent = send_email(email);
+                username = user.getUsername();
+            }
+        }
+
+        // Need GUI to have a text-field here that gets user input
+        String user_input = "no number";
+        if (user_input.equals(code_sent)) {
+            return username;
+        }
+        else if (!user_input.equals(code_sent) && !code_sent.equals("none")){
+            return "The code entered is incorrect, please try again.";
+        }
+        else {
+            return "The email you have entered is not a registered user.";
+        }
+    }
+
     public boolean forgot_password(String username, String email, String newPassword) throws FileNotFoundException{
         //verify that the username exists
         if(!verify_username(username)){

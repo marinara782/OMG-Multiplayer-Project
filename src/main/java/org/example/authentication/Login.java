@@ -9,6 +9,12 @@ import javafx.stage.Stage;
 
 public class Login extends UserDatabaseStub {
 
+    /**
+     * help users to recover their username if they forget it. Sends a 6-digit code to the email and checks if the code is correct.
+     * @param email email of th user
+     * @return the username of the user if the code is correct, otherwise return a message
+     * @throws FileNotFoundException when the file is not found
+     */
     public String forgot_username(String email) throws FileNotFoundException {
 
         // accessing database

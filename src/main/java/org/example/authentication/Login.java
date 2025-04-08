@@ -166,8 +166,5 @@ public class Login extends UserDatabaseStub {
 
     public void show() {
     }
-
-
-
 }
 

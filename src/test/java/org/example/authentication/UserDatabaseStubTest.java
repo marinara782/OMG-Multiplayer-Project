@@ -116,9 +116,30 @@ class UserDatabaseStubTest {
         }
     }
 
+    // gets username from dataBase compares if its in expected dataBase
+    @Test
+    void testGetCurrentUsername() throws FileNotFoundException {
+        assertEquals("alice", dataBase.getUsername("alice"));
+        assertNull(dataBase.getUsername("unknown"));
+    }
+
     @Test
     void testGetCurrentPassword() throws FileNotFoundException {
         assertEquals("pass123", dataBase.getCurrentPassword("alice"));
+        assertNull(dataBase.getCurrentPassword("unknown"));
+    }
+
+    // gets email from dataBase compares if its in expected dataBase
+    @Test
+    void testGetCurrentEmail() throws FileNotFoundException {
+        assertEquals("bob@gmail.com", dataBase.getCurrentEmail("bob"));
+        assertNull(dataBase.getCurrentPassword("unknown"));
+    }
+
+    // gets phone from dataBase compares if its in expected dataBase
+    @Test
+    void testGetCurrentPhone() throws FileNotFoundException {
+        assertEquals("111-222-3333", dataBase.getCurrentPassword("alice"));
         assertNull(dataBase.getCurrentPassword("unknown"));
     }
 }

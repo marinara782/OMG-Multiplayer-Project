@@ -23,7 +23,6 @@ public class UserProfileWindow {
     public TableView checkersTable;
     public PieChart connect4PieChart;
     public TableView connect4Table;
-    public ComboBox gameSelector;
     public RadioButton weekBtn;
     public RadioButton monthBtn;
     public RadioButton allTimeBtn;
@@ -54,17 +53,6 @@ public class UserProfileWindow {
     public RadioButton friendsRadio;
     public RadioButton privateRadio;
     public CheckBox showCurrentGameCheck;
-    public RadioButton darkThemeRadio;
-    public RadioButton lightThemeRadio;
-    public RadioButton systemThemeRadio;
-    public RadioButton blueColorRadio;
-    public RadioButton greenColorRadio;
-    public RadioButton orangeColorRadio;
-    public RadioButton redColorRadio;
-    public RadioButton purpleColorRadio;
-    public Slider fontSizeSlider;
-    public Label fontSizeValueLabel;
-    public CheckBox enableAnimationsCheck;
 
     public UserProfileWindow() {
     }

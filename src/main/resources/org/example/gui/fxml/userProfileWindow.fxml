@@ -227,35 +227,27 @@
     <!-- Settings Tab -->
     <Tab text="Settings">
         <ScrollPane>
-            <VBox styleClass="settings-pane">
+            <VBox styleClass="settings-pane" spacing="20">
+                <!-- Profile Settings -->
                 <TitledPane text="Profile Settings" styleClass="settings-titled-pane">
-                    <GridPane styleClass="settings-grid">
+                    <GridPane styleClass="settings-grid" vgap="10" hgap="10">
                         <columnConstraints>
                             <ColumnConstraints percentWidth="30"/>
                             <ColumnConstraints percentWidth="70"/>
                         </columnConstraints>
+                        <Label text="Username" styleClass="setting-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <TextField fx:id="usernameField" styleClass="setting-text-field" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
-                        <Label text="Username" styleClass="setting-label" GridPane.rowIndex="0"
-                               GridPane.columnIndex="0"/>
-                        <TextField fx:id="usernameField" styleClass="setting-text-field" GridPane.rowIndex="0"
-                                   GridPane.columnIndex="1"/>
+                        <Label text="Email Address" styleClass="setting-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <TextField fx:id="emailField" styleClass="setting-text-field" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
 
-                        <Label text="Email Address" styleClass="setting-label" GridPane.rowIndex="1"
-                               GridPane.columnIndex="0"/>
-                        <TextField fx:id="emailField" styleClass="setting-text-field" GridPane.rowIndex="1"
-                                   GridPane.columnIndex="1"/>
-
-                        <Label text="Display Name" styleClass="setting-label" GridPane.rowIndex="2"
-                               GridPane.columnIndex="0"/>
-                        <TextField fx:id="displayNameField" styleClass="setting-text-field" GridPane.rowIndex="2"
-                                   GridPane.columnIndex="1"/>
+                        <Label text="Display Name" styleClass="setting-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <TextField fx:id="displayNameField" styleClass="setting-text-field" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
                         <Label text="Bio" styleClass="setting-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                        <TextArea fx:id="bioArea" styleClass="setting-text-area" GridPane.rowIndex="3"
-                                  GridPane.columnIndex="1"/>
+                        <TextArea fx:id="bioArea" styleClass="setting-text-area" GridPane.rowIndex="3" GridPane.columnIndex="1" prefRowCount="3"/>
 
-                        <Label text="Profile Avatar" styleClass="setting-label" GridPane.rowIndex="4"
-                               GridPane.columnIndex="0"/>
+                        <Label text="Profile Avatar" styleClass="setting-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
                         <HBox styleClass="avatar-box" GridPane.rowIndex="4" GridPane.columnIndex="1">
                             <StackPane styleClass="small-avatar-container">
                                 <Circle styleClass="small-avatar-circle"/>
@@ -264,34 +256,26 @@
                             <Button text="Choose Image" styleClass="button highlight-button"/>
                         </HBox>
 
-                        <Label text="Change Password" styleClass="setting-label" GridPane.rowIndex="5"
-                               GridPane.columnIndex="0"/>
+                        <Label text="Change Password" styleClass="setting-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
                         <HBox styleClass="password-box" GridPane.rowIndex="5" GridPane.columnIndex="1">
-                            <Button text="Change Password" styleClass="button element-button"
-                                    onAction="#handleChangePassword" />
+                            <Button text="Change Password" styleClass="button element-button" onAction="#handleChangePassword"/>
                         </HBox>
                     </GridPane>
                 </TitledPane>
 
+                <!-- Notification Settings -->
                 <TitledPane text="Notification Settings" styleClass="settings-titled-pane">
-                    <VBox styleClass="notification-content">
+                    <VBox styleClass="notification-content" spacing="10">
                         <Label text="Notification Preferences" styleClass="settings-section-label"/>
-                        <CheckBox text="Game Invites" fx:id="gameInviteCheck" styleClass="settings-check-box"
-                                  selected="true"/>
-                        <CheckBox text="Friend Requests" fx:id="friendRequestCheck" styleClass="settings-check-box"
-                                  selected="true"/>
-                        <CheckBox text="Achievement Unlocked" fx:id="achievementCheck" styleClass="settings-check-box"
-                                  selected="true"/>
-                        <CheckBox text="Rank Changes" fx:id="rankChangeCheck" styleClass="settings-check-box"
-                                  selected="true"/>
-                        <CheckBox text="Platform News and Updates" fx:id="platformNewsCheck"
-                                  styleClass="settings-check-box"/>
+                        <CheckBox text="Game Invites" fx:id="gameInviteCheck" styleClass="settings-check-box" selected="true"/>
+                        <CheckBox text="Friend Requests" fx:id="friendRequestCheck" styleClass="settings-check-box" selected="true"/>
+                        <CheckBox text="Achievement Unlocked" fx:id="achievementCheck" styleClass="settings-check-box" selected="true"/>
+                        <CheckBox text="Rank Changes" fx:id="rankChangeCheck" styleClass="settings-check-box" selected="true"/>
+                        <CheckBox text="Platform News and Updates" fx:id="platformNewsCheck" styleClass="settings-check-box"/>
 
                         <Label text="Notification Channels" styleClass="settings-section-label"/>
-                        <CheckBox text="In-App Notifications" fx:id="inAppCheck" styleClass="settings-check-box"
-                                  selected="true"/>
-                        <CheckBox text="Email Notifications" fx:id="emailCheck" styleClass="settings-check-box"
-                                  selected="true"/>
+                        <CheckBox text="In-App Notifications" fx:id="inAppCheck" styleClass="settings-check-box" selected="true"/>
+                        <CheckBox text="Email Notifications" fx:id="emailCheck" styleClass="settings-check-box" selected="true"/>
                         <CheckBox text="Push Notifications" fx:id="pushCheck" styleClass="settings-check-box"/>
 
                         <Label text="Do Not Disturb" styleClass="settings-section-label"/>
@@ -299,92 +283,34 @@
                     </VBox>
                 </TitledPane>
 
+                <!-- Privacy Settings -->
                 <TitledPane text="Privacy Settings" styleClass="settings-titled-pane">
-                    <VBox styleClass="privacy-content">
+                    <VBox styleClass="privacy-content" spacing="10">
                         <Label text="Profile Visibility" styleClass="settings-section-label"/>
-                        <RadioButton text="Public - Anyone can view your profile" fx:id="publicRadio"
-                                     styleClass="settings-radio-button" selected="true"/>
-                        <RadioButton text="Friends Only - Only friends can view your profile" fx:id="friendsRadio"
-                                     styleClass="settings-radio-button"/>
-                        <RadioButton text="Private - Only you can view your profile" fx:id="privateRadio"
-                                     styleClass="settings-radio-button"/>
+                        <RadioButton text="Public - Anyone can view your profile" fx:id="publicRadio" styleClass="settings-radio-button" selected="true"/>
+                        <RadioButton text="Friends Only - Only friends can view your profile" fx:id="friendsRadio" styleClass="settings-radio-button"/>
+                        <RadioButton text="Private - Only you can view your profile" fx:id="privateRadio" styleClass="settings-radio-button"/>
 
                         <Label text="Game Activity" styleClass="settings-section-label"/>
-                        <CheckBox text="Show what game I'm currently playing" fx:id="showCurrentGameCheck"
-                                  styleClass="settings-check-box" selected="true"/>
-                        <CheckBox text="Show my game history" fx:id="showGameHistoryCheck"
-                                  styleClass="settings-check-box" selected="true"/>
-                        <CheckBox text="Show my rankings" fx:id="showRankingsCheck" styleClass="settings-check-box"
-                                  selected="true"/>
+                        <CheckBox text="Show what game I'm currently playing" fx:id="showCurrentGameCheck" styleClass="settings-check-box" selected="true"/>
+                        <CheckBox text="Show my game history" fx:id="showGameHistoryCheck" styleClass="settings-check-box" selected="true"/>
+                        <CheckBox text="Show my rankings" fx:id="showRankingsCheck" styleClass="settings-check-box" selected="true"/>
 
                         <Label text="Online Status" styleClass="settings-section-label"/>
-                        <RadioButton text="Show as online for everyone" fx:id="onlineForAllRadio"
-                                     styleClass="settings-radio-button" selected="true"/>
-                        <RadioButton text="Show as online for friends only" fx:id="onlineForFriendsRadio"
-                                     styleClass="settings-radio-button"/>
-                        <RadioButton text="Appear offline" fx:id="appearOfflineRadio"
-                                     styleClass="settings-radio-button"/>
+                        <RadioButton text="Show as online for everyone" fx:id="onlineForAllRadio" styleClass="settings-radio-button" selected="true"/>
+                        <RadioButton text="Show as online for friends only" fx:id="onlineForFriendsRadio" styleClass="settings-radio-button"/>
+                        <RadioButton text="Appear offline" fx:id="appearOfflineRadio" styleClass="settings-radio-button"/>
 
                         <Label text="Data Options" styleClass="settings-section-label"/>
-                        <HBox styleClass="data-options-box">
+                        <HBox styleClass="data-options-box" spacing="10">
                             <Button text="Export My Data" styleClass="button highlight-button"/>
                             <Button text="Delete My Account" styleClass="button error-button"/>
                         </HBox>
                     </VBox>
                 </TitledPane>
 
-                <TitledPane text="Theme Settings" styleClass="settings-titled-pane">
-                    <VBox styleClass="theme-content">
-                        <Label text="UI Theme" styleClass="settings-section-label"/>
-                        <RadioButton text="Dark Theme" fx:id="darkThemeRadio" styleClass="settings-radio-button"
-                                     selected="true"/>
-                        <RadioButton text="Light Theme" fx:id="lightThemeRadio" styleClass="settings-radio-button"/>
-                        <RadioButton text="Use System Theme" fx:id="systemThemeRadio"
-                                     styleClass="settings-radio-button"/>
-
-                        <Label text="Accent Color" styleClass="settings-section-label"/>
-                        <HBox styleClass="color-options">
-                            <HBox styleClass="color-option">
-                                <RadioButton fx:id="blueColorRadio" selected="true" styleClass="color-radio-button"/>
-                                <Circle styleClass="color-circle" fill="#3498db"/>
-                            </HBox>
-                            <HBox styleClass="color-option">
-                                <RadioButton fx:id="greenColorRadio" styleClass="color-radio-button"/>
-                                <Circle styleClass="color-circle" fill="#2ecc71"/>
-                            </HBox>
-                            <HBox styleClass="color-option">
-                                <RadioButton fx:id="orangeColorRadio" styleClass="color-radio-button"/>
-                                <Circle styleClass="color-circle" fill="#f39c12"/>
-                            </HBox>
-                            <HBox styleClass="color-option">
-                                <RadioButton fx:id="redColorRadio" styleClass="color-radio-button"/>
-                                <Circle styleClass="color-circle" fill="#e74c3c"/>
-                            </HBox>
-                            <HBox styleClass="color-option">
-                                <RadioButton fx:id="purpleColorRadio" styleClass="color-radio-button"/>
-                                <Circle styleClass="color-circle" fill="#9b59b6"/>
-                            </HBox>
-                        </HBox>
-
-                        <Label text="Font Size" styleClass="settings-section-label"/>
-                        <HBox styleClass="font-size-box">
-                            <Slider fx:id="fontSizeSlider" min="80" max="120" value="100"
-                                    styleClass="font-size-slider"/>
-                            <Label fx:id="fontSizeValueLabel" text="100%" styleClass="font-size-label"/>
-                        </HBox>
-
-                        <Label text="Animations" styleClass="settings-section-label"/>
-                        <CheckBox text="Enable animations" fx:id="enableAnimationsCheck" styleClass="settings-check-box"
-                                  selected="true"/>
-
-                        <HBox styleClass="reset-button-box">
-                            <Button text="Reset to Default Theme" styleClass="button element-button"
-                                    onAction="#handleResetTheme" />
-                        </HBox>
-                    </VBox>
-                </TitledPane>
-
-                <HBox styleClass="save-button-box">
+                <!-- Save Button -->
+                <HBox styleClass="save-button-box" alignment="CENTER">
                     <Button text="Save Settings" styleClass="button success-button" onAction="#handleSaveSettings"/>
                 </HBox>
             </VBox>

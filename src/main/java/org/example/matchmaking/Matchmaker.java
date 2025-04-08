@@ -6,13 +6,25 @@ import org.example.Player;
 
 // Try and look over the related problem later.
 public class Matchmaker {
-    private List<Player> players; // List of all players in matchmaking pool
+    private final List<Player> players; // List of all players in matchmaking pool
     private final List<Player> topPlayers; // Leaderboard containing top-ranked players
 
     public Matchmaker() {
-        //this.players = new ArrayList<>(players);
+        this.players = new ArrayList<>();
         this.topPlayers = new ArrayList<>();
     }
+
+
+    /**
+     * Adds a player to the matchmaking pool.
+     * This method allows players to the matchmaking queue.
+     * @param player The player to be added to the matchmaking pool.
+     */
+    public void addPlayer(Player player) {
+        players.add(player);
+    }
+
+
 
     /**
      * Finds the best possible match for a player based on skill level.
@@ -73,13 +85,20 @@ public class Matchmaker {
      * @param loser The player who lost the match.
      */
     public void updateLeaderboard(Player winner, Player loser) {
-        if (!topPlayers.contains(winner)) {
-            topPlayers.add(winner);
-        }
+        winner.updateCheckerWins();
+        loser.updateCheckerLosses();
+
+        // Add players to the leaderboard
+        topPlayers.add(winner);
+        topPlayers.add(loser);
+
+        // Sort players by number of wins in descending order
         topPlayers.sort((p1, p2) -> Integer.compare(p2.getCheckerWins(), p1.getCheckerWins()));
-        if (topPlayers.size() > 5) {
-            topPlayers.remove(topPlayers.size() - 1);
-        }
+
+        // You may want to remove duplicates or ensure unique players in the leaderboard
+        Set<Player> uniqueTopPlayers = new LinkedHashSet<>(topPlayers);  // Set removes duplicates
+        topPlayers.clear();
+        topPlayers.addAll(uniqueTopPlayers);
     }
 
     /**
@@ -88,7 +107,7 @@ public class Matchmaker {
      * @param player1 The first player in the match.
      * @param player2 The second player in the match.
      */
-   private void simulateMatchResult(Player player1, Player player2) {
+    private void simulateMatchResult(Player player1, Player player2) {
         Player winner = ThreadLocalRandom.current().nextBoolean() ? player1 : player2;
         Player loser = (winner.equals(player1)) ? player2 : player1;
 
@@ -100,10 +119,20 @@ public class Matchmaker {
     }
 
     /**
+     * Retrieves the players currently in the matchmaking queue.
+     * @return A list of players in the matchmaking queue.
+     */
+    public List<Player> getPlayers() {
+        return new ArrayList<>(players);
+    }
+
+
+    /**
      * Retrieves the top players on the leaderboard.
      * @return A list of the top players.
      */
     public List<Player> getTopPlayers() {
+
         return new ArrayList<>(topPlayers);
     }
 }

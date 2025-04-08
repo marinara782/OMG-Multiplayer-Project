@@ -3,8 +3,7 @@ package org.example.authentication;
 import javafx.stage.Stage;
 
 import java.io.FileNotFoundException;
-import java.util.HashSet;
-import java.util.regex.Pattern;
+import java.util.*;
 
 public class Login extends UserDatabaseStub {
 
@@ -62,29 +61,84 @@ public class Login extends UserDatabaseStub {
         // GUI must implement a method to load the login UI
     }
 
-    public static boolean createAccount(String new_username, String password, String email, String phone) {
+    public static  boolean createAccount(String new_username, String password, String email, String phone) throws FileNotFoundException {
 
             System.out.println("\nAttempting to create account for: " + new_username);
 
             UserDatabaseStub databaseStub = new UserDatabaseStub();
-        // authenticate users
-        try {
-            if(databaseStub.Authenticate_user(new_username, password, email, phone)){
-                System.out.println("User already exists.");
-                return false;}
 
+            List<User> users = new ArrayList<>(); // Initialize empty list as fallback
+
+        // authenticate users
+
+        try {
+            users = databaseStub.registered_users_list();
         } catch (FileNotFoundException e) {
-            throw new RuntimeException("User database file not found.");
+            System.out.println("Creating new user database file...");
+            // Continue with empty list if file doesn't exist
+            users = new ArrayList<>();
         }
+
+        if(databaseStub.verify_username(new_username)){
+            System.out.println("User already exists. ");
+            return false;
+            }
+
+        User new_user = new User(new_username, password, email, phone);
+        users.add(new_user);
+        databaseStub.write_users_to_file(users);
+
         System.out.println("✅ Account successfully created for: " + new_username);
+
         return true;
+    }
+
+    public boolean change_password(String username, String oldPassword, String newPassword, String confirmPassword) throws FileNotFoundException{
+        //verify old password
+        if(!verify_password(username, oldPassword)){
+            System.out.println("Password is incorrect");
+            return false;
         }
+
+        //newPassword has length >=8
+        boolean isLongEnough = newPassword.length() >= 8;
+        //new password has at least one letter
+        boolean hasLetter = newPassword.matches(".*[a-zA-Z].*");
+        //new password has at least 1 digit
+        boolean hasNumber= newPassword.matches(".*\\d.*");
+        if(!(isLongEnough && hasLetter && hasNumber)){
+            System.out.println("newPassword does not match requirements: it must be at east 8 characters long and contain at least 1 letter and 1 number ");
+            return false;
+        }
+
+        //verify that new password matches confirmation input
+        if(!newPassword.equals(confirmPassword)){
+            System.out.println("New password and confirmation do not match");
+            return false;
+        }
+        //change password
+        update_password(username, oldPassword, newPassword);
+        System.out.println("Password changed successfully");
+        return true;
+    }
+    public boolean change_email(String username, String password, String oldEmail, String newEmail) throws FileNotFoundException{
+        //verify that the password is correct and matches username
+        if (!verify_password(username, password)){
+            System.out.println("Incorrect password. Email update failed");
+            return false;
+        }
+        //change email
+        update_email(username, newEmail, password);
+        return true;
+    }
 
     public Login(Stage stage) {
     }
 
     public void show() {
     }
+
+
 
 }
 

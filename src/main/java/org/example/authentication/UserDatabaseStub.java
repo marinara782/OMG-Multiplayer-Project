@@ -83,14 +83,14 @@ public class UserDatabaseStub {
     public boolean verify_phone_number(String username, String phone) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
-            if(user.getUsername().equals(username)){
+            if(user.getUsername().equals(username) && user.getPhone().equals(phone)){
                 return true;
             }
         }
         return false;
     }
 
-    private void write_users_to_file(List<User> users) {
+    public void write_users_to_file(List<User> users) {
         try (PrintWriter writer = new PrintWriter(new FileWriter("temp.txt"))) {
             for (User user : users) {
                 writer.println(user.getUsername() + ", " + user.getPassword() + ", " + user.getEmail() + ", " + user.getPhone());
@@ -137,5 +137,51 @@ public class UserDatabaseStub {
             }
         }
         return null;
+    }
+    public void update_email(String username, String newEmail, String password) throws  FileNotFoundException{
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                user.setEmail(newEmail);
+            }
+        }
+    }
+
+    public String send_email(String email) throws FileNotFoundException {
+
+        // accessing database
+        List<User> users = registered_users_list();
+
+        // for loop - checks database email with email entered, gives random 6-digit code if email matches
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+
+                Random random = new Random();
+
+                int random_number = random.nextInt(1000000);
+
+                return String.format("%06d", random_number);
+            }
+        }
+        return "Email not found";
+    }
+
+    public String send_text(String phone_number) throws FileNotFoundException {
+
+        // accessing database
+        List<User> users = registered_users_list();
+
+        // for loop - checks database phone # with phone # entered, gives random 6-digit code if phone # matches
+        for (User user : users) {
+            if (user.getPhone().equals(phone_number)) {
+
+                Random random = new Random();
+
+                int random_number = random.nextInt(1000000);
+
+                return String.format("%06d", random_number);
+            }
+        }
+        return "Phone number not found";
     }
 }

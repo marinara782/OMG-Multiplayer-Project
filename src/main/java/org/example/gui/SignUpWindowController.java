@@ -40,8 +40,8 @@ public class SignUpWindowController {
         }
 
         showAlert(Alert.AlertType.INFORMATION, "Success", "Account created successfully!");
-        UserProfile NewUser = new UserProfile(username,password,email, null);
-        OpenMainMenu(NewUser);
+//        UserProfile NewUser = new UserProfile(username,password,email, null);
+//        OpenMainMenu(NewUser);
     }
 
     private void OpenMainMenu(UserProfile user) {

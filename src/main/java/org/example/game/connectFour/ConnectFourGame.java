@@ -15,7 +15,7 @@ public class ConnectFourGame {
      * @param rows 
      * @param columns
      * @param goal 
-     * @param vsComputer true when playing aganst a copmuter, false when playing against another user player
+     * @param vsComputer true when playing against a computer, false when playing against another user player
      */
     public ConnectFourGame(int player, int rows, int columns, int goal, boolean vsComputer) {
         this.player = player;

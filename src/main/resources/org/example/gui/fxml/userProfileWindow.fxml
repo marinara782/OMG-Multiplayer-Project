@@ -8,7 +8,7 @@
 
 <TabPane xmlns="http://javafx.com/javafx/17"
          xmlns:fx="http://javafx.com/fxml/1"
-         fx:controller="org.example.gui.UserProfileWindow"
+         fx:controller="org.example.gui.UserProfileWindowController"
          stylesheets="@../styles/userprofile.css"
          prefHeight="650.0" prefWidth="1100.0">
     <!-- Overview Tab -->

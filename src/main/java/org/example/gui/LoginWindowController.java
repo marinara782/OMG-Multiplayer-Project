@@ -32,12 +32,9 @@ public class LoginWindowController {
 
     private ImageView[] images;
     private int currentIndex = 0;
-
     private final UserDatabaseStub userDatabase = new UserDatabaseStub();
-    private Stage stage;
 
     public void setStage(Stage stage) {
-        this.stage = stage;
     }
 
     //will check the information inputted into the text field and password field and login the user if correct info inputted

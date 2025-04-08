@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="" />
+    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment=".xml formatted accordingly">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/tictactoe.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/LoginWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/LoginWindowController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/tictactoe_rule.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/tictactoe_rule.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/game.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/userprofile.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/userprofile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/gui/HelloApplicationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/gui/HelloApplicationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/gui/MainMenuWindowTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/gui/MainMenuWindowTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/gui/UserProfileWindowTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/gui/UserProfileWindowTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,8 +25,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaFXApplication" />
-        <option value="FxmlFile" />
+        <option value="JUnit5 Test Class" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -71,22 +83,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;bhuvan&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_directory_selection&quot;: &quot;C:/Users/bhuva/OneDrive/Desktop/SENG 300/seng300-w25-project/src/main/java/org/example/gui&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/bhuva/OneDrive/Desktop/SENG 300/seng300-w25-project&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.13477087&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.17471737&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HelloApplication.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "JUnit.LoginWindowControllerTest.executor": "Run",
+    "JUnit.LoginWindowControllerTest.testHandleJoinGuest.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "bhuvan",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "C:/Users/bhuva/OneDrive/Desktop/SENG 300/seng300-w25-project/src/main/java/org/example/game/connectFour",
+    "last_opened_file_path": "C:/Users/bhuva/OneDrive/Desktop/SENG 300/seng300-w25-project",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.13477087",
+    "project.structure.side.proportion": "0.17471737",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="org.example.authentication" />
@@ -96,6 +112,12 @@
       <recent name="C:\Users\bhuva\OneDrive\Desktop\SENG 300\seng300-w25-project\src\main\resources\org\example\gui" />
       <recent name="C:\Users\bhuva\OneDrive\Desktop\SENG 300\seng300-w25-project\docs\UseCaseDescriptions" />
       <recent name="C:\Users\bhuva\OneDrive\Desktop\SENG 300\seng300-w25-project\docs\planning" />
+    </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.example.gui" />
     </key>
   </component>
   <component name="RunManager">
@@ -372,7 +394,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743658514760</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary=".xml formatted accordingly">
+      <option name="closed" value="true" />
+      <created>1743938771761</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1743938771761</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -387,7 +417,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Created Docs &gt; UseCaseDescriptions" />
     <MESSAGE value="Developed UserProfileWindow" />
     <MESSAGE value="Developed UserProfileWindow and HelloApplication" />
     <MESSAGE value="Started Tic-Tac-toe Basics from computer side." />
@@ -412,6 +441,7 @@
     <MESSAGE value="Formatted/Layout TicTacToe rules (working on the designing)" />
     <MESSAGE value="Designing TicTacToe rules (Done)" />
     <MESSAGE value="Profile Window fxml file and CSS file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Profile Window fxml file and CSS file" />
+    <MESSAGE value=".xml formatted accordingly" />
+    <option name="LAST_COMMIT_MESSAGE" value=".xml formatted accordingly" />
   </component>
 </project>

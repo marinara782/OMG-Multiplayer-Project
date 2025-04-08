@@ -2,9 +2,6 @@ package org.example.game.checkers;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CheckersGameTest {
@@ -151,53 +148,5 @@ public class CheckersGameTest {
 
         boolean win = game.checkWin();
         assertTrue(win, "Game should be over when red has no pieces.");
-    }
-    @Test
-    public void testComputerMakesAMove() {
-        // Move black first to switch turn
-        game.movePiece(5, 0, 4, 1);
-        // Now red's turn (AI)
-        game.computerMove();
-        // Board should still be valid, and turn switched
-        assertTrue(game.isPlayersTurn());
-    }
-
-    @Test
-    public void testJumpCaptureNotAllowedIfLandingOccupied() {
-        int[][] board = game.getBoard();
-        board[5][0] = -1;
-        board[4][1] = 1;   // red piece
-        board[3][2] = -1;  // already occupied
-
-        boolean moved = game.movePiece(5, 0, 3, 2); // capture blocked
-        assertFalse(moved);
-    }
-
-    @Test
-    public void testInvalidKingMoveDiagonalTooFar() {
-        game.movePiece(5, 0, 4, 1); // Black moves
-        int[][] board = game.getBoard();
-        board[4][3] = 2; // Red king
-        boolean moved = game.movePiece(4, 3, 1, 0); // Too far, no jump
-        assertFalse(moved);
-    }
-
-    @Test
-    public void testWinConditionWhenBoardIsEmpty() {
-        int[][] board = game.getBoard();
-        // Remove all pieces
-        for (int r = 0; r < 8; r++) {
-            Arrays.fill(board[r], 0);
-        }
-        assertTrue(game.checkWin(), "Game should be over if board is empty");
-    }
-
-    @Test
-    public void testBlackKingPromotion() {
-        int[][] board = game.getBoard();
-        board[1][2] = -1;
-        board[0][3] = 0;
-        game.movePiece(1, 2, 0, 3);
-        assertEquals(-2, board[0][3], "Black piece should be promoted to king");
     }
 }

@@ -1,83 +1,368 @@
 package org.example.game.checkers;
 
-/**
- * Handles the internal logic for Checkers gameplay.
- * Includes board setup, turn tracking, and access methods.
- */
+import java.util.*;
+
 public class CheckersGame {
+    private static final int SIZE = 8;
+    private final int[][] board;
+    private boolean isRedTurn = false; // player is black, computer is red
 
-    // Board representation:
-    //  0 = empty, 1 = red piece, -1 = black piece
-    private int[][] board;
-
-    // false = black's turn, true = red's turn
-    private boolean isRedTurn;
-
-    /**
-     * Constructor initializes the board and sets the starting turn.
-     */
     public CheckersGame() {
-        board = new int[8][8];
-        isRedTurn = false; // Black goes first
+        board = new int[SIZE][SIZE];
         initializeBoard();
     }
 
-    /**
-     * Sets up the initial piece positions on the board.
-     * Red at the top, black at the bottom.
-     */
     private void initializeBoard() {
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                if ((row + col) % 2 == 1) {
-                    if (row < 3) {
-                        board[row][col] = 1;  // Red pieces
-                    } else if (row > 4) {
-                        board[row][col] = -1; // Black pieces
-                    }
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                if ((row + col) % 2 != 0) {
+                    if (row < 3) board[row][col] = 1;
+                    else if (row > 4) board[row][col] = -1;
                 }
             }
         }
     }
 
-    /**
-     * Returns the value at a board position.
-     * @param row Row index
-     * @param col Column index
-     * @return 1 (red), -1 (black), or 0 (empty)
-     */
-    public int getBoardValue(int row, int col) {
+    public int[][] getBoard() {
+        return board;
+    }
+
+    public int getPiece(int row, int col) {
         return board[row][col];
     }
 
-    /**
-     * Checks whose turn it is.
-     * @return true if red's turn, false if black's
-     */
-    public boolean isRedTurn() {
-        return isRedTurn;
+    public boolean isPlayersTurn() {
+        return !isRedTurn;
     }
 
-    /**
-     * Placeholder for future move logic.
-     */
-    public void makeMove(int row, int col) {
-        // TODO: Implement logic to move
-    }
+    public boolean movePiece(int fromRow, int fromCol, int toRow, int toCol) {
+        if (!isInBounds(fromRow, fromCol) || !isInBounds(toRow, toCol)) return false;
 
-    /**
-     * Placeholder for future win-checking logic.
-     */
-    public boolean checkForWin() {
-        // TODO: Implement logic to check for a win
+        int piece = board[fromRow][fromCol];
+        if (piece == 0 || (piece > 0) != isRedTurn) return false;
+
+        int dr = toRow - fromRow;
+        int dc = toCol - fromCol;
+        boolean isKing = Math.abs(piece) == 2;
+
+        if (Math.abs(dr) == 1 && Math.abs(dc) == 1 && board[toRow][toCol] == 0) {
+            if (isKing || dr == (isRedTurn ? 1 : -1)) {
+                executeMove(fromRow, fromCol, toRow, toCol, piece);
+                return true;
+            }
+        }
+
+        if (Math.abs(dr) == 2 && Math.abs(dc) == 2) {
+            int midRow = fromRow + dr / 2;
+            int midCol = fromCol + dc / 2;
+            int midPiece = board[midRow][midCol];
+            if (midPiece != 0 && (midPiece > 0) != (piece > 0) && board[toRow][toCol] == 0) {
+                board[midRow][midCol] = 0;
+                executeMove(fromRow, fromCol, toRow, toCol, piece);
+                return true;
+            }
+        }
         return false;
     }
 
-    /**
-     * Placeholder for draw detection logic.
-     */
-    public boolean isBoardFull() {
-        // TODO: Implement logic to check if board is full
-        return false;
+    private void executeMove(int fromRow, int fromCol, int toRow, int toCol, int piece) {
+        board[fromRow][fromCol] = 0;
+        board[toRow][toCol] = piece;
+
+        if (piece == 1 && toRow == SIZE - 1) board[toRow][toCol] = 2;
+        if (piece == -1 && toRow == 0) board[toRow][toCol] = -2;
+
+        isRedTurn = !isRedTurn;
+    }
+
+    public void computerMove() {
+        List<Move> moves = getAllValidMoves(true);
+        if (!moves.isEmpty()) {
+            Move move = moves.get(new Random().nextInt(moves.size()));
+            movePiece(move.fromRow, move.fromCol, move.toRow, move.toCol);
+        }
+    }
+
+    private List<Move> getAllValidMoves(boolean redTurn) {
+        List<Move> moves = new ArrayList<>();
+        for (int row = 0; row < SIZE; row++) {
+            for (int col = 0; col < SIZE; col++) {
+                int piece = board[row][col];
+                if (piece == 0 || (piece > 0) != redTurn) continue;
+
+                boolean isKing = Math.abs(piece) == 2;
+                int[][] directions = isKing ? new int[][]{{1,1},{1,-1},{-1,1},{-1,-1}} : redTurn ? new int[][]{{1,1},{1,-1}} : new int[][]{{-1,1},{-1,-1}};
+
+                for (int[] d : directions) {
+                    int r = row + d[0];
+                    int c = col + d[1];
+                    if (isInBounds(r, c) && board[r][c] == 0) {
+                        moves.add(new Move(row, col, r, c));
+                    }
+                    int jr = row + 2 * d[0];
+                    int jc = col + 2 * d[1];
+                    if (isInBounds(jr, jc) && board[jr][jc] == 0) {
+                        int mid = board[row + d[0]][col + d[1]];
+                        if (mid != 0 && (mid > 0) != redTurn) {
+                            moves.add(new Move(row, col, jr, jc));
+                        }
+                    }
+                }
+            }
+        }
+        return moves;
+    }
+
+    private boolean isInBounds(int row, int col) {
+        return row >= 0 && row < SIZE && col >= 0 && col < SIZE;
+    }
+
+    public boolean checkWin() {
+        boolean red = false, black = false;
+        for (int[] row : board) {
+            for (int cell : row) {
+                if (cell > 0) red = true;
+                if (cell < 0) black = true;
+            }
+        }
+        return !(red && black);
+    }
+
+    public int[][] computerMoveWithPreview() {
+        return new int[0][];
+    }
+
+    public void finalizeComputerMove() {
+        // TODO: implement if needed
+    }
+
+    private static class Move {
+        int fromRow, fromCol, toRow, toCol;
+        Move(int fr, int fc, int tr, int tc) {
+            fromRow = fr; fromCol = fc; toRow = tr; toCol = tc;
+        }
+    }
+
+    public List<int[]> getValidMoves(int row, int col) {
+        List<int[]> validMoves = new ArrayList<>();
+        int piece = board[row][col];
+        if (piece == 0) return validMoves;
+
+        boolean isPlayerPiece = piece < 0;
+        boolean isKing = Math.abs(piece) == 2;
+
+        int[][] directions = isKing ? new int[][]{
+                {-1, -1}, {-1, 1}, {1, -1}, {1, 1}
+        } : (isPlayerPiece ? new int[][]{
+                {-1, -1}, {-1, 1}
+        } : new int[][]{
+                {1, -1}, {1, 1}
+        });
+
+        for (int[] dir : directions) {
+            int newRow = row + dir[0];
+            int newCol = col + dir[1];
+
+            if (isInBounds(newRow, newCol)) {
+                if (board[newRow][newCol] == 0) {
+                    validMoves.add(new int[]{newRow, newCol});
+                } else if ((isPlayerPiece && board[newRow][newCol] > 0) || (!isPlayerPiece && board[newRow][newCol] < 0)) {
+                    int jumpRow = newRow + dir[0];
+                    int jumpCol = newCol + dir[1];
+                    if (isInBounds(jumpRow, jumpCol) && board[jumpRow][jumpCol] == 0) {
+                        validMoves.add(new int[]{jumpRow, jumpCol});
+                    }
+                }
+            }
+        }
+
+        return validMoves;
     }
 }
+
+
+//package org.example.game.checkers;
+//
+//import java.util.*;
+//
+//public class CheckersGame {
+//    private final int[][] board;
+//    private boolean isRedTurn = false; // player is black, computer is red
+//
+//    public CheckersGame() {
+//        board = new int[8][8];
+//        initializeBoard();
+//    }
+//
+//    private void initializeBoard() {
+//        for (int row = 0; row < 8; row++) {
+//            for (int col = 0; col < 8; col++) {
+//                if ((row + col) % 2 != 0) {
+//                    if (row < 3) board[row][col] = 1;
+//                    else if (row > 4) board[row][col] = -1;
+//                }
+//            }
+//        }
+//    }
+//
+//    public int[][] getBoard() {
+//        return board;
+//    }
+//
+//    public int getPiece(int row, int col) {
+//        return board[row][col];
+//    }
+//
+//    public boolean isPlayersTurn() {
+//        return !isRedTurn;
+//    }
+//
+//    public boolean movePiece(int fromRow, int fromCol, int toRow, int toCol) {
+//        int piece = board[fromRow][fromCol];
+//        if (piece == 0 || (piece > 0) != isRedTurn) return false;
+//
+//        int dr = toRow - fromRow;
+//        int dc = toCol - fromCol;
+//        boolean isKing = Math.abs(piece) == 2;
+//
+//        if (Math.abs(dr) == 1 && Math.abs(dc) == 1 && board[toRow][toCol] == 0) {
+//            if (isKing || dr == (isRedTurn ? 1 : -1)) {
+//                executeMove(fromRow, fromCol, toRow, toCol, piece);
+//                return true;
+//            }
+//        }
+//
+//        if (Math.abs(dr) == 2 && Math.abs(dc) == 2) {
+//            int midRow = fromRow + dr / 2;
+//            int midCol = fromCol + dc / 2;
+//            int midPiece = board[midRow][midCol];
+//            if (midPiece != 0 && (midPiece > 0) != (piece > 0) && board[toRow][toCol] == 0) {
+//                board[midRow][midCol] = 0;
+//                executeMove(fromRow, fromCol, toRow, toCol, piece);
+//                return true;
+//            }
+//        }
+//        return false;
+//    }
+//
+//    private void executeMove(int fromRow, int fromCol, int toRow, int toCol, int piece) {
+//        board[fromRow][fromCol] = 0;
+//        board[toRow][toCol] = piece;
+//
+//        if (piece == 1 && toRow == 7) board[toRow][toCol] = 2;
+//        if (piece == -1 && toRow == 0) board[toRow][toCol] = -2;
+//
+//        isRedTurn = !isRedTurn;
+//    }
+//
+//    public void computerMove() {
+//        List<Move> moves = getAllValidMoves(true);
+//        if (!moves.isEmpty()) {
+//            Move move = moves.get(new Random().nextInt(moves.size()));
+//            movePiece(move.fromRow, move.fromCol, move.toRow, move.toCol);
+//        }
+//    }
+//
+//    private List<Move> getAllValidMoves(boolean redTurn) {
+//        List<Move> moves = new ArrayList<>();
+//        for (int row = 0; row < 8; row++) {
+//            for (int col = 0; col < 8; col++) {
+//                int piece = board[row][col];
+//                if (piece == 0 || (piece > 0) != redTurn) continue;
+//                boolean isKing = Math.abs(piece) == 2;
+//                int[][] directions = isKing ? new int[][]{{1,1},{1,-1},{-1,1},{-1,-1}} : redTurn ? new int[][]{{1,1},{1,-1}} : new int[][]{{-1,1},{-1,-1}};
+//
+//                for (int[] d : directions) {
+//                    int r = row + d[0];
+//                    int c = col + d[1];
+//                    if (inBounds(r, c) && board[r][c] == 0) {
+//                        moves.add(new Move(row, col, r, c));
+//                    }
+//                    int jr = row + 2 * d[0];
+//                    int jc = col + 2 * d[1];
+//                    if (inBounds(jr, jc) && board[jr][jc] == 0) {
+//                        int mid = board[row + d[0]][col + d[1]];
+//                        if (mid != 0 && (mid > 0) != redTurn) {
+//                            moves.add(new Move(row, col, jr, jc));
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//        return moves;
+//    }
+//
+//    private boolean inBounds(int r, int c) {
+//        return r >= 0 && r < 8 && c >= 0 && c < 8;
+//    }
+//
+//    public boolean checkWin() {
+//        boolean red = false, black = false;
+//        for (int[] row : board) {
+//            for (int cell : row) {
+//                if (cell > 0) red = true;
+//                if (cell < 0) black = true;
+//            }
+//        }
+//        return !(red && black);
+//    }
+//
+//    public int[][] computerMoveWithPreview() {
+//        return new int[0][];
+//    }
+//
+//    public void finalizeComputerMove() {
+//    }
+//
+//    private static class Move {
+//        int fromRow, fromCol, toRow, toCol;
+//        Move(int fr, int fc, int tr, int tc) {
+//            fromRow = fr; fromCol = fc; toRow = tr; toCol = tc;
+//        }
+//    }
+//
+//
+//    // --- In CheckersGame.java ---
+//    // Add this method inside the CheckersGame class
+//    public List<int[]> getValidMoves(int row, int col) {
+//        List<int[]> validMoves = new ArrayList<>();
+//        int piece = board[row][col];
+//        if (piece == 0) return validMoves;
+//
+//        boolean isPlayerPiece = piece < 0;
+//        boolean isKing = Math.abs(piece) == 2;
+//
+//        int[][] directions = isKing ? new int[][]{
+//                {-1, -1}, {-1, 1}, {1, -1}, {1, 1}
+//        } : (isPlayerPiece ? new int[][]{
+//                {-1, -1}, {-1, 1}
+//        } : new int[][]{
+//                {1, -1}, {1, 1}
+//        });
+//
+//        for (int[] dir : directions) {
+//            int newRow = row + dir[0];
+//            int newCol = col + dir[1];
+//
+//            if (isInBounds(newRow, newCol)) {
+//                if (board[newRow][newCol] == 0) {
+//                    validMoves.add(new int[]{newRow, newCol});
+//                } else if ((isPlayerPiece && board[newRow][newCol] > 0) || (!isPlayerPiece && board[newRow][newCol] < 0)) {
+//                    // Jump check
+//                    int jumpRow = newRow + dir[0];
+//                    int jumpCol = newCol + dir[1];
+//                    if (isInBounds(jumpRow, jumpCol) && board[jumpRow][jumpCol] == 0) {
+//                        validMoves.add(new int[]{jumpRow, jumpCol});
+//                    }
+//                }
+//            }
+//        }
+//
+//        return validMoves;
+//    }
+//
+//    private boolean isInBounds(int row, int col) {
+//        return row >= 0 && row < 8 && col >= 0 && col < 8;
+//    }
+//}
+

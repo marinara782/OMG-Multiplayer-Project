@@ -1,9 +1,4 @@
-
-
 package game.checkers;
-
-
-
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -24,10 +19,15 @@ public class CheckersBoardTest {
     private CheckersBoard board;
 
     @BeforeEach
+    void setup() {
+        game = new CheckersGame();       // ✅ No-arg constructor
+        board = new CheckersBoard(game); // ✅ Takes a CheckersGame object
+    }
 
     @Test
     void testInitialBoardGridSize() {
         GridPane grid = getBoardGrid();
+        assertNotNull(grid, "Board grid should not be null");
         assertEquals(64, grid.getChildren().size(), "8x8 board should have 64 cells");
     }
 
@@ -59,6 +59,7 @@ public class CheckersBoardTest {
     @Test
     void testDrawBoardConsistency() {
         GridPane grid = getBoardGrid();
+        assertNotNull(grid, "GridPane should not be null");
         assertTrue(grid.getChildren().stream().allMatch(node -> node instanceof StackPane),
                 "All grid elements must be StackPane");
     }
@@ -96,4 +97,3 @@ public class CheckersBoardTest {
         }
     }
 }
-//Changes will occure if problem occurs again !

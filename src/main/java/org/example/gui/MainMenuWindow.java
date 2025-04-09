@@ -4,15 +4,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.authentication.Login;
 import org.example.authentication.UserProfile;
-import org.example.game.checkers.CheckersGame;
-import org.example.game.connectFour.ConnectFourGame;
-import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.leaderboard.Leaderboard;
 import org.example.matchmaking.Matchmaker;
 
@@ -344,13 +339,13 @@ public class MainMenuWindow {
     private void startGame(String gameType) {
         switch (gameType) {
             case "ticTacToe", "tictactoe", "tic-tac-toe":
-                new GameWindow(stage, new TicTacToeGame(), currentUser);
+                new GameWindow();
                 break;
             case "connectfour", "connectFour", "connect-four":
-                new GameWindow(stage, new ConnectFourGame(), currentUser);
+                new GameWindow();
                 break;
             case "checkers":
-                new GameWindow(stage, new CheckersGame(), currentUser);
+                new GameWindow();
                 break;
             default:
                 System.out.println("Unknown game type: " + gameType);

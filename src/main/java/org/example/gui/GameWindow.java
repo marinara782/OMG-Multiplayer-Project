@@ -35,7 +35,7 @@ public class GameWindow {
     private Label turnLabel;
     private Label timerLabel;
 
-    public GameWindow(Stage stage, Object gameInstance, UserProfile currentUser) {
+    public GameWindow() {
         this.stage = stage;
         this.gameInstance = gameInstance;
         this.currentUser = currentUser;
@@ -598,5 +598,12 @@ public class GameWindow {
         MainMenuWindow mainMenu = new MainMenuWindow(stage, currentUser);
         mainMenu.show();
     }
+    public Scene getScene() { return this.scene; }
+    public Stage getStage() { return this.stage; }
+    public void setupInitialBoard() { /* implement or stub */ }
+    public boolean checkWin(String player) { return false; }
+    public void resetBoard() { /* implement or stub */ }
+    public boolean makeMove(int x1, int y1, int x2, int y2) { return false; }
+
 }
 

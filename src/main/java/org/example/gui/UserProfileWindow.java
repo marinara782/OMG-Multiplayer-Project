@@ -4,10 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -150,19 +147,15 @@ public class UserProfileWindow {
         chartContainer.setText("Game Distribution");
         chartContainer.setCollapsible(false);
 
-        CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis();
-        BarChart<String, Number> barChart = new BarChart<>(xAxis, yAxis);
-        barChart.setTitle("Games Played by Type");
-        barChart.setLegendVisible(false);
+        // Create a PieChart instead of a BarChart
+        PieChart pieChart = new PieChart();
+        pieChart.setTitle("Games Played by Type");
 
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
         for (Map.Entry<String, Integer> entry : gameStats.entrySet()) {
-            series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue()));
+            pieChart.getData().add(new PieChart.Data(entry.getKey(), entry.getValue()));
         }
 
-        barChart.getData().add(series);
-        chartContainer.setContent(barChart);
+        chartContainer.setContent(pieChart);
 
         overviewPane.getChildren().addAll(summary, chartContainer);
         return overviewPane;

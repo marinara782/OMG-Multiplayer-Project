@@ -1,10 +1,6 @@
 package org.example.authentication;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,11 +9,7 @@ import java.util.Scanner;
 public class UserDatabaseStub {
 
 
-    /**
-     *  reads user data from a file and returns a list of user objects to simulate a database
-     * @return List<User> - list of users
-     * @throws FileNotFoundException when the file is not found
-     */
+    // return a list of registered users from temp.txt, returns List<User>
     public List<User> registered_users_list() throws FileNotFoundException {
         List<User> users = new ArrayList<>();
         File file = new File("temp.txt");
@@ -39,15 +31,7 @@ public class UserDatabaseStub {
 
     }
 
-    /**
-     * check if user exists in the database by checking the parameters
-     * @param username username of the user
-     * @param password password of the user
-     * @param email email of the user
-     * @param phone phone number of the user
-     * @return true if the user exists, false if the user does not exist
-     * @throws FileNotFoundException when the file is not found
-     */
+    // checks if given parameters match with a user in database, returns bool
     public boolean Authenticate_user(String username, String password, String email, String phone) throws FileNotFoundException {
         List<User> users = registered_users_list();
         boolean userExists = false;
@@ -60,13 +44,7 @@ public class UserDatabaseStub {
         return userExists;
     }
 
-    /**
-     * checks username and the password of the user to see if it is in the database
-     * @param username username of the user
-     * @param password password of the user
-     * @return true if the user exists, false if the user does not exist
-     * @throws FileNotFoundException when the file is not found
-     */
+    // checks if username and password exist in database and returns bool
     public boolean verify_account(String username, String password) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) { // checks if the user exists in the database by matching the username and password parameters
@@ -77,12 +55,7 @@ public class UserDatabaseStub {
         return false;
     }
 
-    /**
-     * check is username is already used by another user in the database
-     * @param username username of the user
-     * @return true if the username is already used by someone else, false if the username is still unused and available
-     * @throws FileNotFoundException when the file is not found
-     */
+    // checks if user is in database, returns true if exist
     public boolean verify_username(String username) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) { // checks if the username exists in the database
@@ -93,13 +66,7 @@ public class UserDatabaseStub {
         return false;
     }
 
-    /**
-     * verifies the password of the user in the database
-     * @param username username of the user
-     * @param password password of the user
-     * @return true when password is correct, false when password is incorrect
-     * @throws FileNotFoundException when the file is not found
-     */
+    // checks if password matches password in database, returns true if so
     public boolean verify_password(String username, String password) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
@@ -110,13 +77,7 @@ public class UserDatabaseStub {
         return false;
     }
 
-    /**
-     * verify the email of the given user with the username
-     * @param username username of the user
-     * @param email email of the user
-     * @return true if the email matches the username, false when the email doesn't match
-     * @throws FileNotFoundException
-     */
+    // checks if given email matches email in database, returns true if so
     public boolean verify_email(String username, String email) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
@@ -127,13 +88,7 @@ public class UserDatabaseStub {
         return false;
     }
 
-    /**
-     * verifies the phone number of the user with the username
-     * @param username username of the user
-     * @param phone phone number of the user
-     * @return true if the phone number matches the given username, false when phone number and username don't match
-     * @throws FileNotFoundException when the file is not found
-     */
+    // checks if given phone matches phone in database, returns true if so
     public boolean verify_phone_number(String username, String phone) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
@@ -144,26 +99,22 @@ public class UserDatabaseStub {
         return false;
     }
 
-    /**
-     * adds a new user to the database by writing the new user into the file
-     * @param users user object to be added to the database
-     */
+    // writes given user list to database, overwrites anything already in, returns void
     public void write_users_to_file(List<User> users) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter("temp.txt"))) {
+        File file = new File("temp.txt");
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             for (User user : users) {
-                writer.println(user.getUsername() + ", " + user.getPassword() + ", " + user.getEmail() + ", " + user.getPhone());
+                writer.write(user.getUsername() + "," + user.getPassword() + "," + user.getEmail() + "," + user.getPhone());
+                writer.newLine();
             }
+            writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    /**
-     * changes the username of the user
-     * @param oldUsername old username of the user
-     * @param newUsername new username of the user
-     * @throws FileNotFoundException when the file is not found
-     */
+    // updates username in data base, returns void
     public void update_username(String oldUsername, String newUsername) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
@@ -174,13 +125,7 @@ public class UserDatabaseStub {
         write_users_to_file(users);
     }
 
-    /**
-     * change the password of the user
-     * @param username username of the user
-     * @param oldPassword old password of the user
-     * @param newPassword new password of the user
-     * @throws FileNotFoundException when the file is not found
-     */
+    // updates password in database, returns void
     public void update_password(String username, String oldPassword, String newPassword) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
@@ -191,12 +136,7 @@ public class UserDatabaseStub {
         write_users_to_file(users);
     }
 
-    /**
-     * updates the phone number of the user or links when user has no phone number
-     * @param username username of the user
-     * @param newPhone new phone number of the user replacing the old phone number
-     * @throws FileNotFoundException when the file is not found
-     */
+    // updates phone number in database, returns void
     public void linked_phone_number(String username, String newPhone) throws FileNotFoundException {
         List<User> users = registered_users_list();
         for (User user : users) {
@@ -206,13 +146,19 @@ public class UserDatabaseStub {
         }
         write_users_to_file(users);
     }
-    
-    /**
-     * getting the current password of the user
-     * @param username 
-     * @return String password of the user
-     * @throws FileNotFoundException when the file is not found
-     */
+
+    // returns username if username is in database
+    public String getUsername(String username) throws FileNotFoundException {
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return user.getUsername();
+            }
+        }
+        return null;
+    }
+
+    // returns password of username
     public String getCurrentPassword(String username) throws FileNotFoundException{
         List<User> users = registered_users_list();
         for (User user : users) {
@@ -223,13 +169,28 @@ public class UserDatabaseStub {
         return null;
     }
 
-    /**
-     * udpates the email of the user
-     * @param username
-     * @param newEmail
-     * @param password
-     * @throws FileNotFoundException
-     */
+    // returns email of username
+    public String getCurrentEmail(String username) throws FileNotFoundException{
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if (user.getUsername().equals(username)){
+                return user.getEmail();
+            }
+        }
+        return null;
+    }
+
+    // returns phone number of username
+    public String getCurrentPhone(String username) throws FileNotFoundException{
+        List<User> users = registered_users_list();
+        for (User user : users) {
+            if (user.getUsername().equals(username)){
+                return user.getPhone();
+            }
+        }
+        return null;
+    }
+
     public void update_email(String username, String newEmail, String password) throws  FileNotFoundException{
         List<User> users = registered_users_list();
         for (User user : users) {

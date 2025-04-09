@@ -1,13 +1,262 @@
 package org.example.gui;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import org.example.Player;
+import org.example.authentication.UserProfile;
+import org.example.leaderboard.Leaderboard;
+import org.example.leaderboard.LeaderboardDatabaseStub;
+
+import java.io.IOException;
+import java.util.List;
 
 public class LeaderBoardController {
-    public void handleSearch(ActionEvent actionEvent) {
+    private Stage stage;
+
+    @FXML private TableView<Player> leaderboardTable;
+    @FXML private TableColumn<Player, Integer> rankColumn;
+    @FXML private TableColumn<Player, String> playerColumn;
+    @FXML private TableColumn<Player, Integer> winsColumn;
+    @FXML private TableColumn<Player, Integer> lossColumn;
+    @FXML private ChoiceBox<String> sortBox;
+    @FXML private TextField searchField;
+    @FXML public VBox gamesMenu;
+
+    @FXML private Label firstPlaceName, firstPlaceScore;
+    @FXML private Label secondPlaceName, secondPlaceScore;
+    @FXML private Label thirdPlaceName, thirdPlaceScore;
+
+    private final LeaderboardDatabaseStub databaseStub = new LeaderboardDatabaseStub();
+    private final Leaderboard leaderboard = new Leaderboard();
+    private UserProfile user;
+
+    private String currentSortCriteria = "total";
+
+    public void setUser(UserProfile user) {
+        this.user = user;
     }
 
-    public void handleSort(ActionEvent actionEvent) {
+    @FXML
+    public void initialize() {
+        // Setup Table Columns
+        //Updates the Rankings
+        rankColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getIndex() >= leaderboardTable.getItems().size()) {
+                    setText(null);
+                } else {
+                    setText(String.valueOf(getIndex() + 1));
+                }
+            }
+        });
+
+        //Gets the players Username for the Table columns
+        playerColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUsername()));
+
+        //Updates the Wins based on the Type of Sort
+        winsColumn.setCellFactory(col -> new TableCell<>() {
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getIndex() >= leaderboardTable.getItems().size()) {
+                    setText(null);
+                } else {
+                    Player player = leaderboardTable.getItems().get(getIndex());
+                    int stat = getPlayerStat(player, currentSortCriteria, "wins");
+                    setText(String.valueOf(stat));
+                }
+            }
+        });
+
+        //Updates the losses based on the Type of Sort
+        lossColumn.setCellFactory(col -> new TableCell<>() {
+            @Override
+            protected void updateItem(Integer item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getIndex() >= leaderboardTable.getItems().size()) {
+                    setText(null);
+                } else {
+                    Player player = leaderboardTable.getItems().get(getIndex());
+                    int stat = getPlayerStat(player, currentSortCriteria, "losses");
+                    setText(String.valueOf(stat));
+                }
+            }
+        });
+
+        sortBox.setValue("Total wins");
+        sortBox.setOnAction(this::handleSort);
+        loadAndDisplayPlayers("Total wins");
     }
 
+    private void loadAndDisplayPlayers(String criteria) {
+        currentSortCriteria = criteria.split(" ")[0].toLowerCase(); // store just the game
+        List<Player> sortedPlayers = databaseStub.getSortedPlayers(criteria); // sort using full string
+        leaderboardTable.setItems(FXCollections.observableArrayList(sortedPlayers));
+        updatePodium(sortedPlayers);
+    }
+
+    private void updatePodium(List<Player> players) {
+        firstPlaceName.setText("");
+        firstPlaceScore.setText("");
+        secondPlaceName.setText("");
+        secondPlaceScore.setText("");
+        thirdPlaceName.setText("");
+        thirdPlaceScore.setText("");
+
+        if (players.size() >= 1) {
+            firstPlaceName.setText(players.get(0).getUsername());
+            firstPlaceScore.setText(getPlayerStat(players.get(0), currentSortCriteria, "wins") + " wins");
+        }
+        if (players.size() >= 2) {
+            secondPlaceName.setText(players.get(1).getUsername());
+            secondPlaceScore.setText(getPlayerStat(players.get(1), currentSortCriteria, "wins") + " wins");
+        }
+        if (players.size() >= 3) {
+            thirdPlaceName.setText(players.get(2).getUsername());
+            thirdPlaceScore.setText(getPlayerStat(players.get(2), currentSortCriteria, "wins") + " wins");
+        }
+    }
+    private int getPlayerStat(Player player, String game, String type) {
+        switch (game) {
+            case "total":
+                if (type.equals("wins")) {
+                    return player.getTotalWins();
+                } else {
+                    return player.getTotalLosses();
+                }
+            case "checkers":
+                if (type.equals("wins")) {
+                    return player.getCheckerWins();
+                } else {
+                    return player.getCheckerLosses();
+                }
+            case "connect4":
+                if (type.equals("wins")) {
+                    return player.getConnect4Wins();
+                } else {
+                    return player.getConnect4Losses();
+                }
+            case "tictactoe":
+                if (type.equals("wins")) {
+                    return player.getTictactoeWins();
+                } else {
+                    return player.getTictactoeLosses();
+                }
+            default:
+                return 0;
+        }
+    }
+
+    @FXML
+    public void handleSort(ActionEvent event) {
+        String selected = sortBox.getValue();
+        if (selected != null) {
+            loadAndDisplayPlayers(selected.toLowerCase());
+        }
+    }
+
+    @FXML
+    public void handleSearch(ActionEvent event) {
+        String searchTerm = searchField.getText().trim().toLowerCase();
+
+        if (searchTerm.isEmpty()) { //Does the same Job as the Handle Reset
+            loadAndDisplayPlayers(sortBox.getValue());
+            leaderboardTable.refresh();
+            return;
+        }
+
+        List<Player> allPlayers = databaseStub.getSortedPlayers(sortBox.getValue());
+        List<Player> filtered = allPlayers.stream()
+                .filter(p -> p.getUsername().toLowerCase().contains(searchTerm))
+                .toList();
+
+        leaderboardTable.setItems(FXCollections.observableArrayList(filtered));
+        updatePodium(filtered);
+
+    }
+
+    @FXML
+    public void handleReset(ActionEvent actionEvent) {
+        searchField.clear();
+        loadAndDisplayPlayers(sortBox.getValue());
+        leaderboardTable.refresh();
+    }
+
+    //Navigation Bar, might make this into its own class
+    public void handleHome(ActionEvent actionEvent) {
+        try {
+            Stage mainMenuStage = new Stage(); // Create a new Stage for the main menu
+            MainMenuWindow mainMenu = new MainMenuWindow(mainMenuStage, user);
+            mainMenuStage.show(); // Show the new main menu stage
+
+            // Close the login window
+            Stage currentStage = (Stage) leaderboardTable.getScene().getWindow();
+            currentStage.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            showAlert("Error", "Failed to load the main menu.");
+        }
+    }
+
+    public void handleGames(ActionEvent actionEvent) {
+        gamesMenu.setVisible(!gamesMenu.isVisible());
+    }
+
+    public void handleTicTacToe(ActionEvent actionEvent) {
+        //will need to be added to go to the window, if we implement a specfic game description window
+    }
+
+    public void handleCheckers(ActionEvent actionEvent) {
+        //will need to be added to go to the window, if we implement a specfic game description window
+    }
+
+    public void handleConnect4(ActionEvent actionEvent) {
+        //will need to be added to go to the window, if we implement a specfic game description window
+    }
+
+    public void handleProfile(ActionEvent actionEvent) {
+        //will need to be added to go to the window
+    }
+
+    public void handleSettings(ActionEvent actionEvent) {
+        //will need to be added to go to the window
+    }
+
+    public void handleLogout(ActionEvent actionEvent) {
+        try {
+            Stage currentStage = (Stage) leaderboardTable.getScene().getWindow();
+            currentStage.close();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("loginWindow2.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage loginStage = new Stage();
+            loginStage.setScene(scene);
+            loginStage.setTitle("Login");
+            loginStage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }}
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
 
 }

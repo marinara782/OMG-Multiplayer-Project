@@ -2,9 +2,10 @@ package org.example.gui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.authentication.Login;
@@ -13,6 +14,8 @@ import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourGame;
 import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.leaderboard.Leaderboard;
+
+import java.io.IOException;
 
 public class MainMenuWindow {
     private final Stage stage;
@@ -291,9 +294,16 @@ public class MainMenuWindow {
     }
 
     private void logout() {
-        Login loginScreen = new Login(stage);
-        loginScreen.show();
-    }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("loginWindow2.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Login");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }}
 
     private void startMatchmaking(String gameType) {
         System.out.println("Starting matchmaking for " + gameType);
@@ -583,9 +593,19 @@ public class MainMenuWindow {
 
 
     private void openLeaderboard() {
-        Leaderboard leaderboard = new Leaderboard();
-        leaderboard.showLeaderboard(new Stage());
-    }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LeaderboardWindow.fxml"));
+            Parent root = loader.load();
+            LeaderBoardController controller = loader.getController();
+            controller.setUser(currentUser);
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("OMG - Leaderboard");
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }}
+
 
     private void challengePlayer(String playerName) {
         Alert challenge = new Alert(Alert.AlertType.CONFIRMATION);

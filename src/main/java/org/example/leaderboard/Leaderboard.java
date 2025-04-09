@@ -86,6 +86,8 @@ public class Leaderboard {
     private Comparator<Player> getComparator(String gameName, String criteriaString){
         if ("wins".equals(criteriaString)){ // if the criteria is wins
             switch (gameName) { // switch based on the game name
+                case "total":
+                    return Comparator.comparingInt(Player::getTotalWins).reversed();
                 case "checkers":
                     return Comparator.comparingInt(Player::getCheckerWins).reversed(); // return the comparator based on the checker wins. reversed() is used to sort in descending order
                 case "tictactoe":
@@ -99,6 +101,8 @@ public class Leaderboard {
             }
         } else if ("losses".equals(criteriaString)){ // if the criteria is losses
             switch (gameName) { // switch based on the game name
+                case "total":
+                    return Comparator.comparingInt(Player::getTotalLosses);
                 case "checkers":
                     return Comparator.comparingInt(Player::getCheckerLosses).reversed();
                 case "tictactoe":
@@ -126,6 +130,10 @@ public class Leaderboard {
         } else {
             throw new IllegalArgumentException("invalid sorting criteria: "+criteriaString);
         }
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }
 

@@ -4,34 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Split the game breakdown into multiple sections">
+    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Final Working changes - (1)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/authentication/AuthenticationManager.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/authentication/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/authentication/Login.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/authentication/SignUp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/authentication/UserDatabaseStub.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/authentication/UserDatabaseStub.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/authentication/UserProfile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/authentication/UserProfile.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/authentication/temp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/authentication/temp.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/connectFour/ConnectFourGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/game/connectFour/ConnectFourGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/connectFour/ConnectFourGameModeSelection.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/ticTacToe/GameModeSelection.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/ticTacToe/SymbolSelection.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/ticTacToe/TicTacToeBoard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/ticTacToe/TicTacToeController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/ticTacToe/TicTacToeRules.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/GameWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/GameWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/HelloApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/LoginWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/LoginWindowController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/checkers/CheckersRules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/game/checkers/CheckersRules.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/connectFour/ConnectFourRules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/game/connectFour/ConnectFourRules.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/ticTacToe/TicTacToeRules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/game/ticTacToe/TicTacToeRules.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/MainMenuWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/MainMenuWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/SceneManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/SceneManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/SignUpWindowController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/SignUpWindowController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/UserProfileWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/UserProfileWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/matchmaking/SkillBasedMatchmaking.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/matchmaking/SkillBasedMatchmaking.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/networking/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/networking/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/tictactoe_rule.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/tictactoe_rules.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/userProfileWindow.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/userProfileWindow.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/userprofile.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/userprofile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/checkers_rules.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/checkers_rules.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/tictactoe_rules.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/tictactoe_rules.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/tictactoe.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/tictactoe.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,6 +110,9 @@
       <recent name="C:\Users\bhuva\OneDrive\Desktop\SENG 300\seng300-w25-project\src\main\resources\org\example\gui" />
       <recent name="C:\Users\bhuva\OneDrive\Desktop\SENG 300\seng300-w25-project\docs\UseCaseDescriptions" />
       <recent name="C:\Users\bhuva\OneDrive\Desktop\SENG 300\seng300-w25-project\docs\planning" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.example.game.checkers" />
     </key>
   </component>
   <component name="RunManager">
@@ -412,7 +397,23 @@
       <option name="project" value="LOCAL" />
       <updated>1743731048406</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Final Working changes">
+      <option name="closed" value="true" />
+      <created>1744150604197</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1744150604198</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Final Working changes - (1)">
+      <option name="closed" value="true" />
+      <created>1744150879991</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1744150879993</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -427,8 +428,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Developed UserProfileWindow" />
-    <MESSAGE value="Developed UserProfileWindow and HelloApplication" />
     <MESSAGE value="Started Tic-Tac-toe Basics from computer side." />
     <MESSAGE value="Initiated Tic-Tac-Toe Basics and deleted .fxml file from computer side- (1)." />
     <MESSAGE value="Working 2-Player Tic-Tac-Toe Board and Game (2)." />
@@ -452,6 +451,8 @@
     <MESSAGE value="Designing TicTacToe rules (Done)" />
     <MESSAGE value="Updated the Profile visuals a bit" />
     <MESSAGE value="Split the game breakdown into multiple sections" />
-    <option name="LAST_COMMIT_MESSAGE" value="Split the game breakdown into multiple sections" />
+    <MESSAGE value="Final Working changes" />
+    <MESSAGE value="Final Working changes - (1)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final Working changes - (1)" />
   </component>
 </project>

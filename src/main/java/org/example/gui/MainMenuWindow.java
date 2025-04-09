@@ -13,14 +13,10 @@ import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourGame;
 import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.leaderboard.Leaderboard;
-//import org.example.matchmaking.Matchmaker;
 
 public class MainMenuWindow {
-    private Stage stage;
-    private Scene scene;
-    private BorderPane mainLayout;
-    private UserProfile currentUser;
-//    private Matchmaker matchmaker;
+    private final Stage stage;
+    private final UserProfile currentUser;
 
     public MainMenuWindow(Stage stage, UserProfile currentUser) {
         this.stage = stage;
@@ -30,7 +26,7 @@ public class MainMenuWindow {
     }
 
     private void initializeUI() {
-        mainLayout = new BorderPane();
+        BorderPane mainLayout = new BorderPane();
         mainLayout.setPadding(new Insets(20));
         mainLayout.setStyle("-fx-background-color: #2c3e50;");
 
@@ -50,7 +46,7 @@ public class MainMenuWindow {
         HBox statusBar = createStatusBar();
         mainLayout.setBottom(statusBar);
 
-        scene = new Scene(mainLayout, 1200, 800);
+        Scene scene = new Scene(mainLayout, 1200, 800);
         stage.setTitle("OMG - Online Multiplayer Game Platform");
         stage.setScene(scene);
         stage.setMinWidth(800);
@@ -70,7 +66,7 @@ public class MainMenuWindow {
         // User profile button
         Button profileButton = new Button("Profile");
         profileButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
-        profileButton.setOnAction(e -> openUserProfile());
+        profileButton.setOnAction(_ -> openUserProfile());
 
         // Spacer
         Region spacer = new Region();
@@ -83,7 +79,7 @@ public class MainMenuWindow {
         // Logout button
         Button logoutButton = new Button("Logout");
         logoutButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
-        logoutButton.setOnAction(e -> logout());
+        logoutButton.setOnAction(_ -> logout());
 
         header.getChildren().addAll(logoLabel, spacer, userLabel, profileButton, logoutButton);
 
@@ -103,15 +99,15 @@ public class MainMenuWindow {
 
         // TicTacToe Game Card
         VBox ticTacToeCard = createGameCard("Tic-Tac-Toe", "ticTacToe");
-        ticTacToeCard.setOnMouseClicked(e -> runTicTacToeGame());
+        ticTacToeCard.setOnMouseClicked(_ -> runTicTacToeGame());
 
         // Connect Four Game Card
         VBox connectFourCard = createGameCard("Connect Four", "connectFour");
-        connectFourCard.setOnMouseClicked(e -> handleConnectFourClick());
+        connectFourCard.setOnMouseClicked(_ -> handleConnectFourClick());
 
         // Checkers Game Card
         VBox checkersCard = createGameCard("Checkers", "checkers");
-        checkersCard.setOnMouseClicked(e -> startMatchmaking("checkers"));
+        checkersCard.setOnMouseClicked(_ -> startMatchmaking("checkers"));
 
         gamesContainer.getChildren().addAll(ticTacToeCard, connectFourCard, checkersCard);
 
@@ -131,7 +127,7 @@ public class MainMenuWindow {
 
         Button findMatchButton = new Button("Find Match");
         findMatchButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-min-width: 150px;");
-        findMatchButton.setOnAction(e -> findMatch(gameSelector.getValue()));
+        findMatchButton.setOnAction(_ -> findMatch(gameSelector.getValue()));
 
         matchmakingSection.getChildren().addAll(matchmakingLabel, gameSelector, findMatchButton);
 
@@ -162,7 +158,7 @@ public class MainMenuWindow {
 
         Button rulesButton = new Button("View Rules");
         rulesButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
-        rulesButton.setOnAction(e -> showGameRules(gameType));
+        rulesButton.setOnAction(_ -> showGameRules(gameType));
 
         card.getChildren().addAll(iconPlaceholder, nameLabel, playersLabel, rulesButton);
 
@@ -214,7 +210,7 @@ public class MainMenuWindow {
 
         Button viewMoreButton = new Button("View Full Leaderboard");
         viewMoreButton.setStyle("-fx-background-color: transparent; -fx-text-fill: #3498db;");
-        viewMoreButton.setOnAction(e -> openLeaderboard());
+        viewMoreButton.setOnAction(_ -> openLeaderboard());
 
         leaderboardSection.getChildren().addAll(leaderboardTitle, leaderEntries, viewMoreButton);
 
@@ -244,7 +240,7 @@ public class MainMenuWindow {
             Button challengeButton = new Button("Challenge");
             challengeButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 10px;");
             int finalI = i;
-            challengeButton.setOnAction(e -> challengePlayer("Friend " + finalI));
+            challengeButton.setOnAction(_ -> challengePlayer("Friend " + finalI));
 
             entry.getChildren().addAll(statusIndicator, nameLabel, spacer, challengeButton);
             playerEntries.getChildren().add(entry);
@@ -327,7 +323,7 @@ public class MainMenuWindow {
 
         Button cancelButton = new Button("Cancel");
         cancelButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
-        cancelButton.setOnAction(e -> dialogStage.close());
+        cancelButton.setOnAction(_ -> dialogStage.close());
 
         dialogContent.getChildren().addAll(titleLabel, progressIndicator, statusLabel, cancelButton);
 
@@ -359,12 +355,11 @@ public class MainMenuWindow {
                 new GameWindow(stage, new TicTacToeGame(isComputerGameTTT), currentUser);
                 break;
             case "connectfour", "connectFour", "connect-four":
-//                Boolean vsComputer = showConnectFourModeDialog();
+                Boolean vsComputer = showConnectFourModeDialog();
 //                if (vsComputer == null) {
 //                    return;
 //                }
-                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, false), currentUser);
-                //new GameWindow(stage, new ConnectFourGame(1,6,7,4), currentUser);
+//                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, false), currentUser);
                 break;
             case "checkers":
                 new GameWindow(stage, new CheckersGame(), currentUser);
@@ -511,7 +506,7 @@ public class MainMenuWindow {
     // of whether the game is against the computer or not through the selected option in the dialogue box
     public boolean isComputerGameTTT;
     private void runTicTacToeGame() {
-        isComputerGameTTT = showTicTacToeModeDialog();
+        isComputerGameTTT = Boolean.TRUE.equals(showTicTacToeModeDialog());
         TicTacToeGame ticTacToeGame = new TicTacToeGame(isComputerGameTTT);
         new GameWindow(stage, ticTacToeGame, currentUser);
     }
@@ -542,7 +537,7 @@ public class MainMenuWindow {
         Label noteLabel = new Label("Select a goal that fits the board size");
         noteLabel.setStyle("-fx-text-fill: #bdc3c7; -fx-font-size: 12px;");
 
-        boardSize.setOnAction(e -> {
+        boardSize.setOnAction(_ -> {
             String[] parts = boardSize.getValue().split(" x ");
             int rows  = Integer.parseInt(parts[0].trim());
             int cols  = Integer.parseInt(parts[1].trim());

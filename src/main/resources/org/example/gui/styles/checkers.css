@@ -1,0 +1,178 @@
+.root {
+    -dark-bg: #1e2a38;
+    -panel-bg: #2c3e50;
+    -element-bg: #34495e;
+    -highlight-color: #3498db;
+    -success-color: #2ecc71;
+    -error-color: #e74c3c;
+    -warning-color: #f39c12;
+    -text-primary: #ffffff;
+    -text-secondary: #bdc3c7;
+}
+
+.title-label {
+    -fx-text-fill: -text-primary;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 2, 0, 0, 1);
+}
+
+.rules-tab-pane {
+    -fx-background-color: transparent;
+    -fx-tab-min-width: 120px;
+}
+
+.rules-tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: -element-bg;
+    -fx-background-radius: 5px 5px 0 0;
+}
+
+.rule-tab {
+    -fx-background-color: -element-bg;
+    -fx-background-radius: 5px 5px 0 0;
+    -fx-padding: 5px 15px;
+}
+
+.rule-tab:selected {
+    -fx-background-color: -panel-bg;
+}
+
+.rule-tab .tab-label {
+    -fx-text-fill: -text-primary;
+    -fx-font-weight: semi-bold;
+}
+
+.rules-scroll-pane {
+    -fx-background-color: -panel-bg;
+    -fx-border-color: -element-bg;
+    -fx-border-radius: 0 0 5px 5px;
+}
+
+.rules-section {
+    -fx-background-color: -panel-bg;
+    -fx-padding: 20px;
+}
+
+.section-header {
+    -fx-text-fill: -text-primary;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 5px 0;
+    -fx-border-color: -element-bg;
+    -fx-border-width: 0 0 1px 0;
+}
+
+.subsection-header {
+    -fx-text-fill: -text-primary;
+    -fx-font-size: 16px;
+}
+
+.rule-text {
+    -fx-text-fill: -text-secondary;
+    -fx-line-spacing: 5px;
+}
+
+.checkers-board {
+    -fx-background-color: -element-bg;
+    -fx-padding: 5px;
+    -fx-border-color: -dark-bg;
+    -fx-border-width: 2px;
+    -fx-border-radius: 3px;
+}
+
+.checkers-cell-light {
+    -fx-fill: #ecf0f1;
+    -fx-stroke: -dark-bg;
+    -fx-stroke-width: 0.5px;
+}
+
+.checkers-cell-dark {
+    -fx-fill: #7f8c8d;
+    -fx-stroke: -dark-bg;
+    -fx-stroke-width: 0.5px;
+}
+
+.selected-cell {
+    -fx-fill: -highlight-color;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 4, 0, 0, 0);
+}
+
+.checkers-piece-white {
+    -fx-fill: #ecf0f1;
+    -fx-stroke: #bdc3c7;
+    -fx-stroke-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 2, 0, 0, 1);
+}
+
+.checkers-piece-black {
+    -fx-fill: #2c3e50;
+    -fx-stroke: #1e2a38;
+    -fx-stroke-width: 2px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 2, 0, 0, 1);
+}
+
+.checkers-king {
+    -fx-stroke-width: 3px;
+    -fx-stroke: -highlight-color;
+}
+
+.checkers-king-indicator {
+    -fx-fill: -highlight-color;
+    -fx-stroke: #ecf0f1;
+    -fx-stroke-width: 1px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 2, 0, 0, 1);
+}
+
+.board-container, .scenario-box, .timeline-box {
+    -fx-background-color: -element-bg;
+    -fx-background-radius: 5px;
+    -fx-border-color: -panel-bg;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+    -fx-spacing: 10px;
+}
+
+.board-caption, .scenario-title {
+    -fx-text-fill: -text-secondary;
+    -fx-font-style: italic;
+    -fx-padding: 5px 0;
+    -fx-alignment: center;
+}
+
+.scenario-title {
+    -fx-text-fill: -text-primary;
+    -fx-font-weight: bold;
+    -fx-font-style: normal;
+}
+
+.timeline-box {
+    -fx-padding: 15px;
+    -fx-spacing: 15px;
+}
+
+.timeline-date {
+    -fx-text-fill: -highlight-color;
+    -fx-font-weight: bold;
+    -fx-min-width: 70px;
+}
+
+.timeline-event {
+    -fx-text-fill: -text-secondary;
+    -fx-wrap-text: true;
+}
+
+.strategy-cell {
+    -fx-fill: derive(-success-color, -20%);
+}
+
+AnchorPane {
+    -fx-background-color: -dark-bg;
+}
+
+VBox {
+    -fx-background-color: transparent;
+}
+
+GridPane {
+    -fx-alignment: center;
+}

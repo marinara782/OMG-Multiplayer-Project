@@ -12,8 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.authentication.UserProfile;
-import org.example.leaderboard.Leaderboard;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,13 +34,11 @@ public class UserProfileWindow {
     }
 
     private void initializeMockData() {
-        // Mock game statistics
         gameStats = new HashMap<>();
         gameStats.put("Tic-Tac-Toe", 42);
         gameStats.put("Connect Four", 28);
         gameStats.put("Checkers", 16);
 
-        // Mock ranks
         ranks = new HashMap<>();
         ranks.put("Tic-Tac-Toe", 1250);
         ranks.put("Connect Four", 1423);
@@ -53,11 +49,9 @@ public class UserProfileWindow {
         mainLayout = new BorderPane();
         mainLayout.setStyle("-fx-background-color: #2c3e50;");
 
-        // Header with user info
         HBox header = createHeader();
         mainLayout.setTop(header);
 
-        // Main content with tabs
         tabPane = new TabPane();
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
@@ -78,15 +72,15 @@ public class UserProfileWindow {
     }
 
     private Node createSettingsPane() {
-        return null;
+        return new Label("Settings content goes here.");
     }
 
     private Node createMatchHistoryPane() {
-        return null;
+        return new Label("Match history content goes here.");
     }
 
     private Node createStatsPane() {
-        return null;
+        return new Label("Game stats content goes here.");
     }
 
     private HBox createHeader() {
@@ -95,12 +89,10 @@ public class UserProfileWindow {
         header.setAlignment(Pos.CENTER_LEFT);
         header.setStyle("-fx-background-color: #1a2530;");
 
-        // User avatar placeholder
         Region avatarPlaceholder = new Region();
         avatarPlaceholder.setPrefSize(80, 80);
         avatarPlaceholder.setStyle("-fx-background-color: #3498db; -fx-background-radius: 40;");
 
-        // User info
         VBox userInfo = new VBox(5);
         Label nameLabel = new Label(userProfile.getUsername());
         nameLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;");
@@ -113,7 +105,6 @@ public class UserProfileWindow {
 
         userInfo.getChildren().addAll(nameLabel, joinDateLabel, statusLabel);
 
-        // Rank badge
         VBox rankInfo = new VBox(5);
         rankInfo.setAlignment(Pos.CENTER);
         rankInfo.setPadding(new Insets(0, 0, 0, 40));
@@ -129,11 +120,9 @@ public class UserProfileWindow {
 
         rankInfo.getChildren().addAll(rankLabel, ratingLabel, ratingTextLabel);
 
-        // Spacer
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        // Close button
         Button closeButton = new Button("Close");
         closeButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
         closeButton.setOnAction(e -> stage.close());
@@ -148,22 +137,15 @@ public class UserProfileWindow {
         overviewPane.setPadding(new Insets(20));
         overviewPane.setStyle("-fx-background-color: #2c3e50;");
 
-        // Summary section
         HBox summary = new HBox(20);
         summary.setAlignment(Pos.CENTER);
 
-        // Total games stat
         VBox totalGamesBox = createStatBox("Total Games", "86", "#3498db");
-
-        // Win rate stat
         VBox winRateBox = createStatBox("Win Rate", "62%", "#2ecc71");
-
-        // Highest rank stat
         VBox highestRankBox = createStatBox("Highest Rank", "Gold II", "#f39c12");
 
         summary.getChildren().addAll(totalGamesBox, winRateBox, highestRankBox);
 
-        // Game distribution chart
         TitledPane chartContainer = new TitledPane();
         chartContainer.setText("Game Distribution");
         chartContainer.setCollapsible(false);
@@ -182,54 +164,27 @@ public class UserProfileWindow {
         barChart.getData().add(series);
         chartContainer.setContent(barChart);
 
-        // Recent achievements
-        TitledPane achievementsContainer = new TitledPane();
-        achievementsContainer.setText("Recent Achievements");
-        achievementsContainer.setCollapsible(false);
-
-        VBox achievementsList = new VBox(10);
-        achievementsList.setPadding(new Insets(10));
-
-        String[] achievements = {
-                "First Win in Connect Four",
-                "5-Win Streak in Tic-Tac-Toe",
-                "Reached Gold Rank",
-                "Played 50 Games"
-        };
-
-        for (String achievement : achievements) {
-            HBox achievementRow = new HBox(10);
-            achievementRow.setAlignment(Pos.CENTER_LEFT);
-
-            // Achievement icon placeholder
-            Region iconPlaceholder = new Region();
-            iconPlaceholder.setPrefSize(30, 30);
-            iconPlaceholder.setStyle("-fx-background-color: #f39c12; -fx-background-radius: 15;");
-
-            Label achievementLabel = new Label(achievement);
-            achievementLabel.setStyle("-fx-text-fill: white;");
-
-            Region spacer = new Region();
-            HBox.setHgrow(spacer, Priority.ALWAYS);
-
-            Label dateLabel = new Label("Feb 12, 2023");
-            dateLabel.setStyle("-fx-text-fill: #bdc3c7;");
-
-            achievementRow.getChildren().addAll(iconPlaceholder, achievementLabel, spacer, dateLabel);
-            achievementsList.getChildren().add(achievementRow);
-        }
-
-        achievementsContainer.setContent(achievementsList);
-
-        overviewPane.getChildren().addAll(summary, chartContainer, achievementsContainer);
-
+        overviewPane.getChildren().addAll(summary, chartContainer);
         return overviewPane;
     }
 
     private VBox createStatBox(String title, String value, String color) {
-        return null;
+        VBox box = new VBox(5);
+        box.setAlignment(Pos.CENTER);
+        box.setPadding(new Insets(10));
+        box.setStyle("-fx-background-color: " + color + "; -fx-background-radius: 10;");
+
+        Label valueLabel = new Label(value);
+        valueLabel.setStyle("-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;");
+
+        Label titleLabel = new Label(title);
+        titleLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: white;");
+
+        box.getChildren().addAll(valueLabel, titleLabel);
+        return box;
     }
 
     public void show() {
+        stage.show();
     }
 }

@@ -12,6 +12,8 @@ public class HelloApplication extends Application {
         // Assuming you already have a UserProfile object (replace with actual logic)
         UserProfile currentUser = new UserProfile(); // Or get the actual user
 
+        SceneManager.setPrimaryStage(new Stage());
+
         // Create and show the MainMenuWindow with the stage and user
         MainMenuWindow mainMenuWindow = new MainMenuWindow(stage, currentUser);
         mainMenuWindow.show();

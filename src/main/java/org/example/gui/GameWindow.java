@@ -60,7 +60,7 @@ public class GameWindow {
 
     /**
      * constructor for the game window
-     * @param stage 
+     * @param stage
      * @param gameInstance
      * @param currentUser
      */
@@ -119,7 +119,7 @@ public class GameWindow {
 
     /**
      * Creates the top bar of the game window with game title, turn indicator, timer, and exit button.
-     * @return 
+     * @return
      */
     private HBox createTopBar() {
         HBox topBar = new HBox(20);
@@ -716,15 +716,15 @@ public class GameWindow {
 //        System.out.println("Dropping piece in column: " + column);
 //        // This would call the actual game logic in a real implementation
 //        simulateOpponentTurn();
-        
+
         if(connectFourGame == null) {
             return;
         }
-        
+
         int[][] board = connectFourGame.getBoard();
         int rows  = connectFourGame.getRows();
         int player = connectFourGame.getPlayer();
-        
+
         for(int row = rows - 1; row >= 0 ;  row--){
             if(board[row][column] == ConnectFourBoard.Empty ){
                 connectFourGame.makeMove(row, column);

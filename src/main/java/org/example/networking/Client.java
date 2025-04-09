@@ -39,7 +39,7 @@ public class Client {
         }
     }
 
-    
+
     public void disconnect(){
         System.out.println("Disconnecting from server...");
         if(!isConnected){

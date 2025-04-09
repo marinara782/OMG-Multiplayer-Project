@@ -8,13 +8,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ServerTest {
     //instantiate server object
-    private Server server;
+    private Server testServer;
 
     //set up-- make a server object
     @BeforeEach
     void setUp(){
         //before each test, make a new server object
-        server = new Server();
+        testServer = new Server();
+        //enter port number 80 as parameter
+        testServer.start(80);
+        testServer.clearActiveSessions();
     }
 
     @AfterEach
@@ -28,22 +31,36 @@ public class ServerTest {
 
     @Test
     void testStart(){
+        testServer.stop();
         //enter port number 80 as parameter
-        server.start(80);
+        testServer.start(80);
+        //test
+        System.out.println("From test: isRunning = " + testServer.isRunning());
         //create a game session
-        assertTrue(server.isRunning(), "Server should be running after start()");
-        assertEquals(80, server.getPort(), "Port number should be set correctly.");
+        assertTrue(testServer.isRunning(), "Server should be running after start()");
+        assertEquals(80, testServer.getPort(), "Port number should be set correctly.");
     }
 
     @Test
     void testCreateGameSessionWhileServerRunning(){
-        server.createGameSession("test");
+        testServer.createGameSession("test");
         //check if new game session was returned
-        server.start(80);
-        GameSession session = server.createGameSession("checkers");
+        GameSession session = testServer.createGameSession("checkers");
         assertNotNull(session);
         //check if session has been added to list of active sessions
+        assertTrue(testServer.getActiveSessions().contains(session), "Session should be found.");
+        assertEquals(2, testServer.getActiveSessions().size(), "There should be two active sessions.");
+    }
+
+    @Test
+    void testCreateGameSessionWhileServerStopped(){
+        testServer.createGameSession("test");   //not stored but still added to list
+        GameSession session = testServer.createGameSession("checkers");
+        assertNull(session);
 
     }
+
+
+
 
 }

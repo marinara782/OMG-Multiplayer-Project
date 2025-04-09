@@ -38,6 +38,11 @@ public class Server {
         return new ArrayList<>(activeSessions);
     }
 
+    //clear active sessions
+    public void clearActiveSessions(){
+        activeSessions.clear();
+    }
+
     public Server(){
         this.activeSessions = new ArrayList<>();
         this.isRunning = false;
@@ -52,6 +57,10 @@ public class Server {
         }else{
             System.out.println("Server is already running!");
         }
+    }
+
+    public void stop(){
+        isRunning = false;
     }
 
     private void loadPlayers(){
@@ -143,8 +152,9 @@ public class Server {
     }
 
     public boolean isRunning() {
-        return false;
+        return isRunning;
     }
 
     //new server (using firebase)
 }
+

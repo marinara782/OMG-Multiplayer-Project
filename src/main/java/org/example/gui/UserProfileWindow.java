@@ -164,44 +164,7 @@ public class UserProfileWindow {
         barChart.getData().add(series);
         chartContainer.setContent(barChart);
 
-        TitledPane achievementsContainer = new TitledPane();
-        achievementsContainer.setText("Recent Achievements");
-        achievementsContainer.setCollapsible(false);
-
-        VBox achievementsList = new VBox(10);
-        achievementsList.setPadding(new Insets(10));
-
-        String[] achievements = {
-                "First Win in Connect Four",
-                "5-Win Streak in Tic-Tac-Toe",
-                "Reached Gold Rank",
-                "Played 50 Games"
-        };
-
-        for (String achievement : achievements) {
-            HBox achievementRow = new HBox(10);
-            achievementRow.setAlignment(Pos.CENTER_LEFT);
-
-            Region iconPlaceholder = new Region();
-            iconPlaceholder.setPrefSize(30, 30);
-            iconPlaceholder.setStyle("-fx-background-color: #f39c12; -fx-background-radius: 15;");
-
-            Label achievementLabel = new Label(achievement);
-            achievementLabel.setStyle("-fx-text-fill: white;");
-
-            Region spacer = new Region();
-            HBox.setHgrow(spacer, Priority.ALWAYS);
-
-            Label dateLabel = new Label("Feb 12, 2023");
-            dateLabel.setStyle("-fx-text-fill: #bdc3c7;");
-
-            achievementRow.getChildren().addAll(iconPlaceholder, achievementLabel, spacer, dateLabel);
-            achievementsList.getChildren().add(achievementRow);
-        }
-
-        achievementsContainer.setContent(achievementsList);
-
-        overviewPane.getChildren().addAll(summary, chartContainer, achievementsContainer);
+        overviewPane.getChildren().addAll(summary, chartContainer);
         return overviewPane;
     }
 

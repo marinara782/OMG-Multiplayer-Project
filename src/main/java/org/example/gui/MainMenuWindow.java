@@ -170,59 +170,10 @@ public class MainMenuWindow {
     }
 
     private void showGameRules(String gameType) {
-        String rules = "";
-        if (gameType.toLowerCase().equals("connectfour")) {
-            rules = """
-                CONNECT FOUR RULES:
-                • Players take turns dropping discs into columns.
-                • The first to connect the target number in a row (horizontally, vertically, or diagonally) wins.
-                • If the board fills up with no winner, it's a draw.
-                • Use the drop buttons at the top of the board to make a move.
-                """;
-        }else if (gameType.toLowerCase().equals("tictactoe")) {
-            rules = """
-                TIC-TAC-TOE RULES:
-                • Two players take turns placing X or O.
-                • The first to get 3 in a row (horizontal, vertical, diagonal) wins.
-                • If all 9 spaces are filled and no winner, it's a draw.
-                """;
-        } else if (gameType.toLowerCase().equals("checkers")) {
-            rules = """
-                CHECKERS RULES:
-                • Each player moves diagonally and captures opponent's pieces by jumping over them.
-                • Reach the last row to crown a piece (king).
-                • Player with no remaining moves or pieces loses.
-                """;
-        }else {
-            rules = "No rules available for this game.";
-        }
-
-        Alert rulesDialog = new Alert(Alert.AlertType.INFORMATION);
-        rulesDialog.setTitle("Game Rules");
-        rulesDialog.setHeaderText("Rules for " + formatGameTitle(gameType));
-        rulesDialog.setContentText(rules);
-
-        DialogPane rulesDialogPane = rulesDialog.getDialogPane();
-        rulesDialogPane.setStyle("-fx-background-color: #2c3e50;");
-        rulesDialogPane.lookup(".content.label").setStyle("-fx-text-fill: white;");
-        rulesDialogPane.lookup(".header-panel").setStyle("-fx-background-color: #3498db;");
-
-        rulesDialog.showAndWait();
-
-    }
-
-    private String formatGameTitle(String gameType) {
-        if (gameType.toLowerCase().equals("connectfour")) {
-            return "Connect Four";
-        }
-        else if (gameType.toLowerCase().equals("tictactoe")) {
-            return "Tic-Tac-Toe";
-        }
-        else if (gameType.toLowerCase().equals("checkers")) {
-            return "Checkers";
-        }
-        else {
-            return "Unknown Game";
+        switch (gameType.toLowerCase()) {
+            case "connectfour" -> SceneManager.loadScene("connectfour_rules.fxml");
+            case "tictactoe" -> SceneManager.loadScene("tictactoe_rules.fxml");
+            case "checkers" -> SceneManager.loadScene("checkers_rules.fxml");
         }
     }
 
@@ -489,7 +440,8 @@ public class MainMenuWindow {
         return result == vsComputerButton;
     }
 
-    //This method shows the dialogue box when tic tac toe is selected allowing the player to choose a multipllayer or computer game
+    //This method shows the dialogue box
+    // when tic-tac-toe is selected allowing the player to choose a multiplayer or computer game
     private Boolean showTicTacToeModeDialog() {
         Alert modeDialog = new Alert(Alert.AlertType.CONFIRMATION);
         modeDialog.setTitle("Choose Game Mode");
@@ -555,18 +507,19 @@ public class MainMenuWindow {
 //        }
     }
 
-    //This method makes a new tic tac toe game with the parameter of whether the game is against the computer or not through the selected option in the dialogue box
+    //This method makes a new tic-tac-toe game with the parameter
+    // of whether the game is against the computer or not through the selected option in the dialogue box
     public boolean isComputerGameTTT;
     private void runTicTacToeGame() {
         isComputerGameTTT = showTicTacToeModeDialog();
         TicTacToeGame ticTacToeGame = new TicTacToeGame(isComputerGameTTT);
         new GameWindow(stage, ticTacToeGame, currentUser);
-        }
+    }
 
 
     /*
-    *  THIS METHOD TAKES CARE OF CUSTOM BOARD SIZES WHICH WAS SUGGESTED IN FEATURE PROPOSAL
-    * */
+     *  THIS METHOD TAKES CARE OF CUSTOM BOARD SIZES WHICH WAS SUGGESTED IN FEATURE PROPOSAL
+     * */
     private void showBoardOptionsDialog(boolean vsComputer) {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Select board settings");

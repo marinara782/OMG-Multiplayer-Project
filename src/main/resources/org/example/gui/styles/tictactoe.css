@@ -1,0 +1,103 @@
+.root {
+    -fx-background-color: -dark-bg;
+    -fx-font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.title-label {
+    -fx-text-fill: -text-primary;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 2, 0, 0, 1);
+}
+
+.rules-tab-pane {
+    -fx-background-color: transparent;
+    -fx-tab-min-width: 120px;
+}
+
+.rules-tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: -element-bg;
+    -fx-background-radius: 5px 5px 0 0;
+}
+
+.rule-tab {
+    -fx-background-color: -element-bg;
+    -fx-background-radius: 5px 5px 0 0;
+    -fx-padding: 5px 15px;
+}
+
+.rule-tab:selected {
+    -fx-background-color: -panel-bg;
+}
+
+.rule-tab .tab-label {
+    -fx-text-fill: -text-primary;
+    -fx-font-weight: semi-bold;
+}
+
+.rules-scroll-pane {
+    -fx-background-color: -panel-bg;
+    -fx-border-color: -element-bg;
+    -fx-border-radius: 0 0 5px 5px;
+}
+
+.rules-section {
+    -fx-background-color: -panel-bg;
+}
+
+.section-header {
+    -fx-text-fill: -text-primary;
+    -fx-border-color: -element-bg;
+}
+
+.subsection-header, .rule-text {
+    -fx-text-fill: -text-secondary;
+}
+
+.board-container, .scenario-box {
+    -fx-background-color: -element-bg;
+    -fx-border-color: -panel-bg;
+
+
+.tictactoe-board, .mini-board {
+    -fx-background-color: -element-bg;
+}
+
+.board-cell, .mini-cell {
+    -fx-fill: -panel-bg;
+    -fx-stroke: -text-secondary;
+}
+
+.x-symbol {
+    -fx-text-fill: -error-color;
+}
+.o-symbol {
+    -fx-text-fill: -highlight-color;
+}
+
+.menu-button {
+    -fx-background-color: -element-bg;
+    -fx-text-fill: -text-primary;
+    -fx-border-color: -panel-bg;
+}
+.menu-button:hover {
+    -fx-background-color: #3d566e;
+}
+
+.start-button {
+    -fx-background-color: -success-color;
+    -fx-text-fill: -text-primary;
+}
+.start-button:hover {
+    -fx-background-color: #27ae60;
+}
+
+.root {
+    -dark-bg: #1e2a38;
+    -panel-bg: #2c3e50;
+    -element-bg: #34495e;
+    -highlight-color: #3498db;
+    -success-color: #2ecc71;
+    -error-color: #e74c3c;
+    -text-primary: #ffffff;
+    -text-secondary: #bdc3c7;
+}

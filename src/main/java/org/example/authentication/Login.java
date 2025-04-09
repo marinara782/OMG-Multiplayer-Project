@@ -127,11 +127,11 @@ public class Login extends UserDatabaseStub {
      */
     public static  boolean createAccount(String new_username, String password, String email, String phone) throws FileNotFoundException {
 
-            System.out.println("\nAttempting to create account for: " + new_username);
+        System.out.println("\nAttempting to create account for: " + new_username);
 
-            UserDatabaseStub databaseStub = new UserDatabaseStub();
+        UserDatabaseStub databaseStub = new UserDatabaseStub();
 
-            List<User> users = new ArrayList<>(); // Initialize empty list as fallback
+        List<User> users = new ArrayList<>(); // Initialize empty list as fallback
 
         // authenticate users
 
@@ -146,7 +146,7 @@ public class Login extends UserDatabaseStub {
         if(databaseStub.verify_username(new_username)){
             System.out.println("User already exists. ");
             return false;
-            }
+        }
 
         User new_user = new User(new_username, password, email, phone);
         users.add(new_user);
@@ -194,7 +194,7 @@ public class Login extends UserDatabaseStub {
         System.out.println("Password changed successfully");
         return true;
     }
-    
+
     /**
      * verifies that the password is correct and matches with the given username, then change the email
      * @param username username of the user

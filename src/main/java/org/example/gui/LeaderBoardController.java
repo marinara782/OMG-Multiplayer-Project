@@ -104,6 +104,7 @@ public class LeaderBoardController {
     private void loadAndDisplayPlayers(String criteria) {
         currentSortCriteria = criteria.split(" ")[0].toLowerCase(); // store just the game
         List<Player> sortedPlayers = databaseStub.getSortedPlayers(criteria); // sort using full string
+        leaderboardTable.refresh();
         leaderboardTable.setItems(FXCollections.observableArrayList(sortedPlayers));
         updatePodium(sortedPlayers);
     }

@@ -215,8 +215,8 @@ public class Login extends UserDatabaseStub {
         return true;
     }
 
-    public Login(Stage stage) {
-    }
+    //public Login(Stage stage) {
+    //}
 
     public void show() {
     }

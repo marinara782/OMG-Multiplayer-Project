@@ -65,7 +65,7 @@ public class LoginWindowController {
                 showAlert("Error", "Incorrect password. Please try again.");
             } else {
                 showAlert("Success", "Login successful!");
-                UserProfile authenticatedUser = new UserProfile(username, password, "", ""); // Fetch full user details if needed
+                UserProfile authenticatedUser = new UserProfile(); // Fetch full user details if needed
                 OpenMainMenu(authenticatedUser);
             }
         } catch(FileNotFoundException e) {
@@ -136,7 +136,7 @@ public class LoginWindowController {
     }
 
     public void handleJoinGuest(ActionEvent actionEvent) {
-        UserProfile currentUser = new UserProfile("Guest",null,null,null);
+        UserProfile currentUser = new UserProfile();
         OpenMainMenu(currentUser);
     }
 

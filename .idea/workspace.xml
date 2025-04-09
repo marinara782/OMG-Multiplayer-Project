@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Split the game breakdown into multiple sections" />
+    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Final Working changes - (1)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/checkers/CheckersRules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/game/checkers/CheckersRules.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/connectFour/ConnectFourRules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/game/connectFour/ConnectFourRules.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/game/ticTacToe/TicTacToeRules.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/game/ticTacToe/TicTacToeRules.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/MainMenuWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/MainMenuWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/checkers_rules.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/checkers_rules.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/tictactoe_rules.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/fxml/tictactoe_rules.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/tictactoe.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/gui/styles/tictactoe.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,7 +32,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="GUI_iteration3" />
+        <entry key="$PROJECT_DIR$" value="temp_merge_gui_attempt" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -77,7 +87,7 @@
     "Application.Unnamed.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "bhuvan",
+    "git-widget-placeholder": "GUI__iteration3",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "C:/Users/bhuva/OneDrive/Desktop/SENG 300/seng300-w25-project/src/main/java/org/example/game/connectFour",
     "last_opened_file_path": "C:/Users/bhuva/OneDrive/Desktop/GitHub Projects/DuplicateGame",
@@ -101,6 +111,9 @@
       <recent name="C:\Users\bhuva\OneDrive\Desktop\SENG 300\seng300-w25-project\docs\UseCaseDescriptions" />
       <recent name="C:\Users\bhuva\OneDrive\Desktop\SENG 300\seng300-w25-project\docs\planning" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.example.game.checkers" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
@@ -110,14 +123,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.24978.46" />
-        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-IU-243.24978.46" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -392,11 +397,24 @@
       <option name="project" value="LOCAL" />
       <updated>1743731048406</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Final Working changes">
+      <option name="closed" value="true" />
+      <created>1744150604197</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1744150604198</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Final Working changes - (1)">
+      <option name="closed" value="true" />
+      <created>1744150879991</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1744150879993</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -410,8 +428,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Developed UserProfileWindow" />
-    <MESSAGE value="Developed UserProfileWindow and HelloApplication" />
     <MESSAGE value="Started Tic-Tac-toe Basics from computer side." />
     <MESSAGE value="Initiated Tic-Tac-Toe Basics and deleted .fxml file from computer side- (1)." />
     <MESSAGE value="Working 2-Player Tic-Tac-Toe Board and Game (2)." />
@@ -435,16 +451,8 @@
     <MESSAGE value="Designing TicTacToe rules (Done)" />
     <MESSAGE value="Updated the Profile visuals a bit" />
     <MESSAGE value="Split the game breakdown into multiple sections" />
-    <option name="LAST_COMMIT_MESSAGE" value="Split the game breakdown into multiple sections" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.lang.NullPointerException" package="java.lang" />
-          <option name="timeStamp" value="1" />
-        </breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Final Working changes" />
+    <MESSAGE value="Final Working changes - (1)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final Working changes - (1)" />
   </component>
 </project>

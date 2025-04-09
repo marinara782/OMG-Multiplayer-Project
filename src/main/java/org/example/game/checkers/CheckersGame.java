@@ -50,7 +50,13 @@ public class CheckersGame {
      * @return true when the piece has moved, false when fails
      */
     public boolean movePiece(int fromRow, int fromCol, int toRow, int toCol) {
+        if (!isInBounds(fromRow, fromCol) || !isInBounds(toRow, toCol)) {
+            return false; // Prevents ArrayIndexOutOfBoundsException
+        }
+
         int piece = board[fromRow][fromCol];
+        if (piece == 0 || (piece > 0) != isRedTurn) return false; // not a valid piece or not player's turn
+        piece = board[fromRow][fromCol];
         if (piece == 0 || (piece > 0) != isRedTurn) return false; // not a valid piece or not player's turn
 
         int dr = toRow - fromRow;

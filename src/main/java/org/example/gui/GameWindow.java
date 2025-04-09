@@ -1,15 +1,8 @@
 package org.example.gui;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
-import javafx.util.Duration;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.example.authentication.UserProfile;
 import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourGame;
@@ -18,8 +11,29 @@ import org.example.networking.GameSession;
 import org.example.utilities.ChatManager;
 import org.example.utilities.GameTimer;
 
-// addition from game logic team (Jacob Baggott)
-import org.example.game.checkers.CheckersBoard;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import static javafx.geometry.Pos.CENTER;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class GameWindow {
     private Stage stage;
@@ -35,7 +49,20 @@ public class GameWindow {
     private Label turnLabel;
     private Label timerLabel;
 
-    public GameWindow() {
+    //connectFour
+    private ConnectFourGame connectFourGame;
+
+    //Tic Tac Toe game object
+    private TicTacToeGame ticTacToeGame;
+
+
+    /**
+     * constructor for the game window
+     * @param stage 
+     * @param gameInstance
+     * @param currentUser
+     */
+    public GameWindow(Stage stage, Object gameInstance, UserProfile currentUser) {
         this.stage = stage;
         this.gameInstance = gameInstance;
         this.currentUser = currentUser;
@@ -54,6 +81,7 @@ public class GameWindow {
         startGameUpdates();
     }
 
+    // method for initialize the UI
     private void initializeUI() {
         mainLayout = new BorderPane();
         mainLayout.setPadding(new Insets(15));
@@ -84,6 +112,10 @@ public class GameWindow {
         stage.setMinHeight(600);
     }
 
+    /**
+     * Creates the top bar of the game window with game title, turn indicator, timer, and exit button.
+     * @return 
+     */
     private HBox createTopBar() {
         HBox topBar = new HBox(20);
         topBar.setPadding(new Insets(10));

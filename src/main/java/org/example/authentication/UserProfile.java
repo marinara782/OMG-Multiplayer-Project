@@ -4,10 +4,19 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 public class UserProfile extends UserDatabaseStub {
+    
+    // get username of the user
     public String getUsername() {
         return "";
     }
 
+    /**
+     * change username for the user
+     * @param old_username old username of the user
+     * @param new_username new username of the user
+     * @param first_password old password of the user
+     * @param second_password new password of the user
+     */
     public void change_username(String old_username, String new_username, String first_password, String second_password) {
 
         // creating boolean variable that acts as a flag to see if the new username is available
@@ -50,7 +59,13 @@ public class UserProfile extends UserDatabaseStub {
         }
     }
 
-
+    /**
+     * changes the phone number of the user
+     * @param new_phone_number new phone number of the user
+     * @param password password of the user
+     * @param confirmPassword confirmation password of the user by retyping it
+     * @return true when the phone number has changed, false when not
+     */
     public boolean change_phone_number(String new_phone_number, String password, String confirmPassword) {
         try {
             // 1.Verify password
@@ -87,6 +102,14 @@ public class UserProfile extends UserDatabaseStub {
         }
     }
 
+    /**
+     * set phone number for user
+     * @param phone_number phone number of the user
+     * @param password password of the user
+     * @param confirm_password confirmation password of the user by retyping it
+     * @return true when a phone number has been set, false when not
+     * @throws FileNotFoundException when the file is not found
+     */
     public boolean set_phone_number(String phone_number, String password, String confirm_password) {
         try {
             String username = getUsername(); // Get current logged-in username
@@ -126,6 +149,14 @@ public class UserProfile extends UserDatabaseStub {
         }
     }
 
+    /**
+     * set email for user
+     * @param username
+     * @param first_password
+     * @param second_password
+     * @param choice 1 for email, 2 for phone number
+     * @throws FileNotFoundException
+     */
     public void enable_2_factor(String username, String first_password, String second_password, int choice) throws FileNotFoundException {
 
         String phone_number = "none";

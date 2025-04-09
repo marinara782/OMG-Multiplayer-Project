@@ -38,33 +38,33 @@ public class LoginWindowController {
     }
 
     //will check the information inputted into the text field and password field and login the user if correct info inputted
-    public void handleLogin(ActionEvent actionEvent) {
-       String username = usernameField.getText();
-       String password = passwordField.getText();
-
-        if (username.isEmpty()) {
-            showAlert("Error", "Username cannot be empty. Please fill in your username!");
-            return;
-        }
-        if (password.isEmpty()) {
-            showAlert("Error", "Password cannot be empty. Please fill in your Password!");
-            return;
-        }
-
-        boolean usernameExists = userDatabase.verify_username(username);
-        boolean authenticated = userDatabase.verify_account(username, password);
-
-        if (!usernameExists) {
-            showAlert("Error", "Username not found. Please sign up.");
-        } else if (!authenticated) {
-            showAlert("Error", "Incorrect password. Please try again.");
-        } else {
-            showAlert("Success", "Login successful!");
-            UserProfile authenticatedUser = new UserProfile(username, password, "", ""); // Fetch full user details if needed
-            OpenMainMenu(authenticatedUser);
-        }
-    }
-
+//    public void handleLogin(ActionEvent actionEvent) {
+//       String username = usernameField.getText();
+//       String password = passwordField.getText();
+//
+//        if (username.isEmpty()) {
+//            showAlert("Error", "Username cannot be empty. Please fill in your username!");
+//            return;
+//        }
+//        if (password.isEmpty()) {
+//            showAlert("Error", "Password cannot be empty. Please fill in your Password!");
+//            return;
+//        }
+//
+//        boolean usernameExists = userDatabase.verify_username(username);
+//        boolean authenticated = userDatabase.verify_account(username, password);
+//
+//        if (!usernameExists) {
+//            showAlert("Error", "Username not found. Please sign up.");
+//        } else if (!authenticated) {
+//            showAlert("Error", "Incorrect password. Please try again.");
+//        } else {
+//            showAlert("Success", "Login successful!");
+//            UserProfile authenticatedUser = new UserProfile(username, password, "", ""); // Fetch full user details if needed
+//            OpenMainMenu(authenticatedUser);
+//        }
+//    }
+//
     private void OpenMainMenu(UserProfile user) {
         try {
             Stage mainMenuStage = new Stage(); // Create a new Stage for the main menu
@@ -127,10 +127,10 @@ public class LoginWindowController {
 
     }
 
-    public void handleJoinGuest(ActionEvent actionEvent) {
-        UserProfile currentUser = new UserProfile("Guest",null,null,null);
-        OpenMainMenu(currentUser);
-    }
+//    public void handleJoinGuest(ActionEvent actionEvent) {
+//        UserProfile currentUser = new UserProfile("Guest",null,null,null);
+//        OpenMainMenu(currentUser);
+//    }
 
     //Mainly for LoginWindow2 as extra features, can be taken out if not needed
     public void initialize() {

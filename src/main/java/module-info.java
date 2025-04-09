@@ -1,11 +1,12 @@
 module org.example.gui {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.desktop;
-    requires javafx.media;
+    requires com.fasterxml.jackson.databind;
 
 
     opens org.example.gui to javafx.fxml;
     exports org.example.gui;
     exports org.example.game.ticTacToe to javafx.fxml;
+    exports org.example.game.connectFour to javafx.fxml;
+    exports org.example.game.checkers to javafx.fxml;
 }

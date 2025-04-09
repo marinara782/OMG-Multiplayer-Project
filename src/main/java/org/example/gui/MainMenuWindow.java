@@ -2,50 +2,55 @@ package org.example.gui;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.authentication.Login;
-import org.example.authentication.SignUp;
 import org.example.authentication.UserProfile;
 import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourGame;
-import org.example.game.ticTacToe.GameModeSelection;
-import org.example.game.ticTacToe.SymbolSelection;
+import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.leaderboard.Leaderboard;
-import org.example.matchmaking.Matchmaker;
+//import org.example.matchmaking.Matchmaker;
 
 public class MainMenuWindow {
-    private final Stage stage;
-    private final UserProfile currentUser;
+    private Stage stage;
+    private Scene scene;
+    private BorderPane mainLayout;
+    private UserProfile currentUser;
+//    private Matchmaker matchmaker;
 
     public MainMenuWindow(Stage stage, UserProfile currentUser) {
         this.stage = stage;
         this.currentUser = currentUser;
-        SceneManager.setPrimaryStage(new Stage());
-        Matchmaker matchmaker = new Matchmaker();
+//        this.matchmaker = new Matchmaker();
         initializeUI();
     }
 
     private void initializeUI() {
-        BorderPane mainLayout = new BorderPane();
+        mainLayout = new BorderPane();
         mainLayout.setPadding(new Insets(20));
         mainLayout.setStyle("-fx-background-color: #2c3e50;");
 
+        // Top section - Header with logo and user info
         HBox header = createHeader();
         mainLayout.setTop(header);
 
+        // Center section - Game selection
         VBox gameSelection = createGameSelection();
         mainLayout.setCenter(gameSelection);
 
+        // Right section - Leaderboard and active players
         VBox rightPanel = createRightPanel();
         mainLayout.setRight(rightPanel);
 
+        // Bottom section - Status bar
         HBox statusBar = createStatusBar();
         mainLayout.setBottom(statusBar);
 
-        Scene scene = new Scene(mainLayout, 1200, 800);
+        scene = new Scene(mainLayout, 1200, 800);
         stage.setTitle("OMG - Online Multiplayer Game Platform");
         stage.setScene(scene);
         stage.setMinWidth(800);
@@ -58,37 +63,29 @@ public class MainMenuWindow {
         header.setAlignment(Pos.CENTER_LEFT);
         header.setStyle("-fx-background-color: #1a2530; -fx-background-radius: 5;");
 
+        // Logo placeholder
         Label logoLabel = new Label("OMG");
         logoLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #3498db;");
 
+        // User profile button
         Button profileButton = new Button("Profile");
         profileButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
-        profileButton.setOnAction(e -> {
-            SceneManager.loadScene("userProfileWindow.fxml");
-        });
+        profileButton.setOnAction(e -> openUserProfile());
 
+        // Spacer
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        Login login = new Login(stage);
-        String profileName;
-        if(login.checkLoginValidity()){
-            profileName = currentUser.getUsername();
-        }else{
-            profileName = "Player";
-        }
-        Label userLabel = new Label("Welcome, " + profileName);
+        // User info
+        Label userLabel = new Label("Welcome, " + currentUser.getUsername());
         userLabel.setStyle("-fx-text-fill: white; -fx-font-size: 14px;");
 
-        Button signUpButton = new Button("SignUp");
-        signUpButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
-        signUpButton.setOnAction(e -> signUp());
-
+        // Logout button
         Button logoutButton = new Button("Logout");
         logoutButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
-        logoutButton.setOnAction(e -> login());
+        logoutButton.setOnAction(e -> logout());
 
-        header.getChildren().addAll(logoLabel, spacer, userLabel, profileButton, signUpButton, logoutButton);
+        header.getChildren().addAll(logoLabel, spacer, userLabel, profileButton, logoutButton);
 
         return header;
     }
@@ -104,17 +101,21 @@ public class MainMenuWindow {
         HBox gamesContainer = new HBox(30);
         gamesContainer.setAlignment(Pos.CENTER);
 
+        // TicTacToe Game Card
         VBox ticTacToeCard = createGameCard("Tic-Tac-Toe", "ticTacToe");
-        ticTacToeCard.setOnMouseClicked(e -> startMatchmaking("ticTacToe"));
+        ticTacToeCard.setOnMouseClicked(e -> runTicTacToeGame());
 
+        // Connect Four Game Card
         VBox connectFourCard = createGameCard("Connect Four", "connectFour");
-        connectFourCard.setOnMouseClicked(e -> startMatchmaking("connectFour"));
+        connectFourCard.setOnMouseClicked(e -> handleConnectFourClick());
 
+        // Checkers Game Card
         VBox checkersCard = createGameCard("Checkers", "checkers");
         checkersCard.setOnMouseClicked(e -> startMatchmaking("checkers"));
 
         gamesContainer.getChildren().addAll(ticTacToeCard, connectFourCard, checkersCard);
 
+        // Matchmaking section
         VBox matchmakingSection = new VBox(15);
         matchmakingSection.setPadding(new Insets(20, 0, 0, 0));
         matchmakingSection.setAlignment(Pos.CENTER);
@@ -139,6 +140,7 @@ public class MainMenuWindow {
         return gameSelection;
     }
 
+
     private VBox createGameCard(String gameName, String gameType) {
         VBox card = new VBox(10);
         card.setPadding(new Insets(15));
@@ -158,9 +160,21 @@ public class MainMenuWindow {
         Label playersLabel = new Label("Online: 42 players");
         playersLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #bdc3c7;");
 
-        card.getChildren().addAll(iconPlaceholder, nameLabel, playersLabel);
+        Button rulesButton = new Button("View Rules");
+        rulesButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
+        rulesButton.setOnAction(e -> showGameRules(gameType));
+
+        card.getChildren().addAll(iconPlaceholder, nameLabel, playersLabel, rulesButton);
 
         return card;
+    }
+
+    private void showGameRules(String gameType) {
+        switch (gameType.toLowerCase()) {
+            case "connectfour" -> SceneManager.loadScene("connectfour_rules.fxml");
+            case "tictactoe" -> SceneManager.loadScene("tictactoe_rules.fxml");
+            case "checkers" -> SceneManager.loadScene("checkers_rules.fxml");
+        }
     }
 
     private VBox createRightPanel() {
@@ -274,12 +288,13 @@ public class MainMenuWindow {
         return statusBar;
     }
 
-    private void signUp() {
-        SignUp signUpScreen = new SignUp(stage);
-        signUpScreen.show();
+    // Event handlers
+    private void openUserProfile() {
+        UserProfileWindow profileWindow = new UserProfileWindow(new Stage(), currentUser);
+        profileWindow.show();
     }
 
-    private void login() {
+    private void logout() {
         Login loginScreen = new Login(stage);
         loginScreen.show();
     }
@@ -341,18 +356,15 @@ public class MainMenuWindow {
     private void startGame(String gameType) {
         switch (gameType) {
             case "ticTacToe", "tictactoe", "tic-tac-toe":
-                // Create symbol selection dialog
-                SymbolSelection symbolDialog = new SymbolSelection();
-                char chosenSymbol = symbolDialog.showAndWait();
-
-                GameModeSelection gameModeDialog = new GameModeSelection();
-                GameModeSelection.GameMode ChosenGameMode = gameModeDialog.showAndWait();
-
-                // Create game with chosen symbol
-//                new GameWindow(stage, new TicTacToeGame(chosenSymbol, ChosenGameMode), currentUser);
+                new GameWindow(stage, new TicTacToeGame(isComputerGameTTT), currentUser);
                 break;
             case "connectfour", "connectFour", "connect-four":
-                new GameWindow(stage, new ConnectFourGame(), currentUser);
+//                Boolean vsComputer = showConnectFourModeDialog();
+//                if (vsComputer == null) {
+//                    return;
+//                }
+                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, false), currentUser);
+                //new GameWindow(stage, new ConnectFourGame(1,6,7,4), currentUser);
                 break;
             case "checkers":
                 new GameWindow(stage, new CheckersGame(), currentUser);
@@ -361,6 +373,219 @@ public class MainMenuWindow {
                 System.out.println("Unknown game type: " + gameType);
         }
     }
+
+    private Boolean showConnectFourModeDialog() {
+        Alert modeDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        modeDialog.setTitle("Choose Game Mode");
+        modeDialog.setHeaderText("Select Connect Four Mode");
+        modeDialog.setContentText("Do you want to play against the computer or another player?");
+
+        ButtonType vsComputerButton = new ButtonType("Computer");
+        ButtonType multiplayerButton = new ButtonType("Multiplayer (Same Device)");
+
+        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        modeDialog.getButtonTypes().setAll(vsComputerButton, multiplayerButton, cancel);
+
+        DialogPane dialogPane = modeDialog.getDialogPane();
+
+        dialogPane.setStyle("-fx-background-color: #3498db");
+
+        Node header = dialogPane.lookup(".header-panel");
+        if(header != null) {
+            header.setStyle("-fx-background-color: #3498db;");
+        }
+        Label content = (Label) dialogPane.lookup(".content.label");
+        if(content != null) {
+            content.setStyle("-fx-text-fill: white;");
+        }
+        Node buttonBar = dialogPane.lookup(".buttonBar");
+        if(buttonBar != null) {
+            buttonBar.setStyle("-fx-background-color: white;");
+        }
+
+        modeDialog.showingProperty().addListener((obs, wasShowing, isNowShowing) -> {
+            if (isNowShowing) {
+                Button computerButton = (Button) dialogPane.lookupButton(vsComputerButton);
+                Button multiButton = (Button) dialogPane.lookupButton(multiplayerButton);
+                Button cancelButton = (Button) dialogPane.lookupButton(cancel);
+
+                computerButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; ");
+                multiButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
+                cancelButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+            }
+        });
+
+
+        ButtonType result = modeDialog.showAndWait().orElse(cancel);
+        if (result == cancel) {
+            return null;
+        }
+
+/*/
+        modeDialog.showAndWait().ifPresent(response -> {
+            boolean vsComputer;
+            if (response == vsComputerButton) {
+                // Single Player
+                vsComputer = true;
+                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, vsComputer), currentUser);
+            } else {
+                //Local Multiplayer
+                vsComputer = false;
+                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, vsComputer), currentUser);
+            }
+        });
+
+ */
+        return result == vsComputerButton;
+    }
+
+    //This method shows the dialogue box
+    // when tic-tac-toe is selected allowing the player to choose a multiplayer or computer game
+    private Boolean showTicTacToeModeDialog() {
+        Alert modeDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        modeDialog.setTitle("Choose Game Mode");
+        modeDialog.setHeaderText("Select Tic Tac Toe Mode");
+        modeDialog.setContentText("Do you want to play against the computer or another player?");
+
+        ButtonType vsComputerButton = new ButtonType("Computer");
+        ButtonType multiplayerButton = new ButtonType("Multiplayer (Same Device)");
+
+        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        modeDialog.getButtonTypes().setAll(vsComputerButton, multiplayerButton, cancel);
+
+        DialogPane dialogPane = modeDialog.getDialogPane();
+
+        dialogPane.setStyle("-fx-background-color: #3498db");
+
+        Node header = dialogPane.lookup(".header-panel");
+        if(header != null) {
+            header.setStyle("-fx-background-color: #3498db;");
+        }
+        Label content = (Label) dialogPane.lookup(".content.label");
+        if(content != null) {
+            content.setStyle("-fx-text-fill: white;");
+        }
+        Node buttonBar = dialogPane.lookup(".buttonBar");
+        if(buttonBar != null) {
+            buttonBar.setStyle("-fx-background-color: white;");
+        }
+
+        modeDialog.showingProperty().addListener((obs, wasShowing, isNowShowing) -> {
+            if (isNowShowing) {
+                Button computerButton = (Button) dialogPane.lookupButton(vsComputerButton);
+                Button multiButton = (Button) dialogPane.lookupButton(multiplayerButton);
+                Button cancelButton = (Button) dialogPane.lookupButton(cancel);
+
+                computerButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; ");
+                multiButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
+                cancelButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+            }
+        });
+
+
+        ButtonType result = modeDialog.showAndWait().orElse(cancel);
+        if (result == cancel) {
+            return null;
+        }
+
+        return result == vsComputerButton;
+    }
+
+    private void handleConnectFourClick() {
+        Boolean vsComputer = showConnectFourModeDialog();
+        if (vsComputer == null) {
+            return;
+        }
+        showBoardOptionsDialog(vsComputer);
+//        if (vsComputer) {
+//            ConnectFourGame game = new ConnectFourGame(1, 6, 7, 4, true);
+//            new GameWindow(stage, game, currentUser);
+//        }else{
+//            startMatchmaking("connectFour");
+//        }
+    }
+
+    //This method makes a new tic-tac-toe game with the parameter
+    // of whether the game is against the computer or not through the selected option in the dialogue box
+    public boolean isComputerGameTTT;
+    private void runTicTacToeGame() {
+        isComputerGameTTT = showTicTacToeModeDialog();
+        TicTacToeGame ticTacToeGame = new TicTacToeGame(isComputerGameTTT);
+        new GameWindow(stage, ticTacToeGame, currentUser);
+    }
+
+
+    /*
+     *  THIS METHOD TAKES CARE OF CUSTOM BOARD SIZES WHICH WAS SUGGESTED IN FEATURE PROPOSAL
+     * */
+    private void showBoardOptionsDialog(boolean vsComputer) {
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("Select board settings");
+        dialog.setHeaderText(null);
+
+        Label customHeader = new Label("Choose board size and Win Condition");
+        customHeader.setStyle("-fx-text-fill: white; -fx-font-size: 16px;-fx-font-weight: bold;");
+        VBox headerBox = new VBox(customHeader);
+        headerBox.setPadding(new Insets(10));
+        headerBox.setAlignment(Pos.CENTER_LEFT);
+        dialog.getDialogPane().setHeader(headerBox);
+
+        ComboBox<String> boardSize = new ComboBox<>();
+        boardSize.getItems().addAll("6 x 7", "5 x 5", "4 x 5", "7 x 8", "8 x 8", "10 x 10");
+        boardSize.setValue("6 x 7");
+
+        ComboBox<Integer> goalBox = new ComboBox<>();
+        goalBox.setDisable(true);
+
+        Label noteLabel = new Label("Select a goal that fits the board size");
+        noteLabel.setStyle("-fx-text-fill: #bdc3c7; -fx-font-size: 12px;");
+
+        boardSize.setOnAction(e -> {
+            String[] parts = boardSize.getValue().split(" x ");
+            int rows  = Integer.parseInt(parts[0].trim());
+            int cols  = Integer.parseInt(parts[1].trim());
+
+            int maxGoal = Math.min(rows, cols);
+            goalBox.getItems().clear();
+            for (int i = 3; i <= maxGoal; i++) {
+                goalBox.getItems().add(i);
+            }
+
+            goalBox.setDisable(false);
+            goalBox.setValue(Math.min(4, maxGoal));
+        });
+
+        boardSize.getOnAction().handle(null);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+        grid.add(new Label("Board Size:"), 0, 0);
+        grid.add(boardSize, 1, 0);
+        grid.add(new Label("Goal Size:"), 0, 1);
+        grid.add(goalBox, 1, 1);
+        grid.add(noteLabel, 1, 2);
+
+        dialog.getDialogPane().setContent(grid);
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        dialog.getDialogPane().setStyle("-fx-background-color: #3498db;");
+
+        dialog.showAndWait().ifPresent(result -> {
+            if(result == ButtonType.OK) {
+                String[] size = boardSize.getValue().split("x");
+                int rows = Integer.parseInt(size[0].trim());
+                int cols = Integer.parseInt(size[1].trim());
+                int goal = goalBox.getValue();
+
+                ConnectFourGame game = new ConnectFourGame(1, rows, cols, goal, vsComputer);
+                new GameWindow(stage, game, currentUser);
+            }
+        });
+    }
+
 
     private void openLeaderboard() {
         Leaderboard leaderboard = new Leaderboard();

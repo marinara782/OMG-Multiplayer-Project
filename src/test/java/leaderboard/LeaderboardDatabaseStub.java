@@ -1,4 +1,4 @@
-package org.example.leaderboard;
+package leaderboard;
 
 public class LeaderboardDatabaseStub {
 }

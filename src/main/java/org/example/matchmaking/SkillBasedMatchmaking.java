@@ -11,9 +11,9 @@ import org.example.Player;
 public class SkillBasedMatchmaking {
 
     private List<QueuedPlayer> players; // List of all players waiting to be matched up
-    private int baseTolerance;
+    private double baseTolerance;
     private int maxWaitTimeSeconds;
-    private int toleranceIncrement;
+    private double toleranceIncrement;
 
     /**
      * Constructs a matchmaking system.
@@ -22,7 +22,7 @@ public class SkillBasedMatchmaking {
      * @param maxWaitTimeSeconds Max time before expanding the tolerance (in seconds).
      * @param toleranceIncrement Amount to expand tolerance after wait time.
      */
-    public SkillBasedMatchmaking(int baseTolerance, int maxWaitTimeSeconds, int toleranceIncrement) {
+    public SkillBasedMatchmaking(double baseTolerance, int maxWaitTimeSeconds, double toleranceIncrement) {
         this.players = new ArrayList<>(); //Match pool
         this.baseTolerance = baseTolerance;
         this.maxWaitTimeSeconds = maxWaitTimeSeconds;
@@ -53,6 +53,11 @@ public class SkillBasedMatchmaking {
      * @param player The player that is to be added
      */
     public void addPlayer(Player player) {
+
+        for (QueuedPlayer qp : players) { //this loop essentially prevents the same player from queuing with themself
+            if (qp.player == player) return; // Player already in queue — skip
+        }
+
         long matchTime = System.currentTimeMillis();
         QueuedPlayer queuedPlayer = new QueuedPlayer(player, matchTime);
         players.add(queuedPlayer);
@@ -65,43 +70,55 @@ public class SkillBasedMatchmaking {
      * @return A list of matched player ID pairs.
      */
     public List<String[]> findMatches() {
-        List<String[]> matchedPlayers = new ArrayList<>(); //This is our list of matched Players that we will return
+        List<String[]> matchedPlayers = new ArrayList<>(); //list of players who have been matched
 
-        while (players.size() >= 2) { //While we have at least 2 people looking for a match
-            QueuedPlayer p1 = players.get(0); //Gets the first player in the queue
-            QueuedPlayer p2 = null; //Null at first until we find an appropriate partner
+        while (players.size() >= 2) { //while there are at least two people looking for a match
+            QueuedPlayer p1 = players.get(0); //grab the first player
+            QueuedPlayer p2 = null; //the second player will be found through a loop
+            boolean matchFound = false; //this is set to false until a match is found as its name and value suggests
 
-            for (int i = 0; i < players.size(); i++) { //For loop to iterate through queue to find an appropriate player to match with (p2)
-                if (players.get(i) != p1) { //We can't match the player with themselves
-                    double p1Skill = p1.player.getWinPercentage(); //Grab their skill levels
-                    double p2Skill = players.get(i).player.getWinPercentage(); //Grab their skill levels
+            for (int i = 1; i < players.size(); i++) { //loop through available players
+                QueuedPlayer candidate = players.get(i); //grab the player we are at in the loop (i)
 
-                    if (Math.abs(p1Skill - p2Skill) <= baseTolerance) { //if the skill levels fit within the tolerance limits
-                        p2 = players.get(i); //Then p2 is whatever player we are at right now
-                        matchedPlayers.add(new String[]{p1.player.getUsername(), p2.player.getUsername()});
-                        break; //We need to exit immediately so that we can remove the players from the pool.
-                    }
+                double p1Skill = p1.player.getWinPercentage(); //grab the first players skill level (win percentage)
+                double p2Skill = candidate.player.getWinPercentage(); //grab the second players skill level (win percentage)
 
-                    else { //If it is not less than the baseTolerance
-                        long timeWaitedP1 = System.currentTimeMillis() - p1.joinTime; //Get the time waited for p1
-                        p2 = players.get(i); //Grab the current player anyways because at this point, we need to increase tolerance
-                        long timeWaitedP2 = System.currentTimeMillis() - p2.joinTime; //Get the time waited for p2
 
-                        if (timeWaitedP1 > maxWaitTimeSeconds || timeWaitedP2 > maxWaitTimeSeconds) { //If the time waited is too much for either player...
-                            baseTolerance += toleranceIncrement; //...increase the tolerance limit so it's easier to find a match
-                        }
-                    }
+                int p1SkillInt = (int) (p1Skill * 100); // Convert skill levels to percentages so they are easier to work with
+                int p2SkillInt = (int) (p2Skill * 100); // Convert skill levels to percentages so they are easier to work with
+                int diff = Math.abs(p1SkillInt - p2SkillInt); //the difference is what will determine if they can play together or not
+
+
+                if (p1.player == candidate.player) { //if the player is attempting to some how match with themself
+                    continue; // skip matching with self
+                }
+
+                if (diff <= baseTolerance * 100) { //if the difference is less than or equal to the base tolerance we allow
+                    p2 = candidate; //the player we at can match with the current first player
+                    matchedPlayers.add(new String[]{p1.player.getUsername(), p2.player.getUsername()}); //add them both to matched players
+                    matchFound = true; // a match has been found!
+                    break;
                 }
             }
 
-            if (p2 != null) { //we only remove players if a match actually happened and that is proved if p2 is not null
-                players.remove(p1);
+            if (matchFound && p2 != null) { //if a match was found ...
+                players.remove(p1); //...remove p1 and p2 from the match pool
                 players.remove(p2);
+            } else {
+                // no match was found , so check wait time and increase tolerance
+                long timeWaitedP1 = System.currentTimeMillis() - p1.joinTime; //first we check p1s time waited
+                if (timeWaitedP1 >= maxWaitTimeSeconds * 1000L) { //if it exceeds maxwaittime
+                    baseTolerance += toleranceIncrement; //increase tolerance
+                }
+                // Move p1 to the back to retry AFTER other players
+                players.remove(p1);
+                players.add(p1);
             }
-
         }
+
         return matchedPlayers;
     }
+
 
 
 

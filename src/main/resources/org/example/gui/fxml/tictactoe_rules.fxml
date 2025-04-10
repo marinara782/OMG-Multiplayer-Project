@@ -25,7 +25,7 @@
             </VBox.margin>
         </Label>
 
-        <TabPane tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS" styleClass="rules-tab-pane">
+        <TabPane fx:id="rulesTabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS" styleClass="rules-tab-pane">
             <Tab text="Basic Rules" styleClass="rule-tab">
                 <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="rules-scroll-pane">
                     <VBox spacing="20" styleClass="rules-section">

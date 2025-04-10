@@ -7,6 +7,7 @@
     <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="testSaveAndLoadPlayers() is done now">
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/networking/ServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/networking/ServerTest.java" afterDir="false" />
     </list>
+    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Final Working changes - (1)" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -83,6 +84,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "Networking__iteration3",
+    "git-widget-placeholder": "iteration3",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "C:/Users/bhuva/OneDrive/Desktop/SENG 300/seng300-w25-project/src/main/java/org/example/game/connectFour",
     "last_opened_file_path": "C:/Users/bhuva/OneDrive/Desktop/GitHub Projects/DuplicateGame",
@@ -105,6 +107,9 @@
       <recent name="C:\Users\bhuva\OneDrive\Desktop\SENG 300\seng300-w25-project\src\main\resources\org\example\gui" />
       <recent name="C:\Users\bhuva\OneDrive\Desktop\SENG 300\seng300-w25-project\docs\UseCaseDescriptions" />
       <recent name="C:\Users\bhuva\OneDrive\Desktop\SENG 300\seng300-w25-project\docs\planning" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.example.game.checkers" />
     </key>
   </component>
   <component name="RunManager" selected="JUnit.ServerTest">
@@ -165,6 +170,25 @@
         <item itemvalue="JUnit.ServerTest" />
         <item itemvalue="JUnit.GameSessionTest" />
         <item itemvalue="JUnit.ClientTest" />
+      </list>
+    </recent_temporary>
+    <configuration name="org.example in seng300-w25-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="seng300-w25-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.org.example in seng300-w25-project" />
       </list>
     </recent_temporary>
   </component>
@@ -482,6 +506,23 @@
       <updated>1744308983094</updated>
     </task>
     <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00034" summary="Final Working changes">
+      <option name="closed" value="true" />
+      <created>1744150604197</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1744150604198</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Final Working changes - (1)">
+      <option name="closed" value="true" />
+      <created>1744150879991</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1744150879993</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -496,6 +537,11 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="Developed UserProfileWindow" />
+    <MESSAGE value="Developed UserProfileWindow and HelloApplication" />
+    <MESSAGE value="Started Tic-Tac-toe Basics from computer side." />
+    <MESSAGE value="Initiated Tic-Tac-Toe Basics and deleted .fxml file from computer side- (1)." />
+    <MESSAGE value="Working 2-Player Tic-Tac-Toe Board and Game (2)." />
     <MESSAGE value="Working 2-Player Tic-Tac-Toe Board and Game with player option selection(3)." />
     <MESSAGE value="AI Tic-Tac-Toe Board selection(4)." />
     <MESSAGE value="Deleted planning.txt" />
@@ -532,6 +578,47 @@
     </SUITE>
     <SUITE FILE_PATH="coverage/HelloApplication_java$GameSessionTest.ic" NAME="GameSessionTest Coverage Results" MODIFIED="1744221097355" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>org.example.networking.*</FILTER>
+    </SUITE>
+    <MESSAGE value="Final Working changes" />
+    <MESSAGE value="Final Working changes - (1)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final Working changes - (1)" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/HelloApplication_java$ServerTest.ic" NAME="ServerTest Coverage Results" MODIFIED="1744267653311" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.networking.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$ConnectFourGameTest.ic" NAME="ConnectFourGameTest Coverage Results" MODIFIED="1744268935297" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.game.connectFour.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$PlayerTest.ic" NAME="PlayerTest Coverage Results" MODIFIED="1744231948621" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$CheckersBoardTest.ic" NAME="CheckersBoardTest Coverage Results" MODIFIED="1744228308938" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.game.checkers.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$LeaderBoardControllerTest.ic" NAME="LeaderBoardControllerTest Coverage Results" MODIFIED="1744307110287" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.gui.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$CheckersBoardTest_testHandleClickTriggersMoveAndWin.ic" NAME="CheckersBoardTest.testHandleClickTriggersMoveAndWin Coverage Results" MODIFIED="1744228139495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.game.checkers.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$ConnectFourBoardTest.ic" NAME="ConnectFourBoardTest Coverage Results" MODIFIED="1744268815638" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.game.connectFour.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$GameSessionTest.ic" NAME="GameSessionTest Coverage Results" MODIFIED="1744221097355" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.networking.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$ClientTest.ic" NAME="ClientTest Coverage Results" MODIFIED="1744210385142" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.networking.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$LeaderboardDatabaseStubTest.ic" NAME="LeaderboardDatabaseStubTest Coverage Results" MODIFIED="1744309487850" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.leaderboard.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$SkillBasedMatchMakingTest.ic" NAME="SkillBasedMatchMakingTest Coverage Results" MODIFIED="1744232756513" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.matchmaking.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$org_example_in_seng300_w25_project.ic" NAME="org.example in seng300-w25-project Coverage Results" MODIFIED="1744259691675" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.*</FILTER>
     </SUITE>
   </component>
 </project>

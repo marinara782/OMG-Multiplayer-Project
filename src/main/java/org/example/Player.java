@@ -95,6 +95,7 @@ public class Player {
     public void setTictactoeDraws(int tictactoeDraws) {
         this.tictactoeDraws = tictactoeDraws;
         updateTotalDraws();
+        updateWinPercentage();
     }
 
     public void setConnect4Wins(int connect4Wins) {
@@ -114,6 +115,7 @@ public class Player {
     public void setConnect4Draws(int connect4Draws) {
         this.connect4Draws = connect4Draws;
         updateTotalDraws();
+        updateWinPercentage();
     }
 
 

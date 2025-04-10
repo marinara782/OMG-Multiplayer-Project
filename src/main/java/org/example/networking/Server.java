@@ -32,6 +32,11 @@ public class Server {
         return port;
     }
 
+    //getter for isRunning boolean
+    public boolean isRunning() {
+        return isRunning;
+    }
+
     //getter for list of active sessions
     AbstractList<GameSession> getActiveSessions(){
         return new ArrayList<>(activeSessions);
@@ -154,10 +159,6 @@ public class Server {
                 return "Unknown Request";
 
         }
-    }
-
-    public boolean isRunning() {
-        return isRunning;
     }
 }
 

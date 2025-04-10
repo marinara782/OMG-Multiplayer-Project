@@ -36,11 +36,11 @@ public class MatchmakerTest {
     @Test
     void testLeaderboard() {
         Player p1 = new Player("Player1");
-        p1.setCheckerWins(3);
+        p1.setTictactoeWins(3);
         matchmaker.addPlayer(p1);
 
         Player p2 = new Player("Player2");
-        p2.setCheckerWins(5);
+        p2.setConnect4Wins(5);
         matchmaker.addPlayer(p2);
 
         Player p3 = new Player("Player3");
@@ -48,11 +48,11 @@ public class MatchmakerTest {
         matchmaker.addPlayer(p3);
 
         Player p4 = new Player("Player4");
-        p4.setCheckerWins(4);  // Player4 has 4 wins
+        p4.setTictactoeWins(4);  // Player4 has 4 wins
         matchmaker.addPlayer(p4);
 
         Player p5 = new Player("Player5");
-        p5.setCheckerWins(6);  // Player5 has 6 wins
+        p5.setConnect4Wins(6);  // Player5 has 6 wins
         matchmaker.addPlayer(p5);
 
         Player p6 = new Player("Player6");
@@ -71,11 +71,11 @@ public class MatchmakerTest {
     @Test
     void findMatch() {
         Player p1 = new Player("Player1");
-        p1.setCheckerWins(3);
+        p1.setTictactoeWins(3);
         matchmaker.addPlayer(p1);
 
         Player p2 = new Player("Player2");
-        p2.setCheckerWins(4);
+        p2.setConnect4Wins(4);
         matchmaker.addPlayer(p2);
 
         Player match = matchmaker.findMatch(p1);
@@ -91,11 +91,11 @@ public class MatchmakerTest {
     @Test
     void matchPlayers() {
         Player p1 = new Player("Player1");
-        p1.setCheckerWins(3);
+        p1.setTictactoeWins(3);
         matchmaker.addPlayer(p1);
 
         Player p2 = new Player ("Player2");
-        p2.setCheckerWins(5);
+        p2.setConnect4Wins(5);
         matchmaker.addPlayer(p2);
 
         assertTrue(matchmaker.getPlayers().contains(p1), "Player1 should be in the matchmaking pool.");
@@ -119,11 +119,11 @@ public class MatchmakerTest {
         matchmaker.addPlayer(p1);
 
         Player p2 = new Player("Player2");
-        p2.setCheckerWins(5);
+        p2.setTictactoeWins(5);
         matchmaker.addPlayer(p2);
 
         Player p3 = new Player("Player3");
-        p3.setCheckerWins(4);
+        p3.setConnect4Wins(4);
         matchmaker.addPlayer(p3);
 
         // Add the players and simulate the match process

@@ -1,7 +1,10 @@
 package org.example.authentication;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 public class UserDatabaseStub {
 
@@ -11,6 +14,7 @@ public class UserDatabaseStub {
         List<User> users = new ArrayList<>();
         File file = new File("temp.txt");
 
+        // Check if the file exists, if not create it
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
@@ -31,7 +35,7 @@ public class UserDatabaseStub {
     public boolean Authenticate_user(String username, String password, String email, String phone) throws FileNotFoundException {
         List<User> users = registered_users_list();
         boolean userExists = false;
-        for (User user : users) {
+        for (User user : users) { // checks if the user exists in the database by matching the parameters
             if(user.getUsername().equals(username) && user.getPassword().equals(password) && user.getEmail().equals(email) && user.getPhone().equals(phone)) {
                 userExists = true;
                 break;
@@ -43,7 +47,7 @@ public class UserDatabaseStub {
     // checks if username and password exist in database and returns bool
     public boolean verify_account(String username, String password) throws FileNotFoundException {
         List<User> users = registered_users_list();
-        for (User user : users) {
+        for (User user : users) { // checks if the user exists in the database by matching the username and password parameters
             if(user.getUsername().equals(username) && user.getPassword().equals(password)){
                 return true;
             }
@@ -54,7 +58,7 @@ public class UserDatabaseStub {
     // checks if user is in database, returns true if exist
     public boolean verify_username(String username) throws FileNotFoundException {
         List<User> users = registered_users_list();
-        for (User user : users) {
+        for (User user : users) { // checks if the username exists in the database
             if(user.getUsername().equals(username)){
                 return true;
             }
@@ -197,6 +201,12 @@ public class UserDatabaseStub {
         write_users_to_file(users);
     }
 
+    /**
+     * sends a verification code to the user's email address
+     * @param email
+     * @return String - random 6-digit verification code
+     * @throws FileNotFoundException when the file is not found
+     */
     public String send_email(String email) throws FileNotFoundException {
 
         // accessing database
@@ -206,9 +216,9 @@ public class UserDatabaseStub {
         for (User user : users) {
             if (user.getEmail().equals(email)) {
 
-                Random random = new Random();
+                Random random = new Random(); // random object
 
-                int random_number = random.nextInt(1000000);
+                int random_number = random.nextInt(1000000); // generates a random number between 0 and 999999
 
                 return String.format("%06d", random_number);
             }
@@ -216,6 +226,12 @@ public class UserDatabaseStub {
         return "Email not found";
     }
 
+    /**
+     * sends a verification code to the user's phone number
+     * @param phone_number phone number of the user
+     * @return String - random 6-digit verification code
+     * @throws FileNotFoundException
+     */
     public String send_text(String phone_number) throws FileNotFoundException {
 
         // accessing database

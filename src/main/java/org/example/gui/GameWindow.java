@@ -1,16 +1,8 @@
 package org.example.gui;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.application.Platform;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
-import javafx.util.Duration;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.example.authentication.UserProfile;
 import org.example.game.checkers.CheckersBoard;
 import org.example.game.checkers.CheckersGame;
@@ -21,10 +13,29 @@ import org.example.networking.GameSession;
 import org.example.utilities.ChatManager;
 import org.example.utilities.GameTimer;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import static javafx.geometry.Pos.CENTER;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class GameWindow {
     private Stage stage;
@@ -47,6 +58,12 @@ public class GameWindow {
     private TicTacToeGame ticTacToeGame;
 
 
+    /**
+     * constructor for the game window
+     * @param stage
+     * @param gameInstance
+     * @param currentUser
+     */
     public GameWindow(Stage stage, Object gameInstance, UserProfile currentUser) {
         this.stage = stage;
         this.gameInstance = gameInstance;
@@ -69,6 +86,7 @@ public class GameWindow {
         startGameUpdates();
     }
 
+    // method for initialize the UI
     private void initializeUI() {
         mainLayout = new BorderPane();
         mainLayout.setPadding(new Insets(15));
@@ -99,6 +117,10 @@ public class GameWindow {
         stage.setMinHeight(600);
     }
 
+    /**
+     * Creates the top bar of the game window with game title, turn indicator, timer, and exit button.
+     * @return
+     */
     private HBox createTopBar() {
         HBox topBar = new HBox(20);
         topBar.setPadding(new Insets(10));
@@ -395,9 +417,11 @@ public class GameWindow {
                                 //Player O wins
                                 if (OpponentWin) {
                                     showGameOverDialog("Player O Wins!");
+                                    disableBoard(board);
                                 }
                                 else if (full) {
                                     showGameOverDialog("Draw!");
+                                    disableBoard(board);
                                 }
                                 //Switch to other player's turn
                                 ticTacToeGame.isPlayerTurn();
@@ -414,9 +438,11 @@ public class GameWindow {
                                 //Player X wins
                                 if (PlayerWin) {
                                     showGameOverDialog("Player X Wins!");
+                                    disableBoard(board);
                                 }
                                 else if (full) {
                                     showGameOverDialog("Draw!");
+                                    disableBoard(board);
                                 }
                                 //Switch to other player's turn
                                 ticTacToeGame.isOpponentTurn();
@@ -437,9 +463,11 @@ public class GameWindow {
                                 //PLayer wins
                                 if (playerWin) {
                                     showGameOverDialog("Player Wins!");
+                                    disableBoard(board);
                                     return;
                                 } else if (full) {
                                     showGameOverDialog("Draw!");
+                                    disableBoard(board);
                                     return;
                                 }
                                 //Switch to computer's turn
@@ -472,8 +500,10 @@ public class GameWindow {
                                             //Computer wins
                                             if (computerWin) {
                                                 showGameOverDialog("Computer Wins!");
+                                                disableBoard(board);
                                             } else if (boardFull) {
                                                 showGameOverDialog("Draw!");
+                                                disableBoard(board);
                                             } else {
                                                 //Switch to player's turn
                                                 ticTacToeGame.isPlayerTurn();
@@ -496,12 +526,17 @@ public class GameWindow {
         gameBoard.getChildren().add(boardContainer);
     }
 
+    private void disableBoard(GridPane board) {
+        board.getChildren().forEach(node -> node.setDisable(true));
+    }
+
     //Game over dialogue box used to show whose won or if the game was a draw for tic tac toe
     private void showGameOverDialog(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game Over");
         alert.setHeaderText(null);
         alert.setContentText(message);
+        alert.setOnHidden(e -> returnToMainMenu());
         alert.showAndWait();
     }
 
@@ -556,52 +591,6 @@ public class GameWindow {
         boardContainer.getChildren().addAll(columnButtons, board);
         gameBoard.getChildren().clear();
         gameBoard.getChildren().add(boardContainer);
-
-
-// OLD CODE NOT DYNAMIC - hardcoded 6x7 board
-//
-//        VBox boardContainer = new VBox(20);
-//        boardContainer.setAlignment(Pos.CENTER);
-//
-//        GridPane board = new GridPane();
-//        board.setAlignment(Pos.CENTER);
-//        board.setHgap(5);
-//        board.setVgap(5);
-//
-//        // Create the 7x6 grid (7 columns, 6 rows)
-//        for (int row = 0; row < 6; row++) {
-//            for (int col = 0; col < 7; col++) {
-//                StackPane cell = new StackPane();
-//                cell.setPrefSize(60, 60);
-//                cell.setStyle("-fx-background-color: #3498db; -fx-background-radius: 30;");
-//
-//                Region innerCircle = new Region();
-//                innerCircle.setPrefSize(50, 50);
-//                innerCircle.setStyle("-fx-background-color: #1a2530; -fx-background-radius: 25;");
-//
-//                cell.getChildren().add(innerCircle);
-//                board.add(cell, col, row);
-//            }
-//        }
-//
-//        // Create column buttons for dropping pieces
-//        HBox columnButtons = new HBox(5);
-//        columnButtons.setAlignment(Pos.CENTER);
-//
-//        for (int col = 0; col < 7; col++) {
-//            Button dropButton = new Button("Drop");
-//            dropButton.setPrefWidth(60);
-//            dropButton.setUserData(col);
-//            dropButton.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white;");
-//
-//            final int column = col;
-//            dropButton.setOnAction(e -> makeConnectFourMove(column));
-//
-//            columnButtons.getChildren().add(dropButton);
-//        }
-//
-//        boardContainer.getChildren().addAll(columnButtons, board);
-//        gameBoard.getChildren().add(boardContainer);
     }
 
     // Game logic team -> chosen to initialize the board in CheckersBoard class (Jacob Baggott)
@@ -694,15 +683,15 @@ public class GameWindow {
 //        System.out.println("Dropping piece in column: " + column);
 //        // This would call the actual game logic in a real implementation
 //        simulateOpponentTurn();
-        
+
         if(connectFourGame == null) {
             return;
         }
-        
+
         int[][] board = connectFourGame.getBoard();
         int rows  = connectFourGame.getRows();
         int player = connectFourGame.getPlayer();
-        
+
         for(int row = rows - 1; row >= 0 ;  row--){
             if(board[row][column] == ConnectFourBoard.Empty ){
                 connectFourGame.makeMove(row, column);

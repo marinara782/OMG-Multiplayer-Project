@@ -37,7 +37,7 @@ public class Matchmaker {
 
         for (Player opponent : players) {
             if (!opponent.equals(player)) {
-                int skillDifference = Math.abs(player.getCheckerWins() - opponent.getCheckerWins());
+                int skillDifference = Math.abs(player.getTotalWins() - opponent.getTotalWins());
                 if (skillDifference < minSkillDifference) {
                     minSkillDifference = skillDifference;
                     bestMatch = opponent;
@@ -85,15 +85,15 @@ public class Matchmaker {
      * @param loser The player who lost the match.
      */
     public void updateLeaderboard(Player winner, Player loser) {
-        winner.updateCheckerWins();
-        loser.updateCheckerLosses();
+        winner.updateTotalWins();
+        loser.updateTotalLosses();
 
         // Add players to the leaderboard
         topPlayers.add(winner);
         topPlayers.add(loser);
 
         // Sort players by number of wins in descending order
-        topPlayers.sort((p1, p2) -> Integer.compare(p2.getCheckerWins(), p1.getCheckerWins()));
+        topPlayers.sort((p1, p2) -> Integer.compare(p2.getTotalWins(), p1.getTotalWins()));
 
         // You may want to remove duplicates or ensure unique players in the leaderboard
         Set<Player> uniqueTopPlayers = new LinkedHashSet<>(topPlayers);  // Set removes duplicates
@@ -111,8 +111,8 @@ public class Matchmaker {
         Player winner = ThreadLocalRandom.current().nextBoolean() ? player1 : player2;
         Player loser = (winner.equals(player1)) ? player2 : player1;
 
-        winner.updateCheckerWins();
-        loser.updateCheckerLosses();
+        winner.updateTotalWins();
+        loser.updateTotalLosses();
 
         updateLeaderboard(winner, loser);
         System.out.println(winner.getUsername() + " won against " + loser.getUsername());

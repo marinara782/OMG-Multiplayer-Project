@@ -1,0 +1,231 @@
+/* userprofile.css */
+
+.pie-chart .default-color0.chart-pie { -fx-pie-color: #3498db; } /* Blue */
+.pie-chart .default-color1.chart-pie { -fx-pie-color: #2ecc71; } /* Green */
+.pie-chart .default-color2.chart-pie { -fx-pie-color: #f39c12; } /* Orange */
+.pie-chart .default-color3.chart-pie { -fx-pie-color: #e74c3c; } /* Red */
+
+/* Pie chart styles */
+.pie-chart {
+    -fx-background-color: transparent;
+}
+
+.pie-chart .chart-title {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+/* Pie chart data labels */
+.pie-chart .chart-pie-label {
+    -fx-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+/* Pie chart legend */
+.chart-legend {
+    -fx-background-color: transparent;
+}
+
+.chart-legend-item {
+    -fx-text-fill: white;
+}
+
+.root {
+    -fx-background-color: #2c3e50;
+}
+
+/* Header styles */
+.header {
+    -fx-background-color: #1a2530;
+    -fx-padding: 15px;
+}
+
+.username-label {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.join-date-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #bdc3c7;
+}
+
+.status-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #2ecc71;
+}
+
+.rank-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #f39c12;
+}
+
+.rating-label {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.rating-text-label {
+    -fx-font-size: 10px;
+    -fx-text-fill: #bdc3c7;
+}
+
+/* Tab pane styles */
+.tab-pane {
+    -fx-background-color: #2c3e50;
+}
+
+.tab {
+    -fx-background-color: #34495e;
+    -fx-text-fill: white;
+}
+
+.tab:selected {
+    -fx-background-color: #3498db;
+}
+
+.tab-label {
+    -fx-text-fill: white;
+}
+
+/* Overview tab styles */
+.overview-pane {
+    -fx-background-color: #2c3e50;
+    -fx-padding: 20px;
+}
+
+.welcome-label {
+    -fx-font-size: 18px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.stats-grid {
+    -fx-hgap: 20px;
+    -fx-vgap: 10px;
+    -fx-padding: 10px 0 20px 0;
+}
+
+.stat-label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #bdc3c7;
+}
+
+.stat-value {
+    -fx-font-size: 24px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.titled-pane {
+    -fx-text-fill: white;
+    -fx-background-color: #34495e;
+}
+
+.titled-pane > .title {
+    -fx-background-color: #34495e;
+    -fx-text-fill: white;
+}
+
+.pie-chart {
+    -fx-background-color: transparent;
+}
+
+.pie-chart .chart-title {
+    -fx-text-fill: white;
+}
+
+/* Stats tab styles */
+.stats-pane {
+    -fx-background-color: #2c3e50;
+    -fx-padding: 20px;
+}
+
+.stats-title {
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+    -fx-padding: 0 0 10px 0;
+}
+
+.game-stats-tabs {
+    -fx-background-color: #2c3e50;
+}
+
+/* Match history tab styles */
+.match-history-pane {
+    -fx-background-color: #2c3e50;
+    -fx-padding: 20px;
+}
+
+.history-title {
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+    -fx-padding: 0 0 10px 0;
+}
+
+.match-list {
+    -fx-control-inner-background: #1a2530;
+    -fx-text-fill: white;
+}
+
+/* Settings tab styles */
+.settings-pane {
+    -fx-background-color: #2c3e50;
+    -fx-padding: 20px;
+    -fx-spacing: 20px;
+}
+
+.settings-title {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+}
+
+.settings-button {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-pref-width: 200px;
+}
+/* Inputs */
+.text-field, .text-area {
+    -fx-background-color: #1a2530;
+    -fx-text-fill: white;
+    -fx-border-color: #34495e;
+}
+
+/* ComboBoxes */
+.combo-box {
+    -fx-background-color: #1a2530;
+    -fx-mark-color: white;
+    -fx-border-color: #34495e;
+    -fx-text-fill: white;
+}
+
+/* TableView dark mode */
+.table-view {
+    -fx-background-color: #1a2530;
+    -fx-table-cell-border-color: #34495e;
+    -fx-text-fill: white;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #34495e;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: #1a2530;
+    -fx-text-fill: white;
+}
+
+.table-view .table-cell {
+    -fx-text-fill: white;
+}
+
+/* Pie chart title size */
+.pie-chart .chart-title {
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}

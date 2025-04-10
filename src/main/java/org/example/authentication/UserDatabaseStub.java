@@ -184,4 +184,12 @@ public class UserDatabaseStub {
         }
         return "Phone number not found";
     }
+
+    public boolean is_valid_phone_number_format(String phoneNumber) {
+        if (phoneNumber == null) {
+            return false;
+        }
+        // Matches xxx-xxx-xxxx where x is digit
+        return phoneNumber.matches("^\\d{3}-\\d{3}-\\d{4}$");
+    }
 }

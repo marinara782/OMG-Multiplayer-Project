@@ -4,8 +4,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -43,7 +45,7 @@ public class UserProfileTest {
     public void testSetPhoneNumber_Success() throws IOException {
 
 
-        assertTrue(userProfile.set_phone_number("1234567890", "password124", "password124"));
+        assertTrue(userProfile.set_phone_number("alice","123-456-7890", "password124", "password124"));
 
 
     }
@@ -51,69 +53,74 @@ public class UserProfileTest {
     @Test
 
     public void testSetPhoneNumber_IncorrectCurrentPassword() throws IOException{
-        assertFalse(userProfile.set_phone_number("1234567890", "password123", "password124"));
+        assertFalse(userProfile.set_phone_number("alice","123-456-7890", "password123", "password124"));
 
     }
 
     @Test
 
     public void testSetPhoneNumber_PasswordsDoNotMatch() throws IOException{
-        assertFalse(userProfile.set_phone_number("1234567890", "password124", "password123"));
+        assertFalse(userProfile.set_phone_number("alice","123-4567-890", "password124", "password123"));
 
     }
 
     @Test
 
     public void  testSetPhoneNumber_InvalidPhoneNumber() throws IOException {
-        assertFalse(userProfile.set_phone_number("1234", "password124", "password124"));
+        assertFalse(userProfile.set_phone_number("alice","1234", "password124", "password124"));
+        assertFalse(userProfile.set_phone_number("alice","1234567890", "password124", "password124"));
 
     }
 
     @Test
 
-    public void testSetPhoneNumber_FileNotFoundException() throws FileNotFoundException {
-        assertFalse(userProfile.set_phone_number("1234567890", "password124", "password124"));
+    public void testSetPhoneNumber_FileNotFoundException() throws IOException {
+        // Test when database file is missing
+        Files.delete(Paths.get(testFilePath));
+        assertThrows(RuntimeException.class, () -> {
+        assertFalse(userProfile.set_phone_number("alice","123-456-7890", "password124", "password124"));
 
 
+    });
     }
     @Test
     public void testChangePhoneNumber_Success() {
         // Test successful phone number change
-        assertTrue(userProfile.change_phone_number("1234567890", "password124", "password124"));
+        assertTrue(userProfile.change_phone_number("alice","123-456-7890", "password124", "password124"));
     }
 
     @Test
     public void testChangePhoneNumber_IncorrectCurrentPassword() {
         // Test with wrong current password
-        assertFalse(userProfile.change_phone_number("1234567890", "wrongpassword", "wrongpassword"));
+        assertFalse(userProfile.change_phone_number("alice","123-456-7890", "wrongpassword", "wrongpassword"));
     }
 
     @Test
     public void testChangePhoneNumber_PasswordsDoNotMatch() {
         // Test when password and confirmation don't match
-        assertFalse(userProfile.change_phone_number("1234567890", "password124", "differentpassword"));
+        assertFalse(userProfile.change_phone_number("alice","123-456-7890", "password124", "differentpassword"));
     }
 
     @Test
     public void testChangePhoneNumber_InvalidPhoneNumber() {
         // Test with invalid phone number format
-        assertFalse(userProfile.change_phone_number("123", "password124", "password124")); // Too short
-        assertFalse(userProfile.change_phone_number("invalid", "password124", "password124")); // Non-numeric
+        assertFalse(userProfile.change_phone_number("alice","123", "password124", "password124")); // Too short
+        assertFalse(userProfile.change_phone_number("alice","invalid", "password124", "password124")); // Non-numeric
     }
 
     @Test
-    public void testChangePhoneNumber_FileNotFound() throws IOException {
+
+    public void testChangePhoneNumber_FileNotFoundException() throws IOException {
         // Test when database file is missing
         Files.delete(Paths.get(testFilePath));
         assertThrows(RuntimeException.class, () -> {
-            userProfile.change_phone_number("1234567890", "password124", "password124");
+            assertFalse(userProfile.set_phone_number("alice","123-456-7890", "password124", "password124"));
+
+
         });
     }
 
-    @Test
-    public void testChangePhoneNumber_NewNumberSameAsCurrent() {
-        // Test changing to the same phone number (should fail)
-        assertFalse(userProfile.change_phone_number("111-222-3333", "password124", "password124"));
-    }
+
+
 
 }

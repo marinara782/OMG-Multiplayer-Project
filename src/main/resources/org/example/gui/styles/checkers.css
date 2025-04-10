@@ -39,7 +39,6 @@
 
 .rule-tab .tab-label {
     -fx-text-fill: -text-primary;
-    -fx-font-weight: semi-bold;
 }
 
 .rules-scroll-pane {

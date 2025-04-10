@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Final Working changes - (1)" />
+    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Final Working changes - (1)">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/authentication/LoginTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/authentication/LoginTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,7 +26,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="temp_merge_gui_attempt" />
+        <entry key="$PROJECT_DIR$" value="iteration3" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -71,26 +75,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;GUI__iteration3&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_directory_selection&quot;: &quot;C:/Users/bhuva/OneDrive/Desktop/SENG 300/seng300-w25-project/src/main/java/org/example/game/connectFour&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/bhuva/OneDrive/Desktop/GitHub Projects/DuplicateGame&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.13477087&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.17471737&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.HelloApplication.executor": "Run",
+    "Application.Unnamed.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "Wasef",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "C:/Users/bhuva/OneDrive/Desktop/SENG 300/seng300-w25-project/src/main/java/org/example/game/connectFour",
+    "last_opened_file_path": "C:/Users/bhuva/OneDrive/Desktop/GitHub Projects/DuplicateGame",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.13477087",
+    "project.structure.side.proportion": "0.17471737",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="org.example.authentication" />
@@ -113,6 +117,44 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="LoginTest.testChangePassword_ConfirmationMismatch" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="seng300-w25-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.authentication.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.authentication" />
+      <option name="MAIN_CLASS_NAME" value="org.example.authentication.LoginTest" />
+      <option name="METHOD_NAME" value="testChangePassword_ConfirmationMismatch" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserProfileTest.testSetPhoneNumber_Success" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="seng300-w25-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.authentication.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.authentication" />
+      <option name="MAIN_CLASS_NAME" value="org.example.authentication.UserProfileTest" />
+      <option name="METHOD_NAME" value="testSetPhoneNumber_Success" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.UserProfileTest.testSetPhoneNumber_Success" />
+        <item itemvalue="JUnit.LoginTest.testChangePassword_ConfirmationMismatch" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">

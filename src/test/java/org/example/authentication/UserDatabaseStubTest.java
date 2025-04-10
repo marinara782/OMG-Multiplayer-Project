@@ -29,6 +29,22 @@ class UserDatabaseStubTest {
     }
 
     @Test
+    public void testWriteUsersToFile() throws IOException {
+        String filePath = "temp.txt";
+        List<User> users = new ArrayList<>();
+        users.add(new User("testuser1", "pass1", "test1@gmail.com", "123-4567-8901"));
+        users.add(new User("testuser2", "pass2", "test2@gmail.com", "098-7654-3210"));
+
+        UserDatabaseStub tempData = new UserDatabaseStub();
+        tempData.write_users_to_file(users);
+
+        List<String> lines = Files.readAllLines(Paths.get(filePath));
+        assertEquals(2, lines.size());
+        assertEquals("testuser1,pass1,test1@gmail.com,123-4567-8901", lines.get(0).trim());
+        assertEquals("testuser2,pass2,test2@gmail.com,098-7654-3210", lines.get(1).trim());
+    }
+
+    @Test
     void testRegisteredUsersList() throws FileNotFoundException {
         List<User> users = dataBase.registered_users_list();
         assertEquals(2, users.size());
@@ -89,6 +105,12 @@ class UserDatabaseStubTest {
     }
 
     @Test
+    void testUpdateEmail() throws FileNotFoundException {
+        dataBase.update_email("bob", "bob_new@gmail.com", "qwerty");
+        assertEquals("bob_new@gmail.com", dataBase.getCurrentEmail("bob"));
+    }
+
+    @Test
     void testLinkedPhoneNumber() throws FileNotFoundException {
         dataBase.linked_phone_number("alice", "999-888-7777");
         List<User> users = dataBase.registered_users_list();
@@ -124,5 +146,30 @@ class UserDatabaseStubTest {
     void testGetCurrentPhone() throws FileNotFoundException {
         assertEquals("111-222-3333", dataBase.getCurrentPhone("alice"));
         assertNull(dataBase.getCurrentPhone("unknown"));
+    }
+
+    @Test
+    public void testSendEmailWithValidEmail() throws FileNotFoundException {
+        String code = dataBase.send_email("bob@gmail.com");
+        assertTrue(code.matches("\\d{6}")); // 6-digit code
+    }
+
+    @Test
+    public void testSendEmailWithInvalidEmail() throws FileNotFoundException {
+        String result = dataBase.send_email("notfound@gmail.com");
+        assertEquals("Email not found", result);
+    }
+
+    @Test
+    public void testSendTextWithValidPhoneNumber() throws FileNotFoundException {
+        String code = dataBase.send_text("111-222-3333");
+        assertTrue(code.matches("\\d{6}")); // 6-digit code
+    }
+
+    @Test
+    public void testSendTextWithInvalidPhoneNumber() throws FileNotFoundException {
+
+        String result = dataBase.send_text("0000000000");
+        assertEquals("Phone number not found", result);
     }
 }

@@ -348,16 +348,7 @@ public class MainMenuWindow {
 
         // Simulate finding a match after 3 seconds
         Thread matchmakingThread = new Thread(() -> {
-//            try {
-//                Thread.sleep(3000);
-//                javafx.application.Platform.runLater(() -> {
-//                    dialogStage.close();
-//                    startGame(gameType);
-//                });
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        });
+
             try {
                 Thread.sleep(3000);    // pretend to search 3 s
                 javafx.application.Platform.runLater(() -> {
@@ -382,14 +373,10 @@ public class MainMenuWindow {
     private void startGame(String gameType) {
         switch (gameType) {
             case "ticTacToe", "tictactoe", "tic-tac-toe":
-                new GameWindow(stage, new TicTacToeGame(isComputerGameTTT), currentUser);
+                new GameWindow(stage, new TicTacToeGame(true), currentUser);
                 break;
             case "connectfour", "connectFour", "connect-four":
-                Boolean vsComputer = showConnectFourModeDialog();
-//                if (vsComputer == null) {
-//                    return;
-//                }
-//                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, false), currentUser);
+                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, true), currentUser);
                 break;
             case "checkers":
                 new GameWindow(stage, new CheckersGame(), currentUser);

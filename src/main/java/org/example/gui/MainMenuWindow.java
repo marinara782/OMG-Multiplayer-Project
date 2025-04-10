@@ -387,9 +387,7 @@ public class MainMenuWindow {
                 new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, true), currentUser);
                 break;
             case "checkers":
-                Boolean checkersVsComputer = showCheckersModeDialog();
-                if (checkersVsComputer == null) return;
-                new GameWindow(stage, new CheckersGame(checkersVsComputer), currentUser);
+                new GameWindow(stage, new CheckersGame(false), currentUser);
                 break;
             default:
                 System.out.println("Unknown game type: " + gameType);

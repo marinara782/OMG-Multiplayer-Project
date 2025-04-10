@@ -162,6 +162,13 @@ public class CheckersGame {
         return !(red && black);
     }
 
+    public int[][] computerMoveWithPreview() {
+        return new int[0][];
+    }
+
+    public void finalizeComputerMove() {
+    }
+
     private static class Move {
         int fromRow, fromCol, toRow, toCol;
         Move(int fr, int fc, int tr, int tc) {

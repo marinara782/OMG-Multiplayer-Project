@@ -1,5 +1,6 @@
 package org.example.gui;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -57,6 +58,9 @@ public class MainMenuWindow {
         stage.setScene(scene);
         stage.setMinWidth(800);
         stage.setMinHeight(600);
+        Platform.runLater(() -> {
+            stage.centerOnScreen();
+        });
     }
 
     private HBox createHeader() {
@@ -302,6 +306,7 @@ public class MainMenuWindow {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.centerOnScreen();
             stage.setTitle("Login");
             stage.show();
         } catch (IOException e) {

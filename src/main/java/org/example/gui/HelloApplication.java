@@ -19,14 +19,13 @@ public class HelloApplication extends Application {
         stage.setTitle("Login");
         stage.show();
 
-/*
-        UserProfile currentUser = new UserProfile();
-        SceneManager.setPrimaryStage(new Stage());
-        // Create and show the MainMenuWindow with the stage and user
-        MainMenuWindow mainMenuWindow = new MainMenuWindow(stage, currentUser);
-        mainMenuWindow.show();
-
- */
+       // The commented code loads the mainmenuwindow directly (leaving for debugging)
+//        UserProfile currentUser = new UserProfile();
+//
+//        SceneManager.setPrimaryStage(new Stage());
+//        Create and show the MainMenuWindow with the stage and user
+//        MainMenuWindow mainMenuWindow = new MainMenuWindow(stage, currentUser);
+//        mainMenuWindow.show();
     }
 
     public static void main(String[] args) {

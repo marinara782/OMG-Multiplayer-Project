@@ -1,5 +1,6 @@
 package org.example.networking;
 
+import org.example.Player;
 import org.junit.jupiter.api.*;
 import java.io.File;
 import java.io.FileWriter;
@@ -61,7 +62,7 @@ public class ServerTest {
         GameSession session = testServer.createGameSession("checkers");
         assertNull(session);
     }
-/* IN PROGRESS
+/* IN PROGRESS*/
     @Test
     void testLoadPlayersFromTestFile() throws IOException {
         String json = "[{\"name\":\"TestUser1\",\"score\":150}, {\"name\":\"TestUser2\",\"score\":300}]";
@@ -77,10 +78,4 @@ public class ServerTest {
 
         List<Player> loadedPlayers = testServer.getPlayerList();
     }
-
- */
-
-
-
-
 }

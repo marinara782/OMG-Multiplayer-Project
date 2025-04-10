@@ -322,7 +322,7 @@ public class UserProfileWindow {
         return box;
     }
 
-    // Settings tab with options to change password and manage notifications
+    // Settings tab with options to change password and manage notifications, plus bug report
     private Node createSettingsPane() {
         VBox pane = createStyledVBox();
         pane.setAlignment(Pos.CENTER); // Center content
@@ -340,9 +340,35 @@ public class UserProfileWindow {
         notifications.setPrefWidth(250);
         notifications.setOnAction(e -> openNotificationSettings());
 
-        pane.getChildren().addAll(title, changePassword, notifications);
+        // --- Bug Report Section ---
+        Label bugReportLabel = new Label("Report a Bug");
+        bugReportLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: white; -fx-font-weight: bold;");
+
+        TextArea bugTextArea = new TextArea();
+        bugTextArea.setPromptText("Describe the bug here...");
+        bugTextArea.setWrapText(true);
+        bugTextArea.setPrefRowCount(4);
+        bugTextArea.setMaxWidth(500);
+
+        Button submitBugButton = new Button("Submit Bug Report");
+        submitBugButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px;");
+        submitBugButton.setOnAction(e -> {
+            String bugText = bugTextArea.getText().trim();
+            if (bugText.isEmpty()) {
+                showAlert("Please describe the bug before submitting.");
+            } else {
+                bugTextArea.clear(); // Optionally clear the field
+                showSuccess("Thank you for your report! Our team will review it.");
+            }
+        });
+
+        VBox bugSection = new VBox(10, bugReportLabel, bugTextArea, submitBugButton);
+        bugSection.setAlignment(Pos.CENTER);
+
+        pane.getChildren().addAll(title, changePassword, notifications, new Separator(), bugSection);
         return pane;
     }
+
 
 
     // Dialog window for changing the user's password
@@ -452,6 +478,14 @@ public class UserProfileWindow {
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Warning");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    // Displays a confirmation alert
+    private void showSuccess(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Success");
+        alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }

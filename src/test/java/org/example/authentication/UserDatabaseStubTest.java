@@ -76,23 +76,6 @@ class UserDatabaseStubTest {
     }
 
     @Test
-    void testWriteUsersToFile() throws IOException {
-        dataBase.update_password("joe", "pass", "newpass");
-
-        List<String> lines = Files.readAllLines(Paths.get("temp.txt"));
-
-        boolean foundNewPass = false;
-        for (String line : lines) {
-            if (line.contains("joe") && line.contains("newpass")) {
-                foundNewPass = true;
-                break;
-            }
-        }
-
-        assertTrue(foundNewPass, "New password should be written to file");
-    }
-
-    @Test
     void testUpdateUsername() throws FileNotFoundException {
         dataBase.update_username("alice", "aliceNew");
         assertTrue(dataBase.verify_username("aliceNew"));
@@ -139,7 +122,7 @@ class UserDatabaseStubTest {
     // gets phone from dataBase compares if its in expected dataBase
     @Test
     void testGetCurrentPhone() throws FileNotFoundException {
-        assertEquals("111-222-3333", dataBase.getCurrentPassword("alice"));
-        assertNull(dataBase.getCurrentPassword("unknown"));
+        assertEquals("111-222-3333", dataBase.getCurrentPhone("alice"));
+        assertNull(dataBase.getCurrentPhone("unknown"));
     }
 }

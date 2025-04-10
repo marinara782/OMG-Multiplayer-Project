@@ -96,7 +96,7 @@ public class UserDatabaseStub {
     }
 
     // writes given user list to database, overwrites anything already in, returns void
-    private void write_users_to_file(List<User> users) {
+    public void write_users_to_file(List<User> users) {
         File file = new File("temp.txt");
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {

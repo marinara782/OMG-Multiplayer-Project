@@ -198,6 +198,7 @@ public class UserDatabaseStub {
                 user.setEmail(newEmail);
             }
         }
+        write_users_to_file(users);
     }
 
     /**

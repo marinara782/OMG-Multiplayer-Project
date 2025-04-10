@@ -194,6 +194,7 @@ public class UserDatabaseStub {
                 user.setEmail(newEmail);
             }
         }
+        write_users_to_file(users);
     }
 
     public String send_email(String email) throws FileNotFoundException {

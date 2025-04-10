@@ -23,24 +23,25 @@ public class Login extends UserDatabaseStub {
         String code_sent = "none";
         String username = "";
 
+        boolean email_sent_flag = false;
+
         // for loop that checks if the email entered is the same and sends a 6-digit code to the email
         for (User user : users) {
             if (user.getEmail().equalsIgnoreCase(email)){
                 code_sent = send_email(email);
                 username = user.getUsername();
+                email_sent_flag = true;
             }
         }
 
-        // Need GUI to have a text-field here that gets user input
-        String user_input = "no number";
+        // Method call stub to simulate a user receiving an email and entering it into the program
+        String user_input = get_2FA_input(email_sent_flag, code_sent);
+
         if (user_input.equals(code_sent)) {
             return username;
         }
-        else if (!user_input.equals(code_sent) && !code_sent.equals("none")){
-            return "The code entered is incorrect, please try again.";
-        }
         else {
-            return "The email you have entered is not a registered user.";
+            return "There was an error during the retrieval of your username, try again.";
         }
     }
 

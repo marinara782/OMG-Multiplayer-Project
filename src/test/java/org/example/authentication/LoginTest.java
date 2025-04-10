@@ -111,4 +111,14 @@ public class LoginTest {
     void test_login_account_not_registered_user() {
         assertFalse(login.login_account("benjamin", "not_a_password123"));
     }
+
+    @Test
+    void forgot_username_success() throws IOException {
+        assertEquals("alice", login.forgot_username("alice@gmail.com"), "alice");
+    }
+
+    @Test
+    void forgot_username_failure() throws IOException {
+        assertEquals("There was an error during the retrieval of your username, try again.", login.forgot_username("not_alice@gmail.com"), "There was an error during the retrieval of your username, try again.");
+    }
 }

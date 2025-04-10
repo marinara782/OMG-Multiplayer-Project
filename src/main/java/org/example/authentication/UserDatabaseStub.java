@@ -251,12 +251,20 @@ public class UserDatabaseStub {
         return "Phone number not found";
     }
 
+    public String get_2FA_input(boolean flag, String code) throws FileNotFoundException {
+        if (flag) {
+            return code;
+        }
+        else {
+            return "code not received";
+        }
+    }
+
     public boolean is_valid_phone_number_format(String phoneNumber) {
         if (phoneNumber == null) {
             return false;
         }
         // Matches xxx-xxx-xxxx where x is digit
         return phoneNumber.matches("^\\d{3}-\\d{3}-\\d{4}$");
-
     }
 }

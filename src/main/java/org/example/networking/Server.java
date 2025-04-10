@@ -52,6 +52,13 @@ public class Server {
         activeSessions.clear();
     }
 
+    //HELPER METHOD
+    public void addPlayer(Player player){
+        players.add(player);
+    }
+
+
+
     public Server(){
         this.activeSessions = new ArrayList<>();
         this.isRunning = false;
@@ -63,7 +70,7 @@ public class Server {
             this.port = port;
             this.isRunning = true;
             String playerID = null;
-            System.out.println("Server has started on port "+port+"for player "+ playerID);
+            System.out.println("Server has started on port "+port);
         }else{
             System.out.println("Server is already running!");
         }
@@ -87,7 +94,7 @@ public class Server {
         }
     }
 
-    private void savePlayers(){
+    public void savePlayers(){
         //Jackson ObjectMapper to handle conversion between Java objects and JSON
         ObjectMapper mapper = new ObjectMapper();
         try{

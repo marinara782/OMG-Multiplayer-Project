@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="testCreateGameSessionWhileServerStopped() now works and testLoadPlayersFromTestFile() is in progress">
+    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="moved isRunning getter">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/networking/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/networking/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/org/example/networking/ServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/networking/ServerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -457,7 +461,23 @@
       <option name="project" value="LOCAL" />
       <updated>1744267375211</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="imported player class to ServerTest.java">
+      <option name="closed" value="true" />
+      <created>1744267862936</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1744267862936</updated>
+    </task>
+    <task id="LOCAL-00037" summary="moved isRunning getter">
+      <option name="closed" value="true" />
+      <created>1744268162589</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1744268162589</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -472,8 +492,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Started Tic-Tac-toe Basics from computer side." />
-    <MESSAGE value="Initiated Tic-Tac-Toe Basics and deleted .fxml file from computer side- (1)." />
     <MESSAGE value="Working 2-Player Tic-Tac-Toe Board and Game (2)." />
     <MESSAGE value="Working 2-Player Tic-Tac-Toe Board and Game with player option selection(3)." />
     <MESSAGE value="AI Tic-Tac-Toe Board selection(4)." />
@@ -497,13 +515,15 @@
     <MESSAGE value="Split the game breakdown into multiple sections" />
     <MESSAGE value="start test working in ServerTest.java" />
     <MESSAGE value="testCreateGameSessionWhileServerStopped() now works and testLoadPlayersFromTestFile() is in progress" />
-    <option name="LAST_COMMIT_MESSAGE" value="testCreateGameSessionWhileServerStopped() now works and testLoadPlayersFromTestFile() is in progress" />
+    <MESSAGE value="imported player class to ServerTest.java" />
+    <MESSAGE value="moved isRunning getter" />
+    <option name="LAST_COMMIT_MESSAGE" value="moved isRunning getter" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/HelloApplication_java$ClientTest.ic" NAME="ClientTest Coverage Results" MODIFIED="1744221002260" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>org.example.networking.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/HelloApplication_java$ServerTest.ic" NAME="ServerTest Coverage Results" MODIFIED="1744265983289" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+    <SUITE FILE_PATH="coverage/HelloApplication_java$ServerTest.ic" NAME="ServerTest Coverage Results" MODIFIED="1744307992320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>org.example.networking.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/HelloApplication_java$GameSessionTest.ic" NAME="GameSessionTest Coverage Results" MODIFIED="1744221097355" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

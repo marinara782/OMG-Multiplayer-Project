@@ -37,8 +37,6 @@ public class ServerTest {
         testServer.stop();
         //enter port number 80 as parameter
         testServer.start(80);
-        //test
-        System.out.println("From test: isRunning = " + testServer.isRunning());
         //create a game session
         assertTrue(testServer.isRunning(), "Server should be running after start()");
         assertEquals(80, testServer.getPort(), "Port number should be set correctly.");
@@ -64,18 +62,33 @@ public class ServerTest {
     }
 /* IN PROGRESS*/
     @Test
-    void testLoadPlayersFromTestFile() throws IOException {
-        String json = "[{\"name\":\"TestUser1\",\"score\":150}, {\"name\":\"TestUser2\",\"score\":300}]";
+    void testSaveAndLoadPlayers() throws IOException {
+        List<Player> ogPlayers = testServer.getPlayerList();
+        Player testPlayer = new Player("Eloisa");
+        testPlayer.setCheckerWins(3);
+        testPlayer.setCheckerLosses(1);
+        testServer.addPlayer(testPlayer);
+        testServer.savePlayers();
 
+        testServer.savePlayers();
 
-        File testFile = new File("test_players.json");
-        try (FileWriter writer = new FileWriter(testFile)) {
-            writer.write(json);
-        }
+        ogPlayers.clear();
 
-        Server testServer = new Server();
         testServer.loadPlayers();
-
         List<Player> loadedPlayers = testServer.getPlayerList();
+
+        //assert results
+        assertEquals(1, loadedPlayers.size(), "There should be one player loaded");
+        Player loaded = loadedPlayers.get(0);
+        assertEquals("Eloisa", loaded.getUsername());
+        assertEquals(3, loaded.getCheckerWins());
+        assertEquals(1, loaded.getCheckerLosses());
+
+
+        //clean up. remove file
+        File file = new File("players.json");
+        if (file.exists()){
+            file.delete();
+        }
     }
 }

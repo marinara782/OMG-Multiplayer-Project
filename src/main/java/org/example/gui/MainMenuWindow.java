@@ -334,23 +334,40 @@ public class MainMenuWindow {
         Label statusLabel = new Label("Searching for players in your skill range");
         statusLabel.setStyle("-fx-text-fill: #bdc3c7;");
 
+        final boolean[] cancelled = { false };
+
         Button cancelButton = new Button("Cancel");
         cancelButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
-        cancelButton.setOnAction(_ -> dialogStage.close());
+        cancelButton.setOnAction(_ -> {
+            cancelled[0] = true;       // mark as cancelled
+            dialogStage.close();       // close the window
+        });
+        //cancelButton.setOnAction(_ -> dialogStage.close());
 
         dialogContent.getChildren().addAll(titleLabel, progressIndicator, statusLabel, cancelButton);
 
         // Simulate finding a match after 3 seconds
         Thread matchmakingThread = new Thread(() -> {
+//            try {
+//                Thread.sleep(3000);
+//                javafx.application.Platform.runLater(() -> {
+//                    dialogStage.close();
+//                    startGame(gameType);
+//                });
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        });
             try {
-                Thread.sleep(3000);
+                Thread.sleep(3000);    // pretend to search 3 s
                 javafx.application.Platform.runLater(() -> {
-                    dialogStage.close();
-                    startGame(gameType);
+                    /* only continue if user did NOT press cancel */
+                    if (!cancelled[0]) {
+                        dialogStage.close();
+                        startGame(gameType);
+                    }
                 });
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            } catch (InterruptedException ignored) { }
         });
         matchmakingThread.setDaemon(true);
         matchmakingThread.start();
@@ -518,9 +535,14 @@ public class MainMenuWindow {
     //This method makes a new tic-tac-toe game with the parameter
     // of whether the game is against the computer or not through the selected option in the dialogue box
     public boolean isComputerGameTTT;
+
     private void runTicTacToeGame() {
-        isComputerGameTTT = Boolean.TRUE.equals(showTicTacToeModeDialog());
-        TicTacToeGame ticTacToeGame = new TicTacToeGame(isComputerGameTTT);
+        Boolean vsComputer = showTicTacToeModeDialog();
+        if (vsComputer == null) {          // user hit “Cancel” or closed the dialog
+            return;                        // stay in main menu – nothing else happens
+        }
+        isComputerGameTTT = vsComputer;    // save for later use (startGame)
+        TicTacToeGame ticTacToeGame = new TicTacToeGame(vsComputer);
         new GameWindow(stage, ticTacToeGame, currentUser);
     }
 

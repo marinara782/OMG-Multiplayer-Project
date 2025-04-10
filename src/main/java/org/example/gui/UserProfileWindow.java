@@ -317,51 +317,25 @@ public class UserProfileWindow {
     }
 
     // Settings tab with options to change password and manage notifications
-    // Settings tab with options to change password and manage notifications
     private Node createSettingsPane() {
         VBox pane = createStyledVBox();
+        pane.setAlignment(Pos.CENTER); // Center content
 
         Label title = new Label("Settings");
-        title.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
+        title.setStyle("-fx-font-size: 26px; -fx-text-fill: white; -fx-font-weight: bold;");
 
         Button changePassword = new Button("Change Password");
-        changePassword.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
+        changePassword.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px;");
+        changePassword.setPrefWidth(250);
         changePassword.setOnAction(e -> openChangePasswordDialog());
 
         Button notifications = new Button("Notification Settings");
-        notifications.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
+        notifications.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px;");
+        notifications.setPrefWidth(250);
         notifications.setOnAction(e -> openNotificationSettings());
 
-        CheckBox darkModeToggle = new CheckBox("Enable Dark Mode");
-        darkModeToggle.setStyle("-fx-text-fill: white;");
-        darkModeToggle.setSelected(true);
-        darkModeToggle.setOnAction(e -> toggleDarkMode(darkModeToggle.isSelected()));
-
-        CheckBox twoFactorToggle = new CheckBox("Enable Two-Factor Authentication");
-        twoFactorToggle.setStyle("-fx-text-fill: white;");
-        twoFactorToggle.setSelected(false);
-        twoFactorToggle.setOnAction(e -> toggleTwoFactorAuth(twoFactorToggle.isSelected()));
-
-        pane.getChildren().addAll(
-                title,
-                changePassword,
-                notifications,
-                darkModeToggle,
-                twoFactorToggle
-        );
+        pane.getChildren().addAll(title, changePassword, notifications);
         return pane;
-    }
-
-    // Simulates toggling dark mode (visual change already applied in the layout)
-    private void toggleDarkMode(boolean enabled) {
-        String message = enabled ? "Dark mode enabled." : "Dark mode disabled.";
-        showAlert(message); // You could implement actual theming logic here
-    }
-
-    // Simulates enabling or disabling 2FA
-    private void toggleTwoFactorAuth(boolean enabled) {
-        String message = enabled ? "Two-Factor Authentication enabled." : "Two-Factor Authentication disabled.";
-        showAlert(message); // In real app, you'd integrate this with user settings backend
     }
 
 

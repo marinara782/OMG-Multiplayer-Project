@@ -191,5 +191,6 @@ public class UserDatabaseStub {
         }
         // Matches xxx-xxx-xxxx where x is digit
         return phoneNumber.matches("^\\d{3}-\\d{3}-\\d{4}$");
+
     }
 }

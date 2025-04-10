@@ -117,6 +117,7 @@ public class UserProfile extends UserDatabaseStub {
         }
     }
 
+
     public void enable_2_factor(String username, String first_password, String second_password, int choice) throws FileNotFoundException {
 
         String phone_number = "none";

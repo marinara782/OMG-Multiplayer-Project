@@ -64,34 +64,28 @@ public class UserProfile extends UserDatabaseStub {
      * @param confirmPassword  confirmation password of the user by retyping it
      * @return true when the phone number has changed, false when not
      */
-    public boolean change_phone_number(String new_phone_number, String password, String confirmPassword) {
+    public boolean change_phone_number(String username,String new_phone_number, String password, String confirmPassword) {
         try {
             // 1.Verify password
-            if (!verify_password(getUsername(), password)) {
+            if (!verify_password(username, password)) {
                 System.out.println("Error: Current password is incorrect");
                 return false;
             }
 
-            // 2.Verify confirmation password
-            if (!verify_password(getCurrentPassword(getUsername()), confirmPassword)) {
-                System.out.println("Error: Confirmation password is incorrect");
-                return false;
-            }
-
-            // 3.Verify passwords
+            // 2.Verify passwords
             if (!password.equals(confirmPassword)) {
                 System.out.println("Error: Passwords do not match");
                 return false;
             }
 
-            if (!verify_phone_number(getUsername(), new_phone_number)) {
+            if (!is_valid_phone_number_format(new_phone_number)) {
                 System.out.println("Error: Invalid phone number format");
                 return false;
             }
 
             // 5. Update phone number in database
-            linked_phone_number(getUsername(), new_phone_number);
-            System.out.println("Success: Phone number updated for " + getUsername());
+            linked_phone_number(username, new_phone_number);
+            System.out.println("Success: Phone number updated for " + username);
             return true;
 
         } catch (FileNotFoundException e) {
@@ -109,9 +103,9 @@ public class UserProfile extends UserDatabaseStub {
      * @return true when a phone number has been set, false when not
      * @throws FileNotFoundException when the file is not found
      */
-    public boolean set_phone_number(String phone_number, String password, String confirm_password) {
+    public boolean set_phone_number(String username, String phone_number, String password, String confirm_password) {
         try {
-            String username = getUsername(); // Get current logged-in username
+
 
             // 1. Verify current password
             if (!verify_password(username, password)) {
@@ -119,25 +113,21 @@ public class UserProfile extends UserDatabaseStub {
                 return false;
             }
 
-            // 2. Verify confirmation password
-            if (!verify_password(username, confirm_password)) {
-                System.out.println("Error: Confirmation password is incorrect");
-                return false;
-            }
 
-            // 3. Verify passwords match
+
+            // 2. Verify passwords match
             if (!password.equals(confirm_password)) {
                 System.out.println("Error: Passwords do not match");
                 return false;
             }
-            // 4. Verify phone number
-            if (!verify_phone_number(username, phone_number)) {
-                System.out.println("Error: Account not found!");
+            // 3. Verify phone number
+            if(!is_valid_phone_number_format(phone_number)){
+                System.out.println("phone number format is incorrect!");
                 return false;
             }
 
 
-            // 5. Update phone number in database
+            // 4. Update phone number in database
             linked_phone_number(username, phone_number);
             System.out.println("Success: Phone number updated for " + username);
             return true;

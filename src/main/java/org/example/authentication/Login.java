@@ -4,10 +4,12 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.stage.Stage;
-
 
 public class Login extends UserDatabaseStub {
+
+    public Login() {
+
+    }
 
     /**
      * help users to recover their username if they forget it. Sends a 6-digit code to the email and checks if the code is correct.
@@ -215,8 +217,8 @@ public class Login extends UserDatabaseStub {
         return true;
     }
 
-    public Login(Stage stage) {
-    }
+    //public Login(Stage stage) {
+    //}
 
     public void show() {
     }

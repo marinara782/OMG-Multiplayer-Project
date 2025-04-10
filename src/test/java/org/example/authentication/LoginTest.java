@@ -18,7 +18,7 @@ public class LoginTest {
     void setup() throws IOException{
         List<String> lines = List.of("alice, pass123, alice@gmail.com, 111-222-3333","bob, qwerty, bob@gmail.com, 444-555-6666");
         Files.write(Paths.get(testFilePath), lines);
-        login = new Login(null);
+        login = new Login();
     }
 
     @AfterEach

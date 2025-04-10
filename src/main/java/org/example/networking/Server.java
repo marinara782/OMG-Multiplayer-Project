@@ -22,7 +22,7 @@ public class Server {
     private static List<GameSession> activeSessions;
 
     //.json file variables
-    private final File playerFile = new File("players.json");
+    private File playerFile = new File("players.json");
     private List<Player> players = new ArrayList<>();
 
 
@@ -32,10 +32,14 @@ public class Server {
         return port;
     }
 
-
     //getter for list of active sessions
     AbstractList<GameSession> getActiveSessions(){
         return new ArrayList<>(activeSessions);
+    }
+
+    //getter for player list
+    public List<Player> getPlayerList(){
+        return new ArrayList<>(players);
     }
 
     //clear active sessions
@@ -46,6 +50,7 @@ public class Server {
     public Server(){
         this.activeSessions = new ArrayList<>();
         this.isRunning = false;
+        this.playerFile = playerFile;
     }
 
     public void start(int port){
@@ -63,12 +68,12 @@ public class Server {
         isRunning = false;
     }
 
-    private void loadPlayers(){
+    void loadPlayers(){
         //Jackson ObjectMapper to handle conversion between Java objects and JSON
         ObjectMapper mapper = new ObjectMapper();
         if (playerFile.exists()){
             try{
-                players = mapper.readValue(playerFile, new TypeReference<List<Player>>(){});
+                players = mapper.readValue(playerFile, new TypeReference<List<Player>>(){});    //load players from file
                 System.out.println("Players loaded from file.");
             }catch (IOException e){
                 //e.getMessage() returns a human-readable description of what caused the exception
@@ -154,7 +159,5 @@ public class Server {
     public boolean isRunning() {
         return isRunning;
     }
-
-    //new server (using firebase)
 }
 

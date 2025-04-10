@@ -2,6 +2,8 @@ package org.example.networking;
 
 import org.junit.jupiter.api.*;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,11 +56,29 @@ public class ServerTest {
 
     @Test
     void testCreateGameSessionWhileServerStopped(){
+        testServer.stop();
         testServer.createGameSession("test");   //not stored but still added to list
         GameSession session = testServer.createGameSession("checkers");
         assertNull(session);
-
     }
+/* IN PROGRESS
+    @Test
+    void testLoadPlayersFromTestFile() throws IOException {
+        String json = "[{\"name\":\"TestUser1\",\"score\":150}, {\"name\":\"TestUser2\",\"score\":300}]";
+
+
+        File testFile = new File("test_players.json");
+        try (FileWriter writer = new FileWriter(testFile)) {
+            writer.write(json);
+        }
+
+        Server testServer = new Server();
+        testServer.loadPlayers();
+
+        List<Player> loadedPlayers = testServer.getPlayerList();
+    }
+
+ */
 
 
 

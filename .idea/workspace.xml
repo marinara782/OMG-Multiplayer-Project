@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Split the game breakdown into multiple sections">
+    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="start test working in ServerTest.java">
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/networking/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/networking/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/networking/GameSessionTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/networking/GameSessionTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/networking/ServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/networking/ServerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,6 +77,8 @@
   "keyToString": {
     "Application.HelloApplication.executor": "Run",
     "Application.Unnamed.executor": "Run",
+    "JUnit.ClientTest.executor": "Coverage",
+    "JUnit.GameSessionTest.executor": "Coverage",
     "JUnit.ServerTest.executor": "Coverage",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -107,7 +107,7 @@
       <recent name="C:\Users\bhuva\OneDrive\Desktop\SENG 300\seng300-w25-project\docs\planning" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.GameSessionTest">
+  <component name="RunManager" selected="JUnit.ServerTest">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.gui.HelloApplication" />
       <module name="seng300-w25-project" />
@@ -162,9 +162,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ServerTest" />
         <item itemvalue="JUnit.GameSessionTest" />
         <item itemvalue="JUnit.ClientTest" />
-        <item itemvalue="JUnit.ServerTest" />
       </list>
     </recent_temporary>
   </component>
@@ -441,7 +441,15 @@
       <option name="project" value="LOCAL" />
       <updated>1743731048406</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="start test working in ServerTest.java">
+      <option name="closed" value="true" />
+      <created>1744221216399</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1744221216399</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -456,7 +464,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Developed UserProfileWindow" />
     <MESSAGE value="Developed UserProfileWindow and HelloApplication" />
     <MESSAGE value="Started Tic-Tac-toe Basics from computer side." />
     <MESSAGE value="Initiated Tic-Tac-Toe Basics and deleted .fxml file from computer side- (1)." />
@@ -481,13 +488,17 @@
     <MESSAGE value="Designing TicTacToe rules (Done)" />
     <MESSAGE value="Updated the Profile visuals a bit" />
     <MESSAGE value="Split the game breakdown into multiple sections" />
-    <option name="LAST_COMMIT_MESSAGE" value="Split the game breakdown into multiple sections" />
+    <MESSAGE value="start test working in ServerTest.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="start test working in ServerTest.java" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/HelloApplication_java$ClientTest.ic" NAME="ClientTest Coverage Results" MODIFIED="1744210385142" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+    <SUITE FILE_PATH="coverage/HelloApplication_java$ClientTest.ic" NAME="ClientTest Coverage Results" MODIFIED="1744221002260" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>org.example.networking.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/HelloApplication_java$ServerTest.ic" NAME="ServerTest Coverage Results" MODIFIED="1744220346230" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+    <SUITE FILE_PATH="coverage/HelloApplication_java$ServerTest.ic" NAME="ServerTest Coverage Results" MODIFIED="1744220965842" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.networking.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$GameSessionTest.ic" NAME="GameSessionTest Coverage Results" MODIFIED="1744221097355" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>org.example.networking.*</FILTER>
     </SUITE>
   </component>

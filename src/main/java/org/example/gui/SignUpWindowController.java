@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.example.authentication.Login;
 import org.example.authentication.UserProfile;
 
 import java.io.IOException;
@@ -34,14 +35,24 @@ public class SignUpWindowController {
             return;
         }
 
-        if (password.length() < 6) {
+        if (password.length() < 8) {
             showAlert(Alert.AlertType.ERROR, "Weak Password", "Password must be at least 6 characters long.");
             return;
         }
-
-        showAlert(Alert.AlertType.INFORMATION, "Success", "Account created successfully!");
-//        UserProfile NewUser = new UserProfile(username,password,email, null);
-//        OpenMainMenu(NewUser);
+        try {
+            // Try to create the account
+            boolean success = Login.createAccount(username, password, email, null);
+            if (success) {
+                showAlert(Alert.AlertType.INFORMATION, "Success", "Account created successfully!");
+                UserProfile newUser = new UserProfile(); // Optionally fill this in with details
+                OpenMainMenu(newUser);
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Account Exists", "Username already exists. Please choose another one.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "An error occurred while creating the account.");
+        }
     }
 
     private void OpenMainMenu(UserProfile user) {

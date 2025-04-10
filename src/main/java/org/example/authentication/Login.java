@@ -110,7 +110,7 @@ public class Login extends UserDatabaseStub {
         }
     }
 
-    // return to login screen after logging out
+    // return to log in screen after logging out
     private static void returnToLoginScreen(){
         System.out.println("Return to the login screen...");
         // GUI must implement a method to load the login UI
@@ -214,9 +214,6 @@ public class Login extends UserDatabaseStub {
         update_email(username, newEmail, password);
         return true;
     }
-
-    //public Login(Stage stage) {
-    //}
 
     public void show() {
     }

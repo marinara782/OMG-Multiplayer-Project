@@ -28,7 +28,7 @@ public class UserProfileTest {
     void setup() throws IOException {
         List<String> lines = List.of("alice, password124, alice@gmail.com, 111-222-3333");
         Files.write(Paths.get(testFilePath), lines);
-        login = new Login(null);
+        login = new Login();
         assertTrue(login.login_account("alice", "password124"));
         userProfile = new UserProfile();
     }
@@ -120,8 +120,4 @@ public class UserProfileTest {
         });
 
     }
-
-
-
-
 }

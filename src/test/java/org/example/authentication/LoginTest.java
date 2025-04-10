@@ -90,4 +90,25 @@ public class LoginTest {
     void testChangeEmail_WrongPassword() throws IOException{
         assertFalse(login.change_email("bob", "wrongpass", "bob@gmail.com", "newBob@gmail.com"));
     }
+
+    // Test for checking if a registered user can log in with correct information
+    @Test
+    void test_login_account_success() {
+        assertTrue(login.login_account("alice", "pass123"));
+    }
+
+    @Test
+    void test_login_account_incorrect_password() {
+        assertFalse(login.login_account("alice", "wrongPass123"));
+    }
+
+    @Test
+    void test_login_account_incorrect_username() {
+        assertFalse(login.login_account("not_alice", "pass123"));
+    }
+
+    @Test
+    void test_login_account_not_registered_user() {
+        assertFalse(login.login_account("benjamin", "not_a_password123"));
+    }
 }

@@ -45,7 +45,6 @@ public class UserProfileWindow {
     }
 
 
-
     private void initializeUI() {
         mainLayout = new BorderPane();
         mainLayout.setStyle("-fx-background-color: #2c3e50;");
@@ -304,14 +303,83 @@ public class UserProfileWindow {
         title.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
 
         Button changePassword = new Button("Change Password");
-        Button notifications = new Button("Notification Settings");
-
         changePassword.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
+        changePassword.setOnAction(e -> openChangePasswordDialog());
+
+        Button notifications = new Button("Notification Settings");
         notifications.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
+        notifications.setOnAction(e -> openNotificationSettings());
 
         pane.getChildren().addAll(title, changePassword, notifications);
         return pane;
     }
+    private void openChangePasswordDialog() {
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle("Change Password");
+
+        // Set the button types
+        ButtonType changeButtonType = new ButtonType("Change", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(changeButtonType, ButtonType.CANCEL);
+
+        // Create the password fields
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        PasswordField newPassword = new PasswordField();
+        newPassword.setPromptText("New Password");
+
+        PasswordField confirmPassword = new PasswordField();
+        confirmPassword.setPromptText("Confirm Password");
+
+        grid.add(new Label("New Password:"), 0, 0);
+        grid.add(newPassword, 1, 0);
+        grid.add(new Label("Confirm:"), 0, 1);
+        grid.add(confirmPassword, 1, 1);
+
+        dialog.getDialogPane().setContent(grid);
+
+        // Convert the result
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == changeButtonType) {
+                if (newPassword.getText().equals(confirmPassword.getText())) {
+                    return newPassword.getText(); // Replace with real logic
+                } else {
+                    showAlert("Passwords do not match!");
+                }
+            }
+            return null;
+        });
+
+        dialog.showAndWait();
+    }
+
+    private void openNotificationSettings() {
+        Dialog<Void> dialog = new Dialog<>();
+        dialog.setTitle("Notification Settings");
+        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+
+        CheckBox emailNotif = new CheckBox("Email Notifications");
+        CheckBox appNotif = new CheckBox("In-App Notifications");
+
+        emailNotif.setSelected(true);
+        appNotif.setSelected(true);
+
+        VBox content = new VBox(10, emailNotif, appNotif);
+        content.setPadding(new Insets(20));
+        dialog.getDialogPane().setContent(content);
+
+        dialog.showAndWait();
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
 
     public void show() {
         stage.show();

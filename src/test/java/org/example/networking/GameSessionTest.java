@@ -11,6 +11,7 @@ public class GameSessionTest {
 
     @BeforeEach
     void setUp() {
+        Server clientServer = new Server();
         testClient = new Client();
         testSession = new GameSession();
     }

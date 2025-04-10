@@ -401,7 +401,6 @@ public class UserProfileWindow {
         grid.add(confirmPasswordField, 1, 3);
 
 
-
         dialog.getDialogPane().setContent(grid);
 
         Node changeButton = dialog.getDialogPane().lookupButton(changeButtonType);
@@ -411,7 +410,6 @@ public class UserProfileWindow {
             String newPassword = newPasswordField.getText().trim();
             String confirmPassword = confirmPasswordField.getText().trim();
 
-// From UserProfile
 
             if (email.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
                 showAlert("Please fill in all fields.");

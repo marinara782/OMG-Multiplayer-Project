@@ -1,6 +1,7 @@
 package org.example.gui;
 
 // JavaFX imports for UI components and layout management
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -9,6 +10,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import org.example.authentication.Login;
 import org.example.authentication.UserProfile;
 
 import java.util.HashMap;
@@ -315,6 +317,7 @@ public class UserProfileWindow {
     }
 
     // Settings tab with options to change password and manage notifications
+    // Settings tab with options to change password and manage notifications
     private Node createSettingsPane() {
         VBox pane = createStyledVBox();
 
@@ -329,13 +332,42 @@ public class UserProfileWindow {
         notifications.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
         notifications.setOnAction(e -> openNotificationSettings());
 
-        pane.getChildren().addAll(title, changePassword, notifications);
+        CheckBox darkModeToggle = new CheckBox("Enable Dark Mode");
+        darkModeToggle.setStyle("-fx-text-fill: white;");
+        darkModeToggle.setSelected(true);
+        darkModeToggle.setOnAction(e -> toggleDarkMode(darkModeToggle.isSelected()));
+
+        CheckBox twoFactorToggle = new CheckBox("Enable Two-Factor Authentication");
+        twoFactorToggle.setStyle("-fx-text-fill: white;");
+        twoFactorToggle.setSelected(false);
+        twoFactorToggle.setOnAction(e -> toggleTwoFactorAuth(twoFactorToggle.isSelected()));
+
+        pane.getChildren().addAll(
+                title,
+                changePassword,
+                notifications,
+                darkModeToggle,
+                twoFactorToggle
+        );
         return pane;
     }
 
+    // Simulates toggling dark mode (visual change already applied in the layout)
+    private void toggleDarkMode(boolean enabled) {
+        String message = enabled ? "Dark mode enabled." : "Dark mode disabled.";
+        showAlert(message); // You could implement actual theming logic here
+    }
+
+    // Simulates enabling or disabling 2FA
+    private void toggleTwoFactorAuth(boolean enabled) {
+        String message = enabled ? "Two-Factor Authentication enabled." : "Two-Factor Authentication disabled.";
+        showAlert(message); // In real app, you'd integrate this with user settings backend
+    }
+
+
     // Dialog window for changing the user's password
     private void openChangePasswordDialog() {
-        Dialog<String> dialog = new Dialog<>();
+        Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Change Password");
 
         ButtonType changeButtonType = new ButtonType("Change", ButtonBar.ButtonData.OK_DONE);
@@ -346,32 +378,78 @@ public class UserProfileWindow {
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
-        PasswordField newPassword = new PasswordField();
-        newPassword.setPromptText("New Password");
+        TextField usernameField = new TextField();
+        usernameField.setPromptText("Username");
 
-        PasswordField confirmPassword = new PasswordField();
-        confirmPassword.setPromptText("Confirm Password");
+        TextField emailField = new TextField();
+        emailField.setPromptText("Email");
 
-        grid.add(new Label("New Password:"), 0, 0);
-        grid.add(newPassword, 1, 0);
-        grid.add(new Label("Confirm:"), 0, 1);
-        grid.add(confirmPassword, 1, 1);
+        PasswordField newPasswordField = new PasswordField();
+        newPasswordField.setPromptText("New Password");
+
+        PasswordField confirmPasswordField = new PasswordField();
+        confirmPasswordField.setPromptText("Confirm Password");
+
+
+        grid.add(new Label("Username:"), 0, 0);
+        grid.add(usernameField, 1, 0);
+        grid.add(new Label("Email:"), 0, 1);
+        grid.add(emailField, 1, 1);
+        grid.add(new Label("New Password:"), 0, 2);
+        grid.add(newPasswordField, 1, 2);
+        grid.add(new Label("Confirm Password:"), 0, 3);
+        grid.add(confirmPasswordField, 1, 3);
+
+
 
         dialog.getDialogPane().setContent(grid);
 
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == changeButtonType) {
-                if (newPassword.getText().equals(confirmPassword.getText())) {
-                    return newPassword.getText(); // Passwords match
-                } else {
-                    showAlert("Passwords do not match!");
-                }
+        Node changeButton = dialog.getDialogPane().lookupButton(changeButtonType);
+        changeButton.addEventFilter(ActionEvent.ACTION, event -> {
+            String username = usernameField.getText().trim();
+            String email = emailField.getText().trim();
+            String newPassword = newPasswordField.getText().trim();
+            String confirmPassword = confirmPasswordField.getText().trim();
+
+// From UserProfile
+
+            if (email.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
+                showAlert("Please fill in all fields.");
+                event.consume();
+                return;
             }
-            return null;
+
+            if (newPassword.length() < 8) {
+                showAlert("Password must be at least 8 characters long.");
+                event.consume();
+                return;
+            }
+
+            if (!newPassword.equals(confirmPassword)) {
+                showAlert("Passwords do not match.");
+                event.consume();
+                return;
+            }
+
+            Login login = new Login();
+            try {
+                boolean success = login.forgot_password(username, email, newPassword);
+                if (success) {
+                    showAlert("Password changed successfully!");
+                } else {
+                    showAlert("Email and username do not match or user doesn't exist.");
+                    event.consume(); // Keep the dialog open
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("An error occurred. Please try again.");
+                event.consume();
+            }
         });
 
         dialog.showAndWait();
     }
+
 
     // Opens notification preference toggles
     private void openNotificationSettings() {

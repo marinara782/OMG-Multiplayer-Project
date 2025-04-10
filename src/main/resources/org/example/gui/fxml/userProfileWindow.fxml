@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.gui.UserProfileWindowController">
+
+    <top>
+        <HBox fx:id="header" spacing="10" styleClass="header" alignment="CENTER_LEFT">
+            <Label text="Welcome," fx:id="welcomeLabel" styleClass="username-label"/>
+        </HBox>
+    </top>
+
+    <center>
+        <TabPane fx:id="tabPane" styleClass="tab-pane">
+
+            <Tab text="Overview">
+                <VBox spacing="20" padding="20" styleClass="overview-pane">
+                    <Label fx:id="welcomeLabel" styleClass="welcome-label"/>
+                    <PieChart fx:id="gameDistributionPieChart" title="Game Distribution" />
+                </VBox>
+            </Tab>
+
+            <Tab text="Game Stats">
+                <VBox spacing="20" padding="20" styleClass="stats-pane">
+                    <Label text="Total Games:" styleClass="stats-title"/>
+                    <Label fx:id="totalGamesLabel" styleClass="stat-value"/>
+
+                    <Label text="Wins:" styleClass="stats-title"/>
+                    <Label fx:id="winsLabel" styleClass="stat-value"/>
+
+                    <Label text="Losses:" styleClass="stats-title"/>
+                    <Label fx:id="lossesLabel" styleClass="stat-value"/>
+
+                    <Label text="Win Rate:" styleClass="stats-title"/>
+                    <Label fx:id="winRateStatLabel" styleClass="stat-value"/>
+
+                    <PieChart fx:id="allGamesPieChart" title="All Games"/>
+                    <TableView fx:id="allGamesTable"/>
+                </VBox>
+            </Tab>
+
+            <Tab text="Match History">
+                <VBox spacing="10" padding="20" styleClass="match-history-pane">
+                    <HBox spacing="10">
+                        <ComboBox fx:id="gameTypeCombo" promptText="Game Type"/>
+                        <ComboBox fx:id="resultCombo" promptText="Result"/>
+                        <ComboBox fx:id="dateRangeCombo" promptText="Date Range"/>
+                        <TextField fx:id="searchField" promptText="Search..."/>
+                    </HBox>
+                    <TableView fx:id="matchHistoryTable"/>
+                </VBox>
+            </Tab>
+
+            <Tab text="Settings">
+                <VBox spacing="15" padding="20" styleClass="settings-pane">
+                    <Label text="Profile Settings" styleClass="settings-title"/>
+
+                    <TextField fx:id="usernameField" promptText="Username"/>
+                    <TextField fx:id="emailField" promptText="Email"/>
+                    <TextField fx:id="displayNameField" promptText="Display Name"/>
+                    <TextArea fx:id="bioArea" promptText="Bio"/>
+
+                    <HBox spacing="10">
+                        <Button text="Save" onAction="#handleSaveSettings" styleClass="settings-button"/>
+                        <Button text="Reset Theme" onAction="#handleResetTheme" styleClass="settings-button"/>
+                        <Button text="Change Password" onAction="#handleChangePassword" styleClass="settings-button"/>
+                    </HBox>
+                </VBox>
+            </Tab>
+        </TabPane>
+    </center>
+</BorderPane>

@@ -22,7 +22,7 @@ public class Server {
     private static List<GameSession> activeSessions;
 
     //.json file variables
-    private final File playerFile = new File("players.json");
+    private File playerFile = new File("players.json");
     private List<Player> players = new ArrayList<>();
 
 
@@ -32,15 +32,37 @@ public class Server {
         return port;
     }
 
+    //getter for isRunning boolean
+    public boolean isRunning() {
+        return isRunning;
+    }
 
     //getter for list of active sessions
     AbstractList<GameSession> getActiveSessions(){
         return new ArrayList<>(activeSessions);
     }
 
+    //getter for player list
+    public List<Player> getPlayerList(){
+        return new ArrayList<>(players);
+    }
+
+    //clear active sessions
+    public void clearActiveSessions(){
+        activeSessions.clear();
+    }
+
+    //HELPER METHOD
+    public void addPlayer(Player player){
+        players.add(player);
+    }
+
+
+
     public Server(){
         this.activeSessions = new ArrayList<>();
         this.isRunning = false;
+        this.playerFile = playerFile;
     }
 
     public void start(int port){
@@ -48,18 +70,22 @@ public class Server {
             this.port = port;
             this.isRunning = true;
             String playerID = null;
-            System.out.println("Server has started on port "+port+"for player "+ playerID);
+            System.out.println("Server has started on port "+port);
         }else{
             System.out.println("Server is already running!");
         }
     }
 
-    private void loadPlayers(){
+    public void stop(){
+        isRunning = false;
+    }
+
+    void loadPlayers(){
         //Jackson ObjectMapper to handle conversion between Java objects and JSON
         ObjectMapper mapper = new ObjectMapper();
         if (playerFile.exists()){
             try{
-                players = mapper.readValue(playerFile, new TypeReference<List<Player>>(){});
+                players = mapper.readValue(playerFile, new TypeReference<List<Player>>(){});    //load players from file
                 System.out.println("Players loaded from file.");
             }catch (IOException e){
                 //e.getMessage() returns a human-readable description of what caused the exception
@@ -68,7 +94,7 @@ public class Server {
         }
     }
 
-    private void savePlayers(){
+    public void savePlayers(){
         //Jackson ObjectMapper to handle conversion between Java objects and JSON
         ObjectMapper mapper = new ObjectMapper();
         try{
@@ -122,8 +148,6 @@ public class Server {
     //all code below this may be removed as we make our cases more complex / separate them into individual methods
     public static String processRequest(String request) {
         switch (request) {
-            case "LOGIN":
-                return "Login Successful";
             case "CGS":
                 return "New Game Created";
             case "JOIN":
@@ -141,10 +165,5 @@ public class Server {
 
         }
     }
-
-    public boolean isRunning() {
-        return false;
-    }
-
-    //new server (using firebase)
 }
+

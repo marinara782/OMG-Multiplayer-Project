@@ -119,7 +119,14 @@ public class Server {
         return newGameSession;
     }
 
+    public static String processBugReport(bugReport report) {
+        // This is a stub. In a real system, you'd log the bug or store it.
+        System.out.println("Received bug report:");
+        System.out.println("- Type: " + report.getType());
+        System.out.println("- Comment: " + report.getComment());
 
+        return "Bug report received. Thank you for your feedback!";
+    }
 
 
 

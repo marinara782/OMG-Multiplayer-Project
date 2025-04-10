@@ -104,7 +104,11 @@ public class ClientTest {
         }
     }
 
-
+    @Test
+    void testSendBugReportDoesNotThrow() {
+        Client client = new Client();
+        assertDoesNotThrow(() -> client.sendBugReport("UI Bug", "Buttons are misaligned on login screen."));
+    }
 
 
 

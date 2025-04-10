@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 public class UserProfile extends UserDatabaseStub {
-    
     // get username of the user
     public String getUsername() {
         return "";
@@ -12,9 +11,10 @@ public class UserProfile extends UserDatabaseStub {
 
     /**
      * change username for the user
-     * @param old_username old username of the user
-     * @param new_username new username of the user
-     * @param first_password old password of the user
+     *
+     * @param old_username    old username of the user
+     * @param new_username    new username of the user
+     * @param first_password  old password of the user
      * @param second_password new password of the user
      */
     public void change_username(String old_username, String new_username, String first_password, String second_password) {
@@ -32,8 +32,7 @@ public class UserProfile extends UserDatabaseStub {
         try {
             // equates new_username_available to a verify_username call
             new_username_available = verify_username(new_username);
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -41,8 +40,7 @@ public class UserProfile extends UserDatabaseStub {
         try {
             // equates password_matches to a verify_password call
             password_matches = verify_password(old_username, first_password);
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
 
@@ -52,8 +50,7 @@ public class UserProfile extends UserDatabaseStub {
             // try catch block for exception handling
             try {
                 update_username(old_username, new_username);
-            }
-            catch (FileNotFoundException e) {
+            } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -61,9 +58,10 @@ public class UserProfile extends UserDatabaseStub {
 
     /**
      * changes the phone number of the user
+     *
      * @param new_phone_number new phone number of the user
-     * @param password password of the user
-     * @param confirmPassword confirmation password of the user by retyping it
+     * @param password         password of the user
+     * @param confirmPassword  confirmation password of the user by retyping it
      * @return true when the phone number has changed, false when not
      */
     public boolean change_phone_number(String new_phone_number, String password, String confirmPassword) {
@@ -104,8 +102,9 @@ public class UserProfile extends UserDatabaseStub {
 
     /**
      * set phone number for user
-     * @param phone_number phone number of the user
-     * @param password password of the user
+     *
+     * @param phone_number     phone number of the user
+     * @param password         password of the user
      * @param confirm_password confirmation password of the user by retyping it
      * @return true when a phone number has been set, false when not
      * @throws FileNotFoundException when the file is not found
@@ -132,7 +131,7 @@ public class UserProfile extends UserDatabaseStub {
                 return false;
             }
             // 4. Verify phone number
-            if(!verify_phone_number(username, phone_number)){
+            if (!verify_phone_number(username, phone_number)) {
                 System.out.println("Error: Account not found!");
                 return false;
             }
@@ -151,10 +150,11 @@ public class UserProfile extends UserDatabaseStub {
 
     /**
      * set email for user
+     *
      * @param username
      * @param first_password
      * @param second_password
-     * @param choice 1 for email, 2 for phone number
+     * @param choice          1 for email, 2 for phone number
      * @throws FileNotFoundException
      */
     public void enable_2_factor(String username, String first_password, String second_password, int choice) throws FileNotFoundException {
@@ -215,18 +215,28 @@ public class UserProfile extends UserDatabaseStub {
             String user_input = "no number";
             if (user_input.equals(code_sent_phone)) {
                 System.out.println("Email successfully verified, two-factor authentication has been enabled.");
-            }
-            else if(user_input.equals(code_sent_email)){
+            } else if (user_input.equals(code_sent_email)) {
                 System.out.println("Phone number successfully verified, two-factor authentication has been enabled.");
-            }
-            else {
+            } else {
                 System.out.println("The code entered is incorrect, please try again.");
             }
-        }
-        else {
+        } else {
             System.out.println("Passwords do not match or an incorrect password has been entered, please try again.");
         }
     }
+
+    public void change_current_status(String username, StatusOptions new_status) throws FileNotFoundException {
+        // accessing database
+        List<User> users = registered_users_list();
+
+        // for loop - iterates through database and checks if username matches, updates status if new status is chosen
+        for (User user : users) {
+            if (user.getUsername().equals(username) && user.getCurrentStatus() != new_status) {
+                user.setCurrentStatus(new_status);
+                System.out.println("Your status has been changed to " + new_status.toString());
+            } else if (user.getUsername().equals(username) && user.getCurrentStatus() == new_status) {
+                System.out.println("Your current status is already set to " + new_status.toString());
+            }
+        }
+    }
 }
-
-

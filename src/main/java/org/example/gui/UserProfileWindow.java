@@ -1,6 +1,7 @@
 package org.example.gui;
 
 // JavaFX imports for UI components and layout management
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -9,6 +10,7 @@ import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import org.example.authentication.Login;
 import org.example.authentication.UserProfile;
 
 import java.util.HashMap;
@@ -234,17 +236,23 @@ public class UserProfileWindow {
 
     // Creates pie chart for a selected game showing win/loss/draw breakdown
     private VBox createStatsChart(String gameType) {
-        VBox box = createStyledVBox();
+        VBox outerBox = createStyledVBox(); // Dark background as the outer container
+
+        VBox whiteCard = new VBox(10); // White inner card-style container
+        whiteCard.setPadding(new Insets(20));
+        whiteCard.setStyle("-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);");
 
         Label title = new Label("Win Rate for " + gameType);
-        title.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
+        title.setStyle("-fx-font-size: 16px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;");
 
         PieChart chart = new PieChart();
-        Map<String, Integer> results = calculateResults(gameType); // Calculate win/loss/draw
+        Map<String, Integer> results = calculateResults(gameType);
         results.forEach((k, v) -> chart.getData().add(new PieChart.Data(k, v)));
 
-        box.getChildren().addAll(title, chart);
-        return box;
+        whiteCard.getChildren().addAll(title, chart);
+        outerBox.getChildren().add(whiteCard);
+        return outerBox;
+
     }
 
     // Calculates match outcomes for a specific game or all games
@@ -317,25 +325,29 @@ public class UserProfileWindow {
     // Settings tab with options to change password and manage notifications
     private Node createSettingsPane() {
         VBox pane = createStyledVBox();
+        pane.setAlignment(Pos.CENTER); // Center content
 
         Label title = new Label("Settings");
-        title.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
+        title.setStyle("-fx-font-size: 26px; -fx-text-fill: white; -fx-font-weight: bold;");
 
         Button changePassword = new Button("Change Password");
-        changePassword.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
+        changePassword.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px;");
+        changePassword.setPrefWidth(250);
         changePassword.setOnAction(e -> openChangePasswordDialog());
 
         Button notifications = new Button("Notification Settings");
-        notifications.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
+        notifications.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-size: 16px; -fx-padding: 10px 20px;");
+        notifications.setPrefWidth(250);
         notifications.setOnAction(e -> openNotificationSettings());
 
         pane.getChildren().addAll(title, changePassword, notifications);
         return pane;
     }
 
+
     // Dialog window for changing the user's password
     private void openChangePasswordDialog() {
-        Dialog<String> dialog = new Dialog<>();
+        Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Change Password");
 
         ButtonType changeButtonType = new ButtonType("Change", ButtonBar.ButtonData.OK_DONE);
@@ -346,32 +358,76 @@ public class UserProfileWindow {
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
-        PasswordField newPassword = new PasswordField();
-        newPassword.setPromptText("New Password");
+        TextField usernameField = new TextField();
+        usernameField.setPromptText("Username");
 
-        PasswordField confirmPassword = new PasswordField();
-        confirmPassword.setPromptText("Confirm Password");
+        TextField emailField = new TextField();
+        emailField.setPromptText("Email");
 
-        grid.add(new Label("New Password:"), 0, 0);
-        grid.add(newPassword, 1, 0);
-        grid.add(new Label("Confirm:"), 0, 1);
-        grid.add(confirmPassword, 1, 1);
+        PasswordField newPasswordField = new PasswordField();
+        newPasswordField.setPromptText("New Password");
+
+        PasswordField confirmPasswordField = new PasswordField();
+        confirmPasswordField.setPromptText("Confirm Password");
+
+
+        grid.add(new Label("Username:"), 0, 0);
+        grid.add(usernameField, 1, 0);
+        grid.add(new Label("Email:"), 0, 1);
+        grid.add(emailField, 1, 1);
+        grid.add(new Label("New Password:"), 0, 2);
+        grid.add(newPasswordField, 1, 2);
+        grid.add(new Label("Confirm Password:"), 0, 3);
+        grid.add(confirmPasswordField, 1, 3);
+
 
         dialog.getDialogPane().setContent(grid);
 
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == changeButtonType) {
-                if (newPassword.getText().equals(confirmPassword.getText())) {
-                    return newPassword.getText(); // Passwords match
-                } else {
-                    showAlert("Passwords do not match!");
-                }
+        Node changeButton = dialog.getDialogPane().lookupButton(changeButtonType);
+        changeButton.addEventFilter(ActionEvent.ACTION, event -> {
+            String username = usernameField.getText().trim();
+            String email = emailField.getText().trim();
+            String newPassword = newPasswordField.getText().trim();
+            String confirmPassword = confirmPasswordField.getText().trim();
+
+
+            if (email.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
+                showAlert("Please fill in all fields.");
+                event.consume();
+                return;
             }
-            return null;
+
+            if (newPassword.length() < 8) {
+                showAlert("Password must be at least 8 characters long.");
+                event.consume();
+                return;
+            }
+
+            if (!newPassword.equals(confirmPassword)) {
+                showAlert("Passwords do not match.");
+                event.consume();
+                return;
+            }
+
+            Login login = new Login();
+            try {
+                boolean success = login.forgot_password(username, email, newPassword);
+                if (success) {
+                    showAlert("Password changed successfully!");
+                } else {
+                    showAlert("Email and username do not match or user doesn't exist.");
+                    event.consume(); // Keep the dialog open
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                showAlert("An error occurred. Please try again.");
+                event.consume();
+            }
         });
 
         dialog.showAndWait();
     }
+
 
     // Opens notification preference toggles
     private void openNotificationSettings() {

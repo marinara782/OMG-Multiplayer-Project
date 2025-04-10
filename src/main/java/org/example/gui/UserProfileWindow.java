@@ -236,17 +236,23 @@ public class UserProfileWindow {
 
     // Creates pie chart for a selected game showing win/loss/draw breakdown
     private VBox createStatsChart(String gameType) {
-        VBox box = createStyledVBox();
+        VBox outerBox = createStyledVBox(); // Dark background as the outer container
+
+        VBox whiteCard = new VBox(10); // White inner card-style container
+        whiteCard.setPadding(new Insets(20));
+        whiteCard.setStyle("-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 10, 0, 0, 2);");
 
         Label title = new Label("Win Rate for " + gameType);
-        title.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
+        title.setStyle("-fx-font-size: 16px; -fx-text-fill: #2c3e50; -fx-font-weight: bold;");
 
         PieChart chart = new PieChart();
-        Map<String, Integer> results = calculateResults(gameType); // Calculate win/loss/draw
+        Map<String, Integer> results = calculateResults(gameType);
         results.forEach((k, v) -> chart.getData().add(new PieChart.Data(k, v)));
 
-        box.getChildren().addAll(title, chart);
-        return box;
+        whiteCard.getChildren().addAll(title, chart);
+        outerBox.getChildren().add(whiteCard);
+        return outerBox;
+
     }
 
     // Calculates match outcomes for a specific game or all games

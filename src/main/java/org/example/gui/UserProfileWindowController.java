@@ -3,106 +3,147 @@ package org.example.gui;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class UserProfileWindowController {
 
     // Overview Tab
-    public Label welcomeLabel;
-    public PieChart gameDistributionPieChart;
+    @FXML public Label welcomeLabel;
+    @FXML public PieChart gameDistributionPieChart;
 
     // Game Stats Tab
-    public Label totalGamesLabel;
-    public Label winsLabel;
-    public Label lossesLabel;
-    public Label winRateStatLabel;
-    public PieChart allGamesPieChart;
-    public TableView allGamesTable;
-    public PieChart ticTacToePieChart;
-    public TableView ticTacToeTable;
-    public PieChart checkersPieChart;
-    public TableView checkersTable;
-    public PieChart connect4PieChart;
-    public TableView connect4Table;
+    @FXML public Label totalGamesLabel;
+    @FXML public Label winsLabel;
+    @FXML public Label lossesLabel;
+    @FXML public Label winRateStatLabel;
+    @FXML public PieChart allGamesPieChart;
+    @FXML public TableView<GameRecord> allGamesTable;
+    @FXML public PieChart ticTacToePieChart;
+    @FXML public TableView<GameRecord> ticTacToeTable;
+    @FXML public PieChart checkersPieChart;
+    @FXML public TableView<GameRecord> checkersTable;
+    @FXML public PieChart connect4PieChart;
+    @FXML public TableView<GameRecord> connect4Table;
 
     // Match History Tab
-    public ComboBox gameTypeCombo;
-    public ComboBox resultCombo;
-    public TextField searchField;
-    public ComboBox dateRangeCombo;
-    public TableView matchHistoryTable;
+    @FXML public ComboBox<String> gameTypeCombo;
+    @FXML public ComboBox<String> resultCombo;
+    @FXML public TextField searchField;
+    @FXML public ComboBox<String> dateRangeCombo;
+    @FXML public TableView<GameRecord> matchHistoryTable;
 
     // Settings Tab
-    public TextField usernameField;
-    public TextField emailField;
-    public TextField displayNameField;
-    public TextArea bioArea;
-    public CheckBox gameInviteCheck;
-    public CheckBox rankChangeCheck;
-    public CheckBox friendRequestCheck;
-    public CheckBox platformNewsCheck;
-    public CheckBox emailCheck;
-    public CheckBox inAppCheck;
-    public CheckBox pushCheck;
-    public CheckBox dndCheck;
-    public CheckBox showGameHistoryCheck;
-    public CheckBox showRankingsCheck;
-    public CheckBox showCurrentGameCheck;
-    public RadioButton privateRadio;
-    public CheckBox achievementCheck;
-    public RadioButton publicRadio;
-    public RadioButton friendsRadio;
-    public RadioButton onlineForAllRadio;
-    public RadioButton onlineForFriendsRadio;
-    public RadioButton appearOfflineRadio;
-    public RadioButton darkThemeRadio;
-    public RadioButton lightThemeRadio;
-    public RadioButton systemThemeRadio;
-    public RadioButton blueColorRadio;
-    public RadioButton greenColorRadio;
-    public RadioButton orangeColorRadio;
-    public RadioButton redColorRadio;
-    public RadioButton purpleColorRadio;
-    public Slider fontSizeSlider;
-    public Label fontSizeValueLabel;
-    public CheckBox enableAnimationsCheck;
+    @FXML public TextField usernameField, emailField, displayNameField;
+    @FXML public TextArea bioArea;
+    @FXML public CheckBox gameInviteCheck, rankChangeCheck, friendRequestCheck, platformNewsCheck,
+            emailCheck, inAppCheck, pushCheck, dndCheck,
+            showGameHistoryCheck, showRankingsCheck, showCurrentGameCheck,
+            achievementCheck;
+    @FXML public RadioButton privateRadio, publicRadio, friendsRadio,
+            onlineForAllRadio, onlineForFriendsRadio, appearOfflineRadio,
+            darkThemeRadio, lightThemeRadio, systemThemeRadio,
+            blueColorRadio, greenColorRadio, orangeColorRadio,
+            redColorRadio, purpleColorRadio;
+    @FXML public Slider fontSizeSlider;
+    @FXML public Label fontSizeValueLabel;
+    @FXML public CheckBox enableAnimationsCheck;
 
-    /**
-     * Initialize method to set up data for charts and tables.
-     */
+    @FXML
     public void initialize() {
-        // Example game distribution data
-        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList(
+        System.out.println("Initializing UserProfileWindowController...");
+
+        welcomeLabel.setText("Welcome back, Player123!");
+
+        setPieChart(gameDistributionPieChart, "Game Distribution", FXCollections.observableArrayList(
                 new PieChart.Data("Tic-Tac-Toe", 42),
                 new PieChart.Data("Connect Four", 28),
                 new PieChart.Data("Checkers", 16)
-        );
+        ));
 
-        // Set data for the game distribution pie chart in the Overview tab
-        if (gameDistributionPieChart != null) {
-            gameDistributionPieChart.setData(pieChartData);
+        setPieChart(allGamesPieChart, "All Games", FXCollections.observableArrayList(
+                new PieChart.Data("Wins", 70),
+                new PieChart.Data("Losses", 30)
+        ));
+
+        setPieChart(ticTacToePieChart, "Tic-Tac-Toe", FXCollections.observableArrayList(
+                new PieChart.Data("Wins", 25),
+                new PieChart.Data("Losses", 10),
+                new PieChart.Data("Draws", 7)
+        ));
+
+        setPieChart(checkersPieChart, "Checkers", FXCollections.observableArrayList(
+                new PieChart.Data("Wins", 10),
+                new PieChart.Data("Losses", 5),
+                new PieChart.Data("Draws", 1)
+        ));
+
+        setPieChart(connect4PieChart, "Connect Four", FXCollections.observableArrayList(
+                new PieChart.Data("Wins", 12),
+                new PieChart.Data("Losses", 15),
+                new PieChart.Data("Draws", 2)
+        ));
+
+        setupDemoTable(allGamesTable);
+        setupDemoTable(ticTacToeTable);
+        setupDemoTable(checkersTable);
+        setupDemoTable(connect4Table);
+        setupDemoTable(matchHistoryTable);
+    }
+
+    private void setPieChart(PieChart chart, String title, ObservableList<PieChart.Data> data) {
+        if (chart != null) {
+            chart.setTitle(title);
+            chart.setData(data);
         }
     }
 
-    /**
-     * Handles the change password action.
-     */
+    private void setupDemoTable(TableView<GameRecord> table) {
+        if (table != null) {
+            TableColumn<GameRecord, String> dateCol = new TableColumn<>("Date");
+            dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+            TableColumn<GameRecord, String> gameCol = new TableColumn<>("Game");
+            gameCol.setCellValueFactory(new PropertyValueFactory<>("game"));
+
+            TableColumn<GameRecord, String> resultCol = new TableColumn<>("Result");
+            resultCol.setCellValueFactory(new PropertyValueFactory<>("result"));
+
+            table.getColumns().setAll(dateCol, gameCol, resultCol);
+            table.setItems(FXCollections.observableArrayList(
+                    new GameRecord("2025-04-01", "Tic-Tac-Toe", "Win"),
+                    new GameRecord("2025-04-02", "Connect Four", "Loss")
+            ));
+        }
+    }
+
     public void handleChangePassword(ActionEvent actionEvent) {
-        // Add logic for changing the password here
+        System.out.println("Change Password clicked.");
     }
 
-    /**
-     * Handles resetting the theme to default.
-     */
     public void handleResetTheme(ActionEvent actionEvent) {
-        // Add logic for resetting the theme here
+        System.out.println("Resetting theme to default.");
     }
 
-    /**
-     * Handles saving settings.
-     */
     public void handleSaveSettings(ActionEvent actionEvent) {
-        // Add logic for saving settings here
+        System.out.println("Settings saved!");
+    }
+
+    public static class GameRecord {
+        private final String date;
+        private final String game;
+        private final String result;
+
+        public GameRecord(String date, String game, String result) {
+            this.date = date;
+            this.game = game;
+            this.result = result;
+        }
+
+        public String getDate() { return date; }
+        public String getGame() { return game; }
+        public String getResult() { return result; }
     }
 }

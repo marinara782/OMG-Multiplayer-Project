@@ -4,22 +4,22 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.chart.*;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import org.example.authentication.UserProfile;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class UserProfileWindow {
-    private Stage stage;
+    private final Stage stage;
+    private final UserProfile userProfile;
     private Scene scene;
     private BorderPane mainLayout;
-    private UserProfile userProfile;
     private TabPane tabPane;
 
-    // Mock data for the profile
     private Map<String, Integer> gameStats;
     private Map<String, Integer> ranks;
 
@@ -31,33 +31,36 @@ public class UserProfileWindow {
     }
 
     private void initializeMockData() {
-        gameStats = new HashMap<>();
-        gameStats.put("Tic-Tac-Toe", 42);
-        gameStats.put("Connect Four", 28);
-        gameStats.put("Checkers", 16);
+        gameStats = Map.of(
+                "Tic-Tac-Toe", 10,
+                "Connect Four", 9,
+                "Checkers", 7
+        );
 
-        ranks = new HashMap<>();
-        ranks.put("Tic-Tac-Toe", 1250);
-        ranks.put("Connect Four", 1423);
-        ranks.put("Checkers", 1342);
+        ranks = Map.of(
+                "Tic-Tac-Toe", 1250,
+                "Connect Four", 1423,
+                "Checkers", 1342
+        );
     }
+
+
 
     private void initializeUI() {
         mainLayout = new BorderPane();
         mainLayout.setStyle("-fx-background-color: #2c3e50;");
 
-        HBox header = createHeader();
-        mainLayout.setTop(header);
+        mainLayout.setTop(createHeader());
 
         tabPane = new TabPane();
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
 
-        Tab overviewTab = new Tab("Overview", createOverviewPane());
-        Tab statsTab = new Tab("Game Stats", createStatsPane());
-        Tab matchHistoryTab = new Tab("Match History", createMatchHistoryPane());
-        Tab settingsTab = new Tab("Settings", createSettingsPane());
-
-        tabPane.getTabs().addAll(overviewTab, statsTab, matchHistoryTab, settingsTab);
+        tabPane.getTabs().addAll(
+                new Tab("Overview", createOverviewPane()),
+                new Tab("Game Stats", createStatsPane()),
+                new Tab("Match History", createMatchHistoryPane()),
+                new Tab("Settings", createSettingsPane())
+        );
 
         mainLayout.setCenter(tabPane);
 
@@ -68,322 +71,246 @@ public class UserProfileWindow {
         stage.setMinHeight(500);
     }
 
-    private Node createSettingsPane() {
-        VBox settingsPane = new VBox(20);
-        settingsPane.setPadding(new Insets(20));
-        settingsPane.setStyle("-fx-background-color: #2c3e50;");
-
-        Label settingsTitle = new Label("Settings");
-        settingsTitle.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
-
-        Button changePasswordButton = new Button("Change Password");
-        changePasswordButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
-
-        Button notificationSettingsButton = new Button("Notification Settings");
-        notificationSettingsButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
-
-        settingsPane.getChildren().addAll(settingsTitle, changePasswordButton, notificationSettingsButton);
-
-        return settingsPane;
-    }
-
-    private Node createMatchHistoryPane() {
-        VBox matchHistoryPane = new VBox(20);
-        matchHistoryPane.setPadding(new Insets(20));
-        matchHistoryPane.setStyle("-fx-background-color: #2c3e50;");
-
-        Label matchHistoryTitle = new Label("Match History");
-        matchHistoryTitle.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
-
-        TabPane matchTabs = new TabPane();
-        matchTabs.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-
-        matchTabs.getTabs().add(new Tab("All Games", createAllGamesTab()));
-        matchTabs.getTabs().add(new Tab("Tic-Tac-Toe", createGameTab("Tic-Tac-Toe")));
-        matchTabs.getTabs().add(new Tab("Connect Four", createGameTab("Connect Four")));
-        matchTabs.getTabs().add(new Tab("Checkers", createGameTab("Checkers")));
-
-        matchHistoryPane.getChildren().addAll(matchHistoryTitle, matchTabs);
-
-        return matchHistoryPane;
-    }
-
-    private Node createAllGamesTab() {
-        VBox allGamesTab = new VBox(20);
-        allGamesTab.setPadding(new Insets(20));
-        allGamesTab.setStyle("-fx-background-color: #2c3e50;");
-
-        Label allGamesTitle = new Label("Recent Matches (Last 20 Played)");
-        allGamesTitle.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
-
-        ListView<String> matchListView = new ListView<>();
-        matchListView.setPrefHeight(400);
-        matchListView.setStyle("-fx-control-inner-background: #1a2530; -fx-text-fill: white;");
-
-        String[] allMatches = {
-                "Won against PlayerA in Tic-Tac-Toe (Feb 12, 2023)",
-                "Lost against PlayerB in Connect Four (Feb 10, 2023)",
-                "Draw with PlayerC in Checkers (Feb 8, 2023)",
-                "Won against PlayerD in Tic-Tac-Toe (Feb 7, 2023)",
-                "Lost against PlayerE in Connect Four (Feb 5, 2023)"
-        };
-
-        matchListView.getItems().addAll(allMatches);
-
-        allGamesTab.getChildren().addAll(allGamesTitle, matchListView);
-
-        return allGamesTab;
-    }
-
-    private Node createGameTab(String gameType) {
-        VBox gameTab = new VBox(20);
-        gameTab.setPadding(new Insets(20));
-        gameTab.setStyle("-fx-background-color: #2c3e50;");
-
-        Label gameTitle = new Label("Recent Matches in " + gameType);
-        gameTitle.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
-
-        ListView<String> matchListView = new ListView<>();
-        matchListView.setPrefHeight(400);
-        matchListView.setStyle("-fx-control-inner-background: #1a2530; -fx-text-fill: white;");
-
-        String[] allMatches = {
-                "Won against PlayerA in Tic-Tac-Toe (Feb 12, 2023)",
-                "Lost against PlayerB in Connect Four (Feb 10, 2023)",
-                "Draw with PlayerC in Checkers (Feb 8, 2023)",
-                "Won against PlayerD in Tic-Tac-Toe (Feb 7, 2023)",
-                "Lost against PlayerE in Connect Four (Feb 5, 2023)"
-        };
-
-        for (String match : allMatches) {
-            if (match.contains(gameType)) {
-                matchListView.getItems().add(match);
-            }
-        }
-
-        gameTab.getChildren().addAll(gameTitle, matchListView);
-
-        return gameTab;
-    }
-
-    private Node createStatsPane() {
-        VBox statsPane = new VBox(20);
-        statsPane.setPadding(new Insets(20));
-        statsPane.setStyle("-fx-background-color: #2c3e50;");
-
-        Label statsTitle = new Label("Game Stats");
-        statsTitle.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
-
-        TabPane gameStatsTabs = new TabPane();
-        gameStatsTabs.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-
-        gameStatsTabs.getTabs().add(new Tab("All Games", createPieChartTab("All Games")));
-        gameStatsTabs.getTabs().add(new Tab("Tic-Tac-Toe", createPieChartTab("Tic-Tac-Toe")));
-        gameStatsTabs.getTabs().add(new Tab("Connect Four", createPieChartTab("Connect Four")));
-        gameStatsTabs.getTabs().add(new Tab("Checkers", createPieChartTab("Checkers")));
-
-        statsPane.getChildren().addAll(statsTitle, gameStatsTabs);
-
-        return statsPane;
-    }
-
-    private Node createPieChartTab(String gameType) {
-        VBox pieChartTab = new VBox(20);
-        pieChartTab.setPadding(new Insets(20));
-        pieChartTab.setStyle("-fx-background-color: #2c3e50;");
-
-        Label pieChartTitle = new Label("Win Rate for " + gameType);
-        pieChartTitle.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
-
-        Map<String, Integer> gameResults = new HashMap<>();
-
-        if ("All Games".equals(gameType)) {
-            int totalWins = 0, totalLosses = 0, totalDraws = 0;
-
-            String[] allMatches = {
-                    "Won against PlayerA in Tic-Tac-Toe (Feb 12, 2023)",
-                    "Lost against PlayerB in Connect Four (Feb 10, 2023)",
-                    "Draw with PlayerC in Checkers (Feb 8, 2023)",
-                    "Won against PlayerD in Tic-Tac-Toe (Feb 7, 2023)",
-                    "Lost against PlayerE in Connect Four (Feb 5, 2023)"
-            };
-
-            for (String match : allMatches) {
-                if (match.contains("Won")) {
-                    totalWins++;
-                } else if (match.contains("Lost")) {
-                    totalLosses++;
-                } else if (match.contains("Draw")) {
-                    totalDraws++;
-                }
-            }
-
-            gameResults.put("Wins", totalWins);
-            gameResults.put("Losses", totalLosses);
-            gameResults.put("Draws", totalDraws);
-        } else {
-            int wins = 0, losses = 0, draws = 0;
-
-            String[] allMatches = {
-                    "Won against PlayerA in Tic-Tac-Toe (Feb 12, 2023)",
-                    "Lost against PlayerB in Connect Four (Feb 10, 2023)",
-                    "Draw with PlayerC in Checkers (Feb 8, 2023)",
-                    "Won against PlayerD in Tic-Tac-Toe (Feb 7, 2023)",
-                    "Lost against PlayerE in Connect Four (Feb 5, 2023)"
-            };
-
-            for (String match : allMatches) {
-                if (match.contains(gameType)) {
-                    if (match.contains("Won")) {
-                        wins++;
-                    } else if (match.contains("Lost")) {
-                        losses++;
-                    } else if (match.contains("Draw")) {
-                        draws++;
-                    }
-                }
-            }
-
-            gameResults.put("Wins", wins);
-            gameResults.put("Losses", losses);
-            gameResults.put("Draws", draws);
-        }
-
-        PieChart pieChart = new PieChart();
-        pieChart.setTitle("Win Rate for " + gameType);
-
-        for (Map.Entry<String, Integer> entry : gameResults.entrySet()) {
-            pieChart.getData().add(new PieChart.Data(entry.getKey(), entry.getValue()));
-        }
-
-        pieChartTab.getChildren().addAll(pieChartTitle, pieChart);
-
-        return pieChartTab;
-    }
-
     private HBox createHeader() {
         HBox header = new HBox(20);
         header.setPadding(new Insets(15));
         header.setAlignment(Pos.CENTER_LEFT);
         header.setStyle("-fx-background-color: #1a2530;");
 
-        // Avatar placeholder
-        Region avatarPlaceholder = new Region();
-        avatarPlaceholder.setPrefSize(60, 60);
-        avatarPlaceholder.setStyle("-fx-background-color: #3498db; -fx-background-radius: 30;");
+        Region avatar = new Region();
+        avatar.setPrefSize(60, 60);
+        avatar.setStyle("-fx-background-color: #3498db; -fx-background-radius: 30;");
 
-        // User info section
         VBox userInfo = new VBox(5);
         Label nameLabel = new Label(userProfile.getUsername());
         nameLabel.setStyle("-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: white;");
 
-
         Label statusLabel = new Label("Online");
         statusLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #2ecc71;");
+        userInfo.getChildren().addAll(nameLabel, statusLabel);
 
-
-
-        // Rank info section
         VBox rankInfo = new VBox(2);
         rankInfo.setAlignment(Pos.CENTER_RIGHT);
         rankInfo.setPadding(new Insets(0, 20, 0, 20));
 
-        Label rankLabel = new Label("Gold");
-        rankLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #f39c12;");
+        rankInfo.getChildren().addAll(
+                createStyledLabel("Gold", 14, "#f39c12"),
+                createStyledLabel("1342", 24, "white"),
+                createStyledLabel("Overall rating", 10, "#bdc3c7")
+        );
 
-        Label ratingLabel = new Label("1342");
-        ratingLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;");
-
-        Label ratingTextLabel = new Label("Overall rating");
-        ratingTextLabel.setStyle("-fx-font-size: 10px; -fx-text-fill: #bdc3c7;");
-
-        rankInfo.getChildren().addAll(rankLabel, ratingLabel, ratingTextLabel);
-
-        // Spacer to push content to the left
         Region spacer = new Region();
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
-        header.getChildren().addAll(avatarPlaceholder, userInfo, spacer, rankInfo);
-
+        header.getChildren().addAll(avatar, userInfo, spacer, rankInfo);
         return header;
     }
 
-    private VBox createOverviewPane() {
-        VBox overviewPane = new VBox(20);
-        overviewPane.setPadding(new Insets(20));
-        overviewPane.setStyle("-fx-background-color: #2c3e50;");
+    private Label createStyledLabel(String text, int fontSize, String color) {
+        Label label = new Label(text);
+        label.setStyle(String.format("-fx-font-size: %dpx; -fx-text-fill: %s;", fontSize, color));
+        return label;
+    }
 
-        // Welcome message
+    private VBox createOverviewPane() {
+        VBox pane = createStyledVBox();
+
         Label welcomeLabel = new Label("Welcome back!");
         welcomeLabel.setStyle("-fx-font-size: 18px; -fx-text-fill: white; -fx-font-weight: bold;");
 
-        // Stats grid
         GridPane statsGrid = new GridPane();
         statsGrid.setHgap(20);
         statsGrid.setVgap(10);
         statsGrid.setPadding(new Insets(10, 0, 20, 0));
 
-        // First row - labels
-        Label totalGamesLabel = new Label("Total Games");
-        totalGamesLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #bdc3c7;");
-        GridPane.setConstraints(totalGamesLabel, 0, 0);
+        addStatRow(statsGrid);
 
-        Label winRateLabel = new Label("Win Rate");
-        winRateLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #bdc3c7;");
-        GridPane.setConstraints(winRateLabel, 1, 0);
-
-        Label highestRankLabel = new Label("Highest Rank");
-        highestRankLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #bdc3c7;");
-        GridPane.setConstraints(highestRankLabel, 2, 0);
-
-        Label lastPlayedLabel = new Label("Last Played");
-        lastPlayedLabel.setStyle("-fx-font-size: 14px; -fx-text-fill: #bdc3c7;");
-        GridPane.setConstraints(lastPlayedLabel, 3, 0);
-
-        // Second row - values
-        Label totalGamesValue = new Label("86");
-        totalGamesValue.setStyle("-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;");
-        GridPane.setConstraints(totalGamesValue, 0, 1);
-
-        Label winRateValue = new Label("62%");
-        winRateValue.setStyle("-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;");
-        GridPane.setConstraints(winRateValue, 1, 1);
-
-        Label highestRankValue = new Label("Platinum III");
-        highestRankValue.setStyle("-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;");
-        GridPane.setConstraints(highestRankValue, 2, 1);
-
-        Label lastPlayedValue = new Label("2 hours ago");
-        lastPlayedValue.setStyle("-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;");
-        GridPane.setConstraints(lastPlayedValue, 3, 1);
-
-        statsGrid.getChildren().addAll(
-                totalGamesLabel, winRateLabel, highestRankLabel, lastPlayedLabel,
-                totalGamesValue, winRateValue, highestRankValue, lastPlayedValue
-        );
-
-        // Game Distribution Section
-        TitledPane gameDistributionContainer = new TitledPane();
-        gameDistributionContainer.setText("Game Distribution");
-        gameDistributionContainer.setCollapsible(false);
-
-        VBox gameDistributionContent = new VBox(20);
-        gameDistributionContent.setStyle("-fx-background-color: #2c3e50;");
-
-        // Game Distribution Pie Chart
         PieChart pieChart = new PieChart();
-        pieChart.setTitle("Games Played by Type");
+        gameStats.forEach((k, v) -> pieChart.getData().add(new PieChart.Data(k, v)));
 
-        for (Map.Entry<String, Integer> entry : gameStats.entrySet()) {
-            pieChart.getData().add(new PieChart.Data(entry.getKey(), entry.getValue()));
+        TitledPane piePane = new TitledPane("Game Distribution", pieChart);
+        piePane.setCollapsible(false);
+
+        pane.getChildren().addAll(welcomeLabel, statsGrid, piePane);
+        return pane;
+    }
+
+    private void addStatRow(GridPane grid) {
+        int totalGames = 0, wins = 0;
+        String[] matches = getAllMatches();
+
+        for (String match : matches) {
+            totalGames++;
+            if (match.contains("Won")) wins++;
         }
 
-        gameDistributionContent.getChildren().add(pieChart);
-        gameDistributionContainer.setContent(gameDistributionContent);
+        int winRate = totalGames == 0 ? 0 : (int) Math.round((wins * 100.0) / totalGames);
 
-        overviewPane.getChildren().addAll(welcomeLabel, statsGrid, gameDistributionContainer);
+        String[] labels = {"Total Games", "Win Rate", "Highest Rank", "Last Played"};
+        String[] values = {
+                String.valueOf(totalGames),
+                winRate + "%",
+                "Platinum III",
+                "2 hours ago"
+        };
 
-        return overviewPane;
+        for (int i = 0; i < labels.length; i++) {
+            Label label = new Label(labels[i]);
+            label.setStyle("-fx-font-size: 14px; -fx-text-fill: #bdc3c7;");
+            GridPane.setConstraints(label, i, 0);
+
+            Label value = new Label(values[i]);
+            value.setStyle("-fx-font-size: 24px; -fx-text-fill: white; -fx-font-weight: bold;");
+            GridPane.setConstraints(value, i, 1);
+
+            grid.getChildren().addAll(label, value);
+        }
+    }
+
+    private String[] getAllMatches() {
+        return new String[]{
+                "Won against PlayerA in Tic-Tac-Toe",
+                "Lost against PlayerB in Connect Four",
+                "Draw with PlayerC in Checkers",
+                "Won against PlayerD in Tic-Tac-Toe",
+                "Lost against PlayerE in Connect Four",
+                "Won against PlayerF in Checkers",
+                "Won against PlayerG in Connect Four",
+                "Draw with PlayerH in Tic-Tac-Toe",
+                "Lost against PlayerI in Checkers",
+                "Won against PlayerJ in Tic-Tac-Toe",
+                "Won against PlayerK in Connect Four",
+                "Draw with PlayerL in Checkers",
+                "Lost against PlayerM in Tic-Tac-Toe",
+                "Won against PlayerN in Connect Four",
+                "Lost against PlayerO in Checkers",
+                "Won against PlayerP in Tic-Tac-Toe",
+                "Won against PlayerQ in Connect Four",
+                "Lost against PlayerR in Checkers",
+                "Won against PlayerS in Tic-Tac-Toe",
+                "Won against PlayerT in Checkers",
+                "Won against PlayerU in Connect Four",
+                "Lost against PlayerV in Tic-Tac-Toe",
+                "Draw with PlayerW in Checkers",
+                "Won against PlayerX in Tic-Tac-Toe",
+                "Won against PlayerY in Connect Four",
+                "Lost against PlayerZ in Checkers"
+        };
+    }
+
+
+
+    private VBox createStatsPane() {
+        VBox pane = createStyledVBox();
+        Label statsTitle = new Label("Game Stats");
+        statsTitle.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
+
+        TabPane gameTabs = new TabPane();
+        gameTabs.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+
+        gameTabs.getTabs().addAll(
+                new Tab("All Games", createStatsChart("All Games")),
+                new Tab("Tic-Tac-Toe", createStatsChart("Tic-Tac-Toe")),
+                new Tab("Connect Four", createStatsChart("Connect Four")),
+                new Tab("Checkers", createStatsChart("Checkers"))
+        );
+
+        pane.getChildren().addAll(statsTitle, gameTabs);
+        return pane;
+    }
+
+    private VBox createStatsChart(String gameType) {
+        VBox box = createStyledVBox();
+
+        Label title = new Label("Win Rate for " + gameType);
+        title.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
+
+        PieChart chart = new PieChart();
+        Map<String, Integer> results = calculateResults(gameType);
+        results.forEach((k, v) -> chart.getData().add(new PieChart.Data(k, v)));
+
+        box.getChildren().addAll(title, chart);
+        return box;
+    }
+
+    private Map<String, Integer> calculateResults(String type) {
+        Map<String, Integer> results = new HashMap<>();
+        int win = 0, loss = 0, draw = 0;
+
+        for (String match : getAllMatches()) {
+            if ("All Games".equals(type) || match.contains(type)) {
+                if (match.contains("Won")) win++;
+                else if (match.contains("Lost")) loss++;
+                else if (match.contains("Draw")) draw++;
+            }
+        }
+
+        results.put("Wins", win);
+        results.put("Losses", loss);
+        results.put("Draws", draw);
+        return results;
+    }
+
+
+    private VBox createStyledVBox() {
+        VBox vBox = new VBox(20);
+        vBox.setPadding(new Insets(20));
+        vBox.setStyle("-fx-background-color: #2c3e50;");
+        return vBox;
+    }
+
+    private Node createMatchHistoryPane() {
+        VBox pane = createStyledVBox();
+        Label title = new Label("Match History");
+        title.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
+
+        TabPane tabs = new TabPane();
+        tabs.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        tabs.getTabs().addAll(
+                new Tab("All Games", createMatchList("")),
+                new Tab("Tic-Tac-Toe", createMatchList("Tic-Tac-Toe")),
+                new Tab("Connect Four", createMatchList("Connect Four")),
+                new Tab("Checkers", createMatchList("Checkers"))
+        );
+
+        pane.getChildren().addAll(title, tabs);
+        return pane;
+    }
+
+    private Node createMatchList(String filter) {
+        VBox box = createStyledVBox();
+        Label title = new Label(filter.isEmpty() ? "Recent Matches" : "Matches in " + filter);
+        title.setStyle("-fx-font-size: 16px; -fx-text-fill: white;");
+
+        ListView<String> listView = new ListView<>();
+        listView.setPrefHeight(400);
+        listView.setStyle("-fx-control-inner-background: #1a2530; -fx-text-fill: white;");
+
+        for (String match : getAllMatches()) {
+            if (filter.isEmpty() || match.contains(filter)) {
+                listView.getItems().add(match);
+            }
+        }
+
+        box.getChildren().addAll(title, listView);
+        return box;
+    }
+
+
+    private Node createSettingsPane() {
+        VBox pane = createStyledVBox();
+
+        Label title = new Label("Settings");
+        title.setStyle("-fx-font-size: 20px; -fx-text-fill: white;");
+
+        Button changePassword = new Button("Change Password");
+        Button notifications = new Button("Notification Settings");
+
+        changePassword.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
+        notifications.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
+
+        pane.getChildren().addAll(title, changePassword, notifications);
+        return pane;
     }
 
     public void show() {

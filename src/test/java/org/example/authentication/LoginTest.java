@@ -114,11 +114,11 @@ public class LoginTest {
 
     @Test
     void forgot_username_success() throws IOException {
-        assertEquals("alice", login.forgot_username("alice@gmail.com"), "alice");
+        assertEquals("alice", login.forgot_username("alice@gmail.com"));
     }
 
     @Test
     void forgot_username_failure() throws IOException {
-        assertEquals("There was an error during the retrieval of your username, try again.", login.forgot_username("not_alice@gmail.com"), "There was an error during the retrieval of your username, try again.");
+        assertEquals("There was an error during the retrieval of your username, try again.", login.forgot_username("not_alice@gmail.com"));
     }
 }

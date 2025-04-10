@@ -182,7 +182,32 @@ public class UserProfileWindow {
     // Returns mock list of matches played, used across multiple views
     private String[] getAllMatches() {
         return new String[]{
-                // ... (same match list here, skipped for brevity)
+                "Won against PlayerA in Tic-Tac-Toe",
+                "Lost against PlayerB in Connect Four",
+                "Draw with PlayerC in Checkers",
+                "Won against PlayerD in Tic-Tac-Toe",
+                "Lost against PlayerE in Connect Four",
+                "Won against PlayerF in Checkers",
+                "Won against PlayerG in Connect Four",
+                "Draw with PlayerH in Tic-Tac-Toe",
+                "Lost against PlayerI in Checkers",
+                "Won against PlayerJ in Tic-Tac-Toe",
+                "Won against PlayerK in Connect Four",
+                "Draw with PlayerL in Checkers",
+                "Lost against PlayerM in Tic-Tac-Toe",
+                "Won against PlayerN in Connect Four",
+                "Lost against PlayerO in Checkers",
+                "Won against PlayerP in Tic-Tac-Toe",
+                "Won against PlayerQ in Connect Four",
+                "Lost against PlayerR in Checkers",
+                "Won against PlayerS in Tic-Tac-Toe",
+                "Won against PlayerT in Checkers",
+                "Won against PlayerU in Connect Four",
+                "Lost against PlayerV in Tic-Tac-Toe",
+                "Draw with PlayerW in Checkers",
+                "Won against PlayerX in Tic-Tac-Toe",
+                "Won against PlayerY in Connect Four",
+                "Lost against PlayerZ in Checkers"
         };
     }
 

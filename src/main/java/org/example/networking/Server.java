@@ -148,8 +148,6 @@ public class Server {
     //all code below this may be removed as we make our cases more complex / separate them into individual methods
     public static String processRequest(String request) {
         switch (request) {
-            case "LOGIN":
-                return "Login Successful";
             case "CGS":
                 return "New Game Created";
             case "JOIN":

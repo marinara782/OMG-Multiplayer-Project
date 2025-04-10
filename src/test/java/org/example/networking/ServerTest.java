@@ -60,7 +60,7 @@ public class ServerTest {
         GameSession session = testServer.createGameSession("checkers");
         assertNull(session);
     }
-/* IN PROGRESS*/
+
     @Test
     void testSaveAndLoadPlayers() throws IOException {
         List<Player> ogPlayers = testServer.getPlayerList();
@@ -90,5 +90,60 @@ public class ServerTest {
         if (file.exists()){
             file.delete();
         }
+    }
+
+    @Test
+    void testValidLogin() {
+        String result = Server.processRequest("LOGIN", "Username", "pass");
+        assertEquals("Successful Login", result);
+    }
+
+    @Test
+    void testInvalidLogin() {
+        String result = Server.processRequest("LOGIN", "wrongUser", "wrongPass");
+        assertEquals("Invalid Credentials", result);
+    }
+
+    @Test
+    void testUnknownRequestType() {
+        String result = Server.processRequest("REGISTER", "Username", "pass");
+        assertEquals("Unknown Request", result);
+    }
+
+    //PROCESS REQUEST TESTS
+
+    @Test
+    void testCreateGameSessionRequest() {
+        assertEquals("New Game Created", Server.processRequest("CGS"));
+    }
+
+    @Test
+    void testJoinRequest() {
+        assertEquals("Joined Game", Server.processRequest("JOIN"));
+    }
+
+    @Test
+    void testMoveRequest() {
+        assertEquals("Move Processed", Server.processRequest("MOVE"));
+    }
+
+    @Test
+    void testChatRequest() {
+        assertEquals("Message Sent", Server.processRequest("CHAT"));
+    }
+
+    @Test
+    void testDisconnectRequest() {
+        assertEquals("Disconnected", Server.processRequest("DISCONNECT"));
+    }
+
+    @Test
+    void testCompleteRequest() {
+        assertEquals("Game Completed", Server.processRequest("COMPLETE"));
+    }
+
+    @Test
+    void testUnknownRequest() {
+        assertEquals("Unknown Request", Server.processRequest("FOO"));
     }
 }

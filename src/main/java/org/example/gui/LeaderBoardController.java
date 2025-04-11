@@ -211,29 +211,25 @@ public class LeaderBoardController {
             showAlert("Error", "Failed to load the main menu.");
         }
     }
-
+    /* Not Implemented
     public void handleGames(ActionEvent actionEvent) {
         gamesMenu.setVisible(!gamesMenu.isVisible());
     }
-
     public void handleTicTacToe(ActionEvent actionEvent) {
         //will need to be added to go to the window, if we implement a specfic game description window
     }
-
     public void handleCheckers(ActionEvent actionEvent) {
         //will need to be added to go to the window, if we implement a specfic game description window
     }
-
     public void handleConnect4(ActionEvent actionEvent) {
         //will need to be added to go to the window, if we implement a specfic game description window
     }
-
-    public void handleProfile(ActionEvent actionEvent) {
-        //will need to be added to go to the window
-    }
-
     public void handleSettings(ActionEvent actionEvent) {
-        //will need to be added to go to the window
+    }
+    */
+    public void handleProfile(ActionEvent actionEvent) {
+        UserProfileWindow profileWindow = new UserProfileWindow(new Stage(), user);
+        profileWindow.show();
     }
 
     public void handleLogout(ActionEvent actionEvent) {

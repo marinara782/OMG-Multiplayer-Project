@@ -324,4 +324,27 @@ public class LeaderboardDatabaseStubTest {
         // (Customize this according to the expected output from the test data)
         assertTrue(output.contains("Lebron - 90"));
     }
+
+    @Test
+    void testGetSortedPlayers() {
+        LeaderboardDatabaseStub stub = new LeaderboardDatabaseStub();
+
+        // Act: Get all players sorted by "checkers wins" (the entire list should be returned sorted)
+        List<Player> sortedPlayers = stub.getSortedPlayers("checkers wins");
+
+        // Assert: Check that the list size matches the number of players expected (15 based on initialization)
+        int expectedPlayersCount = 15;
+        assertEquals(expectedPlayersCount, sortedPlayers.size());
+
+        // Assert: Check that the players are sorted in descending order based on checkers wins.
+        for (int i = 0; i < sortedPlayers.size() - 1; i++) {
+            int currentWins = sortedPlayers.get(i).getCheckerWins();
+            int nextWins = sortedPlayers.get(i + 1).getCheckerWins();
+            // ensure that the leaderboard is in sorted order
+            assertTrue( currentWins >= nextWins);
+        }
+
+        // Spot-check known value: From the initialization, "Lebron" should have 90 wins—the highest.
+        assertEquals( "Lebron", sortedPlayers.getFirst().getUsername());
+    }
 }

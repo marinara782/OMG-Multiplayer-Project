@@ -10,10 +10,18 @@ import java.util.Objects;
 public class SceneManager {
     private static Stage primaryStage;
 
+    /**
+     * Setter Method for Stage
+     * @param stage
+     */
     public static void setPrimaryStage(Stage stage) {
         primaryStage = stage;
     }
 
+    /**
+     * Allows to load other windows based on the FXML path, Simplifies code
+     * @param fxmlPath
+     */
     public static void loadScene(String fxmlPath) {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(

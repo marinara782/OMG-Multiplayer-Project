@@ -19,10 +19,18 @@ public class SignUpWindowController {
     public CheckBox checkBox;
     private Stage stage;
 
+    /**
+     * Setter Method for Stage
+     * @param stage
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+    /**
+     * User imputs Username, Email, Password to be able to register
+     * @param actionEvent
+     */
     public void handleRegister(ActionEvent actionEvent) {
         String username = usernameField.getText();
         String password = passwordField.getText();
@@ -59,6 +67,10 @@ public class SignUpWindowController {
         }
     }
 
+    /**
+     * moves stage to the main menu
+     * @param user
+     */
     private void OpenMainMenu(UserProfile user) {
         try {
             Stage mainMenuStage = new Stage(); // Create a new Stage for the main menu
@@ -73,6 +85,12 @@ public class SignUpWindowController {
         }
     }
 
+    /**
+     * Pop alert with info
+     * @param alertType
+     * @param title
+     * @param content
+     */
     private void showAlert(Alert.AlertType alertType, String title, String content) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -81,6 +99,10 @@ public class SignUpWindowController {
         alert.showAndWait();
     }
 
+    /**
+     * moves stage to back to login window
+     * @param actionEvent
+     */
     public void handleBackToLogin(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginWindow.fxml"));

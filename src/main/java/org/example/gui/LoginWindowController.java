@@ -37,11 +37,18 @@ public class LoginWindowController {
     private final Login login = new Login();
     private Stage stage;
 
+    /**
+     * setter method
+     * @param stage
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
-    //will check the information inputted into the text field and password field and login the user if correct info inputted
+    /**
+     *  will check the information inputted into the text field and password field and login the user if correct info inputted
+     * @param actionEvent
+     */
     public void handleLogin(ActionEvent actionEvent) {
        String username = usernameField.getText();
        String password = passwordField.getText();
@@ -73,6 +80,10 @@ public class LoginWindowController {
         }
     }
 
+    /**
+     * moves to stage to main menu
+     * @param user
+     */
     private void OpenMainMenu(UserProfile user) {
         try {
 
@@ -91,7 +102,10 @@ public class LoginWindowController {
         }
     }
 
-    //Once the Signup button is pressed it will close the current scene and send the user to the signup window
+    /**
+     *  Once the Signup button is pressed it will close the current scene and send the user to the signup window
+     * @param actionEvent
+     */
     public void handleSignup(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("SignUpWindow.fxml"));
@@ -110,7 +124,13 @@ public class LoginWindowController {
         }
     }
 
-    //Shows any alerts and messages to the user
+
+
+    /**
+     * Shows any alerts and messages to the user
+     * @param title
+     * @param message
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
@@ -119,6 +139,10 @@ public class LoginWindowController {
         alert.showAndWait();
     }
 
+    /**
+     * moves stage to forget password window
+     * @param actionEvent
+     */
     public void handleForgetPassword(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("ForgetPasswordWindow.fxml"));
@@ -138,12 +162,20 @@ public class LoginWindowController {
 
     }
 
+    /**
+     * Creates a guest user, sends user to main menu
+     * @param actionEvent
+     */
     public void handleJoinGuest(ActionEvent actionEvent) {
         UserProfile currentUser = new UserProfile();
         OpenMainMenu(currentUser);
     }
 
     //Mainly for LoginWindow2 as extra features, can be taken out if not needed
+
+    /**
+     * Sets the Images onto UI
+     */
     public void initialize() {
         images = new ImageView[]{image1, image2, image3};
 
@@ -158,6 +190,9 @@ public class LoginWindowController {
         timeline.play();
     }
 
+    /**
+     * Rotates the Images based on a timer
+     */
     private void rotateImages() {
         ImageView currentImage = images[currentIndex];
         currentIndex = (currentIndex + 1) % images.length;

@@ -10,6 +10,11 @@ import org.example.authentication.UserProfile;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+    /**
+     * Sets the Stage and opens Login Window
+     * @param stage
+     * @throws IOException
+     */
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -34,6 +39,10 @@ public class HelloApplication extends Application {
 //        mainMenuWindow.show();
     }
 
+    /**
+     * launches the UI
+     * @param args
+     */
     public static void main(String[] args) {
         launch();
     }

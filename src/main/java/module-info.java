@@ -2,6 +2,8 @@ module org.example.gui {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.fasterxml.jackson.databind;
+    requires java.desktop;
+    requires javafx.media;
 
     opens org.example to com.fasterxml.jackson.databind;
 

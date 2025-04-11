@@ -25,7 +25,16 @@ public class CheckersBoard extends VBox {
     private final GridPane boardGrid;
     private int[] selected = null;
     private final List<StackPane> highlightedCells = new ArrayList<>();
+    private Runnable stopGameUpdates;
 
+    /**
+     *This method is used to stop the timer once the game is over
+     *
+     * @param stopGameUpdates - a Runnable game instance
+     */
+    public void setStopGameUpdates(Runnable stopGameUpdates) {
+        this.stopGameUpdates = stopGameUpdates;
+    }
 
     /**
      * Constructs the visual board for a given Checkers game.
@@ -163,6 +172,11 @@ public class CheckersBoard extends VBox {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+
+        //to make sure until stopGameUpdates is not null to keep run
+        if(stopGameUpdates != null) {
+            stopGameUpdates.run();
+        }
 
         if (returnToMainMenu != null) {
             returnToMainMenu.run();

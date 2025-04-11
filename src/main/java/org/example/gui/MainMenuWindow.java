@@ -323,11 +323,7 @@ public class MainMenuWindow {
         }
     }
 
-    // No longer needed (GL Team)
-//    private void startMatchmaking(String gameType) {
-//        System.out.println("Starting matchmaking for " + gameType);
-//        showMatchmakingDialog(gameType);
-//    }
+
 
     private void findMatch(String gameSelection) {
         String gameType = gameSelection.toLowerCase().replace(" ", "");
@@ -383,6 +379,7 @@ public class MainMenuWindow {
         dialogStage.setScene(dialogScene);
         dialogStage.setTitle("Matchmaking");
         dialogStage.setResizable(false);
+        dialogStage.setOnCloseRequest(e -> cancelled[0] = true);
         dialogStage.show();
     }
 

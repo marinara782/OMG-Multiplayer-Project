@@ -118,7 +118,7 @@ public class MainMenuWindow {
 
         // Checkers Game Card
         VBox checkersCard = createGameCard("Checkers", "checkers");
-        checkersCard.setOnMouseClicked(_ -> startGame("checkers"));
+        checkersCard.setOnMouseClicked(_ -> handleCheckersClick("checkers"));
 
         gamesContainer.getChildren().addAll(ticTacToeCard, connectFourCard, checkersCard);
 
@@ -145,6 +145,14 @@ public class MainMenuWindow {
         gameSelection.getChildren().addAll(titleLabel, gamesContainer, matchmakingSection);
 
         return gameSelection;
+    }
+
+    private void handleCheckersClick(String checkers) {
+        Boolean vsComputer = showCheckersModeDialog();
+        if (vsComputer == null) {
+            return; // user canceled
+        }
+        new GameWindow(stage, new CheckersGame(vsComputer), currentUser);
     }
 
 

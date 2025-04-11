@@ -2,11 +2,17 @@ package org.example.utilities;
 import javafx.application.Platform;
 import java.util.*;
 
+
+// ChatManager contains chatbot logic for different board games.
+// Each bot responds with context-aware, randomized messages to simulate personality and enhance user experience.
 public class ChatManager {
 
+
+    // Chat bot for Tic Tac Toe game.
     public static class TicTacToeBot extends ChatManager {
         private static final Random random = new Random();
 
+        // Different categories of responses
         private static final String[] moveResponses = {
                 "Nice move!", "Good choice!", "You placed an X.",
                 "A bold move!", "Thinking ahead, I see.", "You took the corner."
@@ -24,6 +30,7 @@ public class ChatManager {
                 "Strategize wisely.", "The board awaits.", "I’m watching!"
         };
 
+        // Generates a context-aware response based on user input for Tic Tac Toe.
         public static String generateResponse(String input) {
             input = input.toLowerCase();
 
@@ -38,14 +45,17 @@ public class ChatManager {
             }
         }
 
+        // Picks a random response from a given list
         private static String randomResponse(String[] responses) {
             return responses[random.nextInt(responses.length)];
         }
     }
 
+    // Chat bot for Checkers game.
     public static class CheckersBot extends ChatManager {
         private static final Random random = new Random();
 
+        // Response templates
         private static final String[] jumpResponses = {
                 "Jumped over you!", "Got your piece!", "Sneaky move!",
                 "Boom! Double jump!", "Captured a piece!"
@@ -59,6 +69,8 @@ public class ChatManager {
                 "Let’s dance!", "You planning something?", "I see your move."
         };
 
+
+        // Generates a response based on Checkers-related input.
         public static String generateResponse(String input) {
             input = input.toLowerCase();
 
@@ -71,14 +83,20 @@ public class ChatManager {
             }
         }
 
+
+        // Helper method to choose a random message
         private static String randomResponse(String[] responses) {
             return responses[random.nextInt(responses.length)];
         }
     }
 
+
+    // Chat bot for Connect Four game.
     public static class ConnectFourBot extends ChatManager {
         private static final Random random = new Random();
 
+
+        // Response templates for different situations
         private static final String[] connectResponses = {
                 "Four in a row!", "Nice drop!", "That column is mine!",
                 "Connect four!", "You’re getting close!"
@@ -92,6 +110,7 @@ public class ChatManager {
                 "I’m watching you!", "Game’s heating up!"
         };
 
+        // Generates a context-aware response for Connect Four based on player input.
         public static String generateResponse(String input) {
             input = input.toLowerCase();
 
@@ -100,17 +119,20 @@ public class ChatManager {
             } else if (input.contains("block")) {
                 return randomResponse(blockResponses);
             } else if (input.matches("[1-7]")) {
+                // Recognizes a column input like "4"
                 return "Dropped in column " + input + ". " + randomResponse(generalResponses);
             } else {
                 return randomResponse(generalResponses);
             }
         }
 
+        // Helper to select a random message
         private static String randomResponse(String[] responses) {
             return responses[random.nextInt(responses.length)];
         }
     }
 
+    // Allows the user to pick a game and enter messages to receive bot responses.
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Choose your game: [tic-tac-toe / checkers / connect-four]");
@@ -124,6 +146,7 @@ public class ChatManager {
             String userInput = scanner.nextLine();
             if (userInput.equalsIgnoreCase("exit")) break;
 
+            // Determine which bot to use based on game choice
             String response;
             switch (gameChoice) {
                 case "tic-tac-toe":

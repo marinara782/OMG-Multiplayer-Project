@@ -306,7 +306,7 @@ public class UserProfileTest {
         assertEquals("Your current status is already set to " + StatusOptions.OFFLINE, result_of_change);
     }
 
-    // tess for getUsername()
+    // tests for getUsername()
 
     // test fur successfully getting the username of the logged in account
     @Test

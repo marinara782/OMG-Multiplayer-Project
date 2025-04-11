@@ -170,6 +170,9 @@ public class LoginTest {
         assertTrue(outputStream.toString().contains("Logging out.."));
     }
 
+    // tests for create_account()
+
+    // test for successfully creating an account
     @Test
     void testCreateAccount_Success() throws IOException {
         // Test account creation
@@ -182,6 +185,7 @@ public class LoginTest {
                 "New account should be in file");
     }
 
+    // test for successfully creating an account when the username is already taken
     @Test
     void testCreateAccount_UsernameTaken() throws IOException {
         // Try to create account with existing username
@@ -192,6 +196,7 @@ public class LoginTest {
         assertEquals(2, lines.size()); // Should still only have alice and bob
     }
 
+    // test for successfully creating an account and putting it into a new database file
     @Test
     void testCreateAccount_NewDatabaseFile() throws IOException {
         // Delete existing file to test creation of new database
@@ -203,6 +208,7 @@ public class LoginTest {
 
     }
 
+    // test for creating an account when there is incomplete information given
     @Test
     void testCreateAccount_EmptyFields() {
         // Test with empty username
@@ -216,12 +222,14 @@ public class LoginTest {
         });
     }
 
+    // test for creating an account when the email format given is invalid
     @Test
     void testCreateAccount_InvalidEmailFormat() throws IOException {
 
         assertFalse(Login.createAccount("testUser", "testPass", "invalid-email", "555-123-4567"));
     }
 
+    // test for creating an account when the phone format given is invalid
     @Test
     void testCreateAccount_InvalidPhoneFormat() throws IOException {
         // Should still succeed since phone format isn't validated in the method

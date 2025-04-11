@@ -81,29 +81,39 @@ public class Server {
     }
 
     void loadPlayers(){
-        //Jackson ObjectMapper to handle conversion between Java objects and JSON
-        ObjectMapper mapper = new ObjectMapper();
-        if (playerFile.exists()){
-            try{
-                players = mapper.readValue(playerFile, new TypeReference<List<Player>>(){});    //load players from file
-                System.out.println("Players loaded from file.");
-            }catch (IOException e){
-                //e.getMessage() returns a human-readable description of what caused the exception
-                System.err.println("Error loading players: "+ e.getMessage());
+        if (isRunning == true){
+            //Jackson ObjectMapper to handle conversion between Java objects and JSON
+            ObjectMapper mapper = new ObjectMapper();
+            if (playerFile.exists()){
+                try{
+                    players = mapper.readValue(playerFile, new TypeReference<List<Player>>(){});    //load players from file
+                    System.out.println("Players loaded from file.");
+                }catch (IOException e){
+                    //e.getMessage() returns a human-readable description of what caused the exception
+                    System.err.println("Error loading players: "+ e.getMessage());
+                }
             }
+        }else{
+            System.out.println("Server disconnected. Please connect and try again.");
         }
+
     }
 
     public void savePlayers(){
-        //Jackson ObjectMapper to handle conversion between Java objects and JSON
-        ObjectMapper mapper = new ObjectMapper();
-        try{
-            mapper.writerWithDefaultPrettyPrinter().writeValue(playerFile, players);
-            System.out.println("Players saved to file");
-        }catch (IOException e) {
-            //e.getMessage() returns a human-readable description of what caused the exception
-            System.err.println("Error saving players: "+e.getMessage());
+        if (isRunning == true){
+            //Jackson ObjectMapper to handle conversion between Java objects and JSON
+            ObjectMapper mapper = new ObjectMapper();
+            try{
+                mapper.writerWithDefaultPrettyPrinter().writeValue(playerFile, players);
+                System.out.println("Players saved to file");
+            }catch (IOException e) {
+                //e.getMessage() returns a human-readable description of what caused the exception
+                System.err.println("Error saving players: "+e.getMessage());
+            }
+        }else{
+            System.out.println("Server disconnected. Please connect and try again.");
         }
+
 
     }
 
@@ -120,12 +130,16 @@ public class Server {
     }
 
     public static String processBugReport(bugReport report) {
-        // This is a stub. In a real system, you'd log the bug or store it.
-        System.out.println("Received bug report:");
-        System.out.println("- Type: " + report.getType());
-        System.out.println("- Comment: " + report.getComment());
+        if (isRunning){
+            System.out.println("Received bug report:");
+            System.out.println("- Type: " + report.getType());
+            System.out.println("- Comment: " + report.getComment());
 
-        return "Bug report received. Thank you for your feedback!";
+            return "Bug report received. Thank you for your feedback!";
+        }else{
+            return "Server disconnected. Please connect and try again.";
+        }
+
     }
 
 

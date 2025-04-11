@@ -39,7 +39,6 @@
 
 .rule-tab .tab-label {
     -fx-text-fill: -text-primary;
-    -fx-font-weight: semi-bold;
 }
 
 .rules-scroll-pane {
@@ -159,6 +158,17 @@
 .timeline-event {
     -fx-text-fill: -text-secondary;
     -fx-wrap-text: true;
+}
+
+.menu-button {
+    -fx-padding: 8px 16px;
+    -fx-background-color: -element-bg;
+    -fx-text-fill: -text-primary;
+    -fx-border-color: -panel-bg;
+}
+
+.menu-button:hover {
+    -fx-background-color: #3d566e;
 }
 
 .strategy-cell {

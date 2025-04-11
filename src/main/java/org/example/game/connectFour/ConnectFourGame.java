@@ -8,13 +8,15 @@ public class ConnectFourGame {
     public int goal;
     public int[][] board;
     private boolean vsComputer;
+    private boolean gameOver = false;
+
 
     /**
      * Constructor for ConnectFourGame
      * @param player 1 for Red, 2 for Blue
-     * @param rows 
+     * @param rows
      * @param columns
-     * @param goal 
+     * @param goal
      * @param vsComputer true when playing against a computer, false when playing against another user player
      */
     public ConnectFourGame(int player, int rows, int columns, int goal, boolean vsComputer) {
@@ -55,8 +57,18 @@ public class ConnectFourGame {
      * @return true when moved, false when not moved
      */
     public boolean makeMove(int row, int column) {
+        if (gameOver) return false; // Prevent moves if game is over
+
         if (this.board[row][column] == ConnectFourBoard.Empty) {
             this.board[row][column] = player;
+
+            // Check win condition
+            if (checkWinnerHorizontal() || checkWinnerVertical() || checkWinnerDiagonal()) {
+                gameOver = true;
+            } else if (checkDraw()) {
+                gameOver = true;
+            }
+
             return true;
         }
         return false;
@@ -79,7 +91,7 @@ public class ConnectFourGame {
      */
     public boolean checkWinnerHorizontal() {
 
-        int counter = 0;
+        int counter;
         for (int row = 0; row < rows; row++) { // check each row
             counter = 0; // reset counter for each row
             for (int column = 0; column < columns; column++) { // check each column
@@ -158,7 +170,7 @@ public class ConnectFourGame {
 
     /**
      * checks if win with the given move in the given column
-     * @param col 
+     * @param col
      * @return true if the move leads to a win, false otherwise
      */
     public boolean canWinWithMove(int col) {
@@ -212,6 +224,14 @@ public class ConnectFourGame {
             return true;
         }
         return false;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean state) {
+        this.gameOver = state;
     }
 
     /**

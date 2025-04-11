@@ -1,13 +1,14 @@
 package org.example.leaderboard;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.example.Player;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class LeaderboardTest {
     private Leaderboard leaderboard;
@@ -260,7 +261,15 @@ public class LeaderboardTest {
         assertEquals("B", topPlayers.get(0).getUsername()); // when run through with the @BeforeEach setUp(), the expected value is "B" but the actual is "Erick"
         assertEquals("A", topPlayers.get(1).getUsername());
         assertEquals("C", topPlayers.get(2).getUsername());
+    }
 
-    
+    @Test
+    void testGetPlayers() {
+        List<Player> players = leaderboard.getPlayers();
+        List<Player> testList = new ArrayList<>();
+        testList.add(alice); testList.add(bob); testList.add(charlie); testList.add(dave); testList.add(fred); testList.add(erick);
+        for (Player p : players) {
+            assertTrue(leaderboard.isPlayerInLeaderboard(p));
+        }
     }
 }

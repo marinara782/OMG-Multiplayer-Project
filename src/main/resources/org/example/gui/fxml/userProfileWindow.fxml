@@ -1,319 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.geometry.Insets?>
 
-<TabPane xmlns="http://javafx.com/javafx/17"
-         xmlns:fx="http://javafx.com/fxml/1"
-         fx:controller="org.example.gui.UserProfileWindowController"
-         stylesheets="@../styles/userprofile.css"
-         prefHeight="650.0" prefWidth="1100.0">
-    <!-- Overview Tab -->
-    <Tab text="Overview">
-        <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER">
-            <VBox styleClass="overview-pane">
-                <Label fx:id="welcomeLabel" styleClass="welcome-label"/>
-                <HBox styleClass="summary-box" spacing="20">
-                    <VBox styleClass="stat-box highlight-border">
-                        <Label text="Total Games" styleClass="stat-title"/>
-                        <Label text="116" styleClass="stat-value"/>
-                    </VBox>
-                    <VBox styleClass="stat-box success-border">
-                        <Label text="Win Rate" styleClass="stat-title"/>
-                        <Label text="62%" styleClass="stat-value"/>
-                    </VBox>
-                    <VBox styleClass="stat-box warning-border">
-                        <Label text="Highest Rank" styleClass="stat-title"/>
-                        <Label text="Platinum III" styleClass="stat-value"/>
-                    </VBox>
-                    <VBox styleClass="stat-box info-border">
-                        <Label text="Last Played" styleClass="stat-value"/>
-                        <Label text="2 hours ago" styleClass="stat-value"/>
-                    </VBox>
-                </HBox>
-                <TitledPane text="Game Distribution" styleClass="titled-pane">
-                    <VBox styleClass="chart-content">
-                        <PieChart fx:id="gameDistributionPieChart" styleClass="pie-chart">
-                            <title>Games Distribution</title>
-                        </PieChart>
-                        <Label text="You've played Tic-Tac-Toe the most. Try other games to earn more XP!"
-                               styleClass="chart-note"/>
-                    </VBox>
-                </TitledPane>
-                <TitledPane text="Recent Matches" styleClass="titled-pane">
-                    <VBox styleClass="recent-matches-content">
-                        <!-- Match rows would be added programmatically -->
-                        <HBox styleClass="matches-button-box">
-                            <Button text="View Full Match History" styleClass="button highlight-button"/>
-                        </HBox>
-                    </VBox>
-                </TitledPane>
-            </VBox>
-        </ScrollPane>
-    </Tab>
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.gui.UserProfileWindowController">
 
-    <!-- Stats Tab -->
-    <Tab text="Game Stats">
-        <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER">
-            <VBox styleClass="stats-pane">
-                <HBox styleClass="summary-box" spacing="20">
-                    <VBox styleClass="stat-box highlight-border">
-                        <Label text="Total Games" styleClass="stat-title"/>
-                        <Label fx:id="totalGamesLabel" text="116" styleClass="stat-value"/>
-                    </VBox>
-                    <VBox styleClass="stat-box success-border">
-                        <Label text="Wins" styleClass="stat-title"/>
-                        <Label fx:id="winsLabel" text="72" styleClass="stat-value"/>
-                    </VBox>
-                    <VBox styleClass="stat-box error-border">
-                        <Label text="Losses" styleClass="stat-title"/>
-                        <Label fx:id="lossesLabel" text="44" styleClass="stat-value"/>
-                    </VBox>
-                    <VBox styleClass="stat-box warning-border">
-                        <Label text="Win Rate" styleClass="stat-title"/>
-                        <Label fx:id="winRateStatLabel" text="62%" styleClass="stat-value"/>
-                    </VBox>
-                </HBox>
+    <top>
+        <HBox fx:id="header" spacing="10" styleClass="header" alignment="CENTER_LEFT">
+            <Label text="Welcome," fx:id="welcomeLabel" styleClass="username-label"/>
+        </HBox>
+    </top>
 
-                <TitledPane text="Game Breakdown" styleClass="stats-titled-pane">
-                    <VBox styleClass="breakdown-content">
-                        <!-- All Games -->
-                        <TitledPane text="All Games" styleClass="sub-titled-pane">
-                            <VBox styleClass="sub-breakdown-content">
-                                <PieChart fx:id="allGamesPieChart" styleClass="pie-chart">
-                                    <title>All Games Stats</title>
-                                </PieChart>
-                                <TableView fx:id="allGamesTable" styleClass="game-stats-table">
-                                    <columns>
-                                        <TableColumn text="Game" styleClass="table-column"/>
-                                        <TableColumn text="Games Played" styleClass="table-column"/>
-                                        <TableColumn text="Win Rate" styleClass="table-column"/>
-                                        <TableColumn text="Rank" styleClass="table-column"/>
-                                        <TableColumn text="Highest Rank" styleClass="table-column"/>
-                                    </columns>
-                                </TableView>
-                            </VBox>
-                        </TitledPane>
+    <center>
+        <TabPane fx:id="tabPane" styleClass="tab-pane">
 
-                        <!-- Tic Tac Toe -->
-                        <TitledPane text="Tic Tac Toe" styleClass="sub-titled-pane">
-                            <VBox styleClass="sub-breakdown-content">
-                                <PieChart fx:id="ticTacToePieChart" styleClass="pie-chart">
-                                    <title>Tic Tac Toe Stats</title>
-                                </PieChart>
-                                <TableView fx:id="ticTacToeTable" styleClass="game-stats-table">
-                                    <columns>
-                                        <TableColumn text="Game" styleClass="table-column"/>
-                                        <TableColumn text="Games Played" styleClass="table-column"/>
-                                        <TableColumn text="Win Rate" styleClass="table-column"/>
-                                        <TableColumn text="Rank" styleClass="table-column"/>
-                                        <TableColumn text="Highest Rank" styleClass="table-column"/>
-                                    </columns>
-                                </TableView>
-                            </VBox>
-                        </TitledPane>
-
-                        <!-- Checkers -->
-                        <TitledPane text="Checkers" styleClass="sub-titled-pane">
-                            <VBox styleClass="sub-breakdown-content">
-                                <PieChart fx:id="checkersPieChart" styleClass="pie-chart">
-                                    <title>Checkers Stats</title>
-                                </PieChart>
-                                <TableView fx:id="checkersTable" styleClass="game-stats-table">
-                                    <columns>
-                                        <TableColumn text="Game" styleClass="table-column"/>
-                                        <TableColumn text="Games Played" styleClass="table-column"/>
-                                        <TableColumn text="Win Rate" styleClass="table-column"/>
-                                        <TableColumn text="Rank" styleClass="table-column"/>
-                                        <TableColumn text="Highest Rank" styleClass="table-column"/>
-                                    </columns>
-                                </TableView>
-                            </VBox>
-                        </TitledPane>
-
-                        <!-- Connect 4 -->
-                        <TitledPane text="Connect 4" styleClass="sub-titled-pane">
-                            <VBox styleClass="sub-breakdown-content">
-                                <PieChart fx:id="connect4PieChart" styleClass="pie-chart">
-                                    <title>Connect 4 Stats</title>
-                                </PieChart>
-                                <TableView fx:id="connect4Table" styleClass="game-stats-table">
-                                    <columns>
-                                        <TableColumn text="Game" styleClass="table-column"/>
-                                        <TableColumn text="Games Played" styleClass="table-column"/>
-                                        <TableColumn text="Win Rate" styleClass="table-column"/>
-                                        <TableColumn text="Rank" styleClass="table-column"/>
-                                        <TableColumn text="Highest Rank" styleClass="table-column"/>
-                                    </columns>
-                                </TableView>
-                            </VBox>
-                        </TitledPane>
-                    </VBox>
-                </TitledPane>
-            </VBox>
-        </ScrollPane>
-    </Tab>
-
-    <!-- Match History Tab -->
-    <Tab text="Match History">
-        <VBox styleClass="match-history-pane">
-            <Label text="Match History" styleClass="section-title"/>
-
-            <HBox styleClass="filter-controls">
-                <VBox styleClass="filter-box">
-                    <Label text="Game Type" styleClass="filter-label"/>
-                    <ComboBox fx:id="gameTypeCombo" styleClass="filter-combo-box"/>
+            <Tab text="Overview">
+                <VBox spacing="20" padding="20" styleClass="overview-pane">
+                    <Label fx:id="welcomeLabel" styleClass="welcome-label"/>
+                    <PieChart fx:id="gameDistributionPieChart" title="Game Distribution" />
                 </VBox>
-                <VBox styleClass="filter-box">
-                    <Label text="Result" styleClass="filter-label"/>
-                    <ComboBox fx:id="resultCombo" styleClass="filter-combo-box"/>
+            </Tab>
+
+            <Tab text="Game Stats">
+                <VBox spacing="20" padding="20" styleClass="stats-pane">
+                    <Label text="Total Games:" styleClass="stats-title"/>
+                    <Label fx:id="totalGamesLabel" styleClass="stat-value"/>
+
+                    <Label text="Wins:" styleClass="stats-title"/>
+                    <Label fx:id="winsLabel" styleClass="stat-value"/>
+
+                    <Label text="Losses:" styleClass="stats-title"/>
+                    <Label fx:id="lossesLabel" styleClass="stat-value"/>
+
+                    <Label text="Win Rate:" styleClass="stats-title"/>
+                    <Label fx:id="winRateStatLabel" styleClass="stat-value"/>
+
+                    <PieChart fx:id="allGamesPieChart" title="All Games"/>
+                    <TableView fx:id="allGamesTable"/>
                 </VBox>
-                <VBox styleClass="filter-box">
-                    <Label text="Date Range" styleClass="filter-label"/>
-                    <ComboBox fx:id="dateRangeCombo" styleClass="filter-combo-box"/>
+            </Tab>
+
+            <Tab text="Match History">
+                <VBox spacing="10" padding="20" styleClass="match-history-pane">
+                    <HBox spacing="10">
+                        <ComboBox fx:id="gameTypeCombo" promptText="Game Type"/>
+                        <ComboBox fx:id="resultCombo" promptText="Result"/>
+                        <ComboBox fx:id="dateRangeCombo" promptText="Date Range"/>
+                        <TextField fx:id="searchField" promptText="Search..."/>
+                    </HBox>
+                    <TableView fx:id="matchHistoryTable"/>
                 </VBox>
-                <VBox styleClass="filter-box">
-                    <Label text="Search Opponent" styleClass="filter-label"/>
-                    <TextField fx:id="searchField" styleClass="filter-text-field"/>
+            </Tab>
+
+            <Tab text="Settings">
+                <VBox spacing="15" padding="20" styleClass="settings-pane">
+                    <Label text="Profile Settings" styleClass="settings-title"/>
+
+                    <TextField fx:id="usernameField" promptText="Username"/>
+                    <TextField fx:id="emailField" promptText="Email"/>
+                    <TextField fx:id="displayNameField" promptText="Display Name"/>
+                    <TextArea fx:id="bioArea" promptText="Bio"/>
+
+                    <HBox spacing="10">
+                        <Button text="Save" onAction="#handleSaveSettings" styleClass="settings-button"/>
+                        <Button text="Reset Theme" onAction="#handleResetTheme" styleClass="settings-button"/>
+                        <Button text="Change Password" onAction="#handleChangePassword" styleClass="settings-button"/>
+                    </HBox>
                 </VBox>
-                <VBox styleClass="filter-box">
-                    <Button text="Apply Filters" styleClass="button highlight-button"/>
-                </VBox>
-            </HBox>
-
-            <TableView fx:id="matchHistoryTable" styleClass="match-history-table">
-                <columns>
-                    <TableColumn text="Game" styleClass="table-column">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="game"/>
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn text="Opponent" styleClass="table-column">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="opponent"/>
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn text="Result" styleClass="table-column">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="result"/>
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn text="Rating Change" styleClass="table-column">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="ratingChange"/>
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn text="Date" styleClass="table-column">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="date"/>
-                        </cellValueFactory>
-                    </TableColumn>
-                </columns>
-            </TableView>
-
-            <HBox styleClass="pagination-controls">
-                <Button text="Previous" styleClass="button element-button" disable="true"/>
-                <ToggleButton text="1" selected="true" styleClass="toggle-button"/>
-                <ToggleButton text="2" styleClass="toggle-button"/>
-                <ToggleButton text="3" styleClass="toggle-button"/>
-                <Button text="Next" styleClass="button element-button"/>
-            </HBox>
-        </VBox>
-    </Tab>
-
-    <!-- Settings Tab -->
-    <Tab text="Settings">
-        <ScrollPane>
-            <VBox styleClass="settings-pane" spacing="20">
-                <!-- Profile Settings -->
-                <TitledPane text="Profile Settings" styleClass="settings-titled-pane">
-                    <GridPane styleClass="settings-grid" vgap="10" hgap="10">
-                        <columnConstraints>
-                            <ColumnConstraints percentWidth="30"/>
-                            <ColumnConstraints percentWidth="70"/>
-                        </columnConstraints>
-                        <Label text="Username" styleClass="setting-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                        <TextField fx:id="usernameField" styleClass="setting-text-field" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-
-                        <Label text="Email Address" styleClass="setting-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                        <TextField fx:id="emailField" styleClass="setting-text-field" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-                        <Label text="Display Name" styleClass="setting-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                        <TextField fx:id="displayNameField" styleClass="setting-text-field" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-                        <Label text="Bio" styleClass="setting-label" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                        <TextArea fx:id="bioArea" styleClass="setting-text-area" GridPane.rowIndex="3" GridPane.columnIndex="1" prefRowCount="3"/>
-
-                        <Label text="Profile Avatar" styleClass="setting-label" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                        <HBox styleClass="avatar-box" GridPane.rowIndex="4" GridPane.columnIndex="1">
-                            <StackPane styleClass="small-avatar-container">
-                                <Circle styleClass="small-avatar-circle"/>
-                                <Label styleClass="small-avatar-initial"/>
-                            </StackPane>
-                            <Button text="Choose Image" styleClass="button highlight-button"/>
-                        </HBox>
-
-                        <Label text="Change Password" styleClass="setting-label" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-                        <HBox styleClass="password-box" GridPane.rowIndex="5" GridPane.columnIndex="1">
-                            <Button text="Change Password" styleClass="button element-button" onAction="#handleChangePassword"/>
-                        </HBox>
-                    </GridPane>
-                </TitledPane>
-
-                <!-- Notification Settings -->
-                <TitledPane text="Notification Settings" styleClass="settings-titled-pane">
-                    <VBox styleClass="notification-content" spacing="10">
-                        <Label text="Notification Preferences" styleClass="settings-section-label"/>
-                        <CheckBox text="Game Invites" fx:id="gameInviteCheck" styleClass="settings-check-box" selected="true"/>
-                        <CheckBox text="Friend Requests" fx:id="friendRequestCheck" styleClass="settings-check-box" selected="true"/>
-                        <CheckBox text="Achievement Unlocked" fx:id="achievementCheck" styleClass="settings-check-box" selected="true"/>
-                        <CheckBox text="Rank Changes" fx:id="rankChangeCheck" styleClass="settings-check-box" selected="true"/>
-                        <CheckBox text="Platform News and Updates" fx:id="platformNewsCheck" styleClass="settings-check-box"/>
-
-                        <Label text="Notification Channels" styleClass="settings-section-label"/>
-                        <CheckBox text="In-App Notifications" fx:id="inAppCheck" styleClass="settings-check-box" selected="true"/>
-                        <CheckBox text="Email Notifications" fx:id="emailCheck" styleClass="settings-check-box" selected="true"/>
-                        <CheckBox text="Push Notifications" fx:id="pushCheck" styleClass="settings-check-box"/>
-
-                        <Label text="Do Not Disturb" styleClass="settings-section-label"/>
-                        <CheckBox text="Enable Do Not Disturb" fx:id="dndCheck" styleClass="settings-check-box"/>
-                    </VBox>
-                </TitledPane>
-
-                <!-- Privacy Settings -->
-                <TitledPane text="Privacy Settings" styleClass="settings-titled-pane">
-                    <VBox styleClass="privacy-content" spacing="10">
-                        <Label text="Profile Visibility" styleClass="settings-section-label"/>
-                        <RadioButton text="Public - Anyone can view your profile" fx:id="publicRadio" styleClass="settings-radio-button" selected="true"/>
-                        <RadioButton text="Friends Only - Only friends can view your profile" fx:id="friendsRadio" styleClass="settings-radio-button"/>
-                        <RadioButton text="Private - Only you can view your profile" fx:id="privateRadio" styleClass="settings-radio-button"/>
-
-                        <Label text="Game Activity" styleClass="settings-section-label"/>
-                        <CheckBox text="Show what game I'm currently playing" fx:id="showCurrentGameCheck" styleClass="settings-check-box" selected="true"/>
-                        <CheckBox text="Show my game history" fx:id="showGameHistoryCheck" styleClass="settings-check-box" selected="true"/>
-                        <CheckBox text="Show my rankings" fx:id="showRankingsCheck" styleClass="settings-check-box" selected="true"/>
-
-                        <Label text="Online Status" styleClass="settings-section-label"/>
-                        <RadioButton text="Show as online for everyone" fx:id="onlineForAllRadio" styleClass="settings-radio-button" selected="true"/>
-                        <RadioButton text="Show as online for friends only" fx:id="onlineForFriendsRadio" styleClass="settings-radio-button"/>
-                        <RadioButton text="Appear offline" fx:id="appearOfflineRadio" styleClass="settings-radio-button"/>
-
-                        <Label text="Data Options" styleClass="settings-section-label"/>
-                        <HBox styleClass="data-options-box" spacing="10">
-                            <Button text="Export My Data" styleClass="button highlight-button"/>
-                            <Button text="Delete My Account" styleClass="button error-button"/>
-                        </HBox>
-                    </VBox>
-                </TitledPane>
-
-                <!-- Save Button -->
-                <HBox styleClass="save-button-box" alignment="CENTER">
-                    <Button text="Save Settings" styleClass="button success-button" onAction="#handleSaveSettings"/>
-                </HBox>
-            </VBox>
-        </ScrollPane>
-    </Tab>
-</TabPane>
+            </Tab>
+        </TabPane>
+    </center>
+</BorderPane>

@@ -16,7 +16,7 @@
           AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0"
           AnchorPane.leftAnchor="0.0">
 
-        <Label wrapText="true" text="Checkers Rules" styleClass="title-label">
+        <Label wrapText="true" text="Checkers Info" styleClass="title-label">
             <font>
                 <Font name="System Bold" size="28.0"/>
             </font>
@@ -26,7 +26,7 @@
         </Label>
 
         <TabPane fx:id="rulesTabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS" styleClass="rules-tab-pane">
-            <Tab fx:id="rulesTabPage1" text="Basic Rules" styleClass="rule-tab">
+            <Tab text="Basic Rules" styleClass="rule-tab">
                 <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="rules-scroll-pane">
                     <VBox spacing="20" styleClass="rules-section">
                         <padding>
@@ -176,7 +176,7 @@
                 </ScrollPane>
             </Tab>
 
-            <Tab fx:id="rulesTabPage2" text="Game Scenarios" styleClass="rule-tab">
+            <Tab text="Game Scenarios" styleClass="rule-tab">
                 <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="rules-scroll-pane">
                     <VBox spacing="25" styleClass="rules-section">
                         <padding>
@@ -309,7 +309,7 @@
                 </ScrollPane>
             </Tab>
 
-            <Tab fx:id="rulesTabPage3" text="History" styleClass="rule-tab">
+            <Tab text="History" styleClass="rule-tab">
                 <ScrollPane fitToWidth="true" fitToHeight="true" styleClass="rules-scroll-pane">
                     <VBox spacing="15" styleClass="rules-section">
                         <padding>
@@ -362,5 +362,10 @@
                 </ScrollPane>
             </Tab>
         </TabPane>
+        <Button text="Main Menu" onAction="#backToMainMenu" styleClass="menu-button">
+            <VBox.margin>
+                <Insets bottom="20.0" top="10.0"/>
+            </VBox.margin>
+        </Button>
     </VBox>
 </AnchorPane>

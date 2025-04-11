@@ -127,5 +127,9 @@ public class Leaderboard {
             throw new IllegalArgumentException("invalid sorting criteria: "+criteriaString);
         }
     }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
 }
 

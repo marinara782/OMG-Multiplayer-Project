@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Removed the LeaderboardDatabaseStubTest.java class as its not needed for tests">
+    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Fixed up games coming from Jacob and linked them to server via GameWindow">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/game/connectFour/ConnectFourGameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/game/connectFour/ConnectFourGameTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="iteration3" />
+        <entry key="$PROJECT_DIR$" value="iteration3_backup" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -48,12 +50,12 @@
     }
   }
 }</component>
-  <component name="GitLabMergeRequestsSettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;first&quot;: &quot;https://csgit.ucalgary.ca/bhuvan.gudimetla/seng300-w25-project.git&quot;,
-    &quot;second&quot;: &quot;5cb740b9-7459-4d7a-8f34-fddb5a3371fa&quot;
+  <component name="GitLabMergeRequestsSettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "first": "https://csgit.ucalgary.ca/bhuvan.gudimetla/seng300-w25-project.git",
+    "second": "1ba1aec3-efca-4d0f-97c3-1d577c44631f"
   }
-}</component>
+}]]></component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/BhuvanGudi/OMG.git&quot;,
@@ -80,10 +82,14 @@
   "keyToString": {
     "Application.HelloApplication.executor": "Run",
     "Application.Unnamed.executor": "Run",
-    "JUnit.PlayerTest.executor": "Coverage",
+    "JUnit.All in seng300-w25-project.executor": "Run",
+    "JUnit.ClientTest.executor": "Coverage",
+    "JUnit.ConnectFourGameTest.executor": "Run",
+    "JUnit.GameSessionTest.executor": "Coverage",
+    "JUnit.ServerTest.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main__test",
+    "git-widget-placeholder": "iteration3",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "C:/Users/bhuva/OneDrive/Desktop/SENG 300/seng300-w25-project/src/main/java/org/example/game/connectFour",
     "last_opened_file_path": "C:/Users/bhuva/OneDrive/Desktop/GitHub Projects/DuplicateGame",
@@ -91,7 +97,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "SDKs",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.13477087",
     "project.structure.side.proportion": "0.17471737",
     "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
@@ -107,6 +113,9 @@
       <recent name="C:\Users\bhuva\OneDrive\Desktop\SENG 300\seng300-w25-project\docs\UseCaseDescriptions" />
       <recent name="C:\Users\bhuva\OneDrive\Desktop\SENG 300\seng300-w25-project\docs\planning" />
     </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="org.example.game.checkers" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
@@ -116,14 +125,82 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.24978.46" />
-        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-IU-243.24978.46" />
-      </set>
-    </attachedChunks>
+    <configuration name="All in seng300-w25-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="seng300-w25-project" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ClientTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="seng300-w25-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.networking.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.networking" />
+      <option name="MAIN_CLASS_NAME" value="org.example.networking.ClientTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameSessionTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="seng300-w25-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.networking.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.networking" />
+      <option name="MAIN_CLASS_NAME" value="org.example.networking.GameSessionTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ServerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="seng300-w25-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.networking.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.networking" />
+      <option name="MAIN_CLASS_NAME" value="org.example.networking.ServerTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="org.example in seng300-w25-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="seng300-w25-project" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.All in seng300-w25-project" />
+        <item itemvalue="JUnit.ServerTest" />
+        <item itemvalue="JUnit.org.example in seng300-w25-project" />
+        <item itemvalue="JUnit.GameSessionTest" />
+        <item itemvalue="JUnit.ClientTest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -398,19 +475,64 @@
       <option name="project" value="LOCAL" />
       <updated>1743731048406</updated>
     </task>
-    <task id="LOCAL-00034" summary="Removed the LeaderboardDatabaseStubTest.java class as its not needed for tests">
+    <task id="LOCAL-00034" summary="Final Working changes">
       <option name="closed" value="true" />
-      <created>1744232360140</created>
+      <created>1744150604197</created>
       <option name="number" value="00034" />
       <option name="presentableId" value="LOCAL-00034" />
       <option name="project" value="LOCAL" />
-      <updated>1744232360140</updated>
+      <updated>1744150604198</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="Final Working changes - (1)">
+      <option name="closed" value="true" />
+      <created>1744150879991</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1744150879993</updated>
+    </task>
+    <task id="LOCAL-00036" summary="imported player class to ServerTest.java">
+      <option name="closed" value="true" />
+      <created>1744267862936</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1744267862936</updated>
+    </task>
+    <task id="LOCAL-00037" summary="moved isRunning getter">
+      <option name="closed" value="true" />
+      <created>1744268162589</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1744268162589</updated>
+    </task>
+    <task id="LOCAL-00038" summary="testSaveAndLoadPlayers() is done now">
+      <option name="closed" value="true" />
+      <created>1744308983094</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1744308983094</updated>
+    </task>
+    <task id="LOCAL-00039" summary="Deleting SceneManager Errors">
+      <option name="closed" value="true" />
+      <created>1744334597195</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1744334597195</updated>
+    </task>
+    <task id="LOCAL-00040" summary="Fixed up games coming from Jacob and linked them to server via GameWindow">
+      <option name="closed" value="true" />
+      <created>1744369636632</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1744369636632</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -424,7 +546,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Developed UserProfileWindow and HelloApplication" />
     <MESSAGE value="Started Tic-Tac-toe Basics from computer side." />
     <MESSAGE value="Initiated Tic-Tac-Toe Basics and deleted .fxml file from computer side- (1)." />
     <MESSAGE value="Working 2-Player Tic-Tac-Toe Board and Game (2)." />
@@ -448,22 +569,21 @@
     <MESSAGE value="Designing TicTacToe rules (Done)" />
     <MESSAGE value="Updated the Profile visuals a bit" />
     <MESSAGE value="Split the game breakdown into multiple sections" />
-    <MESSAGE value="Removed the LeaderboardDatabaseStubTest.java class as its not needed for tests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed the LeaderboardDatabaseStubTest.java class as its not needed for tests" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.lang.NullPointerException" package="java.lang" />
-          <option name="timeStamp" value="1" />
-        </breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="start test working in ServerTest.java" />
+    <MESSAGE value="testCreateGameSessionWhileServerStopped() now works and testLoadPlayersFromTestFile() is in progress" />
+    <MESSAGE value="imported player class to ServerTest.java" />
+    <MESSAGE value="moved isRunning getter" />
+    <MESSAGE value="testSaveAndLoadPlayers() is done now" />
+    <MESSAGE value="Deleting SceneManager Errors" />
+    <MESSAGE value="Fixed up games coming from Jacob and linked them to server via GameWindow" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed up games coming from Jacob and linked them to server via GameWindow" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/HelloApplication_java$ServerTest.ic" NAME="ServerTest Coverage Results" MODIFIED="1744231310662" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+    <SUITE FILE_PATH="coverage/HelloApplication_java$ServerTest.ic" NAME="ServerTest Coverage Results" MODIFIED="1744267653311" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>org.example.networking.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$ConnectFourGameTest.ic" NAME="ConnectFourGameTest Coverage Results" MODIFIED="1744268935297" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.game.connectFour.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/HelloApplication_java$PlayerTest.ic" NAME="PlayerTest Coverage Results" MODIFIED="1744231948621" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>org.example.*</FILTER>
@@ -471,11 +591,29 @@
     <SUITE FILE_PATH="coverage/HelloApplication_java$CheckersBoardTest.ic" NAME="CheckersBoardTest Coverage Results" MODIFIED="1744228308938" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>org.example.game.checkers.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/HelloApplication_java$ClientTest.ic" NAME="ClientTest Coverage Results" MODIFIED="1744210385142" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
-      <FILTER>org.example.networking.*</FILTER>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$LeaderBoardControllerTest.ic" NAME="LeaderBoardControllerTest Coverage Results" MODIFIED="1744307110287" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.gui.*</FILTER>
     </SUITE>
     <SUITE FILE_PATH="coverage/HelloApplication_java$CheckersBoardTest_testHandleClickTriggersMoveAndWin.ic" NAME="CheckersBoardTest.testHandleClickTriggersMoveAndWin Coverage Results" MODIFIED="1744228139495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
       <FILTER>org.example.game.checkers.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$ConnectFourBoardTest.ic" NAME="ConnectFourBoardTest Coverage Results" MODIFIED="1744268815638" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.game.connectFour.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$GameSessionTest.ic" NAME="GameSessionTest Coverage Results" MODIFIED="1744221097355" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.networking.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$ClientTest.ic" NAME="ClientTest Coverage Results" MODIFIED="1744210385142" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.networking.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$LeaderboardDatabaseStubTest.ic" NAME="LeaderboardDatabaseStubTest Coverage Results" MODIFIED="1744309487850" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.leaderboard.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$SkillBasedMatchMakingTest.ic" NAME="SkillBasedMatchMakingTest Coverage Results" MODIFIED="1744232756513" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.matchmaking.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/HelloApplication_java$org_example_in_seng300_w25_project.ic" NAME="org.example in seng300-w25-project Coverage Results" MODIFIED="1744259691675" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>org.example.*</FILTER>
     </SUITE>
   </component>
 </project>

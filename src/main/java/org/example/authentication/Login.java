@@ -4,43 +4,51 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.stage.Stage;
-
 
 public class Login extends UserDatabaseStub {
 
+    public Login() {
+
+    }
+
     /**
      * help users to recover their username if they forget it. Sends a 6-digit code to the email and checks if the code is correct.
-     * @param email email of th user
-     * @return the username of the user if the code is correct, otherwise return a message
+     * @param email email of the user
+     * @return the username of the user if the code is correct, otherwise return an error message
      * @throws FileNotFoundException when the file is not found
      */
     public String forgot_username(String email) throws FileNotFoundException {
 
-        // accessing database
+        // accessing the database
         List<User> users = registered_users_list();
 
-        String code_sent = "none";
+        // Initializing string variables that are used later
+        String code_sent = "";
         String username = "";
 
-        // for loop that checks if the email entered is the same and sends a 6-digit code to the email
+        // initializing a boolean flag that will check if the email was sent
+        boolean email_sent_flag = false;
+
+        // for loop that checks if the email entered is the same and sends a 6-digit code to the email, updates email sent flag
         for (User user : users) {
             if (user.getEmail().equalsIgnoreCase(email)){
                 code_sent = send_email(email);
                 username = user.getUsername();
+                email_sent_flag = true;
             }
         }
 
-        // Need GUI to have a text-field here that gets user input
-        String user_input = "no number";
+        // Method call stub to simulate a user receiving an email and entering it into the program
+        String user_input = get_2FA_input(email_sent_flag, code_sent);
+
+        // if statement that checks if code matches user input, returns username
         if (user_input.equals(code_sent)) {
             return username;
         }
-        else if (!user_input.equals(code_sent) && !code_sent.equals("none")){
-            return "The code entered is incorrect, please try again.";
-        }
+
+        // else statement that gives an error message
         else {
-            return "The email you have entered is not a registered user.";
+            return "There was an error during the retrieval of your username, try again.";
         }
     }
 
@@ -98,20 +106,23 @@ public class Login extends UserDatabaseStub {
     private static boolean loggedIn = true;
 
     /**
-     * logout method
+     * logout method that logs out the user from the platform
      */
     public static void logout(){
+        // checks if the boolean logged in is true
         if (loggedIn){
+            // sends a print message taht you are now logging out, updates boolean variable
             System.out.println("Logging out..");
             loggedIn = false;
             returnToLoginScreen();
         } else {
+            // else statement that gives feedback if noone is logged in
             System.out.println("No user is currently logged in.");
         }
     }
 
-    // return to login screen after logging out
-    private static void returnToLoginScreen(){
+    // return to log in screen after logging out
+    public static void returnToLoginScreen(){
         System.out.println("Return to the login screen...");
         // GUI must implement a method to load the login UI
     }
@@ -125,26 +136,48 @@ public class Login extends UserDatabaseStub {
      * @return true when a new account is created, false when not
      * @throws FileNotFoundException when the file is not found
      */
-    public static  boolean createAccount(String new_username, String password, String email, String phone) throws FileNotFoundException {
+    public static boolean createAccount(String new_username, String password, String email, String phone)
+            throws FileNotFoundException, IllegalArgumentException {
 
+        // Print message that tells user they are attempting to create an account
         System.out.println("\nAttempting to create account for: " + new_username);
 
+        // Validate input formats first
+        if (new_username == null || new_username.trim().isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be empty");
+        }
+
+        if (password == null || password.trim().isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be empty");
+        }
+
+        if (!isValidEmailFormat(email)) {
+            System.out.println("Invalid email format.");
+            return false;
+        }
+
+        if (!isValidPhoneFormat(phone)) {
+            System.out.println("Invalid phone format.");
+            return false;
+        }
+
         UserDatabaseStub databaseStub = new UserDatabaseStub();
-
-        List<User> users = new ArrayList<>(); // Initialize empty list as fallback
-
-        // authenticate users
+        List<User> users;
 
         try {
             users = databaseStub.registered_users_list();
         } catch (FileNotFoundException e) {
             System.out.println("Creating new user database file...");
-            // Continue with empty list if file doesn't exist
             users = new ArrayList<>();
         }
 
-        if(databaseStub.verify_username(new_username)){
-            System.out.println("User already exists. ");
+        if (databaseStub.verify_username(new_username)) {
+            System.out.println("User already exists.");
+            return false;
+        }
+
+        if (databaseStub.verify_email(new_username,email)) {
+            System.out.println("Email already exists.");
             return false;
         }
 
@@ -153,8 +186,22 @@ public class Login extends UserDatabaseStub {
         databaseStub.write_users_to_file(users);
 
         System.out.println("✅ Account successfully created for: " + new_username);
-
         return true;
+    }
+
+    // Helper validation methods
+    private static boolean isValidEmailFormat(String email) {
+        if (email == null) return false;
+        // Basic format: xxx@xx.com
+        return email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+        // For more comprehensive email validation, use:
+        // return email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+    }
+
+    private static boolean isValidPhoneFormat(String phone) {
+        if (phone == null) return false;
+        // Format: xxx-xxx-xxxx
+        return phone.matches("^\\d{3}-\\d{3}-\\d{4}$");
     }
 
     /**
@@ -213,9 +260,6 @@ public class Login extends UserDatabaseStub {
         //change email
         update_email(username, newEmail, password);
         return true;
-    }
-
-    public Login(Stage stage) {
     }
 
     public void show() {

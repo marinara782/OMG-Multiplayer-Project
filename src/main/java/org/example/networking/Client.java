@@ -78,7 +78,14 @@ public class Client {
     public void sendGameMove(GameSession gameSession, String moveData){
         String response_move = gameSession.processMove(this, moveData);
         System.out.println(response_move);
+        System.out.println("[Simulated Server] " + moveData);
         gameSession.broadcastGameState();
+    }
+
+    public void sendBugReport(String type, String comment) {
+        bugReport report = new bugReport(type, comment);
+        String response = Server.processBugReport(report);
+        System.out.println(response); // "Bug report received. Thank you!"
     }
 
     public void completeGame(GameSession gameSession)

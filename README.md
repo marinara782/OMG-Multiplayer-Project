@@ -1,280 +1,593 @@
-# **Project Workflow and Branching Strategy**
-
-## **1. Team Structure & Responsibilities**
-
-### **A. Documentation & Planning Team (3 People)**
-
-- **Directory:** `/docs`
-- **Responsibilities:**
-  - Maintaining project timeline (`milestones_and_task_completion_dates.xlsx`)
-  - Updating architecture and design diagrams (`class_diagram.png`, `use_case_descriptions.pdf`)
-
-### **B. Authentication & User Management Team (3 People)**
-
-- **Directory:** `/src/authentication`
-- **Responsibilities:**
-  - Implementing user authentication (`Login.java`, `UserProfile.java`)
-  - Managing user data storage (`UserDatabaseStub.java`)
-
----
-
-### **C. Game Development Teams (10 People, 3 Sub-Teams)**
-
-Each subteam will develop a specific game.
-
-- **Directory:** `/src/game/[game_name]`
-
-#### Responsibilities:
-
-- **Tic Tac Toe Team (4 People):** `TicTacToeBoard.java`, `TicTacToeGame.java`
-- **Checkers Team (4 People):** `CheckersBoard.java`, `CheckersGame.java`
-- **Connect Four Team (2 People):** `ConnectFourBoard.java`, `ConnectFourGame.java`
-
----
-
-### **D. Leaderboard & Matchmaking Team (3 People)**
-
-- **Directories:** `/src/leaderboard` & `/src/matchmaking`
-- **Responsibilities:**
-  - Implement ranking and score tracking (`Leaderboard.java`, `LeaderboardDatabaseStub.java`)
-  - Develop matchmaking logic (`Matchmaker.java`, `SkillBasedMatchmaking.java`)
-
-### **E. Networking Team (3 People)**
-
-- **Directory:** `/src/networking`
-- **Responsibilities:**
-  - Implement server-client communication (`Server.java`, `Client.java`, `GameSession.java`)
-
-### **F. GUI & Frontend Team (3 People)**
-
-- **Directory:** `/src/gui`
-- **Responsibilities:**
-  - Create the user interface (`MainMenuWindow.java`, `GameWindow.java`, `UserProfileWindow.java`)
-
-### **G. Testing & Quality Assurance Team (3 People)**
-
-- **Directory:** `/tests`
-- **Responsibilities:**
-  - Write unit and integration tests (`gameTests`, `leaderboardTests`, `matchmakingTests`, `guiTests`, `networkingTests`, `integrationTests`)
-  - Ensure game functionality and quality assurance
-
----
-
-## **2. Branching Strategy**
-
-Each team works on a **feature branch** before merging into `main`.
-
-### **Branch Naming Convention:**
-
-- `feature/authentication`
-- `feature/game-tic-tac-toe`
-- `feature/game-connect-four`
-- `feature/game-checkers`
-- `feature/leaderboard`
-- `feature/matchmaking`
-- `feature/networking`
-- `feature/gui`
-- `feature/utilities`
-- `feature/tests`
-
----
-
-## **3. Repository Workflow**
-
-### **Step 1: Sync Feature Branch with `main`**
-
-A designated team member ensures the feature branch is **updated with `main`**:
-
-```bash 
-git checkout feature/authentication
-git pull origin main  # Get the latest updates from main
-git push origin feature/authentication  # Push the updated branch
-```
-
-Now, `feature/authentication` is **in sync** with `main`.
-
-### **Step 2: Developers Pull Updates & Work on Feature Branch**
-
-All team members working on `feature/authentication` must **fetch and pull** the latest changes before making new commits:
-
-```bash
-git checkout feature/authentication
-git fetch origin  # Get the latest repository changes
-git pull origin feature/authentication  # Sync with the updated feature branch
-```
-
-Now, developers have the latest version before continuing their work.
-
-### **Step 3: Developers Make Changes & Push**
-
-After making changes, they **commit and push** to the feature branch:
-
-```bash
-git add .
-git commit -m "Describe your changes"
-git push origin feature/authentication  # Push to the feature branch
-```
-
-### **Step 4: Merge Feature Branch into `main`**
-
-Once the feature is **stable and tested**, the team merges it into `main`:
-
-```bash
-git checkout main
-git pull origin main  # Ensure the latest main updates
-git merge feature/authentication  # Merge the feature branch
-git push origin main  # Update main branch
-```
-
----
-
-## **4. Responsibilities**
-
-**Feature Team Members** → Commit and push only to their **feature branch**  
-**Feature Team Lead** → Ensures the **feature branch** is synced with `main` before team members push  
-**Merge to `main` Only When Stable** → No direct commits to `main`
-
----
-
 # Online Multiplayer Game (OMG)
 
-## Project Overview
+# SENG 300 - W25 Project
 
-This project is a comprehensive **multi-game platform**. It supports multiple board games, allowing players to engage
-in games like Chess, Go, Tic Tac Toe, Connect Four, and Checkers. The platform offers user authentication, matchmaking,
-leaderboards, and a rich graphical user interface (GUI) for a seamless gaming experience.
+Welcome to our software engineering project for **SENG 300 - Winter 2025**. This application is a multi-game platform 
+that supports classic games like Checkers, Connect Four, and Tic-Tac-Toe, with features such as authentication, 
+matchmaking, a leaderboard system, networking, and a modern GUI.
 
-## Project Structure
+### 🧩 Key Features
 
-### This is a Tree structure diagram which can be generated with command 'Tree /F /A' in command prompt
+- **Modular game engine** that allows for easy integration of additional games.
+- **User authentication** including login, signup, and password recovery.
+- **Matchmaking system** with random and skill-based pairing options.
+- **Real-time multiplayer** with smooth communication between client and server.
+- **Leaderboard tracking** for player statistics and performance.
+- **Integrated games**:
+  - Checkers
+  - Connect Four
+  - Tic-Tac-Toe
+- **JavaFX GUI** with responsive design, sound effects, and animations.
+- **JUnit test suite** to ensure code reliability and maintainability.
+
+---
+
+### 🛠 Technologies Used
+
+- **Java 17**
+- **JavaFX** for graphical user interface
+- **Maven** for build automation
+- **JUnit 5** for testing
+
+---
+
+### 📁 Project Structure
+
+#### This is a Tree structure diagram that can be generated with command 'Tree /F /A' or Tree /F in command prompt
 
 ```
 
 /seng300-w25-project
+│   .gitignore
+│   git_log.csv
+│   Iteration_3_Submission_Table.xlsx
+│   mvnw
+│   mvnw.cmd
+│   Planing.txt
+│   pom.xml
+│   Project_v1.0.4.pdf
+│   README.md
+│   team.md
+│   temp.txt
 │
-|   .gitignore
-|   mvnw
-|   mvnw.cmd
-|   pom.xml
-|   Project_v1.0.1.pdf
-|   README.md
-|   team.md
-|
-+---.idea
-|       .gitignore
-|       compiler.xml
-|       encodings.xml
-|       jarRepositories.xml
-|       misc.xml
-|       vcs.xml
-|       workspace.xml
-|
-+---.mvn
-|   \---wrapper
-|           maven-wrapper.jar
-|           maven-wrapper.properties
-|
-+---docs
-|   +---diagrams
-|   \---planning
-+---gitlab
-|       gitlab_link.txt
-|
-+---resources
-|   +---icons
-|   +---images
-|   \---sounds
-+---src
-|   \---main
-|       +---java
-|       |   |   module-info.java
-|       |   |
-|       |   \---org
-|       |       \---example
-|       |           +---authentication
-|       |           |       Login.java
-|       |           |       UserDatabaseStub.java
-|       |           |       UserProfile.java
-|       |           |
-|       |           +---game
-|       |           |   +---checkers
-|       |           |   |       CheckersBoard.java
-|       |           |   |       CheckersGame.java
-|       |           |   |
-|       |           |   +---connectFour
-|       |           |   |       ConnectFourBoard.java
-|       |           |   |       ConnectFourGame.java
-|       |           |   |
-|       |           |   \---ticTacToe
-|       |           |           TicTacToeBoard.java
-|       |           |           TicTacToeGame.java
-|       |           |
-|       |           +---gui
-|       |           |       GameWindow.java
-|       |           |       HelloApplication.java
-|       |           |       HelloController.java
-|       |           |       MainMenuWindow.java
-|       |           |       UserProfileWindow.java
-|       |           |
-|       |           +---leaderboard
-|       |           |       Leaderboard.java
-|       |           |       LeaderboardDatabaseStub.java
-|       |           |
-|       |           +---matchmaking
-|       |           |       Matchmaker.java
-|       |           |       SkillBasedMatchmaking.java
-|       |           |
-|       |           +---networking
-|       |           |       Client.java
-|       |           |       GameSession.java
-|       |           |       Server.java
-|       |           |
-|       |           \---utilities
-|       |                   ChatManager.java
-|       |                   GameTimer.java
-|       |
-|       \---resources
-|           \---org
-|               \---example
-|                   \---gui
-|                           hello-view.fxml
-|
-\---target
-    +---classes
-    |   |   module-info.class
-    |   |
-    |   +---game
-    |   |   +---checkers
-    |   |   |       CheckersBoard.class
-    |   |   |       CheckersGame.class
-    |   |   |
-    |   |   +---chess
-    |   |   |       ChessBoard.class
-    |   |   |       ChessGame.class
-    |   |   |       ChessPiece.class
-    |   |   |
-    |   |   +---connectFour
-    |   |   |       ConnectFourBoard.class
-    |   |   |       ConnectFourGame.class
-    |   |   |
-    |   |   +---go
-    |   |   |       GoBoard.class
-    |   |   |       GoGame.class
-    |   |   |       GoStone.class
-    |   |   |
-    |   |   \---ticTacToe
-    |   |           TicTacToeBoard.class
-    |   |           TicTacToeGame.class
-    |   |
-    |   \---org
-    |       \---example
-    |           \---gui
-    |                   hello-view.fxml
-    |                   HelloApplication.class
-    |                   HelloController.class
-    |
-    \---generated-sources
-        \---annotations
-
+├───.idea
+│   │   .gitignore
+│   │   .name
+│   │   compiler.xml
+│   │   encodings.xml
+│   │   jarRepositories.xml
+│   │   misc.xml
+│   │   vcs.xml
+│   │   workspace.xml
+│   │
+│   └───inspectionProfiles
+│           Project_Default.xml
+│
+├───.mvn
+│   └───wrapper
+│           maven-wrapper.jar
+│           maven-wrapper.properties
+│
+├───demo
+│   │   mvnw
+│   │   mvnw.cmd
+│   │   pom.xml
+│   │
+│   ├───.mvn
+│   │   └───wrapper
+│   │           maven-wrapper.jar
+│   │           maven-wrapper.properties
+│   │
+│   └───src
+│       └───main
+│           ├───java
+│           │   │   module-info.java
+│           │   │
+│           │   └───org
+│           │       └───example
+│           │           └───demo
+│           │                   HelloApplication.java
+│           │                   HelloController.java
+│           │
+│           └───resources
+│               └───org
+│                   └───example
+│                       └───demo
+│                               hello-view.fxml
+│
+├───docs
+│   ├───diagrams
+│   │       AuthenticateUseCaseIteration3.jpg
+│   │       AuthenticationClassDiagram.png
+│   │       AuthenticationIteration3.jpg
+│   │       class_diagram_Checkers.png
+│   │       Class_Diagram_connect4.png
+│   │       class_diagram_Leaderboard.png
+│   │       GUI_Class_Diagram.png
+│   │       MatchMaking Class Diagram.png
+│   │       NetworkingClassDiagram.png
+│   │       NetworkingUseCaseDiagram.png
+│   │       TicTacToe_Class_Structure.png
+│   │
+│   ├───planning
+│   │       AUTHENTICATION.pdf
+│   │       connect4_planning_document.pdf
+│   │       GUI_planning_document.pdf
+│   │       leaderboard_planning.pdf
+│   │       NETWORKING.pdf
+│   │       Planning_Documents_-_Team_5_MATCHMAKING.pdf
+│   │       ProjectPlanningCheckers.pdf
+│   │       TicTacToe_planning_document.pdf
+│   │
+│   └───UseCaseDescriptions
+│           use_cases_descriptions_matchmaking.pdf
+│           use_case_descriptions_authentication.pdf
+│           use_case_descriptions_checkers.pdf
+│           use_case_descriptions_connect4.pdf
+│           use_case_descriptions_gui.pdf
+│           use_case_descriptions_networking.pdf
+│           use_case_descriptions_tictactoe.pdf
+│           use_case_description_leaderboard.pdf
+│
+├───gitlab
+│       gitlab_link.txt
+│
+├───out
+│   └───production
+│       └───seng300-w25-project
+│           └───main
+│               └───resources
+│                   └───org
+│                       └───example
+│                           └───gui
+│                                   hello-view.fxml
+│
+├───resources
+│   ├───icons
+│   │       newIcons
+│   │
+│   ├───images
+│   │       newImages
+│   │
+│   └───sounds
+│           checkersRedMove.mp3
+│           connectFourBlue.mp3
+│           connectFourRed.mp3
+│           ticTacToe1.mp3
+│           ticTacToeO.mp3
+│           ticTacToeX.mp3
+│           win.mp3
+│
+├───src
+│   ├───main
+│   │   ├───java
+│   │   │   │   module-info.java
+│   │   │   │
+│   │   │   └───org
+│   │   │       └───example
+│   │   │           │   Player.java
+│   │   │           │
+│   │   │           ├───authentication
+│   │   │           │       Login.java
+│   │   │           │       StatusOptions.java
+│   │   │           │       temp.txt
+│   │   │           │       User.java
+│   │   │           │       UserDatabaseStub.java
+│   │   │           │       UserProfile.java
+│   │   │           │
+│   │   │           ├───game
+│   │   │           │   ├───checkers
+│   │   │           │   │       CheckersBoard.java
+│   │   │           │   │       CheckersGame.java
+│   │   │           │   │       CheckersRules.java
+│   │   │           │   │
+│   │   │           │   ├───connectFour
+│   │   │           │   │       ConnectFourBoard.java
+│   │   │           │   │       ConnectFourGame.java
+│   │   │           │   │       ConnectFourRules.java
+│   │   │           │   │
+│   │   │           │   └───ticTacToe
+│   │   │           │           TicTacToeGame.java
+│   │   │           │           TicTacToeRules.java
+│   │   │           │
+│   │   │           ├───gui
+│   │   │           │       ForgetPasswordWindowController.java
+│   │   │           │       GameWindow.java
+│   │   │           │       HelloApplication.java
+│   │   │           │       LeaderBoardController.java
+│   │   │           │       LoginWindowController.java
+│   │   │           │       MainMenuWindow.java
+│   │   │           │       SceneManager.java
+│   │   │           │       SignUpWindowController.java
+│   │   │           │       UserProfileWindow.java
+│   │   │           │       UserProfileWindowController.java
+│   │   │           │
+│   │   │           ├───leaderboard
+│   │   │           │       Leaderboard.java
+│   │   │           │       LeaderboardDatabaseStub.java
+│   │   │           │
+│   │   │           ├───matchmaking
+│   │   │           │       Matchmaker.java
+│   │   │           │       SkillBasedMatchmaking.java
+│   │   │           │
+│   │   │           ├───networking
+│   │   │           │       bugReport.java
+│   │   │           │       Client.java
+│   │   │           │       GameSession.java
+│   │   │           │       Server.java
+│   │   │           │
+│   │   │           └───utilities
+│   │   │                   ChatManager.java
+│   │   │                   GameTimer.java
+│   │   │
+│   │   └───resources
+│   │       │   CheckersIMG.jpg
+│   │       │   Connect4IMG.jpg
+│   │       │   TicTacToeIMG.jpg
+│   │       │
+│   │       └───org
+│   │           └───example
+│   │               └───gui
+│   │                   │   ForgetPasswordWindow.fxml
+│   │                   │   leaderboardTable.css
+│   │                   │   LeaderboardWindow.fxml
+│   │                   │   LoginWindow.fxml
+│   │                   │   LoginWindow2.fxml
+│   │                   │   SignUpWindow.fxml
+│   │                   │
+│   │                   ├───fxml
+│   │                   │       checkers_rules.fxml
+│   │                   │       connectfour_rules.fxml
+│   │                   │       tictactoe_rules.fxml
+│   │                   │       userProfileWindow.fxml
+│   │                   │
+│   │                   └───styles
+│   │                           checkers.css
+│   │                           connectfour.css
+│   │                           tictactoe.css
+│   │                           userprofile.css
+│   │
+│   └───test
+│       └───java
+│           └───org
+│               └───example
+│                   │   PlayerTest.java
+│                   │
+│                   ├───authentication
+│                   │       LoginTest.java
+│                   │       UserDatabaseStubTest.java
+│                   │       UserProfileTest.java
+│                   │       UserTest.java
+│                   │
+│                   ├───game
+│                   │   ├───checkers
+│                   │   │       CheckersBoardTest.java
+│                   │   │       CheckersGameTest.java
+│                   │   │
+│                   │   ├───connectFour
+│                   │   │       ConnectFourBoardTest.java
+│                   │   │       ConnectFourGameTest.java
+│                   │   │
+│                   │   └───ticTacToe
+│                   │           TicTacToeGameTest.java
+│                   │
+│                   ├───leaderboard
+│                   │       LeaderboardDatabaseStubTest.java
+│                   │       LeaderboardTest.java
+│                   │
+│                   ├───matchmaking
+│                   │       MatchmakerTest.java
+│                   │       SkillBasedMatchMakingTest.java
+│                   │
+│                   ├───networking
+│                   │       ClientTest.java
+│                   │       GameSessionTest.java
+│                   │       ServerTest.java
+│                   │
+│                   └───utilities
+│                           ChatManagerTest.java
+│                           GameTimerTest.java
+│
+└───target
+    ├───classes
+    │   │   CheckersIMG.jpg
+    │   │   Connect4IMG.jpg
+    │   │   module-info.class
+    │   │   TicTacToeIMG.jpg
+    │   │
+    │   └───org
+    │       └───example
+    │           │   Player.class
+    │           │
+    │           ├───authentication
+    │           │       Login.class
+    │           │       StatusOptions.class
+    │           │       User.class
+    │           │       UserDatabaseStub.class
+    │           │       UserProfile.class
+    │           │
+    │           ├───game
+    │           │   ├───checkers
+    │           │   │       CheckersBoard.class
+    │           │   │       CheckersGame$Move.class
+    │           │   │       CheckersGame.class
+    │           │   │       CheckersRules.class
+    │           │   │
+    │           │   ├───connectFour
+    │           │   │       CheckersRules.class
+    │           │   │       ConnectFourBoard.class
+    │           │   │       ConnectFourGame.class
+    │           │   │       ConnectFourRules.class
+    │           │   │
+    │           │   └───ticTacToe
+    │           │           TicTacToeGame.class
+    │           │           TicTacToeRules.class
+    │           │
+    │           ├───gui
+    │           │   │   ForgetPasswordWindow.fxml
+    │           │   │   ForgetPasswordWindowController.class
+    │           │   │   GameWindow.class
+    │           │   │   hello-view.fxml
+    │           │   │   HelloApplication.class
+    │           │   │   HelloController.class
+    │           │   │   LeaderBoardController$1.class
+    │           │   │   LeaderBoardController$2.class
+    │           │   │   LeaderBoardController$3.class
+    │           │   │   LeaderBoardController.class
+    │           │   │   leaderboardTable.css
+    │           │   │   LeaderboardWindow.fxml
+    │           │   │   LoginWindow.fxml
+    │           │   │   LoginWindow2.fxml
+    │           │   │   LoginWindowController.class
+    │           │   │   MainMenuWindow.class
+    │           │   │   SceneManager.class
+    │           │   │   SignUpWindow.fxml
+    │           │   │   SignUpWindowController.class
+    │           │   │   UserProfileWindow.class
+    │           │   │   UserProfileWindowController$GameRecord.class
+    │           │   │   UserProfileWindowController.class
+    │           │   │
+    │           │   ├───fxml
+    │           │   │       checkers_rules.fxml
+    │           │   │       connectfour_rules.fxml
+    │           │   │       tictactoe_rules.fxml
+    │           │   │       userProfileWindow.fxml
+    │           │   │
+    │           │   └───styles
+    │           │           checkers.css
+    │           │           connectfour.css
+    │           │           tictactoe.css
+    │           │           userprofile.css
+    │           │
+    │           ├───leaderboard
+    │           │       Leaderboard.class
+    │           │       LeaderboardDatabaseStub.class
+    │           │
+    │           ├───matchmaking
+    │           │       Matchmaker$GameType.class
+    │           │       Matchmaker.class
+    │           │       SkillBasedMatchmaking$QueuedPlayer.class
+    │           │       SkillBasedMatchmaking.class
+    │           │
+    │           ├───networking
+    │           │       Client.class
+    │           │       GameSession.class
+    │           │       Server$1.class
+    │           │       Server.class
+    │           │
+    │           └───utilities
+    │                   ChatManager$CheckersBot.class
+    │                   ChatManager$ConnectFourBot.class
+    │                   ChatManager$TicTacToeBot.class
+    │                   ChatManager.class
+    │                   GameTimer.class
+    │
+    ├───generated-sources
+    │   └───annotations
+    ├───generated-test-sources
+    │   └───test-annotations
+    └───test-classes
+        └───org
+            └───example
+                ├───authentication
+                │       LoginTest.class
+                │       UserDatabaseStubTest.class
+                │       UserProfileTest.class
+                │
+                ├───game
+                │   ├───checkers
+                │   │       CheckersBoardTest.class
+                │   │       CheckersGameTest.class
+                │   │
+                │   ├───connectFour
+                │   │       ConnectFourBoardTest.class
+                │   │       ConnectFourGameTest.class
+                │   │
+                │   └───ticTacToe
+                │           TicTacToeBoardTest.class
+                │           TicTacToeGameTest.class
+                │
+                ├───gui
+                │       ForgetPasswordWindowControllerTest.class
+                │       GameWindowTest.class
+                │       HelloApplicationTest.class
+                │       HelloControllerTest.class
+                │       LeaderBoardControllerTest.class
+                │       LoginWindowControllerTest$FakeUserDatabase.class
+                │       LoginWindowControllerTest.class
+                │       MainMenuWindowTest.class
+                │       SceneManagerTest.class
+                │       SignUpWindowControllerTest.class
+                │       UserProfileWindowTest.class
+                │
+                ├───leaderboard
+                │       LeaderboardDatabaseStub.class
+                │       LeaderboardTest.class
+                │
+                ├───matchmaking
+                │       MatchmakerTest.class
+                │       SkillBasedMatchMaking.class
+                │
+                ├───networking
+                │       ClientTest.class
+                │       GameSessionTest.class
+                │       ServerTest.class
+                │
+                └───utilities
+                        ChatManagerTest.class
+                        GameTimerTest.class
 
 ```
+
+### 📄 Documentation
+
+All relevant design documents, reports, and diagrams can be found in the `docs/` directory. This includes:
+
+- System architecture diagrams
+- Use case and sequence diagrams
+- Milestone reports (`Project_v1.0.4.pdf`, etc.)
+
+---
+
+### 👥 Authors
+
+Team P-16 – Winter 2025 (23 people) 
+University of Calgary  
+*Full contributor list available in the docs/report.*
+
+---
+
+### **Branching Strategy**
+
+Each team works on a **origin branch** before merging into `main`.
+
+#### 🔀 Branch Naming Convention & Iteration Overview
+
+To maintain an organized development process throughout the lifecycle of this project, we followed a branching strategy structured by iterations. Each branch was named according to the feature or module being developed, and our workflow included collaborative design, documentation, and regular team meetings.
+
+#### 🧩 Iteration 1 (Feb 22 – Mar 9): Feature Development & Architecture
+During this phase, development was divided into modular branches,
+with team members working in parallel on core game features, UI, networking, and foundational components.
+We also prepared key documentation including using case diagrams, class diagrams, and a planning document.
+
+- `NETWORKING` – Multiplayer connection and data transmission logic
+- `LEADERBOARD` – Player score tracking and leaderboard system
+- `GUI` – Frontend development using JavaFX
+- `AUTHENTICATION` – User login/signup and credential verification
+- `TICTACTOE` – Game logic for Tic-Tac-Toe
+- `MATCHMAKING` – Pairing players for multiplayer sessions
+- `<individual_class_name>` – Branches dedicated to each team member’s class and responsibilities
+
+🔧 Documentation and Collaboration:
+- Use Case Diagrams & Descriptions
+- Class Diagram
+- Planning Document
+- Milestone Tracking
+- Issue Boards (GitHub Projects)
+- Team Meetings (Twice Weekly)
+- Git Logs for Version Control
+
+#### 🔍 Iteration 2 (Mar 9 – Mar 21): Review & Consolidation
+This iteration focused on reviewing peer contributions, refining implementation details,
+and documenting progress through shared Google Docs.
+No new branches were created during this period — collaboration was done directly in shared documents,
+allowing the team to align and make improvements based on feedback.
+
+Absolutely — here's a clear, professional yet descriptive section for **Iteration 3** that you can paste into your `README.md`:
+
+---
+
+### 🔁 Iteration 3 (Mar 22 – Apr 11)
+
+This iteration the team focused
+on implementing feedback received from peer reviews in Iteration 2. This phase was centered
+on refining existing modules,
+enhancing usability, improving performance, and completing final integration tasks across components.
+
+#### 🔍 Key Activities
+
+- Integrated comprehensive feedback received from peer reviews during Iteration 2 to improve system quality and usability.
+- Refined core modules, including **Game Logic**, **Graphical User Interface (GUI)**, **Leaderboard**, and **Matchmaking**, enhancing functionality and overall performance.
+- Conducted thorough testing and debugging to ensure system stability and address edge cases across all components.
+- Updated all relevant project documentation, including:
+  - **Use Case Diagrams**
+  - **Class Diagrams**
+  - **Architecture Diagrams**
+- Produced a final **project explanation video** that outlines the system architecture, design rationale, and core features.
+- Maintained a consistent communication schedule through **bi-weekly team meetings**, ensuring smooth collaboration and alignment throughout the iteration.
+
+#### 🌱 Branches Created:
+- `Gamelogic_iteration3`
+- `GUI_iteration3`
+- `Iteration3`
+- `LeaderandMatch_iteration3`
+
+These branches reflect the modular refinement efforts by various subgroups within the team. Although exact team size per branch varies, the whole class collaborated across modules during this final implementation phase.
+
+> Note: Not all contributions during Iteration 3 were divided evenly among members, but each team member contributed to code refinement, debugging, and final documentation.
+
+---
+
+### **Repository Workflow**
+
+#### **Step 1: Sync Feature Branch with `main`**
+
+A designated team member ensures the feature branch is **updated with `main`**:
+
+```bash 
+git checkout origin/authentication
+git pull origin main 
+git push origin origin/authentication  
+```
+
+Now, `origin/authentication` is **in sync** with `main`.
+
+#### **Step 2: Developers Pull Updates & Work on origin Branch**
+
+All team members working on `origin/authentication` must **fetch and pull** the latest changes before making new commits:
+
+```bash
+git checkout origin/authentication
+git fetch origin  
+git pull origin origin/authentication  
+```
+
+Now, developers have the latest version before continuing their work.
+
+#### **Step 3: Developers Make Changes & Push**
+
+After making changes, they **commit and push** to the origin branch:
+
+```bash
+git add .
+git commit -m "Describe your changes"
+git push origin origin/authentication 
+```
+
+#### **Step 4: Merge origin Branch into `main`**
+
+Once the origin is **stable and tested**, the team merges it into `main`:
+
+```bash
+git checkout main
+git pull origin main 
+git merge origin/authentication 
+git push origin main 
+```
+
+---
+
+### **Responsibilities**
+
+**origin Team Members** → Commit and push only to their **origin branch**  
+**origin Team Lead** → Ensures the **origin branch** is synced with `main` before team members push  
+**Merge to `main` Only When Stable** → No direct commits to `main`
+
+---
+
+
+### 📜 License
+
+This project is developed for academic purposes and is not licensed for commercial distribution.
+
+---

@@ -410,6 +410,7 @@ public class GameWindow {
             gameBoard.getChildren().clear();
             CheckersBoard checkersBoard = new CheckersBoard((CheckersGame) gameInstance);
             checkersBoard.setReturnToMainMenu(this::returnToMainMenu);
+            checkersBoard.setStopGameUpdates(() -> updateTimeline.stop());
             gameBoard.getChildren().add(checkersBoard);
 
         }
@@ -720,13 +721,16 @@ public class GameWindow {
         timerLabel.setText(String.format("%d:%02d", minutes, seconds));
 
         // NEW: If we're in a Checkers game, check for win condition
+        /* I commented this out as this was causing a bug in the checkers game causing duplicate win windows to show up
         if (gameInstance instanceof CheckersGame) {
             CheckersGame checkersGame = (CheckersGame) gameInstance;
             if (checkersGame.checkWin()) {
                 updateTimeline.stop();
-                showGameOverDialog("Game Over: Checkers win detected!", true);
+                showGameOverDialog("Game Over: Checkers win detected!", true); ---> this is a duplicate dialogue box
             }
         }
+
+         */
     }
 
     // Game move logic

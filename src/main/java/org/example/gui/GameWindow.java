@@ -364,11 +364,13 @@ public class GameWindow {
             setupConnectFourBoard();
         } else if (gameInstance instanceof CheckersGame) {
             System.out.println("Setting up Checkers board");
-            // setupCheckersBoard();
+
             // Added by game logic team (Jacob Baggott)
             gameBoard.getChildren().clear();
             CheckersBoard checkersBoard = new CheckersBoard((CheckersGame) gameInstance);
+            checkersBoard.setReturnToMainMenu(this::returnToMainMenu);
             gameBoard.getChildren().add(checkersBoard);
+
         }
     }
 
@@ -605,58 +607,7 @@ public class GameWindow {
         gameBoard.getChildren().add(boardContainer);
     }
 
-    // Game logic team -> chosen to initialize the board in CheckersBoard class (Jacob Baggott)
-//    private void setupCheckersBoard() {
-//        VBox boardContainer = new VBox(20);
-//        boardContainer.setAlignment(CENTER);
-//
-//        GridPane board = new GridPane();
-//        board.setAlignment(CENTER);
-//
-//        // Create the 8x8 grid
-//        for (int row = 0; row < 8; row++) {
-//            for (int col = 0; col < 8; col++) {
-//                StackPane cell = new StackPane();
-//                cell.setPrefSize(60, 60);
-//
-//                // Alternating colors for the checkerboard
-//                boolean isLightSquare = (row + col) % 2 == 0;
-//                cell.setStyle("-fx-background-color: " + (isLightSquare ? "#ecf0f1" : "#34495e") + ";");
-//
-//                // Add checkers pieces to initial positions
-//                if (!isLightSquare) {
-//                    if (row < 3) {
-//                        // Red pieces (opponent)
-//                        Region piece = new Region();
-//                        piece.setPrefSize(40, 40);
-//                        piece.setStyle("-fx-background-color: #e74c3c; -fx-background-radius: 20;");
-//                        cell.getChildren().add(piece);
-//                    } else if (row > 4) {
-//                        // Black pieces (player)
-//                        Region piece = new Region();
-//                        piece.setPrefSize(40, 40);
-//                        piece.setStyle("-fx-background-color: #2c3e50; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20; -fx-border-width: 2;");
-//                        cell.getChildren().add(piece);
-//                    }
-//                }
-//
-//                // Store position for move handling
-//                cell.setUserData(new int[]{row, col});
-//
-//                // Add click handler
-//                cell.setOnMouseClicked(e -> {
-//                    StackPane clicked = (StackPane) e.getSource();
-//                    int[] position = (int[]) clicked.getUserData();
-//                    selectCheckersPiece(position[0], position[1]);
-//                });
-//
-//                board.add(cell, col, row);
-//            }
-//        }
-//
-//        boardContainer.getChildren().add(board);
-//        gameBoard.getChildren().add(boardContainer);
-//    }
+
 
     private String getGameTitle() {
         if (gameInstance instanceof TicTacToeGame) {
@@ -683,6 +634,15 @@ public class GameWindow {
         int minutes = seconds / 60;
         seconds = seconds % 60;
         timerLabel.setText(String.format("%d:%02d", minutes, seconds));
+
+        // NEW: If we're in a Checkers game, check for win condition
+        if (gameInstance instanceof CheckersGame) {
+            CheckersGame checkersGame = (CheckersGame) gameInstance;
+            if (checkersGame.checkWin()) {
+                updateTimeline.stop();
+                showGameOverDialog("Game Over: Checkers win detected!", true);
+            }
+        }
     }
 
     // Game move logic
@@ -692,9 +652,6 @@ public class GameWindow {
     }
 
     private void makeConnectFourMove(int column) {
-//        System.out.println("Dropping piece in column: " + column);
-//        // This would call the actual game logic in a real implementation
-//        simulateOpponentTurn();
 
         if(connectFourGame == null) {
             return;

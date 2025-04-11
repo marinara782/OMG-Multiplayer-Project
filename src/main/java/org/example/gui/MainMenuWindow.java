@@ -447,21 +447,7 @@ public class MainMenuWindow {
             return null;
         }
 
-/*/
-        modeDialog.showAndWait().ifPresent(response -> {
-            boolean vsComputer;
-            if (response == vsComputerButton) {
-                // Single Player
-                vsComputer = true;
-                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, vsComputer), currentUser);
-            } else {
-                //Local Multiplayer
-                vsComputer = false;
-                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, vsComputer), currentUser);
-            }
-        });
 
- */
         return result == vsComputerButton;
     }
 
@@ -524,12 +510,6 @@ public class MainMenuWindow {
             return;
         }
         showBoardOptionsDialog(vsComputer);
-//        if (vsComputer) {
-//            ConnectFourGame game = new ConnectFourGame(1, 6, 7, 4, true);
-//            new GameWindow(stage, game, currentUser);
-//        }else{
-//            startMatchmaking("connectFour");
-//        }
     }
 
     //This method makes a new tic-tac-toe game with the parameter

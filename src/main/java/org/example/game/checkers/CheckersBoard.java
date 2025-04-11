@@ -100,6 +100,7 @@ public class CheckersBoard extends VBox {
         selected = null;
         clearHighlights();
         drawBoard();
+        if (turnLabelUpdater != null) turnLabelUpdater.run();
 
         if (moved && game.checkWin()) {
             showEndDialog(game.isMultiplayer() ? "Game Over!" : "Player wins!");
@@ -112,6 +113,7 @@ public class CheckersBoard extends VBox {
             pause.setOnFinished(event -> {
                 game.computerMove();
                 drawBoard();
+                if (turnLabelUpdater != null) turnLabelUpdater.run();
                 if (game.checkWin()) {
                     showEndDialog("Computer wins!");
                 }
@@ -119,6 +121,7 @@ public class CheckersBoard extends VBox {
             pause.play();
         }
     }
+    private Runnable returnToMainMenu;
 
     private void showEndDialog(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -126,6 +129,14 @@ public class CheckersBoard extends VBox {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+
+        if (returnToMainMenu != null) {
+            returnToMainMenu.run();
+        }
+    }
+
+    public void setReturnToMainMenu(Runnable returnToMainMenu) {
+        this.returnToMainMenu = returnToMainMenu;
     }
 
     private void highlightMoves(List<int[]> moves) {

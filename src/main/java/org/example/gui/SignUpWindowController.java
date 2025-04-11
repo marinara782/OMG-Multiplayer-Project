@@ -4,10 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.authentication.Login;
 import org.example.authentication.UserProfile;
@@ -19,12 +16,21 @@ public class SignUpWindowController {
     public PasswordField passwordField;
     public TextField emailField;
     public Button RegisterButton;
+    public CheckBox checkBox;
     private Stage stage;
 
+    /**
+     * Setter Method for Stage
+     * @param stage
+     */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
+    /**
+     * User imputs Username, Email, Password to be able to register
+     * @param actionEvent
+     */
     public void handleRegister(ActionEvent actionEvent) {
         String username = usernameField.getText();
         String password = passwordField.getText();
@@ -36,12 +42,18 @@ public class SignUpWindowController {
         }
 
         if (password.length() < 8) {
-            showAlert(Alert.AlertType.ERROR, "Weak Password", "Password must be at least 6 characters long.");
+            showAlert(Alert.AlertType.ERROR, "Weak Password", "Password must be at least 8 characters long.");
             return;
         }
+
+        if (!checkBox.isSelected()) {
+            showAlert(Alert.AlertType.ERROR,"Terms Not Accepted","You must agree to the Terms and Conditions.");
+            return;
+        }
+
         try {
             // Try to create the account
-            boolean success = Login.createAccount(username, password, email, null);
+            boolean success = Login.createAccount(username, password, email,  "000-000-0000");
             if (success) {
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Account created successfully!");
                 UserProfile newUser = new UserProfile(); // Optionally fill this in with details
@@ -55,6 +67,10 @@ public class SignUpWindowController {
         }
     }
 
+    /**
+     * moves stage to the main menu
+     * @param user
+     */
     private void OpenMainMenu(UserProfile user) {
         try {
             Stage mainMenuStage = new Stage(); // Create a new Stage for the main menu
@@ -69,6 +85,12 @@ public class SignUpWindowController {
         }
     }
 
+    /**
+     * Pop alert with info
+     * @param alertType
+     * @param title
+     * @param content
+     */
     private void showAlert(Alert.AlertType alertType, String title, String content) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -77,6 +99,10 @@ public class SignUpWindowController {
         alert.showAndWait();
     }
 
+    /**
+     * moves stage to back to login window
+     * @param actionEvent
+     */
     public void handleBackToLogin(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginWindow.fxml"));

@@ -4,15 +4,24 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.game.checkers.CheckersRules;
 import org.example.game.connectFour.ConnectFourRules;
 import org.example.game.ticTacToe.TicTacToeRules;
+import org.example.game.checkers.CheckersRules;
+import org.example.game.connectFour.ConnectFourRules;
+import org.example.game.ticTacToe.TicTacToeRules;
+
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class SceneManager {
+    /**
+     * Allows to load other windows based on the FXML path, Simplifies code
+     * @param fxmlPath
+     */
     public static void loadScene(String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(

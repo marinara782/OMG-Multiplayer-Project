@@ -6,6 +6,16 @@ import org.example.Player;
 
 // Try and look over the related problem later.
 public class Matchmaker {
+
+    /**
+     * Enum for supported games in the matchmaking system.
+     */
+    public enum GameType {
+        CHECKERS,
+        TICTACTOE,
+        CONNECT4
+    }
+
     private final List<Player> players; // List of all players in matchmaking pool
     private final List<Player> topPlayers; // Leaderboard containing top-ranked players
 
@@ -31,20 +41,41 @@ public class Matchmaker {
      * @param player The player looking for a match.
      * @return The best-matched opponent, or null if no suitable match is found.
      */
-    public Player findMatch(Player player) {
+    public Player findMatch(Player player, GameType gameType) {
         Player bestMatch = null;
-        int minSkillDifference = Integer.MAX_VALUE;
+        double minDifference = Double.MAX_VALUE;
 
         for (Player opponent : players) {
             if (!opponent.equals(player)) {
-                int skillDifference = Math.abs(player.getCheckerWins() - opponent.getCheckerWins());
-                if (skillDifference < minSkillDifference) {
-                    minSkillDifference = skillDifference;
+                // Get win percentages for both players and compare
+                double playerStat = getWinStat(player, gameType);
+                double opponentStat = getWinStat(opponent, gameType);
+                double difference = Math.abs(playerStat - opponentStat);
+
+
+                if (difference < minDifference) {
+                    minDifference = difference;
                     bestMatch = opponent;
                 }
             }
         }
         return bestMatch;
+    }
+
+    /**
+     * Helper method to retrieve the correct win percentage for a player based on the game type.
+     */
+    private double getWinStat(Player player, GameType gameType) {
+        switch (gameType) {
+            case CHECKERS:
+                return player.getCheckersWinPercentage();
+            case TICTACTOE:
+                return player.getTicTacToeWinPercentage();
+            case CONNECT4:
+                return player.getConnect4WinPercentage();
+            default:
+                return 0;
+        }
     }
 
     /**
@@ -63,16 +94,19 @@ public class Matchmaker {
 
     /**
      * Matches players based on their checkers skill level and sends them to the game lobby.
+     *
+     * @param gameType The game type to match players for.
      */
-    public void matchPlayers() {
+    public void matchPlayers(GameType gameType) {
         List<Player> playersToMatch = new ArrayList<>(players);
         while (playersToMatch.size() >= 2) {
             Player player1 = playersToMatch.remove(0);
-            Player player2 = findMatch(player1);
+            Player player2 = findMatch(player1, gameType);
+
             if (player2 != null) {
                 playersToMatch.remove(player2);
                 System.out.println(player1.getUsername() + " matched with " + player2.getUsername());
-                simulateMatchResult(player1, player2);
+                simulateMatchResult(player1, player2, gameType);
             } else {
                 System.out.println(player1.getUsername() + " is waiting for a match.");
             }
@@ -84,16 +118,29 @@ public class Matchmaker {
      * @param winner The player who won the match.
      * @param loser The player who lost the match.
      */
-    public void updateLeaderboard(Player winner, Player loser) {
-        winner.updateCheckerWins();
-        loser.updateCheckerLosses();
+    public void updateLeaderboard(Player winner, Player loser, GameType gameType) {
+        // Update only the relevant game-specific stats
+        switch (gameType) {
+            case CHECKERS:
+                winner.updateCheckerWins();
+                loser.updateCheckerLosses();
+                break;
+            case TICTACTOE:
+                winner.updateTicTacToeWins();
+                loser.updateTictactoeLosses();
+                break;
+            case CONNECT4:
+                winner.updateConnect4Wins();
+                loser.updateConnect4Losses();
+                break;
+        }
 
         // Add players to the leaderboard
         topPlayers.add(winner);
         topPlayers.add(loser);
 
         // Sort players by number of wins in descending order
-        topPlayers.sort((p1, p2) -> Integer.compare(p2.getCheckerWins(), p1.getCheckerWins()));
+        topPlayers.sort((p1, p2) -> Integer.compare(p2.getTotalWins(), p1.getTotalWins()));
 
         // You may want to remove duplicates or ensure unique players in the leaderboard
         Set<Player> uniqueTopPlayers = new LinkedHashSet<>(topPlayers);  // Set removes duplicates
@@ -106,15 +153,29 @@ public class Matchmaker {
      * Randomly determines a winner and updates their stats.
      * @param player1 The first player in the match.
      * @param player2 The second player in the match.
+     * @param gameType The game type being player.
      */
-    private void simulateMatchResult(Player player1, Player player2) {
+    private void simulateMatchResult(Player player1, Player player2, GameType gameType) {
         Player winner = ThreadLocalRandom.current().nextBoolean() ? player1 : player2;
         Player loser = (winner.equals(player1)) ? player2 : player1;
 
-        winner.updateCheckerWins();
-        loser.updateCheckerLosses();
+        // Update only the relevant game stats
+        switch (gameType) {
+            case CHECKERS:
+                winner.updateCheckerWins();
+                loser.updateCheckerLosses();
+                break;
+            case TICTACTOE:
+                winner.updateTicTacToeWins();
+                loser.updateTictactoeLosses();
+                break;
+            case CONNECT4:
+                winner.updateConnect4Wins();
+                loser.updateConnect4Losses();
+                break;
+        }
 
-        updateLeaderboard(winner, loser);
+        updateLeaderboard(winner, loser, gameType);
         System.out.println(winner.getUsername() + " won against " + loser.getUsername());
     }
 

@@ -75,13 +75,16 @@ public class LoginWindowController {
 
     private void OpenMainMenu(UserProfile user) {
         try {
-            Stage mainMenuStage = new Stage(); // Create a new Stage for the main menu
-            MainMenuWindow mainMenu = new MainMenuWindow(mainMenuStage, user);
-            mainMenuStage.show(); // Show the new main menu stage
 
-            // Close the login window
             Stage loginStage = (Stage) loginButton.getScene().getWindow();
-            loginStage.close();
+
+
+            SceneManager.setPrimaryStage(loginStage);
+
+            // Now load main menu
+            MainMenuWindow mainMenu = new MainMenuWindow(loginStage, user);
+            mainMenu.show();
+
         } catch (Exception e) {
             e.printStackTrace();
             showAlert("Error", "Failed to load the main menu.");

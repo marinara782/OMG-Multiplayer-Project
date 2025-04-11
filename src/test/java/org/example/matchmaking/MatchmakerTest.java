@@ -36,11 +36,11 @@ public class MatchmakerTest {
     @Test
     void testLeaderboard() {
         Player p1 = new Player("Player1");
-        p1.setCheckerWins(3);
+        p1.setTictactoeWins(3);
         matchmaker.addPlayer(p1);
 
         Player p2 = new Player("Player2");
-        p2.setCheckerWins(5);
+        p2.setConnect4Wins(5);
         matchmaker.addPlayer(p2);
 
         Player p3 = new Player("Player3");
@@ -48,21 +48,21 @@ public class MatchmakerTest {
         matchmaker.addPlayer(p3);
 
         Player p4 = new Player("Player4");
-        p4.setCheckerWins(4);  // Player4 has 4 wins
+        p4.setTictactoeWins(4);  // Player4 has 4 wins
         matchmaker.addPlayer(p4);
 
         Player p5 = new Player("Player5");
-        p5.setCheckerWins(6);  // Player5 has 6 wins
+        p5.setConnect4Wins(6);  // Player5 has 6 wins
         matchmaker.addPlayer(p5);
 
         Player p6 = new Player("Player6");
         p6.setCheckerWins(1);  // Player6 has 1 win
         matchmaker.addPlayer(p6);
 
-        matchmaker.updateLeaderboard(p5, p1);
-        matchmaker.updateLeaderboard(p5, p2);
-        matchmaker.updateLeaderboard(p5, p3);
-        matchmaker.updateLeaderboard(p5, p4);
+        matchmaker.updateLeaderboard(p5, p1, Matchmaker.GameType.CONNECT4);
+        matchmaker.updateLeaderboard(p5, p2, Matchmaker.GameType.CONNECT4);
+        matchmaker.updateLeaderboard(p5, p3, Matchmaker.GameType.CHECKERS);
+        matchmaker.updateLeaderboard(p5, p4, Matchmaker.GameType.TICTACTOE);
 
         List<Player> topPlayers = matchmaker.getTopPlayers();
         assertEquals("Player5", topPlayers.get(0).getUsername(), "Top player should be Player5");
@@ -71,16 +71,20 @@ public class MatchmakerTest {
     @Test
     void findMatch() {
         Player p1 = new Player("Player1");
-        p1.setCheckerWins(3);
+        p1.setTictactoeWins(3);
         matchmaker.addPlayer(p1);
 
         Player p2 = new Player("Player2");
-        p2.setCheckerWins(4);
+        p2.setTictactoeWins(4);
         matchmaker.addPlayer(p2);
 
-        Player match = matchmaker.findMatch(p1);
+        // Print player stats to debug
+        System.out.println("Player 1 TicTacToe Wins: " + p1.getTictactoeWins());
+        System.out.println("Player 2 TicTacToe Wins: " + p2.getTictactoeWins());
+
+        Player match = matchmaker.findMatch(p1, Matchmaker.GameType.TICTACTOE);
         assertNotNull(match, "Match should be found");
-        assertEquals(p2.getUsername(), match.getUsername(), "Player2 should be matched with Player1.");
+        assertEquals(p2.getUsername(), match.getUsername(), "Player2 should be matched with Player1 based on TicTacToe.");
     }
 
     @Test
@@ -91,17 +95,17 @@ public class MatchmakerTest {
     @Test
     void matchPlayers() {
         Player p1 = new Player("Player1");
-        p1.setCheckerWins(3);
+        p1.setTictactoeWins(3);
         matchmaker.addPlayer(p1);
 
         Player p2 = new Player ("Player2");
-        p2.setCheckerWins(5);
+        p2.setConnect4Wins(5);
         matchmaker.addPlayer(p2);
 
         assertTrue(matchmaker.getPlayers().contains(p1), "Player1 should be in the matchmaking pool.");
         assertTrue(matchmaker.getPlayers().contains(p2), "Player2 should be in the matchmaking pool.");
 
-        matchmaker.matchPlayers();
+        matchmaker.matchPlayers(Matchmaker.GameType.CHECKERS);
 
         List<Player> players = matchmaker.getPlayers();
         players.remove(p1);
@@ -119,16 +123,16 @@ public class MatchmakerTest {
         matchmaker.addPlayer(p1);
 
         Player p2 = new Player("Player2");
-        p2.setCheckerWins(5);
+        p2.setTictactoeWins(5);
         matchmaker.addPlayer(p2);
 
         Player p3 = new Player("Player3");
-        p3.setCheckerWins(4);
+        p3.setConnect4Wins(4);
         matchmaker.addPlayer(p3);
 
         // Add the players and simulate the match process
-        matchmaker.updateLeaderboard(p2, p1);
-        matchmaker.updateLeaderboard(p2, p3);
+        matchmaker.updateLeaderboard(p2, p1, Matchmaker.GameType.TICTACTOE);
+        matchmaker.updateLeaderboard(p2, p3, Matchmaker.GameType.CONNECT4);
 
         // Verify the leaderboard is updated
         List<Player> topPlayers = matchmaker.getTopPlayers();

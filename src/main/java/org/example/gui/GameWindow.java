@@ -140,7 +140,7 @@ public class GameWindow {
         turnLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: #2ecc71; -fx-font-weight: bold;");
 
         // Timer
-        timerLabel = new Label("0:30");
+        timerLabel = new Label("0:00");
         timerLabel.setStyle("-fx-font-size: 16px; -fx-text-fill: white; -fx-font-weight: bold;");
 
         // Return to main menu button
@@ -374,6 +374,7 @@ public class GameWindow {
 
     //This is the method that has all the GUI and game logic for the tic tac toe game
     private void playTicTacToeGame() {
+        gameTimer.startNewPhase();
         VBox boardContainer = new VBox(20);
         boardContainer.setAlignment(CENTER);
 
@@ -670,6 +671,9 @@ public class GameWindow {
     }
 
     private void startGameUpdates() {
+        // Initialize timer with first phase
+        gameTimer.startNewPhase();  // Start first timing phase
+
         updateTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), e -> updateGameState())
         );
@@ -679,11 +683,12 @@ public class GameWindow {
 
     private void updateGameState() {
         // Update timer display
-        int seconds = gameTimer.getElapsedSeconds();
+        int seconds = gameTimer.getCurrentPhaseElapsedSeconds();
         int minutes = seconds / 60;
         seconds = seconds % 60;
         timerLabel.setText(String.format("%d:%02d", minutes, seconds));
     }
+
 
     // Game move logic
     private void makeMove(int row, int col) {

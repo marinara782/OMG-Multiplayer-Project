@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Deleting SceneManager Errors">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Fixed up games coming from Jacob and linked them to server via GameWindow">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/game/connectFour/ConnectFourGameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/game/connectFour/ConnectFourGameTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/temp.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="iteration3" />
+        <entry key="$PROJECT_DIR$" value="iteration3_backup" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -49,12 +50,12 @@
     }
   }
 }</component>
-  <component name="GitLabMergeRequestsSettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;first&quot;: &quot;https://csgit.ucalgary.ca/bhuvan.gudimetla/seng300-w25-project.git&quot;,
-    &quot;second&quot;: &quot;5cb740b9-7459-4d7a-8f34-fddb5a3371fa&quot;
+  <component name="GitLabMergeRequestsSettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "first": "https://csgit.ucalgary.ca/bhuvan.gudimetla/seng300-w25-project.git",
+    "second": "1ba1aec3-efca-4d0f-97c3-1d577c44631f"
   }
-}</component>
+}]]></component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/BhuvanGudi/OMG.git&quot;,
@@ -81,12 +82,14 @@
   "keyToString": {
     "Application.HelloApplication.executor": "Run",
     "Application.Unnamed.executor": "Run",
+    "JUnit.All in seng300-w25-project.executor": "Run",
     "JUnit.ClientTest.executor": "Coverage",
+    "JUnit.ConnectFourGameTest.executor": "Run",
     "JUnit.GameSessionTest.executor": "Coverage",
     "JUnit.ServerTest.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "bhuvan",
+    "git-widget-placeholder": "iteration3",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "C:/Users/bhuva/OneDrive/Desktop/SENG 300/seng300-w25-project/src/main/java/org/example/game/connectFour",
     "last_opened_file_path": "C:/Users/bhuva/OneDrive/Desktop/GitHub Projects/DuplicateGame",
@@ -114,10 +117,18 @@
       <recent name="org.example.game.checkers" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Unnamed">
+  <component name="RunManager">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.gui.HelloApplication" />
       <module name="seng300-w25-project" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="All in seng300-w25-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="seng300-w25-project" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -183,11 +194,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in seng300-w25-project" />
         <item itemvalue="JUnit.ServerTest" />
         <item itemvalue="JUnit.org.example in seng300-w25-project" />
         <item itemvalue="JUnit.GameSessionTest" />
         <item itemvalue="JUnit.ClientTest" />
-        <item itemvalue="JUnit.ServerTest" />
       </list>
     </recent_temporary>
   </component>
@@ -512,7 +523,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744334597195</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Fixed up games coming from Jacob and linked them to server via GameWindow">
+      <option name="closed" value="true" />
+      <created>1744369636632</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1744369636632</updated>
+    </task>
+    <option name="localTasksCounter" value="41" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -527,7 +546,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Developed UserProfileWindow and HelloApplication" />
     <MESSAGE value="Started Tic-Tac-toe Basics from computer side." />
     <MESSAGE value="Initiated Tic-Tac-Toe Basics and deleted .fxml file from computer side- (1)." />
     <MESSAGE value="Working 2-Player Tic-Tac-Toe Board and Game (2)." />
@@ -557,7 +575,8 @@
     <MESSAGE value="moved isRunning getter" />
     <MESSAGE value="testSaveAndLoadPlayers() is done now" />
     <MESSAGE value="Deleting SceneManager Errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deleting SceneManager Errors" />
+    <MESSAGE value="Fixed up games coming from Jacob and linked them to server via GameWindow" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed up games coming from Jacob and linked them to server via GameWindow" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/HelloApplication_java$ServerTest.ic" NAME="ServerTest Coverage Results" MODIFIED="1744267653311" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

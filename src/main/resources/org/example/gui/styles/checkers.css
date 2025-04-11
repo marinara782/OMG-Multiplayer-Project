@@ -161,6 +161,7 @@
 }
 
 .menu-button {
+    -fx-padding: 8px 16px;
     -fx-background-color: -element-bg;
     -fx-text-fill: -text-primary;
     -fx-border-color: -panel-bg;

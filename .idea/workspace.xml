@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Deleting SceneManager Errors">
+    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Updating README.md (1)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
@@ -512,7 +512,23 @@
       <option name="project" value="LOCAL" />
       <updated>1744334597195</updated>
     </task>
-    <option name="localTasksCounter" value="40" />
+    <task id="LOCAL-00040" summary="Updating README.md">
+      <option name="closed" value="true" />
+      <created>1744403292386</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1744403292386</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Updating README.md (1)">
+      <option name="closed" value="true" />
+      <created>1744403558420</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1744403558420</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -527,8 +543,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Developed UserProfileWindow and HelloApplication" />
-    <MESSAGE value="Started Tic-Tac-toe Basics from computer side." />
     <MESSAGE value="Initiated Tic-Tac-Toe Basics and deleted .fxml file from computer side- (1)." />
     <MESSAGE value="Working 2-Player Tic-Tac-Toe Board and Game (2)." />
     <MESSAGE value="Working 2-Player Tic-Tac-Toe Board and Game with player option selection(3)." />
@@ -557,7 +571,9 @@
     <MESSAGE value="moved isRunning getter" />
     <MESSAGE value="testSaveAndLoadPlayers() is done now" />
     <MESSAGE value="Deleting SceneManager Errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Deleting SceneManager Errors" />
+    <MESSAGE value="Updating README.md" />
+    <MESSAGE value="Updating README.md (1)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updating README.md (1)" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/HelloApplication_java$ServerTest.ic" NAME="ServerTest Coverage Results" MODIFIED="1744267653311" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

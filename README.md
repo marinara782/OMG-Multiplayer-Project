@@ -1,6 +1,6 @@
-# Online Multiplayer Game (OMG)
+## Online Multiplayer Game (OMG)
 
-# SENG 300 - W25 Project
+## SENG 300 - W25 Project
 
 Welcome to our software engineering project for **SENG 300 - Winter 2025**. This application is a multi-game platform 
 that supports classic games like Checkers, Connect Four, and Tic-Tac-Toe, with features such as authentication, 
@@ -11,7 +11,7 @@ matchmaking, a leaderboard system, networking, and a modern GUI.
 - **Modular game engine** that allows for easy integration of additional games.
 - **User authentication** including login, signup, and password recovery.
 - **Matchmaking system** with random and skill-based pairing options.
-- **Real-time multiplayer** with smooth communication between client and server.
+- **Real-time multiplayer** with smooth communication between client and server. 
 - **Leaderboard tracking** for player statistics and performance.
 - **Integrated games**:
   - Checkers
@@ -459,7 +459,7 @@ University of Calgary
 
 ### **Branching Strategy**
 
-Each team works on a **origin branch** before merging into `main`.
+Each team works on an **origin branch** before merging into `main`.
 
 #### 🔀 Branch Naming Convention & Iteration Overview
 
@@ -504,6 +504,12 @@ enhancing usability, improving performance, and completing final integration tas
 
 #### 🔍 Key Activities
 
+You can add the team member names under their respective team sections within the Iteration 3 description. Here’s an updated version of the section, incorporating the team member details:
+
+---
+
+### 🔍 Key Activities for Iteration 3
+
 - Integrated comprehensive feedback received from peer reviews during Iteration 2 to improve system quality and usability.
 - Refined core modules, including **Game Logic**, **Graphical User Interface (GUI)**, **Leaderboard**, and **Matchmaking**, enhancing functionality and overall performance.
 - Conducted thorough testing and debugging to ensure system stability and address edge cases across all components.
@@ -513,6 +519,43 @@ enhancing usability, improving performance, and completing final integration tas
   - **Architecture Diagrams**
 - Produced a final **project explanation video** that outlines the system architecture, design rationale, and core features.
 - Maintained a consistent communication schedule through **bi-weekly team meetings**, ensuring smooth collaboration and alignment throughout the iteration.
+
+### 🧑‍💻 Team Members in Iteration 3
+
+**Authentication Team**
+- Daman Sodhi (30233872)
+- Jayden Wong (30204632)
+- Syed Raza Zaidi (30075408)
+- Syed Wasef Daiyan (30205727)
+- Vihandu Appuhamy (30177972)
+
+**Game Logic Team**
+- Abdu Rahmann Ben Issa (30171465)
+- Ahmed Azmaine Alvee (30189598)
+- Bereket Ware (30180248)
+- Hamza Ata (30227411)
+- Jacob Baggot (30232092)
+- Khan Muhammad Umer (30210150)
+- Shazil Khan (30241942)
+
+**GUI Team**
+- Bhuvan Gudimetla (30225017)
+- Jose Figueredo (30185529)
+- Puneet Dhawan (30205304)
+
+**Leaderboard & Matchmaking Team**
+- Dilraj Deol (30229680)
+- Jerahmeel Ual Alcano (30153076)
+- Marena Matavao (30237507)
+- Surkhab Mundi (30189028)
+
+**Networking Team**
+- Eloisa Castillo (30208515)
+- Hassaan Durrani (30213840)
+- Sara Moon (30175244)
+- Youssif Abdelaziz (30208726)
+
+---
 
 #### 🌱 Branches Created:
 - `Gamelogic_iteration3`

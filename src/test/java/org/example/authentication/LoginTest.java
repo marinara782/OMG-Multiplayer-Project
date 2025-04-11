@@ -4,7 +4,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.*;
 import java.util.List;
 
@@ -120,5 +122,32 @@ public class LoginTest {
     @Test
     void forgot_username_failure() throws IOException {
         assertEquals("There was an error during the retrieval of your username, try again.", login.forgot_username("not_alice@gmail.com"));
+    }
+
+    @Test
+    void test_return_to_login_screen_success() {
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+
+        System.setOut(printStream);
+
+        Login.returnToLoginScreen();
+
+        assertTrue(outputStream.toString().contains("Return to the login screen..."));
+    }
+
+    @Test
+    void test_logout_success() {
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        PrintStream printStream = new PrintStream(outputStream);
+
+        System.setOut(printStream);
+
+        Login.logout();
+
+        assertTrue(outputStream.toString().contains("Logging out.."));
     }
 }

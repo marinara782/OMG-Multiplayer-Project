@@ -282,4 +282,9 @@ public class UserProfileTest {
 
         assertEquals("Your current status is already set to " + StatusOptions.OFFLINE, result_of_change);
     }
+
+    @Test
+    public void test_getUsername_success() {
+        assertEquals("", userProfile.getUsername());
+    }
 }

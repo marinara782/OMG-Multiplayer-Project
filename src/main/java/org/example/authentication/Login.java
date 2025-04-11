@@ -112,7 +112,7 @@ public class Login extends UserDatabaseStub {
     }
 
     // return to log in screen after logging out
-    private static void returnToLoginScreen(){
+    public static void returnToLoginScreen(){
         System.out.println("Return to the login screen...");
         // GUI must implement a method to load the login UI
     }

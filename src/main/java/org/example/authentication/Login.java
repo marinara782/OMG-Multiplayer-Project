@@ -125,26 +125,47 @@ public class Login extends UserDatabaseStub {
      * @return true when a new account is created, false when not
      * @throws FileNotFoundException when the file is not found
      */
-    public static  boolean createAccount(String new_username, String password, String email, String phone) throws FileNotFoundException {
+    public static boolean createAccount(String new_username, String password, String email, String phone)
+            throws FileNotFoundException, IllegalArgumentException {
 
         System.out.println("\nAttempting to create account for: " + new_username);
 
+        // Validate input formats first
+        if (new_username == null || new_username.trim().isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be empty");
+        }
+
+        if (password == null || password.trim().isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be empty");
+        }
+
+        if (!isValidEmailFormat(email)) {
+            System.out.println("Invalid email format.");
+            return false;
+        }
+
+        if (!isValidPhoneFormat(phone)) {
+            System.out.println("Invalid phone format.");
+            return false;
+        }
+
         UserDatabaseStub databaseStub = new UserDatabaseStub();
-
-        List<User> users = new ArrayList<>(); // Initialize empty list as fallback
-
-        // authenticate users
+        List<User> users;
 
         try {
             users = databaseStub.registered_users_list();
         } catch (FileNotFoundException e) {
             System.out.println("Creating new user database file...");
-            // Continue with empty list if file doesn't exist
             users = new ArrayList<>();
         }
 
-        if(databaseStub.verify_username(new_username)){
-            System.out.println("User already exists. ");
+        if (databaseStub.verify_username(new_username)) {
+            System.out.println("User already exists.");
+            return false;
+        }
+
+        if (databaseStub.verify_email(new_username,email)) {
+            System.out.println("Email already exists.");
             return false;
         }
 
@@ -153,8 +174,22 @@ public class Login extends UserDatabaseStub {
         databaseStub.write_users_to_file(users);
 
         System.out.println("✅ Account successfully created for: " + new_username);
-
         return true;
+    }
+
+    // Helper validation methods
+    private static boolean isValidEmailFormat(String email) {
+        if (email == null) return false;
+        // Basic format: xxx@xx.com
+        return email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+        // For more comprehensive email validation, use:
+        // return email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
+    }
+
+    private static boolean isValidPhoneFormat(String phone) {
+        if (phone == null) return false;
+        // Format: xxx-xxx-xxxx
+        return phone.matches("^\\d{3}-\\d{3}-\\d{4}$");
     }
 
     /**

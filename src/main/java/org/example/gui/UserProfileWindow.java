@@ -1,6 +1,7 @@
 package org.example.gui;
 
 // JavaFX imports for UI components and layout management
+import javafx.beans.value.ChangeListener;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -325,7 +326,7 @@ public class UserProfileWindow {
     // Settings tab with options to change password and manage notifications, plus bug report
     private Node createSettingsPane() {
         VBox pane = createStyledVBox();
-        pane.setAlignment(Pos.CENTER); // Center content
+        pane.setAlignment(Pos.CENTER);
 
         Label title = new Label("Settings");
         title.setStyle("-fx-font-size: 26px; -fx-text-fill: white; -fx-font-weight: bold;");
@@ -341,33 +342,107 @@ public class UserProfileWindow {
         notifications.setOnAction(e -> openNotificationSettings());
 
         // --- Bug Report Section ---
-        Label bugReportLabel = new Label("Report a Bug");
-        bugReportLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: white; -fx-font-weight: bold;");
+        Button reportBugButton = new Button("Report a Bug");
+        reportBugButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-size: 16px;");
 
+        Label bugTypeLabel = new Label("Select Bug Type(s):");
+        bugTypeLabel.setStyle("-fx-text-fill: white;");
+
+        CheckBox uiBug = new CheckBox("UI Issue");
+        uiBug.setStyle("-fx-text-fill: white;");
+        CheckBox gameLogicBug = new CheckBox("Game Logic");
+        gameLogicBug.setStyle("-fx-text-fill: white;");
+        CheckBox performanceBug = new CheckBox("Performance");
+        performanceBug.setStyle("-fx-text-fill: white;");
+        CheckBox networkBug = new CheckBox("Network");
+        networkBug.setStyle("-fx-text-fill: white;");
+        CheckBox otherBug = new CheckBox("Other");
+        otherBug.setStyle("-fx-text-fill: white;");
+
+        VBox bugTypeBox = new VBox(5, bugTypeLabel, uiBug, gameLogicBug, performanceBug, networkBug, otherBug);
+
+        bugTypeBox.setAlignment(Pos.CENTER_LEFT);
+        bugTypeBox.setVisible(false);
+
+        // Bug description (initially hidden)
         TextArea bugTextArea = new TextArea();
         bugTextArea.setPromptText("Describe the bug here...");
         bugTextArea.setWrapText(true);
         bugTextArea.setPrefRowCount(4);
         bugTextArea.setMaxWidth(500);
+        bugTextArea.setVisible(false);
 
         Button submitBugButton = new Button("Submit Bug Report");
         submitBugButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14px;");
-        submitBugButton.setOnAction(e -> {
-            String bugText = bugTextArea.getText().trim();
-            if (bugText.isEmpty()) {
-                showAlert("Please describe the bug before submitting.");
-            } else {
-                bugTextArea.clear(); // Optionally clear the field
-                showSuccess("Thank you for your report! Our team will review it.");
-            }
+        submitBugButton.setVisible(false);
+
+        // Reveal bug type checkboxes on click
+        reportBugButton.setOnAction(e -> {
+            bugTypeBox.setVisible(true);
         });
 
-        VBox bugSection = new VBox(10, bugReportLabel, bugTextArea, submitBugButton);
+        // Show bug textarea and submit button when a box is selected
+        ChangeListener<Boolean> selectionChanged = (obs, oldVal, newVal) -> {
+            boolean atLeastOneSelected = uiBug.isSelected() || gameLogicBug.isSelected()
+                    || performanceBug.isSelected() || networkBug.isSelected() || otherBug.isSelected();
+
+            bugTextArea.setVisible(atLeastOneSelected);
+            submitBugButton.setVisible(atLeastOneSelected);
+        };
+
+        uiBug.selectedProperty().addListener(selectionChanged);
+        gameLogicBug.selectedProperty().addListener(selectionChanged);
+        performanceBug.selectedProperty().addListener(selectionChanged);
+        networkBug.selectedProperty().addListener(selectionChanged);
+        otherBug.selectedProperty().addListener(selectionChanged);
+
+        // Submit button logic
+        submitBugButton.setOnAction(e -> {
+            String bugText = bugTextArea.getText().trim();
+            StringBuilder bugTypesSelected = new StringBuilder();
+
+            if (uiBug.isSelected()) bugTypesSelected.append("UI Issue, ");
+            if (gameLogicBug.isSelected()) bugTypesSelected.append("Game Logic, ");
+            if (performanceBug.isSelected()) bugTypesSelected.append("Performance, ");
+            if (networkBug.isSelected()) bugTypesSelected.append("Network, ");
+            if (otherBug.isSelected()) bugTypesSelected.append("Other, ");
+
+            if (bugText.isEmpty()) {
+                showAlert("Please describe the bug before submitting.");
+                return;
+            }
+
+            if (bugTypesSelected.length() == 0) {
+                showAlert("Please select at least one bug type.");
+                return;
+            }
+
+            String selectedTypes = bugTypesSelected.substring(0, bugTypesSelected.length() - 2);
+
+            System.out.println("Bug Submitted:\nDescription: " + bugText + "\nTypes: " + selectedTypes);
+
+            // Clear inputs
+            bugTextArea.clear();
+            uiBug.setSelected(false);
+            gameLogicBug.setSelected(false);
+            performanceBug.setSelected(false);
+            networkBug.setSelected(false);
+            otherBug.setSelected(false);
+            bugTextArea.setVisible(false);
+            submitBugButton.setVisible(false);
+            bugTypeBox.setVisible(false);
+
+            showSuccess("Thank you for your report! Our team will review it.");
+        });
+
+        VBox bugSection = new VBox(10, reportBugButton, bugTypeBox, bugTextArea, submitBugButton);
         bugSection.setAlignment(Pos.CENTER);
 
         pane.getChildren().addAll(title, changePassword, notifications, new Separator(), bugSection);
         return pane;
     }
+
+
 
 
 

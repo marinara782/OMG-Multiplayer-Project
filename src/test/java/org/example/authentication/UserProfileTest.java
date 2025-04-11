@@ -176,4 +176,84 @@ public class UserProfileTest {
 
         assertNotEquals("alice", new_username);
     }
+
+    @Test
+    public void test_enable_2_factor_success_email() throws IOException {
+
+        String method_output;
+
+        method_output = userProfile.enable_2_factor("alice", "password124", "password124", 1);
+
+        assertEquals("Email successfully verified, two-factor authentication has been enabled.", method_output);
+    }
+
+    @Test
+    public void test_enable_2_factor_success_phone() throws IOException {
+
+        String method_output;
+
+        method_output = userProfile.enable_2_factor("alice", "password124", "password124", 2);
+
+        assertEquals("Phone Number successfully verified, two-factor authentication has been enabled.", method_output);
+    }
+
+    @Test
+    public void test_enable_2_factor_first_password_incorrect_email() throws IOException {
+
+        String method_output;
+
+        method_output = userProfile.enable_2_factor("alice", "incorrect_password", "password124", 1);
+
+        assertEquals("Passwords do not match or an incorrect password has been entered, please try again.", method_output);
+    }
+
+    @Test
+    public void test_enable_2_factor_first_password_incorrect_phone() throws IOException {
+
+        String method_output;
+
+        method_output = userProfile.enable_2_factor("alice", "incorrect_password", "password124", 2);
+
+        assertEquals("Passwords do not match or an incorrect password has been entered, please try again.", method_output);
+    }
+
+    @Test
+    public void test_enable_2_factor_second_password_incorrect_email() throws IOException {
+
+        String method_output;
+
+        method_output = userProfile.enable_2_factor("alice", "password124", "incorrect_password", 1);
+
+        assertEquals("Passwords do not match or an incorrect password has been entered, please try again.", method_output);
+    }
+
+    @Test
+    public void test_enable_2_factor_second_password_incorrect_phone() throws IOException {
+
+        String method_output;
+
+        method_output = userProfile.enable_2_factor("alice", "password124", "incorrect_password", 2);
+
+        assertEquals("Passwords do not match or an incorrect password has been entered, please try again.", method_output);
+    }
+
+    @Test
+    public void test_enable_2_factor_both_passwords_incorrect_email() throws IOException {
+
+        String method_output;
+
+        method_output = userProfile.enable_2_factor("alice", "incorrect_password", "incorrect_password", 1);
+
+        assertEquals("Passwords do not match or an incorrect password has been entered, please try again.", method_output);
+    }
+
+    @Test
+    public void test_enable_2_factor_both_passwords_incorrect_phone() throws IOException {
+
+        String method_output;
+
+        method_output = userProfile.enable_2_factor("alice", "incorrect_password", "incorrect_password", 2);
+
+        assertEquals("Passwords do not match or an incorrect password has been entered, please try again.", method_output);
+    }
 }

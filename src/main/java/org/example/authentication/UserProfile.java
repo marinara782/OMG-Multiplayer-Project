@@ -134,16 +134,20 @@ public class UserProfile extends UserDatabaseStub {
      * @param choice          1 for email, 2 for phone number
      * @throws FileNotFoundException
      */
-    public void enable_2_factor(String username, String first_password, String second_password, int choice) throws FileNotFoundException {
 
-        String phone_number = "none";
-        String email = "none";
+    public String enable_2_factor(String username, String first_password, String second_password, int choice) throws FileNotFoundException {
+
+        String phone_number = "";
+        String email = "";
 
         // creating boolean variable that acts as a flag to see if the first password enters matches the password of the account
         boolean password_matches;
 
         // creating boolean variable that acts as a flag to see if both passwords entered are the same
         boolean passwords_are_equal = first_password.equals(second_password);
+
+        boolean code_sent_to_phone = false;
+        boolean code_sent_to_email = false;
 
         // accessing database
         List<User> users = registered_users_list();
@@ -153,6 +157,8 @@ public class UserProfile extends UserDatabaseStub {
             if (user.getUsername().equals(username)) {
                 phone_number = user.getPhone();
                 email = user.getEmail();
+                code_sent_to_email = true;
+                code_sent_to_phone = true;
             }
         }
 
@@ -162,8 +168,8 @@ public class UserProfile extends UserDatabaseStub {
         // equates password_matches to a verify_password call
         if (password_matches && passwords_are_equal) {
 
-            String code_sent_phone = "none";
-            String code_sent_email = "none";
+            String code_sent_phone = "";
+            String code_sent_email = "";
 
             // switch statement that goes over the various options the user can use for 2FA
             switch (choice) {
@@ -173,8 +179,6 @@ public class UserProfile extends UserDatabaseStub {
                     // calling send_email method which is a 6-digit code
                     code_sent_email = send_email(email);
 
-                    // informing the user a code was sent
-                    System.out.println("A code has been sent to " + email);
                     break;
 
                 // case to handle verification via phone #
@@ -183,22 +187,28 @@ public class UserProfile extends UserDatabaseStub {
                     // calling send_text method which is a 6-digit code
                     code_sent_phone = send_text(phone_number);
 
-                    // informing the user a code was sent
-                    System.out.println("A code has been sent to " + phone_number);
                     break;
             }
 
-            // Need GUI to have a text-field here that gets user input
-            String user_input = "no number";
+            String user_input = "";
+
+            if (choice == 1) {
+               user_input = get_2FA_input(code_sent_to_email, code_sent_email);
+            }
+            else if (choice == 2) {
+               user_input = get_2FA_input(code_sent_to_phone, code_sent_phone);
+            }
+
+
             if (user_input.equals(code_sent_phone)) {
-                System.out.println("Email successfully verified, two-factor authentication has been enabled.");
+                return "Phone Number successfully verified, two-factor authentication has been enabled.";
             } else if (user_input.equals(code_sent_email)) {
-                System.out.println("Phone number successfully verified, two-factor authentication has been enabled.");
+                return "Email successfully verified, two-factor authentication has been enabled.";
             } else {
-                System.out.println("The code entered is incorrect, please try again.");
+                return "The code entered is incorrect, please try again.";
             }
         } else {
-            System.out.println("Passwords do not match or an incorrect password has been entered, please try again.");
+            return "Passwords do not match or an incorrect password has been entered, please try again.";
         }
     }
 

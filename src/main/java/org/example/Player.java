@@ -1,5 +1,8 @@
 package org.example;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 
 public class Player {
     private String username;
@@ -20,6 +23,9 @@ public class Player {
 
 
     private double winPercentage;
+
+    //Jackson requires no-argument constructor (for load/save players in Server.java)
+    public Player(){}
 
 
     public Player(String username) {
@@ -89,6 +95,7 @@ public class Player {
     public void setTictactoeDraws(int tictactoeDraws) {
         this.tictactoeDraws = tictactoeDraws;
         updateTotalDraws();
+        updateWinPercentage();
     }
 
     public void setConnect4Wins(int connect4Wins) {
@@ -108,6 +115,7 @@ public class Player {
     public void setConnect4Draws(int connect4Draws) {
         this.connect4Draws = connect4Draws;
         updateTotalDraws();
+        updateWinPercentage();
     }
 
 

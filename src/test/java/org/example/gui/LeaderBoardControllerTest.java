@@ -1,4 +1,4 @@
-package gui;
+package org.example.gui;
 
 import org.junit.jupiter.api.Test;
 
@@ -54,5 +54,4 @@ public class LeaderBoardControllerTest {
     @Test
     void handleLogout() {
     }
-}
 }

@@ -1,13 +1,12 @@
 package org.example.leaderboard;
 
 
-import org.example.Player;
-import org.example.leaderboard.Leaderboard;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
-
-
+import java.util.ArrayList;
 import java.util.List;
+
+import org.example.Player;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -244,5 +243,33 @@ public class LeaderboardTest {
     void testEmptyLeaderboard() {
         Leaderboard emptyLeaderboard = new Leaderboard();
         assertThrows(IndexOutOfBoundsException.class, () -> emptyLeaderboard.getTopNPlayers(1, "checkers wins"));
+    }
+
+    @Test
+    void testGetTopPlayers_TiedScores() {
+        Leaderboard lb = new Leaderboard();
+        Player a = new Player("A");
+        a.setCheckerWins(5);
+        Player b = new Player("B");
+        b.setCheckerWins(10);
+        Player c = new Player("C");
+        c.setCheckerWins(5);
+        lb.addPlayer(a);
+        lb.addPlayer(b);
+        lb.addPlayer(c);
+        List<Player> topPlayers = lb.getTopNPlayers(3, "checkers wins");
+        assertEquals("B", topPlayers.get(0).getUsername()); // when run through with the @BeforeEach setUp(), the expected value is "B" but the actual is "Erick"
+        assertEquals("A", topPlayers.get(1).getUsername());
+        assertEquals("C", topPlayers.get(2).getUsername());
+    }
+
+    @Test
+    void testGetPlayers() {
+        List<Player> players = leaderboard.getPlayers();
+        List<Player> testList = new ArrayList<>();
+        testList.add(alice); testList.add(bob); testList.add(charlie); testList.add(dave); testList.add(fred); testList.add(erick);
+        for (Player p : players) {
+            assertTrue(leaderboard.isPlayerInLeaderboard(p));
+        }
     }
 }

@@ -16,7 +16,7 @@
           AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0"
           AnchorPane.leftAnchor="0.0">
 
-        <Label wrapText="true" text="Checkers Rules" styleClass="title-label">
+        <Label wrapText="true" text="Checkers Info" styleClass="title-label">
             <font>
                 <Font name="System Bold" size="28.0"/>
             </font>
@@ -362,5 +362,10 @@
                 </ScrollPane>
             </Tab>
         </TabPane>
+        <Button text="Main Menu" onAction="#backToMainMenu" styleClass="menu-button">
+            <VBox.margin>
+                <Insets bottom="20.0" top="10.0"/>
+            </VBox.margin>
+        </Button>
     </VBox>
 </AnchorPane>

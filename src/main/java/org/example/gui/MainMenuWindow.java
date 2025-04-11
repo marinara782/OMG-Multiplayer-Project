@@ -118,7 +118,7 @@ public class MainMenuWindow {
 
         // Checkers Game Card
         VBox checkersCard = createGameCard("Checkers", "checkers");
-        checkersCard.setOnMouseClicked(_ -> startGame("checkers"));
+        checkersCard.setOnMouseClicked(_ -> handleCheckersClick("checkers"));
 
         gamesContainer.getChildren().addAll(ticTacToeCard, connectFourCard, checkersCard);
 
@@ -147,6 +147,14 @@ public class MainMenuWindow {
         return gameSelection;
     }
 
+    private void handleCheckersClick(String checkers) {
+        Boolean vsComputer = showCheckersModeDialog();
+        if (vsComputer == null) {
+            return; // user canceled
+        }
+        new GameWindow(stage, new CheckersGame(vsComputer), currentUser);
+    }
+
 
     private VBox createGameCard(String gameName, String gameType) {
         VBox card = new VBox(10);
@@ -167,7 +175,7 @@ public class MainMenuWindow {
         Label playersLabel = new Label("Online: 42 players");
         playersLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #bdc3c7;");
 
-        Button rulesButton = new Button("View Rules");
+        Button rulesButton = new Button("More Info");
         rulesButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
         rulesButton.setOnAction(_ -> showGameRules(gameType));
 
@@ -315,11 +323,7 @@ public class MainMenuWindow {
         }
     }
 
-    // No longer needed (GL Team)
-//    private void startMatchmaking(String gameType) {
-//        System.out.println("Starting matchmaking for " + gameType);
-//        showMatchmakingDialog(gameType);
-//    }
+
 
     private void findMatch(String gameSelection) {
         String gameType = gameSelection.toLowerCase().replace(" ", "");
@@ -375,6 +379,7 @@ public class MainMenuWindow {
         dialogStage.setScene(dialogScene);
         dialogStage.setTitle("Matchmaking");
         dialogStage.setResizable(false);
+        dialogStage.setOnCloseRequest(e -> cancelled[0] = true);
         dialogStage.show();
     }
 

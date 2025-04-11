@@ -30,7 +30,7 @@ public class HelloApplication extends Application {
         stage.setTitle("Login");
         stage.show();
 
-       // The commented code loads the mainmenuwindow directly (leaving for debugging)
+        // The commented code loads the mainmenuwindow directly (leaving for debugging)
 //        UserProfile currentUser = new UserProfile();
 //
 //        SceneManager.setPrimaryStage(new Stage());

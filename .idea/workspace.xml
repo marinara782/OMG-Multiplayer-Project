@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="testSaveAndLoadPlayers() is done now">
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/networking/ServerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/networking/ServerTest.java" afterDir="false" />
+    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Deleting SceneManager Errors">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
-    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Final Working changes - (1)" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,10 +22,13 @@
       </list>
     </option>
   </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="iteration3" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Eloisa" />
+        <entry key="$PROJECT_DIR$" value="iteration3" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -80,11 +83,10 @@
     "Application.Unnamed.executor": "Run",
     "JUnit.ClientTest.executor": "Coverage",
     "JUnit.GameSessionTest.executor": "Coverage",
-    "JUnit.ServerTest.executor": "Coverage",
+    "JUnit.ServerTest.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Networking__iteration3",
-    "git-widget-placeholder": "iteration3",
+    "git-widget-placeholder": "bhuvan",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "C:/Users/bhuva/OneDrive/Desktop/SENG 300/seng300-w25-project/src/main/java/org/example/game/connectFour",
     "last_opened_file_path": "C:/Users/bhuva/OneDrive/Desktop/GitHub Projects/DuplicateGame",
@@ -92,7 +94,7 @@
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "project.structure.last.edited": "SDKs",
+    "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.13477087",
     "project.structure.side.proportion": "0.17471737",
     "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
@@ -112,7 +114,7 @@
       <recent name="org.example.game.checkers" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.ServerTest">
+  <component name="RunManager" selected="Application.Unnamed">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.gui.HelloApplication" />
       <module name="seng300-w25-project" />
@@ -165,13 +167,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="JUnit.ServerTest" />
-        <item itemvalue="JUnit.GameSessionTest" />
-        <item itemvalue="JUnit.ClientTest" />
-      </list>
-    </recent_temporary>
     <configuration name="org.example in seng300-w25-project" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="seng300-w25-project" />
       <extension name="coverage">
@@ -188,7 +183,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ServerTest" />
         <item itemvalue="JUnit.org.example in seng300-w25-project" />
+        <item itemvalue="JUnit.GameSessionTest" />
+        <item itemvalue="JUnit.ClientTest" />
+        <item itemvalue="JUnit.ServerTest" />
       </list>
     </recent_temporary>
   </component>
@@ -465,21 +464,21 @@
       <option name="project" value="LOCAL" />
       <updated>1743731048406</updated>
     </task>
-    <task id="LOCAL-00034" summary="start test working in ServerTest.java">
+    <task id="LOCAL-00034" summary="Final Working changes">
       <option name="closed" value="true" />
-      <created>1744221216399</created>
+      <created>1744150604197</created>
       <option name="number" value="00034" />
       <option name="presentableId" value="LOCAL-00034" />
       <option name="project" value="LOCAL" />
-      <updated>1744221216399</updated>
+      <updated>1744150604198</updated>
     </task>
-    <task id="LOCAL-00035" summary="testCreateGameSessionWhileServerStopped() now works and testLoadPlayersFromTestFile() is in progress">
+    <task id="LOCAL-00035" summary="Final Working changes - (1)">
       <option name="closed" value="true" />
-      <created>1744267375211</created>
+      <created>1744150879991</created>
       <option name="number" value="00035" />
       <option name="presentableId" value="LOCAL-00035" />
       <option name="project" value="LOCAL" />
-      <updated>1744267375211</updated>
+      <updated>1744150879993</updated>
     </task>
     <task id="LOCAL-00036" summary="imported player class to ServerTest.java">
       <option name="closed" value="true" />
@@ -505,24 +504,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744308983094</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
-    <task id="LOCAL-00034" summary="Final Working changes">
+    <task id="LOCAL-00039" summary="Deleting SceneManager Errors">
       <option name="closed" value="true" />
-      <created>1744150604197</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
+      <created>1744334597195</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
       <option name="project" value="LOCAL" />
-      <updated>1744150604198</updated>
+      <updated>1744334597195</updated>
     </task>
-    <task id="LOCAL-00035" summary="Final Working changes - (1)">
-      <option name="closed" value="true" />
-      <created>1744150879991</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1744150879993</updated>
-    </task>
-    <option name="localTasksCounter" value="36" />
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -537,7 +527,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Developed UserProfileWindow" />
     <MESSAGE value="Developed UserProfileWindow and HelloApplication" />
     <MESSAGE value="Started Tic-Tac-toe Basics from computer side." />
     <MESSAGE value="Initiated Tic-Tac-Toe Basics and deleted .fxml file from computer side- (1)." />
@@ -567,21 +556,8 @@
     <MESSAGE value="imported player class to ServerTest.java" />
     <MESSAGE value="moved isRunning getter" />
     <MESSAGE value="testSaveAndLoadPlayers() is done now" />
-    <option name="LAST_COMMIT_MESSAGE" value="testSaveAndLoadPlayers() is done now" />
-  </component>
-  <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/HelloApplication_java$ClientTest.ic" NAME="ClientTest Coverage Results" MODIFIED="1744221002260" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
-      <FILTER>org.example.networking.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/HelloApplication_java$ServerTest.ic" NAME="ServerTest Coverage Results" MODIFIED="1744308792830" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
-      <FILTER>org.example.networking.*</FILTER>
-    </SUITE>
-    <SUITE FILE_PATH="coverage/HelloApplication_java$GameSessionTest.ic" NAME="GameSessionTest Coverage Results" MODIFIED="1744221097355" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
-      <FILTER>org.example.networking.*</FILTER>
-    </SUITE>
-    <MESSAGE value="Final Working changes" />
-    <MESSAGE value="Final Working changes - (1)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Final Working changes - (1)" />
+    <MESSAGE value="Deleting SceneManager Errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Deleting SceneManager Errors" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/HelloApplication_java$ServerTest.ic" NAME="ServerTest Coverage Results" MODIFIED="1744267653311" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

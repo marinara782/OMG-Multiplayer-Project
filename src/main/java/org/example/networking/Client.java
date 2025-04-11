@@ -81,6 +81,12 @@ public class Client {
         gameSession.broadcastGameState();
     }
 
+    public void sendBugReport(String type, String comment) {
+        bugReport report = new bugReport(type, comment);
+        String response = Server.processBugReport(report);
+        System.out.println(response); // "Bug report received. Thank you!"
+    }
+
     public void completeGame(GameSession gameSession)
     {
         gameSession.completeSession();

@@ -55,4 +55,3 @@ public class LeaderBoardControllerTest {
     void handleLogout() {
     }
 }
-

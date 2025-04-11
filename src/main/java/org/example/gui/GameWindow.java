@@ -392,6 +392,14 @@ public class GameWindow {
                 // Store row and col in button properties for easy access in event handler
                 cell.setUserData(new int[]{row, col});
 
+                //Turn label at the start of the game based on the game mode
+                if(ticTacToeGame.isPlayerAndComputer()){
+                    turnLabel.setText("Your Turn");
+                }
+                else{
+                    turnLabel.setText("X's Turn");
+                }
+
                 //When a player clicks on a box on the board
                 cell.setOnAction(e -> {
                     Button clicked = (Button) e.getSource();
@@ -408,6 +416,7 @@ public class GameWindow {
                         if (clicked.getText().isEmpty()) {
                             //Set the clicked box to O if its O's turn
                             if (currentPlayer == 'O') {
+                                turnLabel.setText("X's Turn");
                                 clicked.setText("O");
                                 //Update our 2d array copy of the game board
                                 ticTacToeGame.makeMove(position[0], position[1], 'O');
@@ -417,9 +426,11 @@ public class GameWindow {
                                 //Player O wins
                                 if (OpponentWin) {
                                     showGameOverDialog("Player O Wins!");
+                                    disableBoard(board);
                                 }
                                 else if (full) {
                                     showGameOverDialog("Draw!");
+                                    disableBoard(board);
                                 }
                                 //Switch to other player's turn
                                 ticTacToeGame.isPlayerTurn();
@@ -427,6 +438,7 @@ public class GameWindow {
                             }
                             //Set the clicked box to X if its X's turn
                             if (currentPlayer == 'X') {
+                                turnLabel.setText("O's Turn");
                                 clicked.setText("X");
                                 //Update our 2d array copy of the game board
                                 ticTacToeGame.makeMove(position[0], position[1], 'X');
@@ -436,9 +448,11 @@ public class GameWindow {
                                 //Player X wins
                                 if (PlayerWin) {
                                     showGameOverDialog("Player X Wins!");
+                                    disableBoard(board);
                                 }
                                 else if (full) {
                                     showGameOverDialog("Draw!");
+                                    disableBoard(board);
                                 }
                                 //Switch to other player's turn
                                 ticTacToeGame.isOpponentTurn();
@@ -451,6 +465,7 @@ public class GameWindow {
                         if (currentPlayer == 'X') {
                             if (clicked.getText().isEmpty()) {
                                 clicked.setText("X");
+                                turnLabel.setText("Computer's Turn");
                                 //Update our 2d array copy of the game board
                                 ticTacToeGame.makeMove(position[0], position[1], 'X');
                                 //Check on the 2d array game board if player has won
@@ -458,10 +473,12 @@ public class GameWindow {
                                 boolean full = ticTacToeGame.isBoardFull();
                                 //PLayer wins
                                 if (playerWin) {
-                                    showGameOverDialog("Player Wins!");
+                                    showGameOverDialog("You Win!");
+                                    disableBoard(board);
                                     return;
                                 } else if (full) {
                                     showGameOverDialog("Draw!");
+                                    disableBoard(board);
                                     return;
                                 }
                                 //Switch to computer's turn
@@ -481,6 +498,7 @@ public class GameWindow {
                                             if (GridPane.getRowIndex(node) == aiMove[0] && GridPane.getColumnIndex(node) == aiMove[1]) {
                                                 if (node instanceof Button) {
                                                     ((Button) node).setText("O");
+                                                    turnLabel.setText("Your Turn");
                                                     break;
                                                 }
                                             }
@@ -494,8 +512,10 @@ public class GameWindow {
                                             //Computer wins
                                             if (computerWin) {
                                                 showGameOverDialog("Computer Wins!");
+                                                disableBoard(board);
                                             } else if (boardFull) {
                                                 showGameOverDialog("Draw!");
+                                                disableBoard(board);
                                             } else {
                                                 //Switch to player's turn
                                                 ticTacToeGame.isPlayerTurn();
@@ -518,12 +538,17 @@ public class GameWindow {
         gameBoard.getChildren().add(boardContainer);
     }
 
+    private void disableBoard(GridPane board) {
+        board.getChildren().forEach(node -> node.setDisable(true));
+    }
+
     //Game over dialogue box used to show whose won or if the game was a draw for tic tac toe
     private void showGameOverDialog(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game Over");
         alert.setHeaderText(null);
         alert.setContentText(message);
+        alert.setOnHidden(e -> returnToMainMenu());
         alert.showAndWait();
     }
 
@@ -537,10 +562,10 @@ public class GameWindow {
         int cols = connectFourGame.getColumns();
 
         VBox boardContainer = new VBox(20);
-        boardContainer.setAlignment(Pos.CENTER);
+        boardContainer.setAlignment(CENTER);
 
         GridPane board = new GridPane();
-        board.setAlignment(Pos.CENTER);
+        board.setAlignment(CENTER);
         board.setHgap(5);
         board.setVgap(5);
 
@@ -561,7 +586,7 @@ public class GameWindow {
         }
 
         HBox columnButtons = new HBox(5);
-        columnButtons.setAlignment(Pos.CENTER);
+        columnButtons.setAlignment(CENTER);
 
         for (int col = 0; col < cols; col++) {
             Button dropButton = new Button("Drop");
@@ -578,106 +603,60 @@ public class GameWindow {
         boardContainer.getChildren().addAll(columnButtons, board);
         gameBoard.getChildren().clear();
         gameBoard.getChildren().add(boardContainer);
+    }
 
-
-// OLD CODE NOT DYNAMIC - hardcoded 6x7 board
-//
+    // Game logic team -> chosen to initialize the board in CheckersBoard class (Jacob Baggott)
+//    private void setupCheckersBoard() {
 //        VBox boardContainer = new VBox(20);
-//        boardContainer.setAlignment(Pos.CENTER);
+//        boardContainer.setAlignment(CENTER);
 //
 //        GridPane board = new GridPane();
-//        board.setAlignment(Pos.CENTER);
-//        board.setHgap(5);
-//        board.setVgap(5);
+//        board.setAlignment(CENTER);
 //
-//        // Create the 7x6 grid (7 columns, 6 rows)
-//        for (int row = 0; row < 6; row++) {
-//            for (int col = 0; col < 7; col++) {
+//        // Create the 8x8 grid
+//        for (int row = 0; row < 8; row++) {
+//            for (int col = 0; col < 8; col++) {
 //                StackPane cell = new StackPane();
 //                cell.setPrefSize(60, 60);
-//                cell.setStyle("-fx-background-color: #3498db; -fx-background-radius: 30;");
 //
-//                Region innerCircle = new Region();
-//                innerCircle.setPrefSize(50, 50);
-//                innerCircle.setStyle("-fx-background-color: #1a2530; -fx-background-radius: 25;");
+//                // Alternating colors for the checkerboard
+//                boolean isLightSquare = (row + col) % 2 == 0;
+//                cell.setStyle("-fx-background-color: " + (isLightSquare ? "#ecf0f1" : "#34495e") + ";");
 //
-//                cell.getChildren().add(innerCircle);
+//                // Add checkers pieces to initial positions
+//                if (!isLightSquare) {
+//                    if (row < 3) {
+//                        // Red pieces (opponent)
+//                        Region piece = new Region();
+//                        piece.setPrefSize(40, 40);
+//                        piece.setStyle("-fx-background-color: #e74c3c; -fx-background-radius: 20;");
+//                        cell.getChildren().add(piece);
+//                    } else if (row > 4) {
+//                        // Black pieces (player)
+//                        Region piece = new Region();
+//                        piece.setPrefSize(40, 40);
+//                        piece.setStyle("-fx-background-color: #2c3e50; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20; -fx-border-width: 2;");
+//                        cell.getChildren().add(piece);
+//                    }
+//                }
+//
+//                // Store position for move handling
+//                cell.setUserData(new int[]{row, col});
+//
+//                // Add click handler
+//                cell.setOnMouseClicked(e -> {
+//                    StackPane clicked = (StackPane) e.getSource();
+//                    int[] position = (int[]) clicked.getUserData();
+//                    selectCheckersPiece(position[0], position[1]);
+//                });
+//
 //                board.add(cell, col, row);
 //            }
 //        }
 //
-//        // Create column buttons for dropping pieces
-//        HBox columnButtons = new HBox(5);
-//        columnButtons.setAlignment(Pos.CENTER);
-//
-//        for (int col = 0; col < 7; col++) {
-//            Button dropButton = new Button("Drop");
-//            dropButton.setPrefWidth(60);
-//            dropButton.setUserData(col);
-//            dropButton.setStyle("-fx-background-color: #f39c12; -fx-text-fill: white;");
-//
-//            final int column = col;
-//            dropButton.setOnAction(e -> makeConnectFourMove(column));
-//
-//            columnButtons.getChildren().add(dropButton);
-//        }
-//
-//        boardContainer.getChildren().addAll(columnButtons, board);
+//        boardContainer.getChildren().add(board);
 //        gameBoard.getChildren().add(boardContainer);
-    }
-
-    // Game logic team -> chosen to initialize the board in CheckersBoard class (Jacob Baggott)
-    private void setupCheckersBoard() {
-        VBox boardContainer = new VBox(20);
-        boardContainer.setAlignment(CENTER);
-
-        GridPane board = new GridPane();
-        board.setAlignment(CENTER);
-
-        // Create the 8x8 grid
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                StackPane cell = new StackPane();
-                cell.setPrefSize(60, 60);
-
-                // Alternating colors for the checkerboard
-                boolean isLightSquare = (row + col) % 2 == 0;
-                cell.setStyle("-fx-background-color: " + (isLightSquare ? "#ecf0f1" : "#34495e") + ";");
-
-                // Add checkers pieces to initial positions
-                if (!isLightSquare) {
-                    if (row < 3) {
-                        // Red pieces (opponent)
-                        Region piece = new Region();
-                        piece.setPrefSize(40, 40);
-                        piece.setStyle("-fx-background-color: #e74c3c; -fx-background-radius: 20;");
-                        cell.getChildren().add(piece);
-                    } else if (row > 4) {
-                        // Black pieces (player)
-                        Region piece = new Region();
-                        piece.setPrefSize(40, 40);
-                        piece.setStyle("-fx-background-color: #2c3e50; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20; -fx-border-width: 2;");
-                        cell.getChildren().add(piece);
-                    }
-                }
-
-                // Store position for move handling
-                cell.setUserData(new int[]{row, col});
-
-                // Add click handler
-                cell.setOnMouseClicked(e -> {
-                    StackPane clicked = (StackPane) e.getSource();
-                    int[] position = (int[]) clicked.getUserData();
-                    selectCheckersPiece(position[0], position[1]);
-                });
-
-                board.add(cell, col, row);
-            }
-        }
-
-        boardContainer.getChildren().add(board);
-        gameBoard.getChildren().add(boardContainer);
-    }
+//    }
 
     private String getGameTitle() {
         if (gameInstance instanceof TicTacToeGame) {
@@ -925,18 +904,18 @@ public class GameWindow {
         });
     }
 
+    // edited by gamelogic team
     private void showGameOverDialog(String reason, boolean victory) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game Over");
         alert.setHeaderText(victory ? "Victory!" : "Defeat");
         alert.setContentText("Game over: " + reason);
 
-        alert.show();
-
-        alert.setOnCloseRequest(e -> returnToMainMenu());
+        alert.showAndWait();
+        returnToMainMenu();
     }
 
-    private void returnToMainMenu() {
+    public void returnToMainMenu() {
         if (updateTimeline != null) {
             updateTimeline.stop();
         }

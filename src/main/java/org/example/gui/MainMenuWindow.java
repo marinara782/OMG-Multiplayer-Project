@@ -1,5 +1,6 @@
 package org.example.gui;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,6 +20,7 @@ import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.leaderboard.Leaderboard;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class MainMenuWindow {
     private final Stage stage;
@@ -57,6 +59,9 @@ public class MainMenuWindow {
         stage.setScene(scene);
         stage.setMinWidth(800);
         stage.setMinHeight(600);
+        Platform.runLater(() -> {
+            stage.centerOnScreen();
+        });
     }
 
     private HBox createHeader() {
@@ -113,7 +118,7 @@ public class MainMenuWindow {
 
         // Checkers Game Card
         VBox checkersCard = createGameCard("Checkers", "checkers");
-        checkersCard.setOnMouseClicked(_ -> startMatchmaking("checkers"));
+        checkersCard.setOnMouseClicked(_ -> handleCheckersClick("checkers"));
 
         gamesContainer.getChildren().addAll(ticTacToeCard, connectFourCard, checkersCard);
 
@@ -142,6 +147,14 @@ public class MainMenuWindow {
         return gameSelection;
     }
 
+    private void handleCheckersClick(String checkers) {
+        Boolean vsComputer = showCheckersModeDialog();
+        if (vsComputer == null) {
+            return; // user canceled
+        }
+        new GameWindow(stage, new CheckersGame(vsComputer), currentUser);
+    }
+
 
     private VBox createGameCard(String gameName, String gameType) {
         VBox card = new VBox(10);
@@ -162,7 +175,7 @@ public class MainMenuWindow {
         Label playersLabel = new Label("Online: 42 players");
         playersLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #bdc3c7;");
 
-        Button rulesButton = new Button("View Rules");
+        Button rulesButton = new Button("More Info");
         rulesButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
         rulesButton.setOnAction(_ -> showGameRules(gameType));
 
@@ -302,16 +315,15 @@ public class MainMenuWindow {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.centerOnScreen();
             stage.setTitle("Login");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-        }}
-
-    private void startMatchmaking(String gameType) {
-        System.out.println("Starting matchmaking for " + gameType);
-        showMatchmakingDialog(gameType);
+        }
     }
+
+
 
     private void findMatch(String gameSelection) {
         String gameType = gameSelection.toLowerCase().replace(" ", "");
@@ -334,23 +346,31 @@ public class MainMenuWindow {
         Label statusLabel = new Label("Searching for players in your skill range");
         statusLabel.setStyle("-fx-text-fill: #bdc3c7;");
 
+        final boolean[] cancelled = { false };
+
         Button cancelButton = new Button("Cancel");
         cancelButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
-        cancelButton.setOnAction(_ -> dialogStage.close());
+        cancelButton.setOnAction(_ -> {
+            cancelled[0] = true;       // mark as cancelled
+            dialogStage.close();       // close the window
+        });
+        //cancelButton.setOnAction(_ -> dialogStage.close());
 
         dialogContent.getChildren().addAll(titleLabel, progressIndicator, statusLabel, cancelButton);
 
         // Simulate finding a match after 3 seconds
         Thread matchmakingThread = new Thread(() -> {
+
             try {
-                Thread.sleep(3000);
+                Thread.sleep(3000);    // pretend to search 3 s
                 javafx.application.Platform.runLater(() -> {
-                    dialogStage.close();
-                    startGame(gameType);
+                    /* only continue if user did NOT press cancel */
+                    if (!cancelled[0]) {
+                        dialogStage.close();
+                        startGame(gameType);
+                    }
                 });
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            } catch (InterruptedException ignored) { }
         });
         matchmakingThread.setDaemon(true);
         matchmakingThread.start();
@@ -359,23 +379,20 @@ public class MainMenuWindow {
         dialogStage.setScene(dialogScene);
         dialogStage.setTitle("Matchmaking");
         dialogStage.setResizable(false);
+        dialogStage.setOnCloseRequest(e -> cancelled[0] = true);
         dialogStage.show();
     }
 
     private void startGame(String gameType) {
         switch (gameType) {
             case "ticTacToe", "tictactoe", "tic-tac-toe":
-                new GameWindow(stage, new TicTacToeGame(isComputerGameTTT), currentUser);
+                new GameWindow(stage, new TicTacToeGame(true), currentUser);
                 break;
             case "connectfour", "connectFour", "connect-four":
-                Boolean vsComputer = showConnectFourModeDialog();
-//                if (vsComputer == null) {
-//                    return;
-//                }
-//                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, false), currentUser);
+                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, true), currentUser);
                 break;
             case "checkers":
-                new GameWindow(stage, new CheckersGame(), currentUser);
+                new GameWindow(stage, new CheckersGame(false), currentUser);
                 break;
             default:
                 System.out.println("Unknown game type: " + gameType);
@@ -400,15 +417,15 @@ public class MainMenuWindow {
         dialogPane.setStyle("-fx-background-color: #3498db");
 
         Node header = dialogPane.lookup(".header-panel");
-        if(header != null) {
+        if (header != null) {
             header.setStyle("-fx-background-color: #3498db;");
         }
         Label content = (Label) dialogPane.lookup(".content.label");
-        if(content != null) {
+        if (content != null) {
             content.setStyle("-fx-text-fill: white;");
         }
         Node buttonBar = dialogPane.lookup(".buttonBar");
-        if(buttonBar != null) {
+        if (buttonBar != null) {
             buttonBar.setStyle("-fx-background-color: white;");
         }
 
@@ -468,15 +485,15 @@ public class MainMenuWindow {
         dialogPane.setStyle("-fx-background-color: #3498db");
 
         Node header = dialogPane.lookup(".header-panel");
-        if(header != null) {
+        if (header != null) {
             header.setStyle("-fx-background-color: #3498db;");
         }
         Label content = (Label) dialogPane.lookup(".content.label");
-        if(content != null) {
+        if (content != null) {
             content.setStyle("-fx-text-fill: white;");
         }
         Node buttonBar = dialogPane.lookup(".buttonBar");
-        if(buttonBar != null) {
+        if (buttonBar != null) {
             buttonBar.setStyle("-fx-background-color: white;");
         }
 
@@ -518,10 +535,60 @@ public class MainMenuWindow {
     //This method makes a new tic-tac-toe game with the parameter
     // of whether the game is against the computer or not through the selected option in the dialogue box
     public boolean isComputerGameTTT;
+
     private void runTicTacToeGame() {
-        isComputerGameTTT = Boolean.TRUE.equals(showTicTacToeModeDialog());
-        TicTacToeGame ticTacToeGame = new TicTacToeGame(isComputerGameTTT);
+        Boolean vsComputer = showTicTacToeModeDialog();
+        if (vsComputer == null) {          // user hit “Cancel” or closed the dialog
+            return;                        // stay in main menu – nothing else happens
+        }
+        isComputerGameTTT = vsComputer;    // save for later use (startGame)
+        TicTacToeGame ticTacToeGame = new TicTacToeGame(vsComputer);
         new GameWindow(stage, ticTacToeGame, currentUser);
+    }
+
+    // Game logic addition
+    private Boolean showCheckersModeDialog() {
+        Alert modeDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        modeDialog.setTitle("Choose Game Mode");
+        modeDialog.setHeaderText("Select Checkers Mode");
+        modeDialog.setContentText("Do you want to play against the computer or another player?");
+
+        ButtonType vsComputerButton = new ButtonType("Computer");
+        ButtonType multiplayerButton = new ButtonType("Multiplayer (Same Device)");
+        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        modeDialog.getButtonTypes().setAll(vsComputerButton, multiplayerButton, cancel);
+
+        DialogPane dialogPane = modeDialog.getDialogPane();
+        dialogPane.setStyle("-fx-background-color: #3498db");
+
+        Node header = dialogPane.lookup(".header-panel");
+        if (header != null) header.setStyle("-fx-background-color: #3498db;");
+
+        Label content = (Label) dialogPane.lookup(".content.label");
+        if (content != null) content.setStyle("-fx-text-fill: white;");
+
+        Node buttonBar = dialogPane.lookup(".buttonBar");
+        if (buttonBar != null) buttonBar.setStyle("-fx-background-color: white;");
+
+        modeDialog.showingProperty().addListener((obs, wasShowing, isNowShowing) -> {
+            if (isNowShowing) {
+                Button computerButton = (Button) dialogPane.lookupButton(vsComputerButton);
+                Button multiButton = (Button) dialogPane.lookupButton(multiplayerButton);
+                Button cancelButton = (Button) dialogPane.lookupButton(cancel);
+
+                computerButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
+                multiButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
+                cancelButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+            }
+        });
+
+        Optional<ButtonType> result = modeDialog.showAndWait();
+        if (result.isPresent()) {
+            if (result.get() == vsComputerButton) return false;
+            else if (result.get() == multiplayerButton) return true;
+        }
+        return null; // cancelled
     }
 
 
@@ -552,8 +619,8 @@ public class MainMenuWindow {
 
         boardSize.setOnAction(_ -> {
             String[] parts = boardSize.getValue().split(" x ");
-            int rows  = Integer.parseInt(parts[0].trim());
-            int cols  = Integer.parseInt(parts[1].trim());
+            int rows = Integer.parseInt(parts[0].trim());
+            int cols = Integer.parseInt(parts[1].trim());
 
             int maxGoal = Math.min(rows, cols);
             goalBox.getItems().clear();
@@ -582,7 +649,7 @@ public class MainMenuWindow {
         dialog.getDialogPane().setStyle("-fx-background-color: #3498db;");
 
         dialog.showAndWait().ifPresent(result -> {
-            if(result == ButtonType.OK) {
+            if (result == ButtonType.OK) {
                 String[] size = boardSize.getValue().split("x");
                 int rows = Integer.parseInt(size[0].trim());
                 int cols = Integer.parseInt(size[1].trim());
@@ -607,7 +674,8 @@ public class MainMenuWindow {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-        }}
+        }
+    }
 
 
     private void challengePlayer(String playerName) {
@@ -642,4 +710,5 @@ public class MainMenuWindow {
     public void show() {
         stage.show();
     }
+
 }

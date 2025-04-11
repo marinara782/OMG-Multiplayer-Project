@@ -936,7 +936,7 @@ public class GameWindow {
         alert.setOnCloseRequest(e -> returnToMainMenu());
     }
 
-    private void returnToMainMenu() {
+    public void returnToMainMenu() {
         if (updateTimeline != null) {
             updateTimeline.stop();
         }

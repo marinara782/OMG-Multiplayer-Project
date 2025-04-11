@@ -108,6 +108,16 @@
     -fx-padding: 10px;
 }
 
+.menu-button {
+    -fx-background-color: -element-bg;
+    -fx-text-fill: -text-primary;
+    -fx-border-color: -panel-bg;
+}
+
+.menu-button:hover {
+    -fx-background-color: #3d566e;
+}
+
 .board-caption, .scenario-title, .timeline-date {
     -fx-text-fill: -text-secondary;
     -fx-font-style: italic;

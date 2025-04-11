@@ -160,6 +160,16 @@
     -fx-wrap-text: true;
 }
 
+.menu-button {
+    -fx-background-color: -element-bg;
+    -fx-text-fill: -text-primary;
+    -fx-border-color: -panel-bg;
+}
+
+.menu-button:hover {
+    -fx-background-color: #3d566e;
+}
+
 .strategy-cell {
     -fx-fill: derive(-success-color, -20%);
 }

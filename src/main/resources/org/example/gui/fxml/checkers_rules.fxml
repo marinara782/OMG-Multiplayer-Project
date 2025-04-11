@@ -362,5 +362,10 @@
                 </ScrollPane>
             </Tab>
         </TabPane>
+        <Button text="Main Menu" onAction="#backToMainMenu" styleClass="menu-button">
+            <VBox.margin>
+                <Insets bottom="20.0" top="10.0"/>
+            </VBox.margin>
+        </Button>
     </VBox>
 </AnchorPane>

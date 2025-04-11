@@ -256,4 +256,30 @@ public class UserProfileTest {
 
         assertEquals("Passwords do not match or an incorrect password has been entered, please try again.", method_output);
     }
+
+    @Test
+    public void test_change_current_status_success() throws IOException {
+        User alice = new User("alice", "password124", "alice@gmail.com", "111-222-3333");
+
+        String result_of_change;
+
+        assertEquals(StatusOptions.OFFLINE, alice.getCurrentStatus());
+
+        result_of_change = userProfile.change_current_status("alice", StatusOptions.ONLINE);
+
+        assertEquals("Your status has been changed to " + StatusOptions.ONLINE, result_of_change);
+    }
+
+    @Test
+    public void test_change_current_status_already_that_status() throws IOException {
+        User alice = new User("alice", "password124", "alice@gmail.com", "111-222-3333");
+
+        String result_of_change;
+
+        assertEquals(StatusOptions.OFFLINE, alice.getCurrentStatus());
+
+        result_of_change = userProfile.change_current_status("alice", StatusOptions.OFFLINE);
+
+        assertEquals("Your current status is already set to " + StatusOptions.OFFLINE, result_of_change);
+    }
 }

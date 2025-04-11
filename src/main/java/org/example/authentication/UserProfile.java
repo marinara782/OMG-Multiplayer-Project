@@ -212,7 +212,7 @@ public class UserProfile extends UserDatabaseStub {
         }
     }
 
-    public void change_current_status(String username, StatusOptions new_status) throws FileNotFoundException {
+    public String change_current_status(String username, StatusOptions new_status) throws FileNotFoundException {
         // accessing database
         List<User> users = registered_users_list();
 
@@ -220,10 +220,11 @@ public class UserProfile extends UserDatabaseStub {
         for (User user : users) {
             if (user.getUsername().equals(username) && user.getCurrentStatus() != new_status) {
                 user.setCurrentStatus(new_status);
-                System.out.println("Your status has been changed to " + new_status.toString());
+                return "Your status has been changed to " + new_status.toString();
             } else if (user.getUsername().equals(username) && user.getCurrentStatus() == new_status) {
-                System.out.println("Your current status is already set to " + new_status.toString());
+                return "Your current status is already set to " + new_status.toString();
             }
         }
+        return "Error trying to change status";
     }
 }

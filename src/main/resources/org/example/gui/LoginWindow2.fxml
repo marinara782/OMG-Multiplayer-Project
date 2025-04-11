@@ -56,7 +56,7 @@
             <Region prefHeight="20.0" prefWidth="513.0" HBox.hgrow="ALWAYS" />
         </HBox>
 
-      <Hyperlink layoutX="572.0" layoutY="374.0" onAction="#handleForgetPassword" text="Forget Password" />
+      <Hyperlink layoutX="572.0" layoutY="374.0" onAction="#handleForgetPassword" text="Forgot Password" />
 
         <Text fill="#3498db" layoutX="554.0" layoutY="569.0" strokeType="OUTSIDE" strokeWidth="0.0" text="© 2025 OMG. All Rights Reserved." wrappingWidth="132.0">
          <font>

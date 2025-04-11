@@ -23,22 +23,22 @@
         <!-- Left Sidebar Navigation -->
         <VBox alignment="TOP_LEFT" layoutX="24.0" layoutY="100.0" prefHeight="717.0" prefWidth="138.0" spacing="20" style="-fx-background-color: #1e2a34; -fx-padding: 20; -fx-background-radius: 10;">
             <Hyperlink onAction="#handleHome" prefHeight="37.0" prefWidth="89.0" style="-fx-text-fill: #3498db; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-color: transparent; -fx-padding: 5;" text="Home" />
+         <Region maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="488.0" prefWidth="92.0" />
+            <!-- Not implemented
             <Hyperlink onAction="#handleGames" prefHeight="37.0" prefWidth="82.0" style="-fx-text-fill: #3498db; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-color: transparent; -fx-padding: 5;" text="Games" />
-
-            <!-- Games Dropdown -->
             <VBox fx:id="gamesMenu" prefHeight="418.0" prefWidth="80.0" spacing="10" style="-fx-background-color: #34495e; -fx-padding: 15; -fx-background-radius: 10;" visible="false">
                 <Hyperlink onAction="#handleTicTacToe" style="-fx-text-fill: #3498db; -fx-font-size: 10px; -fx-font-weight: bold; -fx-background-color: transparent; -fx-padding: 5;" text="Tic Tac Toe" textFill="WHITE" />
                 <Hyperlink onAction="#handleCheckers" style="-fx-text-fill: #3498db; -fx-font-size: 10px; -fx-font-weight: bold; -fx-background-color: transparent; -fx-padding: 5;" text="Checkers" />
                 <Hyperlink onAction="#handleConnect4" style="-fx-text-fill: #3498db; -fx-font-size: 10px; -fx-font-weight: bold; -fx-background-color: transparent; -fx-padding: 5;" text="Connect 4" />
             </VBox>
-
+            -->
             <Line endX="-158.97787475585938" endY="-0.12132024765014648" startX="-66.59919738769531" startY="-0.12130260467529297" stroke="WHITE" strokeWidth="3.0" />
             <Hyperlink onAction="#handleProfile" prefHeight="37.0" prefWidth="114.0" style="-fx-text-fill: #3498db; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-color: transparent; -fx-padding: 5;" text="My Profile" />
-            <Hyperlink onAction="#handleSettings" prefHeight="37.0" prefWidth="87.0" style="-fx-text-fill: #3498db; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-color: transparent; -fx-padding: 5;" text="Settings" />
+        <!--<Hyperlink onAction="#handleSettings" prefHeight="37.0" prefWidth="87.0" style="-fx-text-fill: #3498db; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-color: transparent; -fx-padding: 5;" text="Settings" /> -->
             <Hyperlink onAction="#handleLogout" prefHeight="37.0" prefWidth="114.0" style="-fx-text-fill: #3498db; -fx-font-size: 13px; -fx-font-weight: bold; -fx-background-color: transparent; -fx-padding: 5;" text="Logout" />
-        </VBox>
+      </VBox>
 
-        <!-- Main Content Section -->
+      <!-- Main Content Section -->
         <VBox alignment="CENTER" layoutX="171.0" layoutY="100.0" prefHeight="717.0" prefWidth="735.0" spacing="20" style="-fx-background-color: #1e2a34; -fx-padding: 15; -fx-background-radius: 10;" VBox.vgrow="ALWAYS">
             <!-- Top Players (1st, 2nd, 3rd) -->
             <HBox alignment="CENTER" prefHeight="320.0" prefWidth="659.0" spacing="30" style="-fx-padding: 30;" HBox.hgrow="ALWAYS">

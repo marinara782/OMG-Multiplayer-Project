@@ -2,9 +2,21 @@ package org.example.game.checkers;
 
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.stage.Stage;
 
 public class CheckersRules {
     public TabPane rulesTabPane;
+    private Stage stage;
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public void backToMainMenu() {
+        if (stage != null) {
+            stage.close();
+        }
+    }
 
     public void initialize() {
         updateTabWidths();
@@ -16,8 +28,7 @@ public class CheckersRules {
     private void updateTabWidths() {
         double tabWidth = rulesTabPane.getWidth() / rulesTabPane.getTabs().size();
         for (Tab tab : rulesTabPane.getTabs()) {
-            double finalWidth = Math.max(tabWidth, 100);
-            tab.setStyle("-fx-pref-width: " + finalWidth + "px;");
+            tab.setStyle("-fx-pref-width: " + Math.max(tabWidth, 100) + "px;");
         }
     }
 }

@@ -915,7 +915,7 @@ public class GameWindow {
         returnToMainMenu();
     }
 
-    private void returnToMainMenu() {
+    public void returnToMainMenu() {
         if (updateTimeline != null) {
             updateTimeline.stop();
         }

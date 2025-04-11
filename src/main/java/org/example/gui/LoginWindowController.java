@@ -78,9 +78,6 @@ public class LoginWindowController {
 
             Stage loginStage = (Stage) loginButton.getScene().getWindow();
 
-
-            SceneManager.setPrimaryStage(loginStage);
-
             // Now load main menu
             MainMenuWindow mainMenu = new MainMenuWindow(loginStage, user);
             mainMenu.show();

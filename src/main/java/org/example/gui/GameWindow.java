@@ -9,6 +9,7 @@ import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourBoard;
 import org.example.game.connectFour.ConnectFourGame;
 import org.example.game.ticTacToe.TicTacToeGame;
+import org.example.networking.Client;
 import org.example.networking.GameSession;
 import org.example.utilities.ChatManager;
 import org.example.utilities.GameTimer;
@@ -60,6 +61,8 @@ public class GameWindow {
     private Object gameInstance;
     private GameSession gameSession;
     private ChatManager chatManager;
+    private Client client;
+    private boolean isMultiplayer;
     private GameTimer gameTimer;
     private Timeline updateTimeline;
     private VBox gameBoard;
@@ -85,6 +88,8 @@ public class GameWindow {
         this.currentUser = currentUser;
         this.gameSession = new GameSession();
         this.gameTimer = new GameTimer();
+        this.client = new Client();
+        this.isMultiplayer = gameSession != null && gameSession.isMultiplayer();
 
         //ConnectFourGame logic
         if(gameInstance instanceof ConnectFourGame) {
@@ -472,6 +477,12 @@ public class GameWindow {
                                 ticTacToeGame.isPlayerTurn();
 
                             }
+
+                            if (isMultiplayer && client != null && gameSession != null) {
+                                client.sendGameMove(gameSession, "Player " + currentPlayer + " moved to (" + position[0] + "," + position[1] + ")");
+                            }
+
+
                             //Set the clicked box to X if its X's turn
                             if (currentPlayer == 'X') {
                                 turnLabel.setText("O's Turn");
@@ -601,7 +612,6 @@ public class GameWindow {
      * Sets up the Connect Four board with buttons and visuals.
      */
     private void setupConnectFourBoard() {
-
         if (!(gameInstance instanceof ConnectFourGame)) return;
 
         ConnectFourGame connectFourGame = (ConnectFourGame) gameInstance;
@@ -616,7 +626,7 @@ public class GameWindow {
         board.setHgap(5);
         board.setVgap(5);
 
-
+        // Create the board
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 StackPane cell = new StackPane();
@@ -635,6 +645,7 @@ public class GameWindow {
         HBox columnButtons = new HBox(5);
         columnButtons.setAlignment(CENTER);
 
+        // Create column buttons
         for (int col = 0; col < cols; col++) {
             Button dropButton = new Button("Drop");
             dropButton.setPrefWidth(60);
@@ -644,12 +655,31 @@ public class GameWindow {
             final int column = col;
             dropButton.setOnAction(e -> makeConnectFourMove(column));
 
+            // Disable button if it's the AI's turn
+            dropButton.setDisable(connectFourGame.isVsComputer() && connectFourGame.getPlayer() == ConnectFourBoard.Blue);
+
             columnButtons.getChildren().add(dropButton);
         }
 
         boardContainer.getChildren().addAll(columnButtons, board);
         gameBoard.getChildren().clear();
         gameBoard.getChildren().add(boardContainer);
+    }
+
+    // Disable or enable user interaction for dropping pieces
+    private void disableUserInteraction(boolean disable) {
+        for (Node node : gameBoard.getChildren()) {
+            if (node instanceof VBox) {
+                VBox boardContainer = (VBox) node;
+                HBox columnButtons = (HBox) boardContainer.getChildren().get(0);
+                for (Node buttonNode : columnButtons.getChildren()) {
+                    if (buttonNode instanceof Button) {
+                        Button button = (Button) buttonNode;
+                        button.setDisable(disable);
+                    }
+                }
+            }
+        }
     }
 
     /**
@@ -711,48 +741,49 @@ public class GameWindow {
      * @param column The column in which the player drops their piece.
      */
     private void makeConnectFourMove(int column) {
+        if (connectFourGame == null || connectFourGame.isGameOver()) return;
 
-        if(connectFourGame == null) {
-            return;
-        }
+        // Prevent player from making a move during the AI's turn
+        if (connectFourGame.isVsComputer() && connectFourGame.getPlayer() == ConnectFourBoard.Blue) return;
 
         int[][] board = connectFourGame.getBoard();
-        int rows  = connectFourGame.getRows();
+        int rows = connectFourGame.getRows();
         int player = connectFourGame.getPlayer();
 
-        for(int row = rows - 1; row >= 0 ;  row--){
-            if(board[row][column] == ConnectFourBoard.Empty ){
+        for (int row = rows - 1; row >= 0; row--) {
+            if (board[row][column] == ConnectFourBoard.Empty) {
                 connectFourGame.makeMove(row, column);
                 updateBoardUI(row, column, player);
 
-                if(connectFourGame.checkWinnerHorizontal() || connectFourGame.checkWinnerVertical() || connectFourGame.checkWinnerDiagonal()){
-                    if (player == 1) {
-                        showGameOverDialog("Player Red Wins!" , true);
-                        return;
-                    }
-                    else if (player == 2) {
-                        showGameOverDialog("Player Blue Wins!" , true);
-                        return;
-                    }
+                if (connectFourGame.checkWinnerHorizontal() || connectFourGame.checkWinnerVertical() || connectFourGame.checkWinnerDiagonal()) {
+                    connectFourGame.setGameOver(true);
+                    showGameOverDialog((player == ConnectFourBoard.Red ? "Player Red Wins!" : "Player Blue Wins!"), true);
+                    return;
                 }
 
-                if(connectFourGame.checkDraw()){
-                    showGameOverDialog("Draw!" , false);
+                if (connectFourGame.checkDraw()) {
+                    connectFourGame.setGameOver(true);
+                    showGameOverDialog("Draw!", false);
                     return;
                 }
 
                 connectFourGame.switchTurn();
                 updateTurnLabel();
 
-                // **Only** do AI move if vsComputer == true **and** it's now the AI's turn
+                if (isMultiplayer && client != null && gameSession != null) {
+                    client.sendGameMove(gameSession, "Player dropped piece in column " + column);
+                }
+
+
+                // Now it's the AI's turn — trigger the AI move
                 if (connectFourGame.isVsComputer() && connectFourGame.getPlayer() == ConnectFourBoard.Blue) {
                     simulateComputerMove();
                 }
-
                 return;
             }
         }
 
+        // Column is full
         Alert columnFullAlert = new Alert(Alert.AlertType.WARNING);
         columnFullAlert.setTitle("Invalid Move");
         columnFullAlert.setHeaderText("This Column is full");
@@ -765,10 +796,14 @@ public class GameWindow {
      * Executes a computer move for Connect Four using a random selection of valid columns.
      */
     private void makeComputerMove() {
+        if (connectFourGame.isGameOver()) return;  // Prevent AI move if the game is over
+
         int player = connectFourGame.getPlayer();
 
         // Delay to simulate thinking
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), e -> {
+            if (connectFourGame.isGameOver()) return;  // Check again during the AI move
+
             int[][] board = connectFourGame.getBoard();
             int rows = connectFourGame.getRows();
 
@@ -798,9 +833,6 @@ public class GameWindow {
                     if (connectFourGame.checkDraw()) {
                         showGameOverDialog("Draw!", false);
                         return;
-                    }
-                    if (connectFourGame.isVsComputer()) {
-                        makeComputerMove();
                     }
 
                     connectFourGame.switchTurn();
@@ -963,18 +995,19 @@ public class GameWindow {
 
     /**
      * Shows a styled "Game Over" dialog and returns to main menu.
-     *
-     * @param reason  The reason to display (e.g. "Victory!", "Draw").
-     * @param victory True if the player won, false if they lost or drew.
+     *.
      */
-    private void showGameOverDialog(String reason, boolean victory) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Game Over");
-        alert.setHeaderText(victory ? "Victory!" : "Defeat");
-        alert.setContentText("Game over: " + reason);
+    private void showGameOverDialog(String message, boolean isWin) {
+        Platform.runLater(() -> {
+            Alert alert = new Alert(isWin ? Alert.AlertType.INFORMATION : Alert.AlertType.WARNING);
+            alert.setTitle("Game Over");
+            alert.setHeaderText(message);
 
-        alert.showAndWait();
-        returnToMainMenu();
+            // Show the dialog and wait for the user to press OK
+            alert.showAndWait().ifPresent(response -> {
+                returnToMainMenu();
+            });
+        });
     }
 
     /**
@@ -997,36 +1030,30 @@ public class GameWindow {
      * 3) Choose random column
      */
     private void simulateComputerMove() {
-        // Simple random AI logic:
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), e -> {
             int[][] board = connectFourGame.getBoard();
-            int rows = connectFourGame.getRows();
             int cols = connectFourGame.getColumns();
-            int player = connectFourGame.getPlayer();
 
             // 1) Attempt immediate win
             for (int col = 0; col < cols; col++) {
                 if (connectFourGame.canWinWithMove(col)) {
-                    makeConnectFourMove(col);
+                    makeAIMove(col);
                     return;
                 }
             }
 
             // 2) Block Opponent’s immediate win
-            // Temporarily switch to the other player
             connectFourGame.switchTurn();
             for (int col = 0; col < cols; col++) {
                 if (connectFourGame.canWinWithMove(col)) {
-                    // Switch back to AI
-                    connectFourGame.switchTurn();
-                    makeConnectFourMove(col);
+                    connectFourGame.switchTurn(); // switch back to AI
+                    makeAIMove(col);
                     return;
                 }
             }
-            // Switch back to AI if not blocked
-            connectFourGame.switchTurn();
+            connectFourGame.switchTurn(); // switch back to AI if no block was needed
 
-            // 3) Fallback random
+            // 3) Fallback random move
             List<Integer> validCols = new ArrayList<>();
             for (int col = 0; col < cols; col++) {
                 if (board[0][col] == ConnectFourBoard.Empty) {
@@ -1036,9 +1063,46 @@ public class GameWindow {
             if (validCols.isEmpty()) return;
 
             int randomCol = validCols.get((int)(Math.random() * validCols.size()));
-            makeConnectFourMove(randomCol);
+            makeAIMove(randomCol);
         }));
         timeline.play();
+    }
+
+    private void makeAIMove(int column) {
+        if (connectFourGame == null || connectFourGame.isGameOver()) return;
+
+        int[][] board = connectFourGame.getBoard();
+        int rows = connectFourGame.getRows();
+        int player = connectFourGame.getPlayer();
+
+        for (int row = rows - 1; row >= 0; row--) {
+            if (board[row][column] == ConnectFourBoard.Empty) {
+                connectFourGame.makeMove(row, column);
+                updateBoardUI(row, column, player);
+
+                if (connectFourGame.checkWinnerHorizontal() || connectFourGame.checkWinnerVertical() || connectFourGame.checkWinnerDiagonal()) {
+                    connectFourGame.setGameOver(true);
+                    showGameOverDialog("AI (Blue) Wins!", true);
+                    return;
+                }
+
+                if (connectFourGame.checkDraw()) {
+                    connectFourGame.setGameOver(true);
+                    showGameOverDialog("Draw!", false);
+                    return;
+                }
+
+                connectFourGame.switchTurn();
+                updateTurnLabel();
+                return;
+            }
+        }
+
+        // Fallback if column is full
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("AI Move Error");
+        alert.setHeaderText("AI attempted to move in a full column.");
+        alert.showAndWait();
     }
 
 }

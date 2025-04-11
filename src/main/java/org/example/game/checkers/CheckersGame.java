@@ -239,14 +239,23 @@ public class CheckersGame {
      * @return true if one player has no pieces left
      */
     public boolean checkWin() {
-        boolean red = false, black = false;
+        boolean redHasPieces = false, blackHasPieces = false;
+
         for (int[] row : board) {
             for (int cell : row) {
-                if (cell > 0) red = true;
-                if (cell < 0) black = true;
+                if (cell > 0) redHasPieces = true;
+                if (cell < 0) blackHasPieces = true;
             }
         }
-        return !(red && black);
+
+        if (!redHasPieces || !blackHasPieces) {
+            return true; // One side has no pieces
+        }
+
+        boolean redHasMoves = hasAnyMoves(true);
+        boolean blackHasMoves = hasAnyMoves(false);
+
+        return !redHasMoves || !blackHasMoves;
     }
 
     /**
@@ -272,6 +281,19 @@ public class CheckersGame {
         Move(int fr, int fc, int tr, int tc) {
             fromRow = fr; fromCol = fc; toRow = tr; toCol = tc;
         }
+    }
+
+    public boolean hasAnyMoves(boolean redTurn) {
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                int piece = board[row][col];
+                if (piece == 0 || (piece > 0) != redTurn) continue;
+                if (!getValidMoves(row, col).isEmpty()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
 

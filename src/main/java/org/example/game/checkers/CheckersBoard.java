@@ -124,7 +124,13 @@ public class CheckersBoard extends VBox {
         if (turnLabelUpdater != null) turnLabelUpdater.run();
 
         if (moved && game.checkWin()) {
-            showEndDialog(game.isMultiplayer() ? "Game Over!" : "Player wins!");
+            boolean playerLost = !game.hasAnyMoves(game.isPlayersTurn());
+
+            if (game.isMultiplayer()) {
+                showEndDialog("Game Over! " + (playerLost ? "Opponent wins!" : "You win!"));
+            } else {
+                showEndDialog(playerLost ? "Computer wins!" : "Player wins!");
+            }
             return;
         }
 
@@ -141,6 +147,7 @@ public class CheckersBoard extends VBox {
             });
             pause.play();
         }
+
     }
     private Runnable returnToMainMenu;
 

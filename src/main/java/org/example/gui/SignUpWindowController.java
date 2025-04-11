@@ -105,7 +105,7 @@ public class SignUpWindowController {
      */
     public void handleBackToLogin(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginWindow2.fxml"));
             Parent root = loader.load();
             Stage loginStage = new Stage();
             loginStage.setTitle("Login - OMG");

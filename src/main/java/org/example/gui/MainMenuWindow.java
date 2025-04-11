@@ -1,5 +1,6 @@
 package org.example.gui;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,6 +20,7 @@ import org.example.game.ticTacToe.TicTacToeGame;
 import org.example.leaderboard.Leaderboard;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class MainMenuWindow {
     private final Stage stage;
@@ -57,6 +59,9 @@ public class MainMenuWindow {
         stage.setScene(scene);
         stage.setMinWidth(800);
         stage.setMinHeight(600);
+        Platform.runLater(() -> {
+            stage.centerOnScreen();
+        });
     }
 
     private HBox createHeader() {
@@ -113,7 +118,7 @@ public class MainMenuWindow {
 
         // Checkers Game Card
         VBox checkersCard = createGameCard("Checkers", "checkers");
-        checkersCard.setOnMouseClicked(_ -> startMatchmaking("checkers"));
+        checkersCard.setOnMouseClicked(_ -> startGame("checkers"));
 
         gamesContainer.getChildren().addAll(ticTacToeCard, connectFourCard, checkersCard);
 
@@ -302,16 +307,19 @@ public class MainMenuWindow {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
+            stage.centerOnScreen();
             stage.setTitle("Login");
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-        }}
-
-    private void startMatchmaking(String gameType) {
-        System.out.println("Starting matchmaking for " + gameType);
-        showMatchmakingDialog(gameType);
+        }
     }
+
+    // No longer needed (GL Team)
+//    private void startMatchmaking(String gameType) {
+//        System.out.println("Starting matchmaking for " + gameType);
+//        showMatchmakingDialog(gameType);
+//    }
 
     private void findMatch(String gameSelection) {
         String gameType = gameSelection.toLowerCase().replace(" ", "");
@@ -379,7 +387,7 @@ public class MainMenuWindow {
                 new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, true), currentUser);
                 break;
             case "checkers":
-                new GameWindow(stage, new CheckersGame(), currentUser);
+                new GameWindow(stage, new CheckersGame(false), currentUser);
                 break;
             default:
                 System.out.println("Unknown game type: " + gameType);
@@ -404,15 +412,15 @@ public class MainMenuWindow {
         dialogPane.setStyle("-fx-background-color: #3498db");
 
         Node header = dialogPane.lookup(".header-panel");
-        if(header != null) {
+        if (header != null) {
             header.setStyle("-fx-background-color: #3498db;");
         }
         Label content = (Label) dialogPane.lookup(".content.label");
-        if(content != null) {
+        if (content != null) {
             content.setStyle("-fx-text-fill: white;");
         }
         Node buttonBar = dialogPane.lookup(".buttonBar");
-        if(buttonBar != null) {
+        if (buttonBar != null) {
             buttonBar.setStyle("-fx-background-color: white;");
         }
 
@@ -472,15 +480,15 @@ public class MainMenuWindow {
         dialogPane.setStyle("-fx-background-color: #3498db");
 
         Node header = dialogPane.lookup(".header-panel");
-        if(header != null) {
+        if (header != null) {
             header.setStyle("-fx-background-color: #3498db;");
         }
         Label content = (Label) dialogPane.lookup(".content.label");
-        if(content != null) {
+        if (content != null) {
             content.setStyle("-fx-text-fill: white;");
         }
         Node buttonBar = dialogPane.lookup(".buttonBar");
-        if(buttonBar != null) {
+        if (buttonBar != null) {
             buttonBar.setStyle("-fx-background-color: white;");
         }
 
@@ -533,6 +541,51 @@ public class MainMenuWindow {
         new GameWindow(stage, ticTacToeGame, currentUser);
     }
 
+    // Game logic addition
+    private Boolean showCheckersModeDialog() {
+        Alert modeDialog = new Alert(Alert.AlertType.CONFIRMATION);
+        modeDialog.setTitle("Choose Game Mode");
+        modeDialog.setHeaderText("Select Checkers Mode");
+        modeDialog.setContentText("Do you want to play against the computer or another player?");
+
+        ButtonType vsComputerButton = new ButtonType("Computer");
+        ButtonType multiplayerButton = new ButtonType("Multiplayer (Same Device)");
+        ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        modeDialog.getButtonTypes().setAll(vsComputerButton, multiplayerButton, cancel);
+
+        DialogPane dialogPane = modeDialog.getDialogPane();
+        dialogPane.setStyle("-fx-background-color: #3498db");
+
+        Node header = dialogPane.lookup(".header-panel");
+        if (header != null) header.setStyle("-fx-background-color: #3498db;");
+
+        Label content = (Label) dialogPane.lookup(".content.label");
+        if (content != null) content.setStyle("-fx-text-fill: white;");
+
+        Node buttonBar = dialogPane.lookup(".buttonBar");
+        if (buttonBar != null) buttonBar.setStyle("-fx-background-color: white;");
+
+        modeDialog.showingProperty().addListener((obs, wasShowing, isNowShowing) -> {
+            if (isNowShowing) {
+                Button computerButton = (Button) dialogPane.lookupButton(vsComputerButton);
+                Button multiButton = (Button) dialogPane.lookupButton(multiplayerButton);
+                Button cancelButton = (Button) dialogPane.lookupButton(cancel);
+
+                computerButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
+                multiButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
+                cancelButton.setStyle("-fx-background-color: #e74c3c; -fx-text-fill: white;");
+            }
+        });
+
+        Optional<ButtonType> result = modeDialog.showAndWait();
+        if (result.isPresent()) {
+            if (result.get() == vsComputerButton) return false;
+            else if (result.get() == multiplayerButton) return true;
+        }
+        return null; // cancelled
+    }
+
 
     /*
      *  THIS METHOD TAKES CARE OF CUSTOM BOARD SIZES WHICH WAS SUGGESTED IN FEATURE PROPOSAL
@@ -561,8 +614,8 @@ public class MainMenuWindow {
 
         boardSize.setOnAction(_ -> {
             String[] parts = boardSize.getValue().split(" x ");
-            int rows  = Integer.parseInt(parts[0].trim());
-            int cols  = Integer.parseInt(parts[1].trim());
+            int rows = Integer.parseInt(parts[0].trim());
+            int cols = Integer.parseInt(parts[1].trim());
 
             int maxGoal = Math.min(rows, cols);
             goalBox.getItems().clear();
@@ -591,7 +644,7 @@ public class MainMenuWindow {
         dialog.getDialogPane().setStyle("-fx-background-color: #3498db;");
 
         dialog.showAndWait().ifPresent(result -> {
-            if(result == ButtonType.OK) {
+            if (result == ButtonType.OK) {
                 String[] size = boardSize.getValue().split("x");
                 int rows = Integer.parseInt(size[0].trim());
                 int cols = Integer.parseInt(size[1].trim());
@@ -616,7 +669,8 @@ public class MainMenuWindow {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-        }}
+        }
+    }
 
 
     private void challengePlayer(String playerName) {
@@ -651,4 +705,5 @@ public class MainMenuWindow {
     public void show() {
         stage.show();
     }
+
 }

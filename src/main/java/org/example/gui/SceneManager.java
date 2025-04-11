@@ -25,6 +25,7 @@ public class SceneManager {
             ).toExternalForm());
 
             primaryStage.setScene(scene);
+            primaryStage.centerOnScreen();
             primaryStage.show();
         } catch (IOException e) {
             System.err.println("Failed to load FXML: " + fxmlPath);

@@ -14,6 +14,7 @@ public class ConnectFourRules {
         });
     }
 
+
     private void updateTabWidths() {
         double tabWidth = rulesTabPane.getWidth() / rulesTabPane.getTabs().size();
         for (Tab tab : rulesTabPane.getTabs()) {

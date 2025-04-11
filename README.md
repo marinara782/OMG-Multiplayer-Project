@@ -493,8 +493,6 @@ and documenting progress through shared Google Docs.
 No new branches were created during this period — collaboration was done directly in shared documents,
 allowing the team to align and make improvements based on feedback.
 
-Absolutely — here's a clear, professional yet descriptive section for **Iteration 3** that you can paste into your `README.md`:
-
 ---
 
 ### 🔁 Iteration 3 (Mar 22 – Apr 11)
@@ -522,7 +520,7 @@ enhancing usability, improving performance, and completing final integration tas
 - `Iteration3`
 - `LeaderandMatch_iteration3`
 
-These branches reflect the modular refinement efforts by various subgroups within the team. Although exact team size per branch varies, the whole class collaborated across modules during this final implementation phase.
+These branches reflect the modular refinement efforts by various subgroups within the team. Although the exact team size per branch varies, the whole class collaborated across modules during this final implementation phase.
 
 > Note: Not all contributions during Iteration 3 were divided evenly among members, but each team member contributed to code refinement, debugging, and final documentation.
 

@@ -176,10 +176,11 @@ public class Login extends UserDatabaseStub {
             return false;
         }
 
-        if (databaseStub.verify_email(new_username,email)) {
+        if (databaseStub.registered_users_list().stream().anyMatch(user -> user.getEmail().equals(email))) {
             System.out.println("Email already exists.");
             return false;
         }
+
 
         User new_user = new User(new_username, password, email, phone);
         users.add(new_user);

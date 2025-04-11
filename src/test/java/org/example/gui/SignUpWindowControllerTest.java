@@ -1,20 +1,4 @@
-package org.example.gui;
+package gui;
 
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-class SignUpWindowControllerTest {
-
-    @Test
-    void setStage() {
-    }
-
-    @Test
-    void handleRegister() {
-    }
-
-    @Test
-    void handleBackToLogin() {
-    }
+public class SignUpWindowControllerTest {
 }

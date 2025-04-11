@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 public class UserProfile extends UserDatabaseStub {
-
     // get username of the user
     public String getUsername() {
         return "";

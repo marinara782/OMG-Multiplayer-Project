@@ -1,16 +1,58 @@
-package org.example.gui;
+package gui;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+public class LeaderBoardControllerTest {
+    @Test
+    void setUser() {
+    }
 
-class LeaderBoardControllerTest {
+    @Test
+    void initialize() {
+    }
+
+    @Test
+    void handleSort() {
+    }
 
     @Test
     void handleSearch() {
     }
 
     @Test
-    void handleSort() {
+    void handleReset() {
     }
+
+    @Test
+    void handleHome() {
+    }
+
+    @Test
+    void handleGames() {
+    }
+
+    @Test
+    void handleTicTacToe() {
+    }
+
+    @Test
+    void handleCheckers() {
+    }
+
+    @Test
+    void handleConnect4() {
+    }
+
+    @Test
+    void handleProfile() {
+    }
+
+    @Test
+    void handleSettings() {
+    }
+
+    @Test
+    void handleLogout() {
+    }
+}
 }

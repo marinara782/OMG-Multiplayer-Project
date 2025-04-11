@@ -301,5 +301,10 @@ public class LeaderboardDatabaseStub  {
         // print top 4 players with the highest connect4 win percentage
         stub.printTopPlayers(9, "connect4 percentage");
     }
+
+    public List<Player> getSortedPlayers(String criteria) {
+        int totalPlayers = leaderboard.getPlayers().size();
+        return leaderboard.getTopNPlayers(totalPlayers, criteria);
+    }
 }
 

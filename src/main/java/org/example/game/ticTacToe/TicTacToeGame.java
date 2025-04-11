@@ -26,19 +26,6 @@ public class TicTacToeGame {
         //randomizePlayersSymbols();
     }
 
-    /*public void randomizePlayersSymbols()
-    {
-        int randomNum = (int)(Math.random() * 2) + 1;
-
-        if(randomNum == 1)
-        {
-            currentPlayer = player;
-        }
-        else
-        {
-            currentPlayer = opponent;
-        }
-    }*/
 
     // initializes the board with empty cells
     public void BoardInitialization()
@@ -252,8 +239,5 @@ public class TicTacToeGame {
         }
         return board[row][col];
     }
-
-
-
 
 }

@@ -191,6 +191,7 @@ public class UserDatabaseStub {
         return null;
     }
 
+    // updates email of a user if they request to change it and writes the new email into the file
     public void update_email(String username, String newEmail, String password) throws  FileNotFoundException{
         List<User> users = registered_users_list();
         for (User user : users) {
@@ -198,6 +199,7 @@ public class UserDatabaseStub {
                 user.setEmail(newEmail);
             }
         }
+        write_users_to_file(users);
     }
 
     /**
@@ -222,13 +224,14 @@ public class UserDatabaseStub {
                 return String.format("%06d", random_number);
             }
         }
+        // return message if a code could not be sent
         return "Email not found";
     }
 
     /**
      * sends a verification code to the user's phone number
      * @param phone_number phone number of the user
-     * @return String - random 6-digit verification code
+     * @return String - random 6-digit verification code via text
      * @throws FileNotFoundException
      */
     public String send_text(String phone_number) throws FileNotFoundException {
@@ -247,6 +250,27 @@ public class UserDatabaseStub {
                 return String.format("%06d", random_number);
             }
         }
+        // return message if a code could not be sent
         return "Phone number not found";
+    }
+
+    // helper function for verification purposes, sends code to emulate a text/email being sent successfully
+    public String get_2FA_input(boolean flag, String code) throws FileNotFoundException {
+        // checks if flag eas true, returns a code otherwise gives an error message
+        if (flag) {
+            return code;
+        }
+        else {
+            return "code not received";
+        }
+    }
+
+    // helper function for the format of a phone number, returns the phone number in required format
+    public boolean is_valid_phone_number_format(String phoneNumber) {
+        if (phoneNumber == null) {
+            return false;
+        }
+        // Matches xxx-xxx-xxxx where x is digit
+        return phoneNumber.matches("^\\d{3}-\\d{3}-\\d{4}$");
     }
 }

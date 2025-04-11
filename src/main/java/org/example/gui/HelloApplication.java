@@ -12,10 +12,16 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("loginWindow2.fxml"));
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginWindow2.fxml"));
         Parent root = loader.load();
+
+        LoginWindowController controller = loader.getController();
+        controller.setStage(stage);
+
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.centerOnScreen();
         stage.setTitle("Login");
         stage.show();
 

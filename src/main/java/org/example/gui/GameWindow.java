@@ -550,10 +550,10 @@ public class GameWindow {
         int cols = connectFourGame.getColumns();
 
         VBox boardContainer = new VBox(20);
-        boardContainer.setAlignment(Pos.CENTER);
+        boardContainer.setAlignment(CENTER);
 
         GridPane board = new GridPane();
-        board.setAlignment(Pos.CENTER);
+        board.setAlignment(CENTER);
         board.setHgap(5);
         board.setVgap(5);
 
@@ -574,7 +574,7 @@ public class GameWindow {
         }
 
         HBox columnButtons = new HBox(5);
-        columnButtons.setAlignment(Pos.CENTER);
+        columnButtons.setAlignment(CENTER);
 
         for (int col = 0; col < cols; col++) {
             Button dropButton = new Button("Drop");
@@ -594,57 +594,57 @@ public class GameWindow {
     }
 
     // Game logic team -> chosen to initialize the board in CheckersBoard class (Jacob Baggott)
-    private void setupCheckersBoard() {
-        VBox boardContainer = new VBox(20);
-        boardContainer.setAlignment(CENTER);
-
-        GridPane board = new GridPane();
-        board.setAlignment(CENTER);
-
-        // Create the 8x8 grid
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 8; col++) {
-                StackPane cell = new StackPane();
-                cell.setPrefSize(60, 60);
-
-                // Alternating colors for the checkerboard
-                boolean isLightSquare = (row + col) % 2 == 0;
-                cell.setStyle("-fx-background-color: " + (isLightSquare ? "#ecf0f1" : "#34495e") + ";");
-
-                // Add checkers pieces to initial positions
-                if (!isLightSquare) {
-                    if (row < 3) {
-                        // Red pieces (opponent)
-                        Region piece = new Region();
-                        piece.setPrefSize(40, 40);
-                        piece.setStyle("-fx-background-color: #e74c3c; -fx-background-radius: 20;");
-                        cell.getChildren().add(piece);
-                    } else if (row > 4) {
-                        // Black pieces (player)
-                        Region piece = new Region();
-                        piece.setPrefSize(40, 40);
-                        piece.setStyle("-fx-background-color: #2c3e50; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20; -fx-border-width: 2;");
-                        cell.getChildren().add(piece);
-                    }
-                }
-
-                // Store position for move handling
-                cell.setUserData(new int[]{row, col});
-
-                // Add click handler
-                cell.setOnMouseClicked(e -> {
-                    StackPane clicked = (StackPane) e.getSource();
-                    int[] position = (int[]) clicked.getUserData();
-                    selectCheckersPiece(position[0], position[1]);
-                });
-
-                board.add(cell, col, row);
-            }
-        }
-
-        boardContainer.getChildren().add(board);
-        gameBoard.getChildren().add(boardContainer);
-    }
+//    private void setupCheckersBoard() {
+//        VBox boardContainer = new VBox(20);
+//        boardContainer.setAlignment(CENTER);
+//
+//        GridPane board = new GridPane();
+//        board.setAlignment(CENTER);
+//
+//        // Create the 8x8 grid
+//        for (int row = 0; row < 8; row++) {
+//            for (int col = 0; col < 8; col++) {
+//                StackPane cell = new StackPane();
+//                cell.setPrefSize(60, 60);
+//
+//                // Alternating colors for the checkerboard
+//                boolean isLightSquare = (row + col) % 2 == 0;
+//                cell.setStyle("-fx-background-color: " + (isLightSquare ? "#ecf0f1" : "#34495e") + ";");
+//
+//                // Add checkers pieces to initial positions
+//                if (!isLightSquare) {
+//                    if (row < 3) {
+//                        // Red pieces (opponent)
+//                        Region piece = new Region();
+//                        piece.setPrefSize(40, 40);
+//                        piece.setStyle("-fx-background-color: #e74c3c; -fx-background-radius: 20;");
+//                        cell.getChildren().add(piece);
+//                    } else if (row > 4) {
+//                        // Black pieces (player)
+//                        Region piece = new Region();
+//                        piece.setPrefSize(40, 40);
+//                        piece.setStyle("-fx-background-color: #2c3e50; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20; -fx-border-width: 2;");
+//                        cell.getChildren().add(piece);
+//                    }
+//                }
+//
+//                // Store position for move handling
+//                cell.setUserData(new int[]{row, col});
+//
+//                // Add click handler
+//                cell.setOnMouseClicked(e -> {
+//                    StackPane clicked = (StackPane) e.getSource();
+//                    int[] position = (int[]) clicked.getUserData();
+//                    selectCheckersPiece(position[0], position[1]);
+//                });
+//
+//                board.add(cell, col, row);
+//            }
+//        }
+//
+//        boardContainer.getChildren().add(board);
+//        gameBoard.getChildren().add(boardContainer);
+//    }
 
     private String getGameTitle() {
         if (gameInstance instanceof TicTacToeGame) {
@@ -892,15 +892,15 @@ public class GameWindow {
         });
     }
 
+    // edited by gamelogic team
     private void showGameOverDialog(String reason, boolean victory) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game Over");
         alert.setHeaderText(victory ? "Victory!" : "Defeat");
         alert.setContentText("Game over: " + reason);
 
-        alert.show();
-
-        alert.setOnCloseRequest(e -> returnToMainMenu());
+        alert.showAndWait();
+        returnToMainMenu();
     }
 
     private void returnToMainMenu() {

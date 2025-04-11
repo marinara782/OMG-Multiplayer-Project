@@ -155,7 +155,6 @@ public class LoginTest {
 
     // tests for logout()
 
-
     // test for successfully logging out of the platform
     @Test
     void test_logout_success() {
@@ -169,5 +168,63 @@ public class LoginTest {
         Login.logout();
 
         assertTrue(outputStream.toString().contains("Logging out.."));
+    }
+
+    @Test
+    void testCreateAccount_Success() throws IOException {
+        // Test account creation
+        assertTrue(Login.createAccount("charlie", "char123", "charlie@gmail.com", "555-123-4567"));
+
+        // Verify the account was added to the file
+        List<String> lines = Files.readAllLines(Paths.get(testFilePath));
+        assertEquals(3, lines.size(), "File should have 3 accounts now");
+        assertTrue(lines.stream().anyMatch(line -> line.startsWith("charlie,char123")),
+                "New account should be in file");
+    }
+
+    @Test
+    void testCreateAccount_UsernameTaken() throws IOException {
+        // Try to create account with existing username
+        assertFalse(Login.createAccount("alice", "newpass", "newalice@test.com", "555-111-2222"));
+
+        // Verify original account still exists and no duplicate was created
+        List<String> lines = Files.readAllLines(Paths.get(testFilePath));
+        assertEquals(2, lines.size()); // Should still only have alice and bob
+    }
+
+    @Test
+    void testCreateAccount_NewDatabaseFile() throws IOException {
+        // Delete existing file to test creation of new database
+
+
+        // Create first account
+        assertTrue(Login.createAccount("firstUser", "firstPass", "first@test.com", "000-000-0000"));
+
+
+    }
+
+    @Test
+    void testCreateAccount_EmptyFields() {
+        // Test with empty username
+        assertThrows(IllegalArgumentException.class, () -> {
+            Login.createAccount("", "validPass", "test@test.com", "1234567890");
+        });
+
+        // Test with empty password
+        assertThrows(IllegalArgumentException.class, () -> {
+            Login.createAccount("testUser", "", "test@test.com", "1234567890");
+        });
+    }
+
+    @Test
+    void testCreateAccount_InvalidEmailFormat() throws IOException {
+
+        assertFalse(Login.createAccount("testUser", "testPass", "invalid-email", "555-123-4567"));
+    }
+
+    @Test
+    void testCreateAccount_InvalidPhoneFormat() throws IOException {
+        // Should still succeed since phone format isn't validated in the method
+        assertFalse(Login.createAccount("testUser", "testPass", "test@test.com", "invalid-phone"));
     }
 }

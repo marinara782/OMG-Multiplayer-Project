@@ -29,6 +29,9 @@ public class LeaderBoardController {
     @FXML private TableColumn<Player, String> playerColumn;
     @FXML private TableColumn<Player, Integer> winsColumn;
     @FXML private TableColumn<Player, Integer> lossColumn;
+    @FXML private TableColumn<Player, Integer> drawsColumn;
+    @FXML private TableColumn<Player, Integer> percentageColumn;
+
     @FXML private ChoiceBox<String> sortBox;
     @FXML private TextField searchField;
     @FXML public VBox gamesMenu;
@@ -43,13 +46,24 @@ public class LeaderBoardController {
 
     private String currentSortCriteria = "total";
 
+    /**
+     * Setter method for User
+     * @param user
+     */
     public void setUser(UserProfile user) {
         this.user = user;
     }
 
+    /**
+     * Intializes the UI, Sets the Table Columns so that they can update based on sort and other demands
+     */
     @FXML
     public void initialize() {
         // Setup Table Columns
+        rankColumn.setReorderable(false);
+        playerColumn.setReorderable(false);
+        winsColumn.setReorderable(false);
+        lossColumn.setReorderable(false);
         //Updates the Rankings
         rankColumn.setCellFactory(column -> new TableCell<>() {
             @Override
@@ -101,6 +115,10 @@ public class LeaderBoardController {
         loadAndDisplayPlayers("Total wins");
     }
 
+    /**
+     * Displays table based on sorting criteria
+     * @param criteria
+     */
     private void loadAndDisplayPlayers(String criteria) {
         currentSortCriteria = criteria.split(" ")[0].toLowerCase(); // store just the game
         List<Player> sortedPlayers = databaseStub.getSortedPlayers(criteria); // sort using full string
@@ -109,6 +127,10 @@ public class LeaderBoardController {
         updatePodium(sortedPlayers);
     }
 
+    /**
+     * Podium of top 3 players are shown, updated based on sort
+     * @param players
+     */
     private void updatePodium(List<Player> players) {
         firstPlaceName.setText("");
         firstPlaceScore.setText("");
@@ -130,6 +152,14 @@ public class LeaderBoardController {
             thirdPlaceScore.setText(getPlayerStat(players.get(2), currentSortCriteria, "wins") + " wins");
         }
     }
+
+    /**
+     * Gets players stats based on the game type
+     * @param player
+     * @param game
+     * @param type
+     * @return
+     */
     private int getPlayerStat(Player player, String game, String type) {
         switch (game) {
             case "total":
@@ -161,6 +191,10 @@ public class LeaderBoardController {
         }
     }
 
+    /**
+     * User Inputs sort criteria into sort box, to sort data to get preferred output
+     * @param event
+     */
     @FXML
     public void handleSort(ActionEvent event) {
         String selected = sortBox.getValue();
@@ -169,6 +203,10 @@ public class LeaderBoardController {
         }
     }
 
+    /**
+     * User inputs username into search bar and will find player(s) based on that
+     * @param event
+     */
     @FXML
     public void handleSearch(ActionEvent event) {
         String searchTerm = searchField.getText().trim().toLowerCase();
@@ -189,6 +227,10 @@ public class LeaderBoardController {
 
     }
 
+    /**
+     * Resets search request
+     * @param actionEvent
+     */
     @FXML
     public void handleReset(ActionEvent actionEvent) {
         searchField.clear();
@@ -197,6 +239,11 @@ public class LeaderBoardController {
     }
 
     //Navigation Bar, might make this into its own class
+
+    /**
+     * Moves stage back to main Menu
+     * @param actionEvent
+     */
     public void handleHome(ActionEvent actionEvent) {
         try {
             Stage mainMenuStage = new Stage(); // Create a new Stage for the main menu
@@ -211,31 +258,36 @@ public class LeaderBoardController {
             showAlert("Error", "Failed to load the main menu.");
         }
     }
-
+    /* Not Implemented
     public void handleGames(ActionEvent actionEvent) {
         gamesMenu.setVisible(!gamesMenu.isVisible());
     }
-
     public void handleTicTacToe(ActionEvent actionEvent) {
         //will need to be added to go to the window, if we implement a specfic game description window
     }
-
     public void handleCheckers(ActionEvent actionEvent) {
         //will need to be added to go to the window, if we implement a specfic game description window
     }
-
     public void handleConnect4(ActionEvent actionEvent) {
         //will need to be added to go to the window, if we implement a specfic game description window
     }
-
-    public void handleProfile(ActionEvent actionEvent) {
-        //will need to be added to go to the window
-    }
-
     public void handleSettings(ActionEvent actionEvent) {
-        //will need to be added to go to the window
+    }
+    */
+
+    /**
+     * Opens the User Profile window
+     * @param actionEvent
+     */
+    public void handleProfile(ActionEvent actionEvent) {
+        UserProfileWindow profileWindow = new UserProfileWindow(new Stage(), user);
+        profileWindow.show();
     }
 
+    /**
+     * Logs the User out, opens the login window
+     * @param actionEvent
+     */
     public void handleLogout(ActionEvent actionEvent) {
         try {
             Stage currentStage = (Stage) leaderboardTable.getScene().getWindow();
@@ -252,6 +304,12 @@ public class LeaderBoardController {
             e.printStackTrace();
         }}
 
+
+    /**
+     * Pops up alert to show information
+     * @param title
+     * @param message
+     */
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);

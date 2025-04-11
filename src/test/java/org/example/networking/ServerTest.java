@@ -93,6 +93,14 @@ public class ServerTest {
     }
 
     @Test
+    void testProcessBugReport() {
+        bugReport report = new bugReport("Game Logic", "Pieces disappear randomly.");
+        String result = Server.processBugReport(report);
+
+        assertEquals("Bug report received. Thank you for your feedback!", result, "Server should confirm bug report receipt.");
+    }
+
+    @Test
     void testValidLogin() {
         String result = Server.processRequest("LOGIN", "Username", "pass");
         assertEquals("Successful Login", result);

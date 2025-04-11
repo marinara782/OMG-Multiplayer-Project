@@ -5,11 +5,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.example.authentication.UserProfile;
 
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+    /**
+     * Sets the Stage and opens Login Window
+     * @param stage
+     * @throws IOException
+     */
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -25,15 +29,13 @@ public class HelloApplication extends Application {
         stage.setTitle("Login");
         stage.show();
 
-       // The commented code loads the mainmenuwindow directly (leaving for debugging)
-//        UserProfile currentUser = new UserProfile();
-//
-//        SceneManager.setPrimaryStage(new Stage());
-//        Create and show the MainMenuWindow with the stage and user
-//        MainMenuWindow mainMenuWindow = new MainMenuWindow(stage, currentUser);
-//        mainMenuWindow.show();
+
     }
 
+    /**
+     * launches the UI
+     * @param args
+     */
     public static void main(String[] args) {
         launch();
     }

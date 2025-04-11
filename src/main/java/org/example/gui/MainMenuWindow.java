@@ -8,16 +8,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import org.example.authentication.Login;
 import org.example.authentication.UserProfile;
 import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourGame;
 import org.example.game.ticTacToe.TicTacToeGame;
-import org.example.leaderboard.Leaderboard;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -26,13 +22,21 @@ public class MainMenuWindow {
     private final Stage stage;
     private final UserProfile currentUser;
 
+    /**
+     * Constructs a MainMenuWindow for the provided user and stage.
+     *
+     * @param stage the main application stage
+     * @param currentUser the currently logged-in user
+     */
     public MainMenuWindow(Stage stage, UserProfile currentUser) {
         this.stage = stage;
         this.currentUser = currentUser;
-//        this.matchmaker = new Matchmaker();
         initializeUI();
     }
 
+    /**
+     * Initializes the layout and components of the main menu UI.
+     */
     private void initializeUI() {
         BorderPane mainLayout = new BorderPane();
         mainLayout.setPadding(new Insets(20));
@@ -64,6 +68,11 @@ public class MainMenuWindow {
         });
     }
 
+    /**
+     * Creates the header for the main menu, including logo, user info, and logout/profile buttons.
+     *
+     * @return the configured HBox header
+     */
     private HBox createHeader() {
         HBox header = new HBox(20);
         header.setPadding(new Insets(10));
@@ -97,6 +106,7 @@ public class MainMenuWindow {
         return header;
     }
 
+
     private VBox createGameSelection() {
         VBox gameSelection = new VBox(30);
         gameSelection.setPadding(new Insets(20, 10, 20, 10));
@@ -118,7 +128,7 @@ public class MainMenuWindow {
 
         // Checkers Game Card
         VBox checkersCard = createGameCard("Checkers", "checkers");
-        checkersCard.setOnMouseClicked(_ -> startGame("checkers"));
+        checkersCard.setOnMouseClicked(_ -> handleCheckersClick("checkers"));
 
         gamesContainer.getChildren().addAll(ticTacToeCard, connectFourCard, checkersCard);
 
@@ -147,6 +157,14 @@ public class MainMenuWindow {
         return gameSelection;
     }
 
+    private void handleCheckersClick(String checkers) {
+        Boolean vsComputer = showCheckersModeDialog();
+        if (vsComputer == null) {
+            return; // user canceled
+        }
+        new GameWindow(stage, new CheckersGame(vsComputer), currentUser);
+    }
+
 
     private VBox createGameCard(String gameName, String gameType) {
         VBox card = new VBox(10);
@@ -167,7 +185,7 @@ public class MainMenuWindow {
         Label playersLabel = new Label("Online: 42 players");
         playersLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #bdc3c7;");
 
-        Button rulesButton = new Button("View Rules");
+        Button rulesButton = new Button("More Info");
         rulesButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
         rulesButton.setOnAction(_ -> showGameRules(gameType));
 
@@ -315,11 +333,7 @@ public class MainMenuWindow {
         }
     }
 
-    // No longer needed (GL Team)
-//    private void startMatchmaking(String gameType) {
-//        System.out.println("Starting matchmaking for " + gameType);
-//        showMatchmakingDialog(gameType);
-//    }
+
 
     private void findMatch(String gameSelection) {
         String gameType = gameSelection.toLowerCase().replace(" ", "");
@@ -375,6 +389,7 @@ public class MainMenuWindow {
         dialogStage.setScene(dialogScene);
         dialogStage.setTitle("Matchmaking");
         dialogStage.setResizable(false);
+        dialogStage.setOnCloseRequest(e -> cancelled[0] = true);
         dialogStage.show();
     }
 
@@ -442,21 +457,7 @@ public class MainMenuWindow {
             return null;
         }
 
-/*/
-        modeDialog.showAndWait().ifPresent(response -> {
-            boolean vsComputer;
-            if (response == vsComputerButton) {
-                // Single Player
-                vsComputer = true;
-                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, vsComputer), currentUser);
-            } else {
-                //Local Multiplayer
-                vsComputer = false;
-                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, vsComputer), currentUser);
-            }
-        });
 
- */
         return result == vsComputerButton;
     }
 
@@ -519,12 +520,6 @@ public class MainMenuWindow {
             return;
         }
         showBoardOptionsDialog(vsComputer);
-//        if (vsComputer) {
-//            ConnectFourGame game = new ConnectFourGame(1, 6, 7, 4, true);
-//            new GameWindow(stage, game, currentUser);
-//        }else{
-//            startMatchmaking("connectFour");
-//        }
     }
 
     //This method makes a new tic-tac-toe game with the parameter
@@ -541,7 +536,11 @@ public class MainMenuWindow {
         new GameWindow(stage, ticTacToeGame, currentUser);
     }
 
-    // Game logic addition
+    /**
+     * Displays a dialog to let the user choose between multiplayer and AI for Checkers.
+     *
+     * @return false if vs computer, true if multiplayer, null if cancelled
+     */
     private Boolean showCheckersModeDialog() {
         Alert modeDialog = new Alert(Alert.AlertType.CONFIRMATION);
         modeDialog.setTitle("Choose Game Mode");

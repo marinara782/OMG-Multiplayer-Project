@@ -79,7 +79,7 @@ public class ConnectFourGame {
      */
     public boolean checkWinnerHorizontal() {
 
-        int counter = 0;
+        int counter;
         for (int row = 0; row < rows; row++) { // check each row
             counter = 0; // reset counter for each row
             for (int column = 0; column < columns; column++) { // check each column

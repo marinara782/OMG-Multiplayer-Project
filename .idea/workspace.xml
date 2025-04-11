@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="testSaveAndLoadPlayers() is done now">
+    <list default="true" id="60179a95-2c34-4da2-997a-662fd605ae36" name="Changes" comment="Deleting SceneManager Errors">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/gui/GameWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/gui/GameWindow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +86,7 @@
     "JUnit.ServerTest.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "tictactoe__abdu__umer",
+    "git-widget-placeholder": "bhuvan",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "C:/Users/bhuva/OneDrive/Desktop/SENG 300/seng300-w25-project/src/main/java/org/example/game/connectFour",
     "last_opened_file_path": "C:/Users/bhuva/OneDrive/Desktop/GitHub Projects/DuplicateGame",
@@ -115,7 +114,7 @@
       <recent name="org.example.game.checkers" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Unnamed">
     <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.gui.HelloApplication" />
       <module name="seng300-w25-project" />
@@ -505,7 +504,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744308983094</updated>
     </task>
-    <option name="localTasksCounter" value="39" />
+    <task id="LOCAL-00039" summary="Deleting SceneManager Errors">
+      <option name="closed" value="true" />
+      <created>1744334597195</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1744334597195</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -520,7 +527,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Developed UserProfileWindow" />
     <MESSAGE value="Developed UserProfileWindow and HelloApplication" />
     <MESSAGE value="Started Tic-Tac-toe Basics from computer side." />
     <MESSAGE value="Initiated Tic-Tac-Toe Basics and deleted .fxml file from computer side- (1)." />
@@ -550,7 +556,8 @@
     <MESSAGE value="imported player class to ServerTest.java" />
     <MESSAGE value="moved isRunning getter" />
     <MESSAGE value="testSaveAndLoadPlayers() is done now" />
-    <option name="LAST_COMMIT_MESSAGE" value="testSaveAndLoadPlayers() is done now" />
+    <MESSAGE value="Deleting SceneManager Errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Deleting SceneManager Errors" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/HelloApplication_java$ServerTest.ic" NAME="ServerTest Coverage Results" MODIFIED="1744267653311" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">

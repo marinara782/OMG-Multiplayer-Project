@@ -47,7 +47,7 @@
             <Font size="5.0" />
          </font>
       </Label>
-      <CheckBox layoutX="257.0" layoutY="368.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="149.0" style="-fx-font: 15;" text="I agree to all Term &amp; Conditions" textFill="#fffafa">
+      <CheckBox fx:id="checkBox" layoutX="257.0" layoutY="368.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="149.0" style="-fx-font: 15;" text="I agree to all Term &amp; Conditions" textFill="#fffafa">
          <font>
             <Font size="9.0" />
          </font>

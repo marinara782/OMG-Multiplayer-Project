@@ -15,4 +15,5 @@ module org.example.gui {
     exports org.example.game.ticTacToe to javafx.fxml;
     exports org.example.game.connectFour to javafx.fxml;
     exports org.example.game.checkers to javafx.fxml;
+    exports org.example.authentication;
 }

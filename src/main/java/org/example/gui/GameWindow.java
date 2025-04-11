@@ -37,6 +37,21 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * GameWindow is the main GUI class for rendering a playable game screen.
+ * It supports multiple games (Tic-Tac-Toe, Connect Four, Checkers), handles UI layout,
+ * and manages game state, timer, chat interface, and user interactions.
+ *
+ * This class initializes:
+ * - Game board and controls
+ * - Game session (for multiplayer)
+ * - Turn management and status bar
+ * - Chat UI (with simple bot for Tic-Tac-Toe)
+ * - Timed updates for real-time feedback
+ *
+ * It dynamically adapts its layout based on the selected game type.
+ */
+
 public class GameWindow {
     private Stage stage;
     private Scene scene;
@@ -57,12 +72,12 @@ public class GameWindow {
     //Tic Tac Toe game object
     private TicTacToeGame ticTacToeGame;
 
-
     /**
-     * constructor for the game window
-     * @param stage
-     * @param gameInstance
-     * @param currentUser
+     * Constructs a GameWindow which displays the game board and manages gameplay logic and UI.
+     *
+     * @param stage         the JavaFX stage to render this game window on
+     * @param gameInstance  the game object (TicTacToeGame, ConnectFourGame, or CheckersGame)
+     * @param currentUser   the currently logged-in user playing the game
      */
     public GameWindow(Stage stage, Object gameInstance, UserProfile currentUser) {
         this.stage = stage;
@@ -86,7 +101,7 @@ public class GameWindow {
         startGameUpdates();
     }
 
-    // method for initialize the UI
+    // method for initializing the UI
     private void initializeUI() {
         mainLayout = new BorderPane();
         mainLayout.setPadding(new Insets(15));
@@ -153,6 +168,11 @@ public class GameWindow {
         return topBar;
     }
 
+    /**
+     * Creates the right panel containing opponent info, game stats, and chat.
+     *
+     * @return VBox containing all right panel sections.
+     */
     private VBox createRightPanel() {
         VBox rightPanel = new VBox(20);
         rightPanel.setPadding(new Insets(10, 0, 10, 20));
@@ -259,6 +279,14 @@ public class GameWindow {
         return rightPanel;
     }
 
+    /**
+     * Creates the chat send button, including event logic for simulated bot response (TicTacToe).
+     *
+     * @param chatInput    The chat input TextField.
+     * @param chatDisplay  The chat display TextArea.
+     * @param gameInstance The current game instance.
+     * @return A styled send Button with message handling logic.
+     */
     private static Button getButton(TextField chatInput, TextArea chatDisplay, Object gameInstance) {
         Button sendButton = new Button("Send");
         sendButton.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
@@ -325,6 +353,11 @@ public class GameWindow {
         return sendButton;
     }
 
+    /**
+     * Creates the bottom bar for gameplay controls (Undo, Draw, Resign).
+     *
+     * @return HBox with all control buttons.
+     */
     private HBox createBottomBar() {
         HBox bottomBar = new HBox(15);
         bottomBar.setPadding(new Insets(10, 5, 5, 5));
@@ -348,6 +381,9 @@ public class GameWindow {
         return bottomBar;
     }
 
+    /**
+     * Sets up the game board UI based on the game type.
+     */
     private void setupGameBoard() {
         System.out.println("Setting up game board, instance: " + gameInstance);
         System.out.println("Is TicTacToe: " + (gameInstance instanceof TicTacToeGame));
@@ -364,11 +400,13 @@ public class GameWindow {
             setupConnectFourBoard();
         } else if (gameInstance instanceof CheckersGame) {
             System.out.println("Setting up Checkers board");
-            // setupCheckersBoard();
+
             // Added by game logic team (Jacob Baggott)
             gameBoard.getChildren().clear();
             CheckersBoard checkersBoard = new CheckersBoard((CheckersGame) gameInstance);
+            checkersBoard.setReturnToMainMenu(this::returnToMainMenu);
             gameBoard.getChildren().add(checkersBoard);
+
         }
     }
 
@@ -406,8 +444,6 @@ public class GameWindow {
                     int[] position = (int[]) clicked.getUserData();
                     System.out.println("making move at " + position[0] + " " + position[1]);
 
-                    //Debugging line
-                    //System.out.println(ticTacToeGame.getBoardValue(position[0], position[1]));
 
                     //Get whose turn it is each time a box is clicked on
                     char currentPlayer = ticTacToeGame.getCurrentPlayer();
@@ -538,11 +574,20 @@ public class GameWindow {
         gameBoard.getChildren().add(boardContainer);
     }
 
+    /**
+     * Disables all buttons in a Tic Tac Toe board to prevent further input.
+     *
+     * @param board The GridPane containing Tic Tac Toe cells.
+     */
     private void disableBoard(GridPane board) {
         board.getChildren().forEach(node -> node.setDisable(true));
     }
 
-    //Game over dialogue box used to show whose won or if the game was a draw for tic tac toe
+    /**
+     * Displays a "Game Over" alert and returns the user to the main menu once dismissed.
+     *
+     * @param message The message to show (e.g. winner or draw).
+     */
     private void showGameOverDialog(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game Over");
@@ -552,7 +597,9 @@ public class GameWindow {
         alert.showAndWait();
     }
 
-
+    /**
+     * Sets up the Connect Four board with buttons and visuals.
+     */
     private void setupConnectFourBoard() {
 
         if (!(gameInstance instanceof ConnectFourGame)) return;
@@ -605,59 +652,11 @@ public class GameWindow {
         gameBoard.getChildren().add(boardContainer);
     }
 
-    // Game logic team -> chosen to initialize the board in CheckersBoard class (Jacob Baggott)
-//    private void setupCheckersBoard() {
-//        VBox boardContainer = new VBox(20);
-//        boardContainer.setAlignment(CENTER);
-//
-//        GridPane board = new GridPane();
-//        board.setAlignment(CENTER);
-//
-//        // Create the 8x8 grid
-//        for (int row = 0; row < 8; row++) {
-//            for (int col = 0; col < 8; col++) {
-//                StackPane cell = new StackPane();
-//                cell.setPrefSize(60, 60);
-//
-//                // Alternating colors for the checkerboard
-//                boolean isLightSquare = (row + col) % 2 == 0;
-//                cell.setStyle("-fx-background-color: " + (isLightSquare ? "#ecf0f1" : "#34495e") + ";");
-//
-//                // Add checkers pieces to initial positions
-//                if (!isLightSquare) {
-//                    if (row < 3) {
-//                        // Red pieces (opponent)
-//                        Region piece = new Region();
-//                        piece.setPrefSize(40, 40);
-//                        piece.setStyle("-fx-background-color: #e74c3c; -fx-background-radius: 20;");
-//                        cell.getChildren().add(piece);
-//                    } else if (row > 4) {
-//                        // Black pieces (player)
-//                        Region piece = new Region();
-//                        piece.setPrefSize(40, 40);
-//                        piece.setStyle("-fx-background-color: #2c3e50; -fx-background-radius: 20; -fx-border-color: white; -fx-border-radius: 20; -fx-border-width: 2;");
-//                        cell.getChildren().add(piece);
-//                    }
-//                }
-//
-//                // Store position for move handling
-//                cell.setUserData(new int[]{row, col});
-//
-//                // Add click handler
-//                cell.setOnMouseClicked(e -> {
-//                    StackPane clicked = (StackPane) e.getSource();
-//                    int[] position = (int[]) clicked.getUserData();
-//                    selectCheckersPiece(position[0], position[1]);
-//                });
-//
-//                board.add(cell, col, row);
-//            }
-//        }
-//
-//        boardContainer.getChildren().add(board);
-//        gameBoard.getChildren().add(boardContainer);
-//    }
-
+    /**
+     * Returns the game title based on the game type.
+     *
+     * @return A string title (e.g., "Connect Four").
+     */
     private String getGameTitle() {
         if (gameInstance instanceof TicTacToeGame) {
             return "Tic-Tac-Toe";
@@ -669,6 +668,9 @@ public class GameWindow {
         return "Game";
     }
 
+    /**
+     * Starts a timer to update the UI every second for time tracking and win condition checks.
+     */
     private void startGameUpdates() {
         updateTimeline = new Timeline(
                 new KeyFrame(Duration.seconds(1), e -> updateGameState())
@@ -677,12 +679,24 @@ public class GameWindow {
         updateTimeline.play();
     }
 
+    /**
+     * Periodically updates the game timer and checks win conditions (only for Checkers).
+     */
     private void updateGameState() {
         // Update timer display
         int seconds = gameTimer.getElapsedSeconds();
         int minutes = seconds / 60;
         seconds = seconds % 60;
         timerLabel.setText(String.format("%d:%02d", minutes, seconds));
+
+        // NEW: If we're in a Checkers game, check for win condition
+        if (gameInstance instanceof CheckersGame) {
+            CheckersGame checkersGame = (CheckersGame) gameInstance;
+            if (checkersGame.checkWin()) {
+                updateTimeline.stop();
+                showGameOverDialog("Game Over: Checkers win detected!", true);
+            }
+        }
     }
 
     // Game move logic
@@ -691,10 +705,12 @@ public class GameWindow {
         // This would call the actual game logic in a real implementation
     }
 
+    /**
+     * Handles a player's move in Connect Four, checking for win/draw and updating UI.
+     *
+     * @param column The column in which the player drops their piece.
+     */
     private void makeConnectFourMove(int column) {
-//        System.out.println("Dropping piece in column: " + column);
-//        // This would call the actual game logic in a real implementation
-//        simulateOpponentTurn();
 
         if(connectFourGame == null) {
             return;
@@ -744,6 +760,10 @@ public class GameWindow {
         columnFullAlert.showAndWait();
     }
 
+
+    /**
+     * Executes a computer move for Connect Four using a random selection of valid columns.
+     */
     private void makeComputerMove() {
         int player = connectFourGame.getPlayer();
 
@@ -792,8 +812,13 @@ public class GameWindow {
         timeline.play();
     }
 
-
-
+    /**
+     * Visually updates the Connect Four board with the new piece color based on player.
+     *
+     * @param row    Row index of the new piece.
+     * @param column Column index of the new piece.
+     * @param player The player number (1 or 2).
+     */
     private void updateBoardUI(int row, int column, int player) {
 
         GridPane boardContainer = (GridPane) ((VBox)gameBoard.getChildren().get(0)).getChildren().get(1);
@@ -810,6 +835,14 @@ public class GameWindow {
 
     }
 
+    /**
+     * Gets the StackPane node at a specific grid position on the Connect Four board.
+     *
+     * @param row            The row index.
+     * @param column         The column index.
+     * @param boardContainer The GridPane containing all board cells.
+     * @return The matching Node or null if not found.
+     */
     private Node getNodeByRowColumnIndex(int row, int column, GridPane boardContainer) {
         for(Node node: boardContainer.getChildren()){
             if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex((Node) node) == column){
@@ -819,6 +852,9 @@ public class GameWindow {
         return null;
     }
 
+    /**
+     * Updates the turn label based on the current player's turn (Red or Blue).
+     */
     private void updateTurnLabel() {
         int currentPlayer = connectFourGame.getPlayer();
         String label = "";
@@ -834,11 +870,20 @@ public class GameWindow {
 
     }
 
+    /**
+     * Handles simulated piece selection in Checkers (currently a placeholder).
+     *
+     * @param row The selected row.
+     * @param col The selected column.
+     */
     private void selectCheckersPiece(int row, int col) {
         System.out.println("Selected piece at: " + row + ", " + col);
         // This would handle piece selection and movement in a real implementation
     }
 
+    /**
+     * Simulates an opponent turn visually in games that support it (like Tic Tac Toe).
+     */
     private void simulateOpponentTurn() {
         // For demo purposes, simulate the opponent's turn
         turnLabel.setText("Opponent's Turn");
@@ -854,7 +899,9 @@ public class GameWindow {
         opponentTimeline.play();
     }
 
-    // Dialog methods
+    /**
+     * Shows a confirmation dialog for exiting the game early.
+     */
     private void confirmExit() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Exit Game");
@@ -868,6 +915,9 @@ public class GameWindow {
         });
     }
 
+    /**
+     * Offers a draw to the opponent (simulation).
+     */
     private void offerDraw() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Offer Draw");
@@ -882,6 +932,10 @@ public class GameWindow {
         });
     }
 
+
+    /**
+     * Shows a dialog that the draw was accepted and exits to main menu.
+     */
     private void showDrawAcceptedDialog() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Draw Accepted");
@@ -891,6 +945,9 @@ public class GameWindow {
         alert.showAndWait().ifPresent(response -> returnToMainMenu());
     }
 
+    /**
+     * Shows a confirmation dialog to resign from the game.
+     */
     private void confirmResign() {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Resign Game");
@@ -904,7 +961,12 @@ public class GameWindow {
         });
     }
 
-    // edited by gamelogic team
+    /**
+     * Shows a styled "Game Over" dialog and returns to main menu.
+     *
+     * @param reason  The reason to display (e.g. "Victory!", "Draw").
+     * @param victory True if the player won, false if they lost or drew.
+     */
     private void showGameOverDialog(String reason, boolean victory) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game Over");
@@ -915,7 +977,10 @@ public class GameWindow {
         returnToMainMenu();
     }
 
-    private void returnToMainMenu() {
+    /**
+     * Returns the user to the main menu screen.
+     */
+    public void returnToMainMenu() {
         if (updateTimeline != null) {
             updateTimeline.stop();
         }
@@ -924,6 +989,13 @@ public class GameWindow {
         mainMenu.show();
     }
 
+
+    /**
+     * Simulates a Connect Four AI move using a basic 3-step strategy:
+     * 1) Try to win
+     * 2) Block opponent win
+     * 3) Choose random column
+     */
     private void simulateComputerMove() {
         // Simple random AI logic:
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1.5), e -> {

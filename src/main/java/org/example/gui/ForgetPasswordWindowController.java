@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.example.authentication.Login;
 
+
 public class ForgetPasswordWindowController {
     @FXML private TextField usernameField;
     @FXML private TextField emailField;
@@ -20,7 +21,11 @@ public class ForgetPasswordWindowController {
 
     private final Login login = new Login();
 
-    public void handleForget(ActionEvent actionEvent) {
+    /**
+     * Handles when the User forgot their password, the user can reset it.
+     * @param actionEvent
+     */
+    public void handleForgot(ActionEvent actionEvent) {
         String username = usernameField.getText();
         String email = emailField.getText();
         String newPassword = newPasswordField.getText();
@@ -60,6 +65,12 @@ public class ForgetPasswordWindowController {
         }
     }
 
+    /**
+     * Shows popup alerts with information
+     * @param type
+     * @param title
+     * @param message
+     */
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

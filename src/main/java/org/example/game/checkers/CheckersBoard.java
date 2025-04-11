@@ -14,6 +14,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
+/**
+ * Represents the Checkers game board UI and interaction logic.
+ * This class handles rendering of the board, piece movement, highlighting valid moves,
+ * and triggering game end behavior for both single and multiplayer modes.
+ */
 public class CheckersBoard extends VBox {
     private boolean vsComputer;
     private final CheckersGame game;
@@ -21,7 +26,13 @@ public class CheckersBoard extends VBox {
     private int[] selected = null;
     private final List<StackPane> highlightedCells = new ArrayList<>();
 
-    // Main constructor (used by GameWindow)
+
+    /**
+     * Constructs the visual board for a given Checkers game.
+     * Initializes the board grid and sets up cell rendering.
+     *
+     * @param game the Checkers game instance containing game logic
+     */
     public CheckersBoard(CheckersGame game) {
         this.game = game;
         this.boardGrid = new GridPane();
@@ -35,6 +46,10 @@ public class CheckersBoard extends VBox {
         drawBoard();
     }
 
+    /**
+     * Renders the current state of the game board.
+     * This includes cells, pieces, highlights, and selection indication.
+     */
     private void drawBoard() {
         boardGrid.getChildren().clear();
         for (int row = 0; row < 8; row++) {
@@ -75,6 +90,12 @@ public class CheckersBoard extends VBox {
         }
     }
 
+    /**
+     * Handles user click events on board cells.
+     * Performs selection, move validation, actual move execution, and triggers end-of-turn logic.
+     *
+     * @param e the mouse click event
+     */
     private void handleClick(MouseEvent e) {
         StackPane clicked = (StackPane) e.getSource();
         int[] pos = (int[]) clicked.getUserData();
@@ -100,6 +121,7 @@ public class CheckersBoard extends VBox {
         selected = null;
         clearHighlights();
         drawBoard();
+        if (turnLabelUpdater != null) turnLabelUpdater.run();
 
         if (moved && game.checkWin()) {
             showEndDialog(game.isMultiplayer() ? "Game Over!" : "Player wins!");
@@ -112,6 +134,7 @@ public class CheckersBoard extends VBox {
             pause.setOnFinished(event -> {
                 game.computerMove();
                 drawBoard();
+                if (turnLabelUpdater != null) turnLabelUpdater.run();
                 if (game.checkWin()) {
                     showEndDialog("Computer wins!");
                 }
@@ -119,15 +142,33 @@ public class CheckersBoard extends VBox {
             pause.play();
         }
     }
+    private Runnable returnToMainMenu;
 
+    /**
+     * Displays a game-over dialog with a custom message.
+     * If a return-to-main-menu callback is set, it will be invoked after closing the alert.
+     *
+     * @param message the message to display in the dialog
+     */
     private void showEndDialog(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Game Over");
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+
+        if (returnToMainMenu != null) {
+            returnToMainMenu.run();
+        }
     }
 
+    public void setReturnToMainMenu(Runnable returnToMainMenu) {
+        this.returnToMainMenu = returnToMainMenu;
+    }
+
+    /**
+     * Sets a callback to run when the game ends to return the user to the main menu.
+     */
     private void highlightMoves(List<int[]> moves) {
         clearHighlights();
         for (int[] move : moves) {
@@ -141,10 +182,20 @@ public class CheckersBoard extends VBox {
         }
     }
 
+    /**
+     * Clears all previously highlighted move cells.
+     */
     private void clearHighlights() {
         highlightedCells.clear();
     }
 
+    /**
+     * Checks if the given cell coordinates are currently highlighted.
+     *
+     * @param row the row of the cell
+     * @param col the column of the cell
+     * @return true if highlighted, false otherwise
+     */
     private boolean isHighlighted(int row, int col) {
         for (StackPane cell : highlightedCells) {
             Integer r = GridPane.getRowIndex(cell);
@@ -156,6 +207,12 @@ public class CheckersBoard extends VBox {
 
     private Runnable turnLabelUpdater;
 
+    /**
+     * Sets a callback that updates the turn label (e.g., in the GameWindow).
+     * This will be triggered after a successful move or AI turn.
+     *
+     * @param updater the Runnable that updates the label
+     */
     public void setTurnLabelUpdater(Runnable updater) {
         this.turnLabelUpdater = updater;
 

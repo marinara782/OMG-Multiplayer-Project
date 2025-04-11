@@ -29,6 +29,9 @@ public class LeaderBoardController {
     @FXML private TableColumn<Player, String> playerColumn;
     @FXML private TableColumn<Player, Integer> winsColumn;
     @FXML private TableColumn<Player, Integer> lossColumn;
+    @FXML private TableColumn<Player, Integer> drawsColumn;
+    @FXML private TableColumn<Player, Integer> percentageColumn;
+
     @FXML private ChoiceBox<String> sortBox;
     @FXML private TextField searchField;
     @FXML public VBox gamesMenu;
@@ -50,6 +53,10 @@ public class LeaderBoardController {
     @FXML
     public void initialize() {
         // Setup Table Columns
+        rankColumn.setReorderable(false);
+        playerColumn.setReorderable(false);
+        winsColumn.setReorderable(false);
+        lossColumn.setReorderable(false);
         //Updates the Rankings
         rankColumn.setCellFactory(column -> new TableCell<>() {
             @Override

@@ -4,10 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.authentication.Login;
 import org.example.authentication.UserProfile;
@@ -19,6 +16,7 @@ public class SignUpWindowController {
     public PasswordField passwordField;
     public TextField emailField;
     public Button RegisterButton;
+    public CheckBox checkBox;
     private Stage stage;
 
     public void setStage(Stage stage) {
@@ -36,12 +34,18 @@ public class SignUpWindowController {
         }
 
         if (password.length() < 8) {
-            showAlert(Alert.AlertType.ERROR, "Weak Password", "Password must be at least 6 characters long.");
+            showAlert(Alert.AlertType.ERROR, "Weak Password", "Password must be at least 8 characters long.");
             return;
         }
+
+        if (!checkBox.isSelected()) {
+            showAlert(Alert.AlertType.ERROR,"Terms Not Accepted","You must agree to the Terms and Conditions.");
+            return;
+        }
+
         try {
             // Try to create the account
-            boolean success = Login.createAccount(username, password, email, null);
+            boolean success = Login.createAccount(username, password, email,  "000-000-0000");
             if (success) {
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Account created successfully!");
                 UserProfile newUser = new UserProfile(); // Optionally fill this in with details

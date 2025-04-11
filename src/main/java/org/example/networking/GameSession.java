@@ -54,6 +54,10 @@ public class GameSession {
 
     }
 
+    public boolean isMultiplayer() {
+        return true; // stubbed to always simulate multiplayer for now
+    }
+
     public void sendChat(String message){
         System.out.println("Sending chat: " + message);
     }

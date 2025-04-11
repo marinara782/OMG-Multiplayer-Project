@@ -175,7 +175,7 @@ public class MainMenuWindow {
         Label playersLabel = new Label("Online: 42 players");
         playersLabel.setStyle("-fx-font-size: 12px; -fx-text-fill: #bdc3c7;");
 
-        Button rulesButton = new Button("View Rules");
+        Button rulesButton = new Button("More Info");
         rulesButton.setStyle("-fx-background-color: #2ecc71; -fx-text-fill: white;");
         rulesButton.setOnAction(_ -> showGameRules(gameType));
 

@@ -392,6 +392,14 @@ public class GameWindow {
                 // Store row and col in button properties for easy access in event handler
                 cell.setUserData(new int[]{row, col});
 
+                //Turn label at the start of the game based on the game mode
+                if(ticTacToeGame.isPlayerAndComputer()){
+                    turnLabel.setText("Your Turn");
+                }
+                else{
+                    turnLabel.setText("X's Turn");
+                }
+
                 //When a player clicks on a box on the board
                 cell.setOnAction(e -> {
                     Button clicked = (Button) e.getSource();
@@ -408,6 +416,7 @@ public class GameWindow {
                         if (clicked.getText().isEmpty()) {
                             //Set the clicked box to O if its O's turn
                             if (currentPlayer == 'O') {
+                                turnLabel.setText("X's Turn");
                                 clicked.setText("O");
                                 //Update our 2d array copy of the game board
                                 ticTacToeGame.makeMove(position[0], position[1], 'O');
@@ -429,6 +438,7 @@ public class GameWindow {
                             }
                             //Set the clicked box to X if its X's turn
                             if (currentPlayer == 'X') {
+                                turnLabel.setText("O's Turn");
                                 clicked.setText("X");
                                 //Update our 2d array copy of the game board
                                 ticTacToeGame.makeMove(position[0], position[1], 'X');
@@ -455,6 +465,7 @@ public class GameWindow {
                         if (currentPlayer == 'X') {
                             if (clicked.getText().isEmpty()) {
                                 clicked.setText("X");
+                                turnLabel.setText("Computer's Turn");
                                 //Update our 2d array copy of the game board
                                 ticTacToeGame.makeMove(position[0], position[1], 'X');
                                 //Check on the 2d array game board if player has won
@@ -462,7 +473,7 @@ public class GameWindow {
                                 boolean full = ticTacToeGame.isBoardFull();
                                 //PLayer wins
                                 if (playerWin) {
-                                    showGameOverDialog("Player Wins!");
+                                    showGameOverDialog("You Win!");
                                     disableBoard(board);
                                     return;
                                 } else if (full) {
@@ -487,6 +498,7 @@ public class GameWindow {
                                             if (GridPane.getRowIndex(node) == aiMove[0] && GridPane.getColumnIndex(node) == aiMove[1]) {
                                                 if (node instanceof Button) {
                                                     ((Button) node).setText("O");
+                                                    turnLabel.setText("Your Turn");
                                                     break;
                                                 }
                                             }

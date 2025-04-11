@@ -315,9 +315,12 @@ public class ConnectFourGameTest {
     @Test
     public void testGetAvailableRow_FullColumn() {
         ConnectFourGame game = new ConnectFourGame(1, 6, 7, 4, false);
-        // Fill column 2 completely.
+        // Keep dropping into column 2 using correct Connect Four logic
         for (int i = 0; i < game.getRows(); i++) {
-            game.makeMove(i, 2);
+            int row = game.getAvailableRow(2);
+            assertTrue(row != -1, "Expected an available row");
+            game.makeMove(row, 2);
+            game.switchTurn();  // alternate turns for realism
         }
         int availableRow = game.getAvailableRow(2);
         assertEquals(-1, availableRow, "When the column is full, getAvailableRow() should return -1");

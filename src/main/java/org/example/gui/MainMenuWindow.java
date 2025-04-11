@@ -8,16 +8,12 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import org.example.authentication.Login;
 import org.example.authentication.UserProfile;
 import org.example.game.checkers.CheckersGame;
 import org.example.game.connectFour.ConnectFourGame;
 import org.example.game.ticTacToe.TicTacToeGame;
-import org.example.leaderboard.Leaderboard;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -26,13 +22,21 @@ public class MainMenuWindow {
     private final Stage stage;
     private final UserProfile currentUser;
 
+    /**
+     * Constructs a MainMenuWindow for the provided user and stage.
+     *
+     * @param stage the main application stage
+     * @param currentUser the currently logged-in user
+     */
     public MainMenuWindow(Stage stage, UserProfile currentUser) {
         this.stage = stage;
         this.currentUser = currentUser;
-//        this.matchmaker = new Matchmaker();
         initializeUI();
     }
 
+    /**
+     * Initializes the layout and components of the main menu UI.
+     */
     private void initializeUI() {
         BorderPane mainLayout = new BorderPane();
         mainLayout.setPadding(new Insets(20));
@@ -64,6 +68,11 @@ public class MainMenuWindow {
         });
     }
 
+    /**
+     * Creates the header for the main menu, including logo, user info, and logout/profile buttons.
+     *
+     * @return the configured HBox header
+     */
     private HBox createHeader() {
         HBox header = new HBox(20);
         header.setPadding(new Insets(10));
@@ -96,6 +105,7 @@ public class MainMenuWindow {
 
         return header;
     }
+
 
     private VBox createGameSelection() {
         VBox gameSelection = new VBox(30);
@@ -526,7 +536,11 @@ public class MainMenuWindow {
         new GameWindow(stage, ticTacToeGame, currentUser);
     }
 
-    // Game logic addition
+    /**
+     * Displays a dialog to let the user choose between multiplayer and AI for Checkers.
+     *
+     * @return false if vs computer, true if multiplayer, null if cancelled
+     */
     private Boolean showCheckersModeDialog() {
         Alert modeDialog = new Alert(Alert.AlertType.CONFIRMATION);
         modeDialog.setTitle("Choose Game Mode");

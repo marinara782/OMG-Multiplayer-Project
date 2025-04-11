@@ -4,25 +4,50 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Core logic for the Checkers game.
+ * Supports single-player (vs. AI) and multiplayer (same device) modes.
+ * Board values:
+ * - 0 = empty
+ * - 1 = red piece
+ * - 2 = red king
+ * - -1 = black piece
+ * - -2 = black king
+ */
 public class CheckersGame {
     private final int[][] board;
     private boolean isRedTurn = false;
     private final boolean isMultiplayer;
 
+    /**
+     * Default constructor, initializes a single-player game.
+     */
     public CheckersGame() {
         this(false);
     }
 
+    /**
+     * Constructs a new CheckersGame instance with specified game mode.
+     *
+     * @param isMultiplayer true if multiplayer, false for vs computer
+     */
     public CheckersGame(boolean isMultiplayer) {
         this.isMultiplayer = isMultiplayer;
         board = new int[8][8];
         initializeBoard();
     }
 
+    /**
+     * @return true if the game is multiplayer mode
+     */
     public boolean isMultiplayer() {
         return isMultiplayer;
     }
 
+    /**
+     * Initializes the board with red pieces at the top and black pieces at the bottom.
+     * Only dark squares are used for pieces.
+     */
     private void initializeBoard() {
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 8; col++) {
@@ -34,18 +59,41 @@ public class CheckersGame {
         }
     }
 
+    /**
+     * @return the internal 8x8 game board
+     */
     public int[][] getBoard() {
         return board;
     }
 
+    /**
+     * Gets the piece at a given board position.
+     *
+     * @param row row index
+     * @param col column index
+     * @return piece code (positive for red, negative for black, 0 for empty)
+     */
     public int getPiece(int row, int col) {
         return board[row][col];
     }
 
+    /**
+     * @return true if it’s the black player’s turn (used for player turns)
+     */
     public boolean isPlayersTurn() {
         return !isRedTurn;
     }
 
+
+    /**
+     * Attempts to move a piece from one position to another.
+     *
+     * @param fromRow starting row
+     * @param fromCol starting column
+     * @param toRow target row
+     * @param toCol target column
+     * @return true if the move was valid and executed
+     */
     public boolean movePiece(int fromRow, int fromCol, int toRow, int toCol) {
         if (!inBounds(fromRow, fromCol) || !inBounds(toRow, toCol)) return false;
         int piece = board[fromRow][fromCol];
@@ -55,6 +103,7 @@ public class CheckersGame {
         int dc = toCol - fromCol;
         boolean isKing = Math.abs(piece) == 2;
 
+        // Simple diagonal move
         if (Math.abs(dr) == 1 && Math.abs(dc) == 1 && board[toRow][toCol] == 0) {
             if (isKing || dr == (isRedTurn ? 1 : -1)) {
                 executeMove(fromRow, fromCol, toRow, toCol, piece);
@@ -62,6 +111,7 @@ public class CheckersGame {
             }
         }
 
+        // Jump move
         if (Math.abs(dr) == 2 && Math.abs(dc) == 2) {
             int midRow = fromRow + dr / 2;
             int midCol = fromCol + dc / 2;
@@ -75,6 +125,15 @@ public class CheckersGame {
         return false;
     }
 
+    /**
+     * Performs the actual piece movement and handles king promotion.
+     *
+     * @param fromRow source row
+     * @param fromCol source col
+     * @param toRow destination row
+     * @param toCol destination col
+     * @param piece the moving piece
+     */
     private void executeMove(int fromRow, int fromCol, int toRow, int toCol, int piece) {
         board[fromRow][fromCol] = 0;
         board[toRow][toCol] = piece;
@@ -83,6 +142,9 @@ public class CheckersGame {
         isRedTurn = !isRedTurn;
     }
 
+    /**
+     * Makes a random valid move on behalf of the computer.
+     */
     public void computerMove() {
         List<Move> moves = getAllValidMoves(true);
         if (!moves.isEmpty()) {
@@ -91,6 +153,12 @@ public class CheckersGame {
         }
     }
 
+    /**
+     * Returns a list of all valid moves for the current turn (used for AI).
+     *
+     * @param redTurn whether it's red’s turn
+     * @return list of valid moves
+     */
     private List<Move> getAllValidMoves(boolean redTurn) {
         List<Move> moves = new ArrayList<>();
         for (int row = 0; row < 8; row++) {
@@ -118,6 +186,13 @@ public class CheckersGame {
         return moves;
     }
 
+    /**
+     * Returns all valid destination positions for a specific piece.
+     *
+     * @param row row of the selected piece
+     * @param col column of the selected piece
+     * @return list of valid move destinations
+     */
     public List<int[]> getValidMoves(int row, int col) {
         List<int[]> validMoves = new ArrayList<>();
         int piece = board[row][col];
@@ -147,10 +222,22 @@ public class CheckersGame {
         return validMoves;
     }
 
+    /**
+     * Checks if a given board position is within the 8x8 grid.
+     *
+     * @param row row index
+     * @param col column index
+     * @return true if position is within bounds
+     */
     private boolean inBounds(int row, int col) {
         return row >= 0 && row < 8 && col >= 0 && col < 8;
     }
 
+    /**
+     * Checks if either side has won (i.e., the other has no pieces).
+     *
+     * @return true if one player has no pieces left
+     */
     public boolean checkWin() {
         boolean red = false, black = false;
         for (int[] row : board) {
@@ -162,13 +249,24 @@ public class CheckersGame {
         return !(red && black);
     }
 
+    /**
+     * Placeholder for potential future feature: previewing AI move.
+     * @return empty array (not implemented)
+     */
     public int[][] computerMoveWithPreview() {
         return new int[0][];
     }
 
+    /**
+     * Placeholder for finalizing a staged AI move (not implemented).
+     */
     public void finalizeComputerMove() {
     }
 
+
+    /**
+     * Internal helper class representing a move.
+     */
     private static class Move {
         int fromRow, fromCol, toRow, toCol;
         Move(int fr, int fc, int tr, int tc) {

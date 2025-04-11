@@ -4,7 +4,9 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.*;
 import java.util.List;
 
@@ -27,6 +29,8 @@ public class LoginTest {
     }
 
     //forgot_Password() tests
+
+    // successful password change test
     @Test
     void testForgotPassword_Success() throws IOException {
         assertTrue(login.forgot_password("alice", "alice@gmail.com", "newPass123"));
@@ -45,6 +49,8 @@ public class LoginTest {
     }
 
     //changePassword() testcases
+
+    // successful change password test case
     @Test
     void testChangePassword_Success() throws IOException{
         assertTrue(login.change_password("alice", "pass123", "newPass456", "newPass456"));
@@ -89,6 +95,79 @@ public class LoginTest {
     @Test
     void testChangeEmail_WrongPassword() throws IOException{
         assertFalse(login.change_email("bob", "wrongpass", "bob@gmail.com", "newBob@gmail.com"));
+    }
+
+    // tests for login_account()
+
+    // Test for checking if a registered user can log in with correct information
+    @Test
+    void test_login_account_success() {
+        assertTrue(login.login_account("alice", "pass123"));
+    }
+
+    // attempting to log in with an incorrect password
+    @Test
+    void test_login_account_incorrect_password() {
+        assertFalse(login.login_account("alice", "wrongPass123"));
+    }
+
+    // attempting to log in with an incorrect username
+    @Test
+    void test_login_account_incorrect_username() {
+        assertFalse(login.login_account("not_alice", "pass123"));
+    }
+
+    // attempting to log in while not a registered user
+    @Test
+    void test_login_account_not_registered_user() {
+        assertFalse(login.login_account("benjamin", "not_a_password123"));
+    }
+
+    // tests for forgot_username()
+
+    // test for successfully recovering a forgotten username
+    @Test
+    void forgot_username_success() throws IOException {
+        assertEquals("alice", login.forgot_username("alice@gmail.com"));
+    }
+
+    // test for unsuccessfully recovering a forgotten username
+    @Test
+    void forgot_username_failure() throws IOException {
+        assertEquals("There was an error during the retrieval of your username, try again.", login.forgot_username("not_alice@gmail.com"));
+    }
+
+    // tests for returnToLoginScreen()
+
+    // test for successfully returning to the login screen
+    @Test
+    void test_return_to_login_screen_success() {
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+
+        System.setOut(printStream);
+
+        Login.returnToLoginScreen();
+
+        assertTrue(outputStream.toString().contains("Return to the login screen..."));
+    }
+
+    // tests for logout()
+
+    // test for successfully logging out of the platform
+    @Test
+    void test_logout_success() {
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+        PrintStream printStream = new PrintStream(outputStream);
+
+        System.setOut(printStream);
+
+        Login.logout();
+
+        assertTrue(outputStream.toString().contains("Logging out.."));
     }
 
     @Test
@@ -148,8 +227,4 @@ public class LoginTest {
         // Should still succeed since phone format isn't validated in the method
         assertFalse(Login.createAccount("testUser", "testPass", "test@test.com", "invalid-phone"));
     }
-
-
-
-
 }

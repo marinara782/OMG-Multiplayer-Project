@@ -571,14 +571,14 @@ public class GameWindow {
                                         });
                                     }
                                 }));
-                                timeline.play();
+                                timeline.play(); // Start the timeline
 
                             }
                         }
                     }
                 });
 
-                board.add(cell, col, row);
+                board.add(cell, col, row); // Add the button to the grid
             }
         }
 
@@ -825,15 +825,15 @@ public class GameWindow {
 
             // Drop piece in that column
             for (int row = rows - 1; row >= 0 ; row--) {
-                if (board[row][randomCol] == ConnectFourBoard.Empty) {
+                if (board[row][randomCol] == ConnectFourBoard.Empty) { // find the lowest empty row in that column
                     connectFourGame.makeMove(row, randomCol);
                     updateBoardUI(row, randomCol, player);
-
+                    // to check for win conditions
                     if (connectFourGame.checkWinnerHorizontal() || connectFourGame.checkWinnerVertical() || connectFourGame.checkWinnerDiagonal()) {
                         showGameOverDialog((player == 1 ? "Player Red Wins!" : "Computer Wins!"), true);
                         return;
                     }
-
+                    // draw condition
                     if (connectFourGame.checkDraw()) {
                         showGameOverDialog("Draw!", false);
                         return;
@@ -1072,6 +1072,10 @@ public class GameWindow {
         timeline.play();
     }
 
+    /**
+     * handles AI moves by placing a piece in the column specified in the parameter.
+     * @param column column where AI will drop piece
+     */
     private void makeAIMove(int column) {
         if (connectFourGame == null || connectFourGame.isGameOver()) return;
 
@@ -1083,13 +1087,13 @@ public class GameWindow {
             if (board[row][column] == ConnectFourBoard.Empty) {
                 connectFourGame.makeMove(row, column);
                 updateBoardUI(row, column, player);
-
+                // check win conditions
                 if (connectFourGame.checkWinnerHorizontal() || connectFourGame.checkWinnerVertical() || connectFourGame.checkWinnerDiagonal()) {
                     connectFourGame.setGameOver(true);
                     showGameOverDialog("AI (Blue) Wins!", true);
                     return;
                 }
-
+                // check for draw
                 if (connectFourGame.checkDraw()) {
                     connectFourGame.setGameOver(true);
                     showGameOverDialog("Draw!", false);

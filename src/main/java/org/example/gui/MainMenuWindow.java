@@ -1,5 +1,13 @@
 package org.example.gui;
 
+import java.io.IOException;
+import java.util.Optional;
+
+import org.example.authentication.UserProfile;
+import org.example.game.checkers.CheckersGame;
+import org.example.game.connectFour.ConnectFourGame;
+import org.example.game.ticTacToe.TicTacToeGame;
+
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -7,32 +15,43 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.Separator;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.example.authentication.Login;
-import org.example.authentication.UserProfile;
-import org.example.game.checkers.CheckersGame;
-import org.example.game.connectFour.ConnectFourGame;
-import org.example.game.ticTacToe.TicTacToeGame;
-import org.example.leaderboard.Leaderboard;
-
-import java.io.IOException;
-import java.util.Optional;
 
 public class MainMenuWindow {
     private final Stage stage;
     private final UserProfile currentUser;
 
+    /**
+     * Constructs a MainMenuWindow for the provided user and stage.
+     *
+     * @param stage the main application stage
+     * @param currentUser the currently logged-in user
+     */
     public MainMenuWindow(Stage stage, UserProfile currentUser) {
         this.stage = stage;
         this.currentUser = currentUser;
-//        this.matchmaker = new Matchmaker();
         initializeUI();
     }
 
+    /**
+     * Initializes the layout and components of the main menu UI.
+     */
     private void initializeUI() {
         BorderPane mainLayout = new BorderPane();
         mainLayout.setPadding(new Insets(20));
@@ -64,6 +83,11 @@ public class MainMenuWindow {
         });
     }
 
+    /**
+     * Creates the header for the main menu, including logo, user info, and logout/profile buttons.
+     *
+     * @return the configured HBox header
+     */
     private HBox createHeader() {
         HBox header = new HBox(20);
         header.setPadding(new Insets(10));
@@ -97,6 +121,21 @@ public class MainMenuWindow {
         return header;
     }
 
+
+    /**
+     * Creates a VBox layout for the game selection menu. Contains game cards to select individual games with a matchmaking section.
+     *
+     * The layout has:
+     * - A title label with the text "Select a Game".
+     * - A horizontal container (HBox) with game cards for "Tic-Tac-Toe", "Connect Four", and "Checkers".
+     *   Each card has a click event handler to launch the selected game.
+     * - A matchmaking section with:
+     *   - A label titled "Quick Match".
+     *   - A ComboBox for selecting a game ("Tic-Tac-Toe", "Connect Four", or "Checkers").
+     *   - A button to find a match for the selected game.
+     * 
+     * @return A VBox containing the game selection UI components.
+     */
     private VBox createGameSelection() {
         VBox gameSelection = new VBox(30);
         gameSelection.setPadding(new Insets(20, 10, 20, 10));
@@ -147,6 +186,14 @@ public class MainMenuWindow {
         return gameSelection;
     }
 
+    /**
+     * Handles the event when the "Checkers" is selected by clicking in the main menu.
+     * Displays a dialogue to determine the game mode (vs Computer or another player).
+     * If the user cancels the dialogue, the method exits without taking further action.
+     * Otherwise, it initializes a new game window with the selected mode.
+     *
+     * @param checkers A string gameName "checkers"
+     */
     private void handleCheckersClick(String checkers) {
         Boolean vsComputer = showCheckersModeDialog();
         if (vsComputer == null) {
@@ -156,6 +203,14 @@ public class MainMenuWindow {
     }
 
 
+    /**
+     * Creates a styled game card UI component for displaying game information.
+     *
+     * @param gameName name of the selected game
+     * @param gameType type of game used to determine its rules
+     * @return A VBox containing the game card with an icon placeholder, game name, 
+     *         online players count, and a button for more information.
+     */
     private VBox createGameCard(String gameName, String gameType) {
         VBox card = new VBox(10);
         card.setPadding(new Insets(15));
@@ -184,6 +239,11 @@ public class MainMenuWindow {
         return card;
     }
 
+    /**
+     * displays the rules for the selected gameType
+     * 
+     * @param gameType
+     */
     private void showGameRules(String gameType) {
         switch (gameType.toLowerCase()) {
             case "connectfour" -> SceneManager.loadScene("connectfour_rules.fxml");
@@ -192,6 +252,11 @@ public class MainMenuWindow {
         }
     }
 
+    /**
+     * creates the right panel of the main menu windows which has a small snippet of leaderborad, and friends list
+     * 
+     * @return VBox containing the leaderboard and active players (friends list)
+     */
     private VBox createRightPanel() {
         VBox rightPanel = new VBox(20);
         rightPanel.setPadding(new Insets(10, 0, 10, 20));
@@ -275,6 +340,12 @@ public class MainMenuWindow {
         return rightPanel;
     }
 
+    /**
+     * the status bar at the bottom of the main menu bar
+     * 
+     * @return HBox containing the status with the server status, number of players online,
+     *         and number of games currently being played.
+     */
     private HBox createStatusBar() {
         HBox statusBar = new HBox(15);
         statusBar.setPadding(new Insets(10, 5, 5, 5));
@@ -324,12 +395,20 @@ public class MainMenuWindow {
     }
 
 
-
+    /**
+     * finds a match for the selected game type and shows a matchmaking dialogue.
+     * @param gameSelection
+     */
     private void findMatch(String gameSelection) {
         String gameType = gameSelection.toLowerCase().replace(" ", "");
         showMatchmakingDialog(gameType);
     }
 
+    /**
+     * matchmaking dialogue which simulates 'finding a player'
+     * 
+     * @param gameType the type of game that selected by player after clicking selected game card
+     */
     private void showMatchmakingDialog(String gameType) {
         Stage dialogStage = new Stage();
         VBox dialogContent = new VBox(15);
@@ -383,6 +462,15 @@ public class MainMenuWindow {
         dialogStage.show();
     }
 
+    /**
+     * Starts a new game based on the specified game type.
+     *
+     * @param gameType The type of game to start. Supported values are:
+     *                     - "ticTacToe", "tictactoe", "tic-tac-toe" - Starts a Tic Tac Toe game.
+     *                     - "connectfour", "connectFour", "connect-four" - Starts a Connect Four game.
+     *                     - "checkers" - Starts a Checkers game.
+     *                 If an unsupported game type is provided, a message, "Unknown game type" will be printed to the console.
+     */
     private void startGame(String gameType) {
         switch (gameType) {
             case "ticTacToe", "tictactoe", "tic-tac-toe":
@@ -399,6 +487,13 @@ public class MainMenuWindow {
         }
     }
 
+    /**
+     * dialgue box for connect four game to choose a multiplayer or computer game
+     * 
+     * @return true if the user selects "Computer" mode,
+     *         false if the user selects "Multiplayer (Same Device)" mode,
+     *         or null if the user cancels.
+     */
     private Boolean showConnectFourModeDialog() {
         Alert modeDialog = new Alert(Alert.AlertType.CONFIRMATION);
         modeDialog.setTitle("Choose Game Mode");
@@ -447,26 +542,15 @@ public class MainMenuWindow {
             return null;
         }
 
-/*/
-        modeDialog.showAndWait().ifPresent(response -> {
-            boolean vsComputer;
-            if (response == vsComputerButton) {
-                // Single Player
-                vsComputer = true;
-                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, vsComputer), currentUser);
-            } else {
-                //Local Multiplayer
-                vsComputer = false;
-                new GameWindow(stage, new ConnectFourGame(1, 6, 7, 4, vsComputer), currentUser);
-            }
-        });
 
- */
         return result == vsComputerButton;
     }
 
-    //This method shows the dialogue box
-    // when tic-tac-toe is selected allowing the player to choose a multiplayer or computer game
+    /**
+     * shows the dialogue box when tic-tac-toe is selected allowing the player to choose a multiplayer or computer game
+     * 
+     * @return
+     */
     private Boolean showTicTacToeModeDialog() {
         Alert modeDialog = new Alert(Alert.AlertType.CONFIRMATION);
         modeDialog.setTitle("Choose Game Mode");
@@ -524,12 +608,6 @@ public class MainMenuWindow {
             return;
         }
         showBoardOptionsDialog(vsComputer);
-//        if (vsComputer) {
-//            ConnectFourGame game = new ConnectFourGame(1, 6, 7, 4, true);
-//            new GameWindow(stage, game, currentUser);
-//        }else{
-//            startMatchmaking("connectFour");
-//        }
     }
 
     //This method makes a new tic-tac-toe game with the parameter
@@ -546,7 +624,11 @@ public class MainMenuWindow {
         new GameWindow(stage, ticTacToeGame, currentUser);
     }
 
-    // Game logic addition
+    /**
+     * Displays a dialog to let the user choose between multiplayer and AI for Checkers.
+     *
+     * @return false if vs computer, true if multiplayer, null if cancelled
+     */
     private Boolean showCheckersModeDialog() {
         Alert modeDialog = new Alert(Alert.AlertType.CONFIRMATION);
         modeDialog.setTitle("Choose Game Mode");

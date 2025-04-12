@@ -502,12 +502,6 @@ on implementing feedback received from peer reviews in Iteration 2. This phase w
 on refining existing modules,
 enhancing usability, improving performance, and completing final integration tasks across components.
 
-#### 🔍 Key Activities
-
-You can add the team member names under their respective team sections within the Iteration 3 description. Here’s an updated version of the section, incorporating the team member details:
-
----
-
 ### 🔍 Key Activities for Iteration 3
 
 - Integrated comprehensive feedback received from peer reviews during Iteration 2 to improve system quality and usability.
